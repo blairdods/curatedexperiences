@@ -6,6 +6,7 @@ import { Hero } from "@/components/ui/hero";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
 import { ConciergeCTAButton } from "@/components/ui/concierge-cta-button";
+import { TouristDestinationSchema } from "@/components/ui/schema-markup";
 
 export async function generateStaticParams() {
   return DESTINATIONS.map((d) => ({ region: d.slug }));
@@ -40,6 +41,11 @@ export default async function DestinationPage({
 
   return (
     <>
+      <TouristDestinationSchema
+        name={dest.name}
+        description={dest.tagline}
+        image={dest.heroImage}
+      />
       <Hero
         title={dest.name}
         subtitle={dest.tagline}

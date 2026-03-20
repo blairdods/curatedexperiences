@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useConcierge } from "./use-concierge";
 import { ConciergeTrigger } from "./concierge-trigger";
 import { ConciergePanel } from "./concierge-panel";
+import { trackEvent } from "@/components/ui/analytics";
 import {
   wasDismissed,
   markDismissed,
@@ -25,7 +26,8 @@ export function ConciergeWidget() {
   const open = useCallback(() => {
     setIsOpen(true);
     setShowPrompt(false);
-  }, []);
+    trackEvent("concierge_open", { page: pathname });
+  }, [pathname]);
 
   const close = useCallback(() => {
     setIsOpen(false);
