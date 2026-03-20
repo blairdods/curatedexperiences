@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://curatedexperiences.com",
   },
+  verification: {
+    google: "ChDHBuU2pc4TQTlmQzmIQPpzxWG8mjbk6tZcB1jzM2U",
+  },
 };
 
 export default function RootLayout({
