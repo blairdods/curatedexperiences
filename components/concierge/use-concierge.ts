@@ -101,17 +101,21 @@ export function useConcierge() {
 
           bufferRef.current += decoder.decode(value, { stream: true });
 
-          const events = bufferRef.current.split("\n\n");
-          bufferRef.current = events.pop() ?? "";
+          // Stream outputs newline-separated JSON objects
+          const lines = bufferRef.current.split("\n");
+          bufferRef.current = lines.pop() ?? "";
 
-          for (const event of events) {
-            const dataLine = event
-              .split("\n")
-              .find((l) => l.startsWith("data: "));
-            if (!dataLine) continue;
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed) continue;
+
+            // Handle both raw JSON and SSE "data: " prefix formats
+            const jsonStr = trimmed.startsWith("data: ")
+              ? trimmed.slice(6)
+              : trimmed;
 
             try {
-              const data = JSON.parse(dataLine.slice(6));
+              const data = JSON.parse(jsonStr);
               if (
                 data.type === "content_block_delta" &&
                 data.delta?.type === "text_delta"
@@ -124,7 +128,7 @@ export function useConcierge() {
                 }
               }
             } catch {
-              // Skip malformed events
+              // Skip malformed lines
             }
           }
         }
