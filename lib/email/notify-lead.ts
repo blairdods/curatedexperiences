@@ -3,7 +3,7 @@ import type { ConciergeBrief } from "@/lib/claude/extract-brief";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const NOTIFY_EMAILS = ["tony@curatedexperiences.com", "liam@curatedexperiences.com"];
+const NOTIFY_EMAILS = ["blairdods@gmail.com"];
 const FROM_EMAIL = "concierge@curatedexperiences.com";
 
 export async function notifyNewLead(brief: ConciergeBrief, enquiryId: string) {
