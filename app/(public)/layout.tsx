@@ -1,3 +1,5 @@
+import { Navigation } from "@/components/ui/navigation";
+import { Footer } from "@/components/ui/footer";
 import { ConciergeWidget } from "@/components/concierge/concierge-widget";
 
 export default function PublicLayout({
@@ -7,8 +9,9 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      {/* TODO: Public nav + footer */}
-      {children}
+      <Navigation />
+      <main className="flex-1 pt-16 sm:pt-20">{children}</main>
+      <Footer />
       <ConciergeWidget />
     </>
   );

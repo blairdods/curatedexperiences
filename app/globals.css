@@ -1,59 +1,89 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Design System — Curated Experiences
+   ============================================================ */
+
 :root {
-  --background: #faf9f7;
-  --foreground: #1a1a1a;
+  /* Brand */
   --navy: #1f3864;
+  --navy-light: #2a4a7f;
+  --navy-dark: #152848;
+
+  /* Warm neutrals */
+  --warm-50: #faf9f7;
   --warm-100: #f5f0eb;
   --warm-200: #e8dfd6;
   --warm-300: #d4c5b5;
+  --warm-400: #b8a594;
+  --warm-500: #9a8574;
+
+  /* Accent */
+  --gold: #b8860b;
+  --gold-light: #d4a843;
+
+  /* Semantic */
+  --background: var(--warm-50);
+  --foreground: #1a1a1a;
+  --foreground-muted: #6b6560;
+
+  /* Spacing scale */
+  --space-section: 120px;
+  --space-group: 64px;
+  --space-element: 24px;
 }
 
 @theme inline {
+  /* Colours */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
   --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-navy-dark: var(--navy-dark);
+  --color-warm-50: var(--warm-50);
   --color-warm-100: var(--warm-100);
   --color-warm-200: var(--warm-200);
   --color-warm-300: var(--warm-300);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-warm-400: var(--warm-400);
+  --color-warm-500: var(--warm-500);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+
+  /* Typography */
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
+
+/* ============================================================
+   Base styles
+   ============================================================ */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-sans), "Inter", system-ui, sans-serif;
 }
 
+h1, h2, h3, h4 {
+  font-family: var(--font-serif), "Playfair Display", Georgia, serif;
+}
+
+/* ============================================================
+   Concierge animations
+   ============================================================ */
+
 @keyframes concierge-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes concierge-panel-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes concierge-dot-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
-  }
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
