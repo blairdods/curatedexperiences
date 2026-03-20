@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import type { Message } from "./use-concierge";
 import { ConciergeHeader } from "./concierge-header";
 import { ConciergeThread } from "./concierge-thread";
 import { ConciergeInput } from "./concierge-input";
+import { ConciergeOfframp } from "./concierge-offramp";
+import { ConciergeEmailCapture } from "./concierge-email-capture";
 
 export function ConciergePanel({
   messages,
@@ -12,6 +15,7 @@ export function ConciergePanel({
   onSend,
   onStop,
   onClose,
+  onEmailCapture,
 }: {
   messages: Message[];
   isStreaming: boolean;
@@ -19,7 +23,10 @@ export function ConciergePanel({
   onSend: (content: string) => void;
   onStop: () => void;
   onClose: () => void;
+  onEmailCapture: (email: string, name?: string) => void;
 }) {
+  const [showEmailCapture, setShowEmailCapture] = useState(false);
+
   return (
     <div
       className="fixed z-50
@@ -46,11 +53,29 @@ export function ConciergePanel({
         </div>
       )}
 
-      <ConciergeInput
-        onSend={onSend}
-        onStop={onStop}
-        isStreaming={isStreaming}
-      />
+      {showEmailCapture ? (
+        <ConciergeEmailCapture onSubmit={onEmailCapture} />
+      ) : (
+        <ConciergeInput
+          onSend={onSend}
+          onStop={onStop}
+          isStreaming={isStreaming}
+        />
+      )}
+
+      <ConciergeOfframp />
+
+      {/* Email capture toggle — only show when no messages yet */}
+      {messages.length === 0 && !showEmailCapture && (
+        <div className="px-5 pb-3 text-center">
+          <button
+            onClick={() => setShowEmailCapture(true)}
+            className="text-[11px] text-foreground/35 hover:text-foreground/50 transition-colors"
+          >
+            Just browsing? Get inspiration by email instead
+          </button>
+        </div>
+      )}
     </div>
   );
 }
