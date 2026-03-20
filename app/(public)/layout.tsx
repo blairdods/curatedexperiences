@@ -1,3 +1,5 @@
+import { ConciergeWidget } from "@/components/concierge/concierge-widget";
+
 export default function PublicLayout({
   children,
 }: {
@@ -7,6 +9,7 @@ export default function PublicLayout({
     <>
       {/* TODO: Public nav + footer */}
       {children}
+      <ConciergeWidget />
     </>
   );
 }
