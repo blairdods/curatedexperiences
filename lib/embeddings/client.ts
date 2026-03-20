@@ -1,6 +1,6 @@
 const VOYAGE_API_URL = "https://api.voyageai.com/v1/embeddings";
 const MODEL = "voyage-3-large";
-const DIMENSIONS = 1536;
+const DIMENSIONS = 1024;
 
 interface VoyageResponse {
   data: { embedding: number[] }[];
