@@ -8,6 +8,22 @@ export type Message = {
 };
 
 const STORAGE_KEY = "ce-concierge-messages";
+const SESSION_ID_KEY = "ce-session-id";
+const BRIEF_PATTERN = /<!--BRIEF_JSON[\s\S]*?BRIEF_JSON-->/g;
+
+function getSessionId(): string {
+  if (typeof window === "undefined") return "server";
+  let id = sessionStorage.getItem(SESSION_ID_KEY);
+  if (!id) {
+    id = crypto.randomUUID();
+    sessionStorage.setItem(SESSION_ID_KEY, id);
+  }
+  return id;
+}
+
+function stripBriefFromContent(content: string): string {
+  return content.replace(BRIEF_PATTERN, "").trim();
+}
 
 function loadMessages(): Message[] {
   if (typeof window === "undefined") return [];
@@ -32,13 +48,19 @@ export function useConcierge() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const sessionId = useRef(getSessionId());
   const bufferRef = useRef("");
   const pendingTextRef = useRef("");
   const rafRef = useRef<number | null>(null);
 
-  // Persist messages to sessionStorage
+  // Persist messages to sessionStorage (with briefs stripped)
   useEffect(() => {
-    saveMessages(messages);
+    const cleaned = messages.map((m) =>
+      m.role === "assistant"
+        ? { ...m, content: stripBriefFromContent(m.content) }
+        : m
+    );
+    saveMessages(cleaned);
   }, [messages]);
 
   const flushPendingText = useCallback(() => {
@@ -82,11 +104,26 @@ export function useConcierge() {
         const res = await fetch("/api/concierge", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: updatedMessages }),
+          body: JSON.stringify({
+            messages: updatedMessages,
+            sessionId: sessionId.current,
+            visitorContext: {
+              currentPage: typeof window !== "undefined" ? window.location.pathname : undefined,
+              referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined,
+              returningVisitor: messages.length > 0,
+            },
+          }),
           signal: controller.signal,
         });
 
         if (!res.ok) {
+          if (res.status === 429) {
+            const data = await res.json();
+            setError(data.message);
+            setMessages((prev) => prev.slice(0, -1)); // remove empty assistant msg
+            setIsStreaming(false);
+            return;
+          }
           throw new Error(`Request failed: ${res.status}`);
         }
 

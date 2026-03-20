@@ -2,8 +2,13 @@
 
 import type { Message } from "./use-concierge";
 
+const BRIEF_PATTERN = /<!--BRIEF_JSON[\s\S]*?BRIEF_JSON-->/g;
+
 export function ConciergeMessage({ message }: { message: Message }) {
   const isUser = message.role === "user";
+  const content = isUser
+    ? message.content
+    : message.content.replace(BRIEF_PATTERN, "").trim();
 
   return (
     <div
@@ -16,7 +21,7 @@ export function ConciergeMessage({ message }: { message: Message }) {
             : "bg-warm-100 text-foreground rounded-2xl rounded-bl-sm"
         }`}
       >
-        {message.content}
+        {content}
       </div>
     </div>
   );

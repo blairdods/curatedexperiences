@@ -1,15 +1,60 @@
+import { headers } from "next/headers";
 import { anthropic, MODELS } from "@/lib/claude/client";
 import { createServiceClient } from "@/lib/supabase/server";
 import { generateEmbedding } from "@/lib/embeddings/client";
+import { buildSystemPrompt, type VisitorContext } from "@/lib/claude/system-prompt";
+import { extractBrief } from "@/lib/claude/extract-brief";
+import { checkRateLimit, checkSessionBudget, trackSessionTokens } from "@/lib/claude/rate-limit";
+import { notifyNewLead } from "@/lib/email/notify-lead";
 
 export async function POST(request: Request) {
-  const { messages } = await request.json();
+  // --- Rate limiting ---
+  const headerStore = await headers();
+  const ip =
+    headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    headerStore.get("x-real-ip") ??
+    "unknown";
+
+  const rateCheck = checkRateLimit(ip);
+  if (!rateCheck.allowed) {
+    return new Response(
+      JSON.stringify({
+        error: "rate_limited",
+        message:
+          "You've been chatting a lot! Please try again in a little while, or reach out to our team directly.",
+        retryAfterMs: rateCheck.retryAfterMs,
+      }),
+      {
+        status: 429,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  // --- Parse request ---
+  const { messages, sessionId, visitorContext } = await request.json();
 
   if (!messages || messages.length === 0) {
     return new Response("Messages required", { status: 400 });
   }
 
-  // Get the latest user message for RAG retrieval
+  // --- Session budget check ---
+  const sid = sessionId ?? ip;
+  if (!checkSessionBudget(sid)) {
+    return new Response(
+      JSON.stringify({
+        error: "session_budget",
+        message:
+          "We've had a wonderful conversation! For more detailed planning, I'd love to connect you with Tony or Liam from our team. Shall I arrange that?",
+      }),
+      {
+        status: 429,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  // --- RAG retrieval ---
   const lastUserMessage = [...messages]
     .reverse()
     .find((m: { role: string }) => m.role === "user");
@@ -21,12 +66,11 @@ export async function POST(request: Request) {
       const supabase = await createServiceClient();
       const queryEmbedding = await generateEmbedding(lastUserMessage.content);
 
-      // Search both content and tours in parallel
       const [contentResult, toursResult] = await Promise.all([
         supabase.rpc("match_content", {
           query_embedding: queryEmbedding,
           match_threshold: 0.5,
-          match_count: 3,
+          match_count: 5,
         }),
         supabase.rpc("match_tours", {
           query_embedding: queryEmbedding,
@@ -43,12 +87,12 @@ export async function POST(request: Request) {
       }
 
       if (toursResult.data?.length) {
-        ragContext += "\nRelevant journeys:\n";
+        ragContext += "\nAvailable journeys:\n";
         for (const tour of toursResult.data) {
           ragContext += `- ${tour.title} (${tour.regions?.join(", ")}): ${tour.tagline}`;
           if (tour.duration_days) ragContext += ` | ${tour.duration_days} days`;
           if (tour.price_from_usd)
-            ragContext += ` | from $${tour.price_from_usd.toLocaleString()}`;
+            ragContext += ` | from USD $${tour.price_from_usd.toLocaleString()}`;
           ragContext += "\n";
         }
       }
@@ -57,19 +101,19 @@ export async function POST(request: Request) {
     }
   }
 
-  const systemPrompt = `You are a Curated Experiences travel concierge — a warm, knowledgeable guide
-to luxury New Zealand travel. You speak with authority about NZ destinations, experiences, and logistics.
-You are helpful, never pushy, and always prioritise the traveller's interests.
+  // --- Build 8-layer system prompt ---
+  const vCtx: VisitorContext = {
+    currentPage: visitorContext?.currentPage,
+    referrer: visitorContext?.referrer,
+    returningVisitor: visitorContext?.returningVisitor,
+    messageCount: messages.filter(
+      (m: { role: string }) => m.role === "user"
+    ).length,
+  };
 
-${ragContext}
+  const systemPrompt = buildSystemPrompt(ragContext, vCtx);
 
-Key guidelines:
-- Be warm and conversational, not corporate
-- Offer specific, knowledgeable recommendations based on the context provided
-- When appropriate, suggest booking a call with our team
-- Never fabricate details about tours or pricing — only reference what you know from the context above
-- If you don't have specific information, say so honestly and offer to connect them with a curator`;
-
+  // --- Stream response ---
   const stream = await anthropic.messages.stream({
     model: MODELS.concierge,
     max_tokens: 1024,
@@ -77,7 +121,59 @@ Key guidelines:
     messages,
   });
 
+  // Collect the full response for brief extraction (non-blocking)
+  const responseChunks: string[] = [];
+
+  stream.on("text", (text) => {
+    responseChunks.push(text);
+  });
+
+  stream.on("finalMessage", async (message) => {
+    // Track token usage
+    trackSessionTokens(
+      sid,
+      message.usage.input_tokens,
+      message.usage.output_tokens
+    );
+
+    // Extract and save brief if present
+    const fullResponse = responseChunks.join("");
+    const brief = extractBrief(fullResponse);
+
+    if (brief) {
+      try {
+        const supabase = await createServiceClient();
+        const { data } = await supabase
+          .from("enquiries")
+          .insert({
+            name: brief.name,
+            interests: brief.interests,
+            journey_type_pref: brief.journey_type_pref,
+            group_size: brief.group_size,
+            group_composition: brief.group_composition,
+            budget_signal: brief.budget_signal,
+            intent_score: brief.intent_score,
+            ai_brief: brief.ai_brief,
+            source: "concierge",
+            status: brief.intent_score >= 7 ? "nurturing" : "new",
+          })
+          .select("id")
+          .single();
+
+        if (data?.id) {
+          // Fire-and-forget email notification
+          notifyNewLead(brief, data.id).catch(() => {});
+        }
+      } catch (err) {
+        console.error("Failed to save brief:", err);
+      }
+    }
+  });
+
   return new Response(stream.toReadableStream(), {
-    headers: { "Content-Type": "text/event-stream" },
+    headers: {
+      "Content-Type": "text/event-stream",
+      "X-RateLimit-Remaining": String(rateCheck.remaining),
+    },
   });
 }
