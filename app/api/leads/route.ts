@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
+import { sendWelcomeEmail } from "@/lib/email/send";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -23,6 +24,9 @@ export async function POST(request: Request) {
       journey_interest,
       interests,
       status: "new",
+      // Start mid-intent nurture for email captures (no concierge brief)
+      nurture_sequence: "mid:pending",
+      intent_score: 3,
     })
     .select("id")
     .single();
@@ -31,7 +35,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // TODO: Trigger email notification to Tony/Liam via Resend
+  // Send welcome email (fire-and-forget)
+  sendWelcomeEmail(email, name).catch((err) =>
+    console.error("Welcome email failed:", err)
+  );
 
   return NextResponse.json({ id: data.id, status: "received" });
 }
