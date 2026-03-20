@@ -1,5 +1,5 @@
 -- Enable required extensions
-create extension if not exists "pgvector" with schema extensions;
+create extension if not exists "vector" with schema extensions;
 create extension if not exists "btree_gist";  -- for daterange indexing
 
 -- ============================================================
