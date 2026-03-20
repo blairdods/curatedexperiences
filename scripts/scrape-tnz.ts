@@ -8,7 +8,7 @@
  *   npx tsx scripts/scrape-tnz.ts
  *
  * Requires .env.local with:
- *   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, VOYAGE_API_KEY
+ *   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
 
 import puppeteer from "puppeteer";
@@ -22,7 +22,6 @@ import { createClient } from "@supabase/supabase-js";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const VOYAGE_API_KEY = process.env.VOYAGE_API_KEY!;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { persistSession: false },
@@ -112,67 +111,19 @@ function chunk(text: string, size = 1000, overlap = 200): string[] {
   return chunks;
 }
 
-async function generateEmbedding(
-  text: string,
-  retries = 3
-): Promise<number[]> {
-  for (let attempt = 0; attempt < retries; attempt++) {
-    const res = await fetch("https://api.voyageai.com/v1/embeddings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${VOYAGE_API_KEY}`,
-      },
-      body: JSON.stringify({
-        input: [text],
-        model: "voyage-3-large",
-        output_dimension: 1024,
-      }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      return data.data[0].embedding;
-    }
-
-    if (res.status === 429 && attempt < retries - 1) {
-      const wait = (attempt + 1) * 22000; // 22s, 44s backoff (3 RPM = 20s between)
-      console.log(`  ⏳ Rate limited, waiting ${wait / 1000}s...`);
-      await new Promise((r) => setTimeout(r, wait));
-      continue;
-    }
-
-    const err = await res.text();
-    throw new Error(`Voyage API error ${res.status}: ${err}`);
-  }
-
-  throw new Error("Max retries exceeded");
-}
-
-async function storeAndEmbed(
+async function storeContent(
   title: string,
   body: string,
   type: string,
   sourceUrl: string,
   regionTags: string[]
 ) {
-  // Generate embedding
-  const textForEmbed = `[${type}]\n\n${title}\n\n${body}`.slice(0, 4000);
-  let embedding: number[] | null = null;
-
-  try {
-    embedding = await generateEmbedding(textForEmbed);
-  } catch (err) {
-    console.error(`  ⚠ Embedding failed: ${(err as Error).message}`);
-  }
-
   const { error } = await supabase.from("content").insert({
     type,
     title,
     body,
     source_type: "tnz_research",
     region_tags: regionTags,
-    embedding,
     status: "active",
   });
 
@@ -181,9 +132,7 @@ async function storeAndEmbed(
     return false;
   }
 
-  console.log(
-    `  ✓ Stored: "${title.slice(0, 60)}..." (${body.length} chars, ${embedding ? "embedded" : "no embedding"})`
-  );
+  console.log(`  ✓ Stored: "${title.slice(0, 60)}..." (${body.length} chars)`);
   return true;
 }
 
@@ -285,12 +234,9 @@ async function main() {
     console.error("Missing SUPABASE env vars. Check .env.local");
     process.exit(1);
   }
-  if (!VOYAGE_API_KEY) {
-    console.error("Missing VOYAGE_API_KEY. Check .env.local");
-    process.exit(1);
-  }
-
   console.log("🚀 TNZ Content Scraper\n");
+  console.log("Content will be stored without embeddings.");
+  console.log("Run `npm run reembed` afterwards to generate embeddings.\n");
 
   let totalStored = 0;
   let totalFailed = 0;
@@ -319,7 +265,7 @@ async function main() {
 
     for (let i = 0; i < chunks.length; i++) {
       const chunkTitle = `${source.title} (part ${i + 1}/${chunks.length})`;
-      const ok = await storeAndEmbed(
+      const ok = await storeContent(
         chunkTitle,
         chunks[i],
         source.type,
@@ -329,9 +275,8 @@ async function main() {
       if (ok) totalStored++;
       else totalFailed++;
 
-      // Rate limit Voyage API
-      // Rate limit: 21s for free tier (3 RPM), 500ms with payment method
-      await new Promise((r) => setTimeout(r, process.env.VOYAGE_FAST === "1" ? 500 : 21000));
+      // Small delay to avoid hammering the DB
+      await new Promise((r) => setTimeout(r, 100));
     }
 
     // Crawl linked pages if configured
@@ -354,7 +299,7 @@ async function main() {
 
         for (let i = 0; i < subChunks.length; i++) {
           const t = `${source.title} — ${pageTitle} (part ${i + 1}/${subChunks.length})`;
-          const ok = await storeAndEmbed(
+          const ok = await storeContent(
             t,
             subChunks[i],
             source.type,
@@ -364,8 +309,8 @@ async function main() {
           if (ok) totalStored++;
           else totalFailed++;
 
-          // Rate limit: 21s for free tier (3 RPM), 500ms with payment method
-      await new Promise((r) => setTimeout(r, process.env.VOYAGE_FAST === "1" ? 500 : 21000));
+          // Small delay to avoid hammering the DB
+      await new Promise((r) => setTimeout(r, 100));
         }
       }
     }
@@ -382,7 +327,7 @@ async function main() {
 
     for (let i = 0; i < pdfChunks.length; i++) {
       const t = `${PDF_SOURCE.title} (part ${i + 1}/${pdfChunks.length})`;
-      const ok = await storeAndEmbed(
+      const ok = await storeContent(
         t,
         pdfChunks[i],
         PDF_SOURCE.type,
@@ -392,8 +337,8 @@ async function main() {
       if (ok) totalStored++;
       else totalFailed++;
 
-      // Rate limit: 21s for free tier (3 RPM), 500ms with payment method
-      await new Promise((r) => setTimeout(r, process.env.VOYAGE_FAST === "1" ? 500 : 21000));
+      // Small delay to avoid hammering the DB
+      await new Promise((r) => setTimeout(r, 100));
     }
   } else {
     console.log("  ⚠ PDF extraction yielded too little text");

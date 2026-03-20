@@ -1,61 +1,44 @@
 /**
- * Re-embed content records that are missing embeddings.
+ * Re-embed content records missing embeddings via Supabase Edge Function (gte-small).
  *
  * Usage:
  *   npx tsx --env-file=.env.local scripts/reembed-content.ts
- *
- * With fast rate (after adding Voyage payment method):
- *   VOYAGE_FAST=1 npx tsx --env-file=.env.local scripts/reembed-content.ts
  */
 
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { persistSession: false } }
-);
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
-const VOYAGE_API_KEY = process.env.VOYAGE_API_KEY!;
-const FAST = process.env.VOYAGE_FAST === "1";
-const DELAY = FAST ? 500 : 21000;
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { persistSession: false },
+});
 
-async function generateEmbedding(text: string): Promise<number[]> {
-  const res = await fetch("https://api.voyageai.com/v1/embeddings", {
+async function embedBatch(ids: string[], table: string) {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/embed`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${VOYAGE_API_KEY}`,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
     },
-    body: JSON.stringify({
-      input: [text],
-      model: "voyage-3-large",
-      output_dimension: 1024,
-    }),
+    body: JSON.stringify({ ids, table }),
   });
-
-  if (res.status === 429) {
-    console.log("  ⏳ Rate limited, waiting 25s...");
-    await new Promise((r) => setTimeout(r, 25000));
-    return generateEmbedding(text); // retry once
-  }
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Voyage ${res.status}: ${err}`);
+    throw new Error(`Edge Function error ${res.status}: ${err}`);
   }
 
-  const data = await res.json();
-  return data.data[0].embedding;
+  return res.json();
 }
 
 async function main() {
-  console.log(`🔄 Re-embedding content (${FAST ? "fast" : "slow"} mode)\n`);
+  console.log("🔄 Re-embedding content via Supabase gte-small\n");
 
   // Fetch content records without embeddings
   const { data: records, error } = await supabase
     .from("content")
-    .select("id, title, body, type")
+    .select("id")
     .is("embedding", null)
     .eq("status", "active")
     .order("created_at", { ascending: true });
@@ -67,36 +50,36 @@ async function main() {
 
   console.log(`Found ${records.length} records without embeddings\n`);
 
-  let embedded = 0;
-  let failed = 0;
-
-  for (const record of records) {
-    const text = `[${record.type || "content"}]\n\n${record.title || ""}\n\n${record.body || ""}`.slice(0, 4000);
-
-    try {
-      const embedding = await generateEmbedding(text);
-
-      const { error: updateErr } = await supabase
-        .from("content")
-        .update({ embedding })
-        .eq("id", record.id);
-
-      if (updateErr) {
-        console.log(`  ✗ ${record.title?.slice(0, 50)}: ${updateErr.message}`);
-        failed++;
-      } else {
-        console.log(`  ✓ ${record.title?.slice(0, 60)}`);
-        embedded++;
-      }
-    } catch (err) {
-      console.log(`  ✗ ${record.title?.slice(0, 50)}: ${(err as Error).message}`);
-      failed++;
-    }
-
-    await new Promise((r) => setTimeout(r, DELAY));
+  if (records.length === 0) {
+    console.log("Nothing to embed.");
+    return;
   }
 
-  console.log(`\n✅ Done. Embedded: ${embedded}, Failed: ${failed}`);
+  // Process in batches of 10
+  const batchSize = 10;
+  let totalEmbedded = 0;
+  let totalFailed = 0;
+
+  for (let i = 0; i < records.length; i += batchSize) {
+    const batch = records.slice(i, i + batchSize);
+    const ids = batch.map((r) => r.id);
+
+    console.log(
+      `  Batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(records.length / batchSize)} (${ids.length} records)...`
+    );
+
+    try {
+      const result = await embedBatch(ids, "content");
+      totalEmbedded += result.embedded;
+      totalFailed += result.failed;
+      console.log(`    ✓ ${result.embedded} embedded, ${result.failed} failed`);
+    } catch (err) {
+      console.log(`    ✗ ${(err as Error).message}`);
+      totalFailed += ids.length;
+    }
+  }
+
+  console.log(`\n✅ Done. Embedded: ${totalEmbedded}, Failed: ${totalFailed}`);
 }
 
 main().catch((err) => {
