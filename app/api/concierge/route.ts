@@ -101,6 +101,35 @@ export async function POST(request: Request) {
     }
   }
 
+  // --- Load brand voice from DB (with fallback) ---
+  let brandVoice: string | undefined;
+  try {
+    const supabaseForSettings = await createServiceClient();
+    const { data: settings } = await supabaseForSettings
+      .from("settings")
+      .select("key, value")
+      .in("key", [
+        "brand_voice_persona",
+        "brand_voice_tone",
+        "brand_voice_vocabulary_use",
+        "brand_voice_vocabulary_avoid",
+        "brand_voice_rules",
+      ]);
+
+    if (settings && settings.length > 0) {
+      const map = Object.fromEntries(settings.map((s) => [s.key, s.value]));
+      brandVoice = [
+        map.brand_voice_persona ? `## Our CE Curators\n\n${map.brand_voice_persona}` : "",
+        map.brand_voice_tone ? `## Voice & Tone\n\n${map.brand_voice_tone}` : "",
+        map.brand_voice_vocabulary_use ? `## Words We Use\n\n${map.brand_voice_vocabulary_use}` : "",
+        map.brand_voice_vocabulary_avoid ? `## Words We Avoid\n\n${map.brand_voice_vocabulary_avoid}` : "",
+        map.brand_voice_rules ? `## Rules\n\n${map.brand_voice_rules}` : "",
+      ].filter(Boolean).join("\n\n---\n\n");
+    }
+  } catch {
+    // Fall back to static brand voice
+  }
+
   // --- Build 8-layer system prompt ---
   const vCtx: VisitorContext = {
     currentPage: visitorContext?.currentPage,
@@ -111,7 +140,7 @@ export async function POST(request: Request) {
     ).length,
   };
 
-  const systemPrompt = buildSystemPrompt(ragContext, vCtx);
+  const systemPrompt = buildSystemPrompt(ragContext, vCtx, brandVoice);
 
   // --- Stream response ---
   const stream = await anthropic.messages.stream({

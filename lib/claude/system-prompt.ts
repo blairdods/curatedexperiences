@@ -21,14 +21,21 @@ export interface VisitorContext {
 
 export function buildSystemPrompt(
   ragContext: string,
-  visitorContext?: VisitorContext
+  visitorContext?: VisitorContext,
+  brandVoiceOverride?: string
 ): string {
-  // Import brand voice dynamically to keep prompt in sync with voice guide
-  const { FULL_BRAND_VOICE } = require("./brand-voice");
+  // Use DB-loaded brand voice if provided, otherwise fall back to static file
+  let brandVoice: string;
+  if (brandVoiceOverride) {
+    brandVoice = brandVoiceOverride;
+  } else {
+    const { FULL_BRAND_VOICE } = require("./brand-voice");
+    brandVoice = FULL_BRAND_VOICE;
+  }
 
   const layers = [
-    // Layers 1-3: Identity, Brand Voice, Constraints (from brand-voice.ts)
-    `${FULL_BRAND_VOICE}
+    // Layers 1-3: Identity, Brand Voice, Constraints
+    `${brandVoice}
 
 ADDITIONAL RESPONSE RULES:
 - Keep all responses under 300 words unless the visitor explicitly asks for detail
