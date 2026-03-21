@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ContentQueue } from "@/components/admin/content-queue";
 import { ARTICLES } from "@/lib/data/journal";
-import { JOURNEYS } from "@/lib/data/journeys";
 import { DESTINATIONS } from "@/lib/data/destinations";
 import Link from "next/link";
 
@@ -63,37 +62,6 @@ export default async function ContentApprovalPage() {
               </div>
               <Link
                 href={`/journal/${article.slug}`}
-                className="text-xs text-navy hover:text-navy-light transition-colors"
-              >
-                View
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Static content: Journeys */}
-      <div className="mt-10">
-        <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
-          Journeys
-          <span className="ml-2 text-warm-400 normal-case tracking-normal">
-            (static — edit in codebase)
-          </span>
-        </h2>
-        <div className="space-y-2">
-          {JOURNEYS.map((journey) => (
-            <div
-              key={journey.slug}
-              className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-warm-200"
-            >
-              <div>
-                <p className="text-sm text-foreground">{journey.title}</p>
-                <p className="text-xs text-foreground-muted">
-                  {journey.durationDays} days — ${journey.priceFromUsd.toLocaleString()} — {journey.regions.join(", ")}
-                </p>
-              </div>
-              <Link
-                href={`/journeys/${journey.slug}`}
                 className="text-xs text-navy hover:text-navy-light transition-colors"
               >
                 View

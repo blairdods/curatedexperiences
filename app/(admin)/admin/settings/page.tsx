@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { SettingsEditor } from "@/components/admin/settings-editor";
 
@@ -72,7 +72,9 @@ export default async function SettingsPage() {
 
   const allKeys = SETTING_GROUPS.flatMap((g) => g.keys.map((k) => k.key));
 
-  const { data: settings } = await supabase
+  // Use service client to bypass RLS for reading settings
+  const serviceSupabase = await createServiceClient();
+  const { data: settings } = await serviceSupabase
     .from("settings")
     .select("key, value, updated_by, updated_at")
     .in("key", allKeys);
