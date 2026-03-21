@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
@@ -6,20 +6,23 @@ export default async function AdminDashboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/admin/login");
 
+  // Use service client for reading data (bypasses RLS)
+  const serviceSupabase = await createServiceClient();
+
   // Fetch metrics
   const [leadsResult, hotLeadsResult, bookingsResult, contentResult] =
     await Promise.all([
-      supabase
+      serviceSupabase
         .from("enquiries")
         .select("id", { count: "exact", head: true }),
-      supabase
+      serviceSupabase
         .from("enquiries")
         .select("id", { count: "exact", head: true })
         .gte("intent_score", 7),
-      supabase
+      serviceSupabase
         .from("bookings")
         .select("id", { count: "exact", head: true }),
-      supabase
+      serviceSupabase
         .from("content")
         .select("id", { count: "exact", head: true })
         .eq("status", "pending_approval"),
@@ -33,7 +36,7 @@ export default async function AdminDashboardPage() {
   ];
 
   // Fetch latest agent brief
-  const { data: brief } = await supabase
+  const { data: brief } = await serviceSupabase
     .from("agent_outputs")
     .select("content, created_at")
     .eq("agent_name", "ceo")
@@ -43,7 +46,7 @@ export default async function AdminDashboardPage() {
     .maybeSingle();
 
   // Fetch recent leads
-  const { data: recentLeads } = await supabase
+  const { data: recentLeads } = await serviceSupabase
     .from("enquiries")
     .select("id, name, email, source, intent_score, status, created_at")
     .order("created_at", { ascending: false })
