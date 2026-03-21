@@ -1,5 +1,6 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { CeoBrief } from "@/components/admin/ceo-brief";
 
 export default async function AdminDashboardPage() {
   const supabase = await createClient();
@@ -83,18 +84,7 @@ export default async function AdminDashboardPage() {
             CEO Daily Brief
           </h2>
           {brief ? (
-            <>
-              <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-wrap">
-                {brief.content?.slice(0, 500)}
-              </p>
-              <p className="text-xs text-warm-400 mt-3">
-                {new Date(brief.created_at).toLocaleDateString("en-NZ", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </p>
-            </>
+            <CeoBrief content={brief.content} createdAt={brief.created_at} />
           ) : (
             <p className="text-sm text-foreground-muted">
               No brief available yet. The CEO agent will generate one daily
