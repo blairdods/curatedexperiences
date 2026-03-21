@@ -1,66 +1,127 @@
 "use client";
 
-import { Hero } from "@/components/ui/hero";
+import Link from "next/link";
+import { useSignals } from "@/lib/personalisation/use-signals";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
 import { Testimonial } from "@/components/ui/testimonial";
 import { Button } from "@/components/ui/button";
+import { JOURNEYS } from "@/lib/data/journeys";
+import { ARTICLES } from "@/lib/data/journal";
 
-const PLACEHOLDER_JOURNEYS = [
-  {
-    slug: "south-island-odyssey",
-    title: "South Island Odyssey",
-    tagline:
-      "From Queenstown's peaks to Fiordland's ancient waterways — the essential South Island experience.",
-    durationDays: 14,
-    regions: ["Queenstown", "Fiordland", "Wanaka"],
-    imageSrc:
-      "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80",
+// --- Hero variants by personalisation signal ---
+const HERO_VARIANTS: Record<
+  string,
+  { title: string; subtitle: string; image: string }
+> = {
+  "luxury-us": {
+    title: "New Zealand, as it was meant to be experienced",
+    subtitle:
+      "Bespoke luxury journeys crafted by local experts who know every hidden lodge, every secret trail, and every sunset worth chasing.",
+    image:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
   },
-  {
-    slug: "wine-culinary-trail",
-    title: "Wine & Culinary Trail",
-    tagline:
-      "Marlborough vineyards, Hawke's Bay estates, and Wellington's world-class dining scene.",
-    durationDays: 10,
-    regions: ["Marlborough", "Hawke's Bay", "Wellington"],
-    imageSrc:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80",
+  "adventure-us": {
+    title: "The adventure of a lifetime starts here",
+    subtitle:
+      "Glacier heli-hikes, canyon jet boats, and starlit skies — New Zealand's most extraordinary experiences, designed for you.",
+    image:
+      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
   },
-  {
-    slug: "wilderness-adventure",
-    title: "Wilderness & Adventure",
-    tagline:
-      "Heli-hiking glaciers, jet-boating canyons, and stargazing from the world's darkest skies.",
-    durationDays: 12,
-    regions: ["Aoraki", "West Coast", "Queenstown"],
-    imageSrc:
-      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80",
+  "culinary-us": {
+    title: "Taste New Zealand at its finest",
+    subtitle:
+      "From Marlborough's world-famous vineyards to Wellington's MICHELIN-recognised restaurants — a culinary journey like no other.",
+    image:
+      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
   },
-];
+  international: {
+    title: "Discover Aotearoa New Zealand",
+    subtitle:
+      "A land of extraordinary beauty, warm hospitality, and journeys designed around what moves you.",
+    image:
+      "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+  },
+};
+
+// --- Journey order by featured signal ---
+function getOrderedJourneys(featured: string) {
+  const sorted = [...JOURNEYS];
+  const idx = sorted.findIndex((j) => j.slug === featured);
+  if (idx > 0) {
+    const [item] = sorted.splice(idx, 1);
+    sorted.unshift(item);
+  }
+  return sorted;
+}
 
 export default function HomePage() {
+  const signals = useSignals();
+  const hero =
+    HERO_VARIANTS[signals.heroVariant] ?? HERO_VARIANTS["luxury-us"];
+  const journeys = getOrderedJourneys(signals.featuredJourney);
+  const ctaLabel =
+    signals.ctaTone === "direct" ? "Start Planning Now" : "Start Planning";
+
   return (
     <>
-      {/* Hero */}
-      <Hero
-        title="New Zealand, as it was meant to be experienced"
-        subtitle="Bespoke luxury journeys crafted by local experts who know every hidden lodge, every secret trail, and every sunset worth chasing."
-        imageSrc="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80"
-        imageAlt="Milford Sound, Fiordland, New Zealand"
-        cta={{
-          label: "Start Planning",
-          onClick: () =>
-            window.dispatchEvent(new Event("ce:open-concierge")),
-        }}
-        secondaryCta={{
-          label: "Explore Journeys",
-          onClick: () =>
-            document
-              .getElementById("journeys")
-              ?.scrollIntoView({ behavior: "smooth" }),
-        }}
-      />
+      {/* Personalised Hero */}
+      <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+        <img
+          src={hero.image}
+          alt="New Zealand landscape"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-navy-dark/30 to-navy-dark/10" />
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight leading-[1.1] text-white">
+            {hero.title}
+          </h1>
+          <p className="mt-6 text-lg sm:text-xl leading-relaxed max-w-xl mx-auto text-white/80">
+            {hero.subtitle}
+          </p>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button
+              size="lg"
+              onClick={() =>
+                window.dispatchEvent(new Event("ce:open-concierge"))
+              }
+            >
+              {ctaLabel}
+            </Button>
+            <Button
+              variant="ghost"
+              size="lg"
+              className="text-white hover:bg-white/10"
+              onClick={() =>
+                document
+                  .getElementById("journeys")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Explore Journeys
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Strip */}
+      <div className="bg-white border-b border-warm-200">
+        <div className="max-w-5xl mx-auto px-6 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-xs tracking-wide text-foreground-muted">
+          <span className="flex items-center gap-2">
+            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-gold">
+              <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
+            </svg>
+            World Travel Award Winners
+          </span>
+          <span className="text-warm-300">|</span>
+          <span>20+ Years NZ Travel Expertise</span>
+          <span className="text-warm-300">|</span>
+          <span>Trusted by Silversea, Ponant & MSC</span>
+          <span className="text-warm-300">|</span>
+          <span>100% Bespoke Journeys</span>
+        </div>
+      </div>
 
       {/* Introduction */}
       <Section narrow>
@@ -69,8 +130,9 @@ export default function HomePage() {
             A PPG Tours Venture
           </p>
           <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
-            We don&apos;t sell tours. We craft journeys — shaped around who you are,
-            what moves you, and the New Zealand you&apos;ve been dreaming of.
+            We don&apos;t sell tours. We craft journeys — shaped around who you
+            are, what moves you, and the New Zealand you&apos;ve been dreaming
+            of.
           </p>
           <p className="mt-8 text-foreground-muted leading-relaxed max-w-lg mx-auto">
             Every experience is designed by Tony and Liam, two New Zealanders
@@ -80,7 +142,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Journeys */}
+      {/* Featured Journeys (ordered by personalisation) */}
       <Section background="warm" id="journeys">
         <SectionHeader
           eyebrow="Our Journeys"
@@ -88,14 +150,24 @@ export default function HomePage() {
           subtitle="Each journey is a starting point — fully customisable around your interests, pace, and the season."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {PLACEHOLDER_JOURNEYS.map((j) => (
-            <JourneyCard key={j.slug} {...j} />
+          {journeys.map((j) => (
+            <JourneyCard
+              key={j.slug}
+              slug={j.slug}
+              title={j.title}
+              tagline={j.tagline}
+              durationDays={j.durationDays}
+              regions={j.regions.slice(0, 3)}
+              imageSrc={j.images[0]?.src}
+            />
           ))}
         </div>
         <div className="mt-12 text-center">
-          <Button variant="outline" size="lg">
-            View All Journeys
-          </Button>
+          <Link href="/journeys">
+            <Button variant="outline" size="lg">
+              View All Journeys
+            </Button>
+          </Link>
         </div>
       </Section>
 
@@ -145,8 +217,50 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Journal Teaser */}
+      <Section>
+        <SectionHeader
+          eyebrow="From the Journal"
+          title="Stories & Inspiration"
+          subtitle="Insights from our curators on New Zealand travel, destinations, and the art of slow exploration."
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+          {ARTICLES.slice(0, 3).map((article) => (
+            <Link
+              key={article.slug}
+              href={`/journal/${article.slug}`}
+              className="group block"
+            >
+              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-warm-100 mb-4">
+                <img
+                  src={article.heroImage}
+                  alt={article.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <p className="text-xs tracking-widest uppercase text-warm-500">
+                {article.category}
+              </p>
+              <h3 className="mt-2 font-serif text-lg text-navy tracking-tight group-hover:text-navy-light transition-colors">
+                {article.title}
+              </h3>
+              <p className="mt-2 text-sm text-foreground-muted leading-relaxed line-clamp-2">
+                {article.excerpt}
+              </p>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Link href="/journal">
+            <Button variant="outline" size="md">
+              Read the Journal
+            </Button>
+          </Link>
+        </div>
+      </Section>
+
       {/* CTA */}
-      <Section narrow>
+      <Section narrow background="warm">
         <div className="text-center">
           <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-navy">
             Ready to start imagining?
