@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA4_ID || "G-XSB4LZMTX5";
+const GADS_ID = "AW-18032876556";
 
 declare global {
   interface Window {
@@ -40,6 +41,7 @@ export function Analytics() {
           gtag('config', '${GA_ID}', {
             page_path: window.location.pathname,
           });
+          gtag('config', '${GADS_ID}');
         `}
       </Script>
     </>
