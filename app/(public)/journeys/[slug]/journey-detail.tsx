@@ -8,12 +8,15 @@ import { ImageGrid } from "@/components/ui/image-grid";
 import { StickyCta } from "@/components/ui/sticky-cta";
 import { JourneyCard } from "@/components/ui/journey-card";
 import { Button } from "@/components/ui/button";
+import { JourneyMap } from "@/components/ui/journey-map";
 import { JOURNEYS, type Journey } from "@/lib/data/journeys";
+import { getRouteForJourney } from "@/lib/data/coordinates";
 
 export function JourneyDetail({ journey }: { journey: Journey }) {
   const relatedJourneys = JOURNEYS.filter(
     (j) => j.slug !== journey.slug
   ).slice(0, 2);
+  const route = getRouteForJourney(journey.slug);
 
   return (
     <>
@@ -89,6 +92,16 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
             <div className="mt-16">
               <ImageGrid images={journey.images} columns={2} />
             </div>
+
+            {/* Route Map */}
+            {route.length > 0 && (
+              <div className="mt-16">
+                <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-8">
+                  Your route
+                </h2>
+                <JourneyMap route={route} />
+              </div>
+            )}
 
             {/* Itinerary */}
             <div className="mt-16">
