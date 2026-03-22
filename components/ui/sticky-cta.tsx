@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "./button";
+import { openContactModal } from "./contact-modal";
 
 export function StickyCta({
   title,
@@ -43,10 +44,13 @@ export function StickyCta({
           >
             Start Planning
           </Button>
-          <Button variant="outline" size="md" className="w-full">
-            <a href="mailto:hello@curatedexperiences.com?subject=Enquiry: ${title}">
-              Contact Our Team
-            </a>
+          <Button
+            variant="outline"
+            size="md"
+            className="w-full"
+            onClick={() => openContactModal(title)}
+          >
+            Contact Our Team
           </Button>
         </div>
 

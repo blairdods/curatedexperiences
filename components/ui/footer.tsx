@@ -1,15 +1,15 @@
 import Link from "next/link";
+import { FooterContactLink } from "./footer-contact-link";
 
 const FOOTER_LINKS = {
   Explore: [
     { href: "/journeys", label: "Journeys" },
-    { href: "/destinations/south-island", label: "Destinations" },
+    { href: "/destinations/fiordland", label: "Destinations" },
     { href: "/journal", label: "Journal" },
     { href: "/stories", label: "Stories" },
   ],
   Company: [
     { href: "/about", label: "Our Story" },
-    { href: "mailto:hello@curatedexperiences.com", label: "Contact" },
   ],
 };
 
@@ -47,6 +47,11 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
+              {heading === "Company" && (
+                <ul className="space-y-2.5 mt-2.5">
+                  <li><FooterContactLink /></li>
+                </ul>
+              )}
             </div>
           ))}
         </div>

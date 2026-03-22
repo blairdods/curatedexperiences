@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/ui/navigation";
 import { Footer } from "@/components/ui/footer";
 import { ConciergeWidget } from "@/components/concierge/concierge-widget";
+import { ContactModalProvider } from "@/components/ui/contact-modal-provider";
 
 export default function PublicLayout({
   children,
@@ -13,6 +14,7 @@ export default function PublicLayout({
       <main className="flex-1 pt-16 sm:pt-20">{children}</main>
       <Footer />
       <ConciergeWidget />
+      <ContactModalProvider />
     </>
   );
 }
