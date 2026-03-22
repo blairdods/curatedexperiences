@@ -56,6 +56,12 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <OrganizationSchema />
         {children}
