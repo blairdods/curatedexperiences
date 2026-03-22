@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface JourneyCardProps {
   slug: string;
@@ -28,11 +29,12 @@ export function JourneyCard({
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-warm-100">
         {imageSrc ? (
-          <img
+          <Image
             src={imageSrc}
             alt={title}
-            className="w-full h-full object-cover
-              group-hover:scale-105 transition-transform duration-500 ease-out"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-warm-200 to-warm-300" />

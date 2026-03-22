@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Button } from "./button";
 
 interface HeroProps {
@@ -29,10 +30,13 @@ export function Hero({
       {/* Background image */}
       {imageSrc && (
         <>
-          <img
+          <Image
             src={imageSrc}
-            alt={imageAlt ?? ""}
-            className="absolute inset-0 w-full h-full object-cover"
+            alt={imageAlt ?? title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
           />
           {overlay && (
             <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-navy-dark/30 to-navy-dark/10" />
@@ -63,7 +67,7 @@ export function Hero({
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             {cta && (
               <Button
-                variant={imageSrc ? "primary" : "primary"}
+                variant="primary"
                 size="lg"
                 onClick={cta.onClick}
               >

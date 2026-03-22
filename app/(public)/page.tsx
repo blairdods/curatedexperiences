@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSignals } from "@/lib/personalisation/use-signals";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
@@ -67,10 +68,13 @@ export default function HomePage() {
     <>
       {/* Personalised Hero */}
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
-        <img
+        <Image
           src={hero.image}
           alt="New Zealand landscape"
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-navy-dark/30 to-navy-dark/10" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
@@ -231,11 +235,13 @@ export default function HomePage() {
               href={`/journal/${article.slug}`}
               className="group block"
             >
-              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-warm-100 mb-4">
-                <img
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-warm-100 mb-4">
+                <Image
                   src={article.heroImage}
                   alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <p className="text-xs tracking-widest uppercase text-warm-500">
