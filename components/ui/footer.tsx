@@ -4,7 +4,7 @@ import { FooterContactLink } from "./footer-contact-link";
 const FOOTER_LINKS = {
   Explore: [
     { href: "/journeys", label: "Journeys" },
-    { href: "/destinations/fiordland", label: "Destinations" },
+    { href: "/destinations", label: "Destinations" },
     { href: "/journal", label: "Journal" },
     { href: "/stories", label: "Stories" },
   ],
