@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { LeadsTable } from "@/components/admin/leads-table";
 
@@ -7,7 +7,8 @@ export default async function LeadsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/admin/login");
 
-  const { data: leads } = await supabase
+  const serviceSupabase = await createServiceClient();
+  const { data: leads } = await serviceSupabase
     .from("enquiries")
     .select("*")
     .order("created_at", { ascending: false });

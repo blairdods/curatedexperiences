@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ContentQueue } from "@/components/admin/content-queue";
 import { ARTICLES } from "@/lib/data/journal";
@@ -10,13 +10,15 @@ export default async function ContentApprovalPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/admin/login");
 
-  const { data: pending } = await supabase
+  const serviceSupabase = await createServiceClient();
+
+  const { data: pending } = await serviceSupabase
     .from("content")
     .select("*")
     .eq("status", "pending_approval")
     .order("created_at", { ascending: false });
 
-  const { data: dbContent } = await supabase
+  const { data: dbContent } = await serviceSupabase
     .from("content")
     .select("*")
     .eq("status", "active")

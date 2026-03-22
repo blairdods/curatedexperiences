@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 const COLUMNS = [
@@ -13,7 +13,8 @@ export default async function BookingsPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/admin/login");
 
-  const { data: bookings } = await supabase
+  const serviceSupabase = await createServiceClient();
+  const { data: bookings } = await serviceSupabase
     .from("bookings")
     .select("*, tours(title)")
     .order("created_at", { ascending: false });

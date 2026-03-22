@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { JourneysList } from "@/components/admin/journeys-list";
 import { JOURNEYS } from "@/lib/data/journeys";
@@ -9,7 +9,8 @@ export default async function JourneysManagementPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/admin/login");
 
-  const { data: dbJourneys } = await supabase
+  const serviceSupabase = await createServiceClient();
+  const { data: dbJourneys } = await serviceSupabase
     .from("tours")
     .select("id, slug, title, tagline, active, duration_days, price_from_usd, regions, updated_at")
     .order("updated_at", { ascending: false });
