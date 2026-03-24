@@ -46,7 +46,7 @@ export function getRouteForJourney(
   slug: string
 ): RoutePoint[] {
   const routes: Record<string, RoutePoint[]> = {
-    "south-island-odyssey": [
+    "the-masterpiece": [
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
       { name: "Glenorchy", coordinates: NZ_COORDINATES["Glenorchy"], day: 3 },
       { name: "Te Anau", coordinates: NZ_COORDINATES["Te Anau"], day: 4 },
@@ -57,7 +57,7 @@ export function getRouteForJourney(
       { name: "Arrowtown", coordinates: NZ_COORDINATES["Arrowtown"], day: 11 },
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 12 },
     ],
-    "wine-culinary-trail": [
+    "the-epicurean": [
       { name: "Marlborough", coordinates: NZ_COORDINATES["Marlborough"], day: 1 },
       { name: "Blenheim", coordinates: NZ_COORDINATES["Blenheim"], day: 3 },
       { name: "Wellington", coordinates: NZ_COORDINATES["Wellington"], day: 4 },
@@ -65,13 +65,30 @@ export function getRouteForJourney(
       { name: "Napier", coordinates: NZ_COORDINATES["Napier"], day: 7 },
       { name: "Hawke's Bay", coordinates: NZ_COORDINATES["Hawke's Bay"], day: 8 },
     ],
-    "wilderness-adventure": [
+    "the-expedition": [
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
       { name: "Franz Josef", coordinates: NZ_COORDINATES["Franz Josef"], day: 4 },
       { name: "Aoraki / Mount Cook", coordinates: NZ_COORDINATES["Aoraki / Mount Cook"], day: 7 },
       { name: "Te Anau", coordinates: NZ_COORDINATES["Te Anau"], day: 9 },
       { name: "Milford Sound", coordinates: NZ_COORDINATES["Milford Sound"], day: 10 },
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 11 },
+    ],
+    "the-discovery": [
+      { name: "Auckland", coordinates: NZ_COORDINATES["Auckland"], day: 1 },
+      { name: "Rotorua", coordinates: NZ_COORDINATES["Rotorua"], day: 3 },
+      { name: "Wellington", coordinates: NZ_COORDINATES["Wellington"], day: 5 },
+    ],
+    "the-hidden-trail": [
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
+      { name: "Fiordland", coordinates: NZ_COORDINATES["Fiordland"], day: 1 },
+      { name: "West Coast", coordinates: NZ_COORDINATES["West Coast"], day: 4 },
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 9 },
+    ],
+    "the-southern-heart": [
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
+      { name: "Wanaka", coordinates: NZ_COORDINATES["Wanaka"], day: 3 },
+      { name: "Aoraki / Mount Cook", coordinates: NZ_COORDINATES["Aoraki / Mount Cook"], day: 5 },
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 7 },
     ],
   };
 

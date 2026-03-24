@@ -55,7 +55,7 @@ New Zealand's seasons are reversed from the Northern Hemisphere. The sweet spot 
 ## How we can help
 
 At Curated Experiences, we design every journey from scratch. No templates, no group tours, no compromises. Just New Zealand as it was meant to be experienced — at your pace, shaped around what moves you.`,
-    relatedJourneySlugs: ["south-island-odyssey", "wine-culinary-trail"],
+    relatedJourneySlugs: ["the-masterpiece", "the-epicurean"],
   },
   {
     slug: "the-art-of-slow-travel-in-fiordland",
@@ -88,7 +88,7 @@ Doubtful Sound is Milford's quieter, wilder sibling — three times the size, wi
 We typically recommend 3–4 nights in the Fiordland region: one night in Te Anau (the gateway town), one overnight on Milford Sound, and one night at a Fiordland lodge with time for hiking — the Kepler Track or the first section of the Milford Track.
 
 This pace lets you experience the fiord, the forest, and the wildlife. It lets you sit with the landscape rather than passing through it.`,
-    relatedJourneySlugs: ["south-island-odyssey"],
+    relatedJourneySlugs: ["the-masterpiece"],
   },
   {
     slug: "new-zealand-wine-beyond-sauvignon-blanc",
@@ -121,7 +121,7 @@ The 2026 MICHELIN Guide arrival in New Zealand is as much a wine story as a food
 ## Our wine journeys
 
 Our Wine & Culinary Trail takes you from Marlborough to Wellington to Hawke's Bay, with private cellar door tastings, winemaker lunches, and restaurants that will challenge everything you thought you knew about New Zealand cuisine.`,
-    relatedJourneySlugs: ["wine-culinary-trail"],
+    relatedJourneySlugs: ["the-epicurean"],
   },
 ];
 

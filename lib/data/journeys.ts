@@ -25,10 +25,10 @@ export interface Journey {
 
 export const JOURNEYS: Journey[] = [
   {
-    slug: "south-island-odyssey",
-    title: "South Island Odyssey",
+    slug: "the-masterpiece",
+    title: "The Masterpiece",
     tagline:
-      "From Queenstown's peaks to Fiordland's ancient waterways — the essential South Island experience.",
+      "A 14-day symphony of New Zealand's most iconic landscapes, luxury lodges, and unforgettable moments.",
     narrative: `There's a moment on your first morning in Queenstown when the lake catches the light and the Remarkables turn gold, and you understand why people come back to New Zealand year after year. The South Island Odyssey is built around those moments — not the postcard version, but the real thing, experienced at a pace that lets you actually feel it.
 
 We'll take you from the alpine energy of Queenstown through the hushed grandeur of Fiordland, across to the mirror-still lakes of Wanaka, and up through the Mackenzie Country where the skies are so clear the stars feel close enough to touch. Each day is designed to balance adventure with stillness — a glacier helicopter flight in the morning, a long lunch at a vineyard in the afternoon.
@@ -231,10 +231,10 @@ This isn't a tour. It's a conversation with a landscape that has been millions o
     },
   },
   {
-    slug: "wine-culinary-trail",
-    title: "Wine & Culinary Trail",
+    slug: "the-epicurean",
+    title: "The Epicurean",
     tagline:
-      "Marlborough vineyards, Hawke's Bay estates, and Wellington's world-class dining scene.",
+      "A culinary odyssey through New Zealand's finest vineyards, MICHELIN-recognised restaurants, and artisan producers.",
     narrative: `New Zealand's food and wine scene has quietly become one of the world's most exciting — and this journey takes you straight to its heart. From the sauvignon blanc vineyards of Marlborough to the bold reds of Hawke's Bay, with Wellington's inventive restaurant scene in between, this is a journey for people who believe that what you eat and drink is as much a part of travel as what you see.
 
 We've designed this itinerary around the people behind the food — the winemakers who'll open a barrel just for you, the chef who forages from the hills behind her restaurant, the olive oil producer whose family has worked the same grove for three generations. These are the moments that make a culinary journey feel personal, not like a tour.
@@ -395,10 +395,10 @@ In 2026, the MICHELIN Guide arrives in New Zealand for the first time. This jour
     },
   },
   {
-    slug: "wilderness-adventure",
-    title: "Wilderness & Adventure",
+    slug: "the-expedition",
+    title: "The Expedition",
     tagline:
-      "Heli-hiking glaciers, jet-boating canyons, and stargazing from the world's darkest skies.",
+      "For the intrepid soul — glacier heli-hikes, wilderness lodges, and adventures that redefine extraordinary.",
     narrative: `This is New Zealand for people who want to feel alive. Not reckless — exhilarated. The kind of travel where you land a helicopter on a glacier before breakfast, jet-boat through a canyon after lunch, and spend the evening watching the Milky Way from a place where light pollution simply doesn't exist.
 
 The Wilderness & Adventure journey takes you to the South Island's most dramatic landscapes, but always with a level of comfort and expertise that means you can push your boundaries without ever feeling out of your depth. Our guides are the best in the country — mountaineers, pilots, and naturalists who've spent their lives in these mountains and rivers.
@@ -572,6 +572,160 @@ Every day offers a choice: go bigger or go deeper. Heli-hike a glacier or walk a
         "Landing on that glacier was the single most incredible moment of my life. And then somehow every day after that topped it.",
       author: "Jake Morrison",
       location: "Denver, CO",
+    },
+  },
+  {
+    slug: "the-discovery",
+    title: "The Discovery",
+    tagline:
+      "Seven days of curated wonder — perfect for first-time visitors seeking an authentic introduction to New Zealand.",
+    narrative: `The Discovery is designed for travellers who are visiting New Zealand for the first time and want to experience the essence of the country in a week. We've distilled decades of local knowledge into seven transformative days that capture what makes this place extraordinary.
+
+From the cosmopolitan energy of Auckland to the geothermal wonders of Rotorua and the harbour beauty of Wellington, this journey gives you a taste of New Zealand's remarkable diversity — without rushing. Every experience is curated to be both accessible and profound.
+
+This is not a highlights reel. It's a carefully composed introduction that will leave you planning your return before you've even left.`,
+    durationDays: 7,
+    priceFromUsd: 6500,
+    regions: ["Auckland", "Rotorua", "Wellington"],
+    experienceTags: ["Culture", "Geothermal", "City", "Nature"],
+    idealFor: ["First-time visitors", "Couples", "Short breaks"],
+    seasons: ["Year-round"],
+    highlights: [
+      "Auckland harbour sailing experience",
+      "Private geothermal tour in Rotorua",
+      "Māori cultural immersion",
+      "Wellington's culinary scene",
+      "Boutique wine tasting",
+    ],
+    inclusions: [
+      "All boutique accommodation",
+      "Private transfers throughout",
+      "All guided experiences",
+      "Selected dining experiences",
+      "Personal curator support",
+    ],
+    itinerary: [
+      { day: 1, title: "Arrive Auckland", description: "Welcome to New Zealand. Private transfer to your harbour-view hotel. Evening orientation dinner.", overnight: "Hotel DeBrett, Auckland" },
+      { day: 2, title: "Auckland & Waiheke Island", description: "Morning sailing on the Hauraki Gulf. Afternoon ferry to Waiheke Island for vineyard lunch and olive oil tasting.", overnight: "Hotel DeBrett, Auckland" },
+      { day: 3, title: "Fly to Rotorua", description: "Short flight to Rotorua. Private geothermal tour — bubbling mud pools, erupting geysers, and silica terraces.", overnight: "Regent of Rotorua" },
+      { day: 4, title: "Rotorua — Māori culture", description: "Morning at Te Puia. Afternoon mountain biking through the Whakarewarewa Forest. Evening hāngī feast.", overnight: "Regent of Rotorua" },
+      { day: 5, title: "To Wellington", description: "Scenic drive through the Waikato. Arrive in Wellington, New Zealand's creative capital. Evening at a chef's table.", overnight: "QT Wellington" },
+      { day: 6, title: "Wellington food & culture", description: "Morning at Te Papa museum. Walking food tour through the laneways. Afternoon at a Martinborough vineyard.", overnight: "QT Wellington" },
+      { day: 7, title: "Departure", description: "Morning at leisure. Private transfer to Wellington Airport.", highlights: ["Private airport transfer"] },
+    ],
+    images: [
+      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Auckland harbour" },
+      { src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80", alt: "Rotorua geothermal" },
+    ],
+    heroImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+    testimonial: {
+      quote: "Seven days was all it took to fall completely in love with New Zealand. The Discovery gave us the perfect introduction.",
+      author: "Emily & James Wright",
+      location: "Chicago, IL",
+    },
+  },
+  {
+    slug: "the-hidden-trail",
+    title: "The Hidden Trail",
+    tagline:
+      "Off the beaten path — remote lodges, forgotten trails, and encounters with New Zealand that most visitors never see.",
+    narrative: `The Hidden Trail exists for travellers who have done the highlights and want to go deeper. This is New Zealand beyond the postcards — remote valleys accessible only by helicopter, coastal trails where you won't see another soul, and lodges so tucked away they feel like the edge of the world.
+
+We've spent years building relationships with the guides and lodge owners who operate in New Zealand's most remote corners. These are people who don't advertise, who don't appear on booking platforms, and who only accept guests through personal referral. When you travel The Hidden Trail, you're accessing a New Zealand that very few people will ever experience.
+
+This journey requires a spirit of adventure and a willingness to be surprised. What you'll find is something money alone can't buy: authenticity.`,
+    durationDays: 10,
+    priceFromUsd: 18000,
+    regions: ["Fiordland", "West Coast", "Stewart Island"],
+    experienceTags: ["Remote", "Wildlife", "Hiking", "Wilderness"],
+    idealFor: ["Experienced travellers", "Nature purists", "Photographers"],
+    seasons: ["November–March"],
+    highlights: [
+      "Helicopter access to remote Fiordland valleys",
+      "Stewart Island kiwi spotting at night",
+      "West Coast wilderness lodge",
+      "Private guided Hollyford Track section",
+      "Doubtful Sound overnight — no other boats",
+    ],
+    inclusions: [
+      "All remote lodge accommodation",
+      "All helicopter and boat transfers",
+      "Expert wilderness guides throughout",
+      "All meals (lodges are all-inclusive)",
+      "Satellite communication equipment",
+    ],
+    itinerary: [
+      { day: 1, title: "Queenstown to the wild", description: "Helicopter from Queenstown directly into the heart of Fiordland. Land at a remote lodge accessible only by air.", overnight: "Remote Fiordland Lodge" },
+      { day: 2, title: "Fiordland valleys", description: "Guided walk through valleys that see fewer than 100 visitors a year. Bird life is extraordinary — kea, tūī, bellbird.", overnight: "Remote Fiordland Lodge" },
+      { day: 3, title: "Doubtful Sound", description: "Boat into Doubtful Sound. Overnight on the water — you'll likely be the only vessel in the entire fiord.", overnight: "Overnight vessel, Doubtful Sound" },
+      { day: 4, title: "To the West Coast", description: "Transfer to the wild West Coast. Check in to a wilderness lodge nestled in ancient podocarp rainforest.", overnight: "Wilderness Lodge, West Coast" },
+      { day: 5, title: "Rainforest and coast", description: "Guided walk through forest that has been growing for 80 million years. Afternoon on a deserted beach.", overnight: "Wilderness Lodge, West Coast" },
+      { day: 6, title: "Fly to Stewart Island", description: "Flight to Stewart Island — New Zealand's third island, population 400. This is where kiwi roam free.", overnight: "Stewart Island Lodge" },
+      { day: 7, title: "Kiwi spotting", description: "Guided night walk to see wild kiwi in their natural habitat. One of the most magical wildlife experiences in the world.", overnight: "Stewart Island Lodge" },
+      { day: 8, title: "Ulva Island sanctuary", description: "Boat to Ulva Island — a predator-free bird sanctuary. Species found nowhere else on earth.", overnight: "Stewart Island Lodge" },
+      { day: 9, title: "Return to Queenstown", description: "Flight back to Queenstown. Afternoon at leisure. Farewell dinner.", overnight: "Eichardt's Private Hotel" },
+      { day: 10, title: "Departure", description: "Private transfer to Queenstown Airport.", highlights: ["Private airport transfer"] },
+    ],
+    images: [
+      { src: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80", alt: "Remote Fiordland" },
+      { src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80", alt: "West Coast wilderness" },
+    ],
+    heroImage: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+    testimonial: {
+      quote: "The Hidden Trail showed us a New Zealand we didn't know existed. The kiwi spotting on Stewart Island was life-changing.",
+      author: "Richard & Anne Chambers",
+      location: "Boston, MA",
+    },
+  },
+  {
+    slug: "the-southern-heart",
+    title: "The Southern Heart",
+    tagline:
+      "Romance, renewal, and the soul of the South Island — designed for couples seeking connection.",
+    narrative: `The Southern Heart is a journey for two. It's designed around the moments that bring couples closer — a candlelit dinner in a lakeside lodge, a dawn walk through a mist-filled valley, a private hot pool overlooking mountains that seem to go on forever.
+
+This is not a honeymoon package with rose petals on the bed. It's something more considered, more personal. We design each Southern Heart journey around the couple — their story, their passions, their pace. Some want adventure together. Others want stillness. Most want both.
+
+The South Island is extraordinarily romantic, but not in the obvious way. Its romance is in the scale of the landscape, the intimacy of the lodges, and the feeling that in this place, time moves at whatever speed you choose.`,
+    durationDays: 8,
+    priceFromUsd: 14000,
+    regions: ["Queenstown", "Wanaka", "Aoraki / Mount Cook"],
+    experienceTags: ["Romance", "Wellness", "Scenic", "Wine"],
+    idealFor: ["Couples", "Anniversaries", "Honeymoons"],
+    seasons: ["Year-round (each season has its own romance)"],
+    highlights: [
+      "Private hot pool with mountain views",
+      "Candlelit dinner at a lakeside lodge",
+      "Couples' helicopter scenic flight",
+      "Gibbston Valley private wine tasting",
+      "Stargazing at Aoraki Dark Sky Reserve",
+    ],
+    inclusions: [
+      "Premium lodge accommodation with lake/mountain views",
+      "All private transfers and scenic flights",
+      "Couples' experiences throughout",
+      "Selected fine dining experiences",
+      "In-room welcome amenities",
+    ],
+    itinerary: [
+      { day: 1, title: "Arrive Queenstown", description: "Private transfer to your lakeside suite. Champagne welcome. Evening dinner overlooking Lake Wakatipu.", overnight: "Matakauri Lodge" },
+      { day: 2, title: "Queenstown together", description: "Morning at your pace. Afternoon private wine tasting in Gibbston Valley. Evening at a restaurant chosen just for you.", overnight: "Matakauri Lodge" },
+      { day: 3, title: "To Wanaka", description: "Scenic drive to Wanaka. Afternoon kayaking on the lake or simply enjoying the lodge's private hot pool.", overnight: "Minaret Station Alpine Lodge" },
+      { day: 4, title: "Wanaka — sky and lake", description: "Couples' helicopter flight over the Southern Alps with a landing on a remote peak. Afternoon at leisure.", overnight: "Minaret Station Alpine Lodge" },
+      { day: 5, title: "To Aoraki", description: "Transfer to Aoraki / Mount Cook. The landscape transforms as you enter the Mackenzie Country. Private hot pool with mountain views.", overnight: "The Hermitage" },
+      { day: 6, title: "Aoraki — peak and stars", description: "Gentle Hooker Valley walk together. Evening stargazing at the Dark Sky Reserve — the Milky Way as you've never seen it.", overnight: "The Hermitage" },
+      { day: 7, title: "Return to Queenstown", description: "Scenic return to Queenstown via Lake Tekapo. Farewell dinner — a meal that brings together the flavours of your journey.", overnight: "Eichardt's Private Hotel" },
+      { day: 8, title: "Departure", description: "Private transfer to Queenstown Airport. Depart with memories you'll share for a lifetime.", highlights: ["Private airport transfer"] },
+    ],
+    images: [
+      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Queenstown lakeside" },
+      { src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80", alt: "Southern Alps" },
+    ],
+    heroImage: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80",
+    testimonial: {
+      quote: "Our anniversary trip was beyond anything we could have imagined. The stargazing at Aoraki was the most romantic moment of our lives.",
+      author: "Lauren & Michael Torres",
+      location: "Austin, TX",
     },
   },
 ];

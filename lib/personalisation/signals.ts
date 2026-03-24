@@ -107,14 +107,14 @@ function deriveHeroVariant(
 
 function deriveFeaturedJourney(campaign: string, source: string): string {
   if (campaign.includes("adventure") || campaign.includes("wilderness"))
-    return "wilderness-adventure";
+    return "the-expedition";
   if (campaign.includes("wine") || campaign.includes("culinary"))
-    return "wine-culinary-trail";
+    return "the-epicurean";
   if (campaign.includes("fiordland") || campaign.includes("south-island"))
-    return "south-island-odyssey";
+    return "the-masterpiece";
   // Default based on source
-  if (source === "google_ads") return "south-island-odyssey";
-  return "south-island-odyssey";
+  if (source === "google_ads") return "the-masterpiece";
+  return "the-masterpiece";
 }
 
 function deriveConciergeVariant(

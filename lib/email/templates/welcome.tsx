@@ -58,19 +58,19 @@ export function WelcomeEmail({ name }: { name?: string }) {
         {/* Journey links */}
         {[
           {
-            title: "South Island Odyssey",
-            desc: "14 days from Queenstown to Fiordland",
-            href: "https://curatedexperiences.com/journeys/south-island-odyssey",
+            title: "The Masterpiece",
+            desc: "14 days of New Zealand's most iconic landscapes",
+            href: "https://curatedexperiences.com/journeys/the-masterpiece",
           },
           {
-            title: "Wine & Culinary Trail",
-            desc: "10 days through NZ's finest wine regions",
-            href: "https://curatedexperiences.com/journeys/wine-culinary-trail",
+            title: "The Epicurean",
+            desc: "A culinary odyssey through vineyards and restaurants",
+            href: "https://curatedexperiences.com/journeys/the-epicurean",
           },
           {
-            title: "Wilderness & Adventure",
-            desc: "12 days of glacier hikes and starlit skies",
-            href: "https://curatedexperiences.com/journeys/wilderness-adventure",
+            title: "The Expedition",
+            desc: "Adventures that redefine extraordinary",
+            href: "https://curatedexperiences.com/journeys/the-expedition",
           },
         ].map((journey) => (
           <Link

@@ -16,28 +16,28 @@ const HERO_VARIANTS: Record<
   { title: string; subtitle: string; image: string }
 > = {
   "luxury-us": {
-    title: "New Zealand, as it was meant to be experienced",
+    title: "New Zealand, Reimagined.",
     subtitle:
-      "Bespoke luxury journeys crafted by local experts who know every hidden lodge, every secret trail, and every sunset worth chasing.",
+      "Where world-class luxury meets untouched wilderness. Your personal curator awaits.",
     image:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
   },
   "adventure-us": {
-    title: "The adventure of a lifetime starts here",
+    title: "New Zealand, Reimagined.",
     subtitle:
-      "Glacier heli-hikes, canyon jet boats, and starlit skies — New Zealand's most extraordinary experiences, designed for you.",
+      "Glacier heli-hikes, canyon jet boats, and starlit skies — extraordinary experiences, designed for you.",
     image:
       "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
   },
   "culinary-us": {
-    title: "Taste New Zealand at its finest",
+    title: "New Zealand, Reimagined.",
     subtitle:
-      "From Marlborough's world-famous vineyards to Wellington's MICHELIN-recognised restaurants — a culinary journey like no other.",
+      "From Marlborough's world-famous vineyards to MICHELIN-recognised restaurants — a culinary journey like no other.",
     image:
       "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
   },
   international: {
-    title: "Discover Aotearoa New Zealand",
+    title: "New Zealand, Reimagined.",
     subtitle:
       "A land of extraordinary beauty, warm hospitality, and journeys designed around what moves you.",
     image:
@@ -62,11 +62,11 @@ export default function HomePage() {
     HERO_VARIANTS[signals.heroVariant] ?? HERO_VARIANTS["luxury-us"];
   const journeys = getOrderedJourneys(signals.featuredJourney);
   const ctaLabel =
-    signals.ctaTone === "direct" ? "Start Planning Now" : "Start Planning";
+    signals.ctaTone === "direct" ? "Begin Your Journey" : "Begin Your Journey";
 
   return (
     <>
-      {/* Personalised Hero */}
+      {/* Hero */}
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
         <Image
           src={hero.image}
@@ -99,17 +99,17 @@ export default function HomePage() {
               className="text-white hover:bg-white/10"
               onClick={() =>
                 document
-                  .getElementById("journeys")
+                  .getElementById("experiences")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
             >
-              Explore Journeys
+              Explore Experiences
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Trust Strip */}
+      {/* Trust Bar */}
       <div className="bg-white border-b border-warm-200">
         <div className="max-w-5xl mx-auto px-6 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-xs tracking-wide text-foreground-muted">
           <span className="flex items-center gap-2">
@@ -119,39 +119,65 @@ export default function HomePage() {
             World Travel Award Winners
           </span>
           <span className="text-warm-300">|</span>
-          <span>20+ Years NZ Travel Expertise</span>
+          <span>PPG Tours & PPG Events</span>
           <span className="text-warm-300">|</span>
-          <span>Trusted by Silversea, Ponant & MSC</span>
+          <span>20+ Years of Excellence</span>
           <span className="text-warm-300">|</span>
-          <span>100% Bespoke Journeys</span>
+          <span>Trusted by the World&apos;s Most Discerning Travellers</span>
         </div>
       </div>
 
-      {/* Introduction */}
+      {/* The "Curated" Difference */}
       <Section narrow>
         <div className="text-center">
           <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
-            A PPG Tours Venture
+            The &ldquo;Curated&rdquo; Difference
           </p>
           <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
-            We don&apos;t sell tours. We craft journeys — shaped around who you
-            are, what moves you, and the New Zealand you&apos;ve been dreaming
-            of.
+            Every journey is a masterwork — never a template.
           </p>
-          <p className="mt-8 text-foreground-muted leading-relaxed max-w-lg mx-auto">
-            Every experience is designed by Tony and Liam, two New Zealanders
-            with decades of luxury travel expertise and an intimate knowledge of
-            this extraordinary country.
-          </p>
+        </div>
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-3xl mx-auto">
+          {[
+            {
+              title: "Curated, Not Created",
+              description:
+                "Each itinerary is a bespoke work of art, hand-crafted by personal curators who have spent decades perfecting the art of New Zealand travel.",
+            },
+            {
+              title: "Exclusive Access",
+              description:
+                "Private helicopter landings, closed-door vineyard tastings, and wilderness lodges that don't appear on any booking platform.",
+            },
+            {
+              title: "Local Wisdom",
+              description:
+                "Your curators are New Zealanders with generational knowledge. They know the hidden trails, the secret beaches, and the stories behind every landscape.",
+            },
+            {
+              title: "Personal Curators",
+              description:
+                "From the first conversation to your final evening, the same dedicated curator ensures every moment exceeds expectation.",
+            },
+          ].map((item) => (
+            <div key={item.title}>
+              <h3 className="font-serif text-lg text-navy tracking-tight">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm text-foreground-muted leading-relaxed">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </Section>
 
-      {/* Featured Journeys (ordered by personalisation) */}
-      <Section background="warm" id="journeys">
+      {/* Experiences (Gallery Style) */}
+      <Section background="warm" id="experiences">
         <SectionHeader
-          eyebrow="Our Journeys"
-          title="Experiences that stay with you"
-          subtitle="Each journey is a starting point — fully customisable around your interests, pace, and the season."
+          eyebrow="Our Experiences"
+          title="Six Signature Journeys"
+          subtitle="Each experience is a starting point — fully customisable around your desires, pace, and the season."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {journeys.map((j) => (
@@ -166,13 +192,6 @@ export default function HomePage() {
             />
           ))}
         </div>
-        <div className="mt-12 text-center">
-          <Link href="/journeys">
-            <Button variant="outline" size="lg">
-              View All Journeys
-            </Button>
-          </Link>
-        </div>
       </Section>
 
       {/* Testimonial */}
@@ -181,48 +200,109 @@ export default function HomePage() {
           quote="We've travelled the world, but nothing has come close to what Tony and the team crafted for us in New Zealand. Every single day exceeded our expectations."
           author="Sarah & David Chen"
           location="San Francisco, CA"
-          journey="South Island Odyssey"
+          journey="The Masterpiece"
         />
       </Section>
 
-      {/* Why CE */}
+      {/* Heritage of Excellence */}
       <Section background="navy">
         <SectionHeader
-          eyebrow="Why Curated Experiences"
-          title="What makes us different"
+          eyebrow="Heritage of Excellence"
+          title="The PPG Collective"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-12 text-center">
-          {[
-            {
-              title: "Local expertise",
-              description:
-                "Born and raised in New Zealand, our curators know places that don't appear in any guidebook.",
-            },
-            {
-              title: "Truly bespoke",
-              description:
-                "No two journeys are alike. Every itinerary is designed from scratch around your interests and pace.",
-            },
-            {
-              title: "AI-powered planning",
-              description:
-                "Our concierge uses local knowledge to help you explore ideas — then our team brings them to life.",
-            },
-          ].map((item) => (
-            <div key={item.title}>
-              <h3 className="font-serif text-xl text-white tracking-tight">
-                {item.title}
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-sm text-white/70 leading-relaxed">
+            Curated Experiences is the luxury travel division of the PPG
+            Collective — comprising PPG Tours and PPG Events. For over two
+            decades, PPG has set the standard for premium experiences in New
+            Zealand and the Pacific.
+          </p>
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div>
+              <h3 className="font-serif text-lg text-white tracking-tight">
+                PPG Tours
               </h3>
-              <p className="mt-3 text-sm text-white/60 leading-relaxed">
-                {item.description}
+              <p className="mt-2 text-sm text-white/50 leading-relaxed">
+                World Travel Award-winning luxury travel specialists.
+                Trusted by Silversea, Ponant, and MSC for bespoke shore
+                excursions and land programs.
               </p>
             </div>
-          ))}
+            <div>
+              <h3 className="font-serif text-lg text-white tracking-tight">
+                PPG Events
+              </h3>
+              <p className="mt-2 text-sm text-white/50 leading-relaxed">
+                Premium event management across New Zealand. Corporate
+                retreats, incentive programs, and milestone celebrations
+                delivered with precision and flair.
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 p-6 rounded-xl bg-white/5 border border-white/10">
+            <p className="text-xs tracking-widest uppercase text-white/40 mb-2">
+              Why This Matters
+            </p>
+            <p className="text-sm text-white/70 leading-relaxed">
+              When you choose Curated Experiences, you&apos;re backed by an
+              established company with proven relationships, vetted partners,
+              and two decades of flawless execution. This isn&apos;t a startup
+              — it&apos;s a legacy, refined.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* Privacy & Discretion */}
+      <Section>
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
+            A Covenant of Discretion
+          </p>
+          <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-navy">
+            Your Privacy, Our Promise
+          </h2>
+          <p className="mt-6 text-foreground-muted leading-relaxed">
+            We understand that our guests value privacy as much as they value
+            extraordinary experiences. Curated Experiences maintains the highest
+            standards of discretion.
+          </p>
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+            {[
+              {
+                title: "Confidential planning",
+                description:
+                  "All communications and itinerary details are handled through secure, private channels.",
+              },
+              {
+                title: "Discreet arrangements",
+                description:
+                  "We work with partners who understand that privacy is non-negotiable.",
+              },
+              {
+                title: "No public profiles",
+                description:
+                  "Your journey exists for you alone — we never share guest information or experiences publicly without express consent.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="p-5 rounded-xl bg-warm-100/50"
+              >
+                <h3 className="text-sm font-medium text-navy">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-xs text-foreground-muted leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
 
       {/* Journal Teaser */}
-      <Section>
+      <Section background="warm">
         <SectionHeader
           eyebrow="From the Journal"
           title="Stories & Inspiration"
@@ -266,14 +346,14 @@ export default function HomePage() {
       </Section>
 
       {/* CTA */}
-      <Section narrow background="warm">
+      <Section narrow>
         <div className="text-center">
           <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-navy">
-            Ready to start imagining?
+            Begin Your Journey
           </h2>
           <p className="mt-4 text-foreground-muted leading-relaxed">
-            Talk to our concierge about your dream New Zealand journey — no
-            obligation, just inspiration.
+            Talk to your personal curator about your dream New Zealand
+            experience — no obligation, just inspiration.
           </p>
           <div className="mt-8">
             <Button
@@ -282,7 +362,7 @@ export default function HomePage() {
                 window.dispatchEvent(new Event("ce:open-concierge"))
               }
             >
-              Talk to Our Concierge
+              Begin Your Journey
             </Button>
           </div>
         </div>

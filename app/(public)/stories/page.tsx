@@ -9,7 +9,7 @@ const STORIES = [
       "Sarah and David came to us looking for a two-week South Island adventure for their 25th anniversary. They wanted hiking, wine, and landscapes that would take their breath away. We built a journey from Queenstown to Fiordland to Wanaka, with a helicopter glacier landing and an overnight cruise in Milford Sound. David later told us the stargazing at Aoraki was the most moving experience of his life.",
     author: "Sarah & David Chen",
     location: "San Francisco, CA",
-    journey: "South Island Odyssey",
+    journey: "The Masterpiece",
     image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80",
   },
   {
@@ -19,7 +19,7 @@ const STORIES = [
       "Michael and Patricia are serious wine collectors from Napa. They'd visited Bordeaux, Tuscany, and the Barossa — but New Zealand wasn't on their radar. We took them from Marlborough's sauvignon blanc to Central Otago's pinot noir to Hawke's Bay's syrah, with private cellar door tastings and winemaker lunches. They've since bought a case of Central Otago pinot noir and are planning a return trip.",
     author: "Michael & Patricia Ross",
     location: "Napa Valley, CA",
-    journey: "Wine & Culinary Trail",
+    journey: "The Epicurean",
     image: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80",
   },
   {
@@ -29,7 +29,7 @@ const STORIES = [
       "Jake is the kind of traveller who needs to be moving. He'd done Patagonia, Iceland, and Nepal, and wanted something that would push his boundaries. We built a 12-day itinerary focused on the most dramatic experiences the South Island offers — glacier heli-hikes, canyon jet boats, Milford Sound kayaking, and a summit hike up Ben Lomond. He's already booked his next trip.",
     author: "Jake Morrison",
     location: "Denver, CO",
-    journey: "Wilderness & Adventure",
+    journey: "The Expedition",
     image: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80",
   },
 ];

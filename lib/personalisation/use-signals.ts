@@ -14,7 +14,7 @@ export interface ClientSignals {
 
 const DEFAULT_SIGNALS: ClientSignals = {
   heroVariant: "luxury-us",
-  featuredJourney: "south-island-odyssey",
+  featuredJourney: "the-masterpiece",
   ctaTone: "exploratory",
   conciergeVariant: "default",
   country: "unknown",

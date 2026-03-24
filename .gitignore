@@ -38,6 +38,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# paperclip data (local DB, backups, logs, workspaces)
+paperclip/data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

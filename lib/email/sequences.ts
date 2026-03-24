@@ -20,7 +20,7 @@ export const HIGH_INTENT_SEQUENCE: SequenceEmail[] = [
     bodyHtml: `
       <p>Thank you for sharing your travel plans with us — we're genuinely excited about what we can create for you.</p>
       <p>One of our curators, Tony or Liam, will be in touch within 24 hours to start shaping your journey. In the meantime, here's a taste of what's possible:</p>
-      <p><a href="https://curatedexperiences.com/journeys/south-island-odyssey">South Island Odyssey</a> — our most popular journey, 14 days from Queenstown to Fiordland.</p>
+      <p><a href="https://curatedexperiences.com/journeys/the-masterpiece">The Masterpiece</a> — our most popular journey, 14 days from Queenstown to Fiordland.</p>
       <p>We'll speak soon.</p>
       <p>Warm regards,<br/>Tony & Liam</p>
     `,
@@ -87,9 +87,9 @@ export const MID_INTENT_SEQUENCE: SequenceEmail[] = [
     previewText: "Adventure, wine, or the full South Island odyssey",
     bodyHtml: `
       <p>Every journey we design starts with a conversation — but here are three of our most loved starting points:</p>
-      <p><a href="https://curatedexperiences.com/journeys/south-island-odyssey">South Island Odyssey</a> — 14 days, Queenstown to Fiordland</p>
-      <p><a href="https://curatedexperiences.com/journeys/wine-culinary-trail">Wine & Culinary Trail</a> — 10 days through NZ's finest wine regions</p>
-      <p><a href="https://curatedexperiences.com/journeys/wilderness-adventure">Wilderness & Adventure</a> — 12 days of glacier hikes and starlit skies</p>
+      <p><a href="https://curatedexperiences.com/journeys/the-masterpiece">The Masterpiece</a> — 14 days, Queenstown to Fiordland</p>
+      <p><a href="https://curatedexperiences.com/journeys/the-epicurean">The Epicurean</a> — 10 days through NZ's finest wine regions</p>
+      <p><a href="https://curatedexperiences.com/journeys/the-expedition">The Expedition</a> — 12 days of glacier hikes and starlit skies</p>
       <p>Each is fully customisable. What appeals to you?</p>
     `,
   },
