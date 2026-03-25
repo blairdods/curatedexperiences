@@ -19,10 +19,12 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-warm-200/50">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <span className="font-serif text-xl sm:text-2xl tracking-tight text-navy">
-            Curated Experiences
-          </span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/curated-experiences.png"
+            alt="Curated Experiences"
+            className="h-10 sm:h-12 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}

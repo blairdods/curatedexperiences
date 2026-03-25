@@ -31,10 +31,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-warm-50 px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="font-serif text-2xl text-navy tracking-tight">
-            Curated Experiences
-          </h1>
-          <p className="text-xs tracking-widest uppercase text-warm-500 mt-1">
+          <img
+            src="/curated-experiences.png"
+            alt="Curated Experiences"
+            className="h-12 w-auto mx-auto"
+          />
+          <p className="text-xs tracking-widest uppercase text-warm-500 mt-3">
             Admin Dashboard
           </p>
         </div>

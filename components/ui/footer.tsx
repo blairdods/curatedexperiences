@@ -20,9 +20,11 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
           {/* Brand */}
           <div>
-            <h3 className="font-serif text-xl text-white tracking-tight">
-              Curated Experiences
-            </h3>
+            <img
+              src="/curated-experiences.png"
+              alt="Curated Experiences"
+              className="h-10 w-auto brightness-0 invert opacity-90"
+            />
             <p className="mt-3 text-sm leading-relaxed max-w-xs">
               Bespoke luxury travel across New Zealand, crafted by local experts
               for discerning travellers.

@@ -60,9 +60,13 @@ export function AdminSidebar() {
   return (
     <aside className="w-56 bg-navy-dark text-white/70 flex flex-col min-h-screen">
       {/* Logo */}
-      <div className="px-5 py-6 border-b border-white/10">
+      <div className="px-5 py-5 border-b border-white/10">
         <Link href="/admin">
-          <span className="font-serif text-lg text-white tracking-tight">CE Admin</span>
+          <img
+            src="/curated-experiences.png"
+            alt="Curated Experiences"
+            className="h-8 w-auto brightness-0 invert opacity-80"
+          />
         </Link>
       </div>
 
