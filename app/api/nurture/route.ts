@@ -12,7 +12,7 @@ import { sendNurtureEmail } from "@/lib/email/send";
  *
  * Auth: Requires CRON_SECRET header to prevent unauthorized calls.
  */
-export async function POST(request: Request) {
+async function handleNurture(request: Request) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -95,4 +95,14 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ sent, skipped, total: enquiries?.length ?? 0 });
+}
+
+// Vercel Cron sends GET requests
+export async function GET(request: Request) {
+  return handleNurture(request);
+}
+
+// Manual/external triggers can use POST
+export async function POST(request: Request) {
+  return handleNurture(request);
 }
