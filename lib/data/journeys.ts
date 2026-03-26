@@ -28,7 +28,7 @@ export const JOURNEYS: Journey[] = [
     slug: "the-masterpiece",
     title: "The Masterpiece",
     tagline:
-      "A 14-day symphony of New Zealand's most iconic landscapes, luxury lodges, and unforgettable moments.",
+      "The definitive New Zealand odyssey. A 15-day symphony of 'Super Lodges' and private aviation, hand-crafted for those who refuse to compromise on icons.",
     narrative: `There's a moment on your first morning in Queenstown when the lake catches the light and the Remarkables turn gold, and you understand why people come back to New Zealand year after year. The South Island Odyssey is built around those moments — not the postcard version, but the real thing, experienced at a pace that lets you actually feel it.
 
 We'll take you from the alpine energy of Queenstown through the hushed grandeur of Fiordland, across to the mirror-still lakes of Wanaka, and up through the Mackenzie Country where the skies are so clear the stars feel close enough to touch. Each day is designed to balance adventure with stillness — a glacier helicopter flight in the morning, a long lunch at a vineyard in the afternoon.
@@ -234,7 +234,7 @@ This isn't a tour. It's a conversation with a landscape that has been millions o
     slug: "the-epicurean",
     title: "The Epicurean",
     tagline:
-      "A culinary odyssey through New Zealand's finest vineyards, MICHELIN-recognised restaurants, and artisan producers.",
+      "A love letter to New Zealand's soil and sea. Move through world-renowned vineyards and meet the makers in their private cellars for an estate-to-table experience.",
     narrative: `New Zealand's food and wine scene has quietly become one of the world's most exciting — and this journey takes you straight to its heart. From the sauvignon blanc vineyards of Marlborough to the bold reds of Hawke's Bay, with Wellington's inventive restaurant scene in between, this is a journey for people who believe that what you eat and drink is as much a part of travel as what you see.
 
 We've designed this itinerary around the people behind the food — the winemakers who'll open a barrel just for you, the chef who forages from the hills behind her restaurant, the olive oil producer whose family has worked the same grove for three generations. These are the moments that make a culinary journey feel personal, not like a tour.
@@ -398,7 +398,7 @@ In 2026, the MICHELIN Guide arrives in New Zealand for the first time. This jour
     slug: "the-expedition",
     title: "The Expedition",
     tagline:
-      "For the intrepid soul — glacier heli-hikes, wilderness lodges, and adventures that redefine extraordinary.",
+      "A journey into the profound silence of the wilderness. Navigate the deep-blue reaches of the fjords by private charter and retreat to tented luxury accessible only by air.",
     narrative: `This is New Zealand for people who want to feel alive. Not reckless — exhilarated. The kind of travel where you land a helicopter on a glacier before breakfast, jet-boat through a canyon after lunch, and spend the evening watching the Milky Way from a place where light pollution simply doesn't exist.
 
 The Wilderness & Adventure journey takes you to the South Island's most dramatic landscapes, but always with a level of comfort and expertise that means you can push your boundaries without ever feeling out of your depth. Our guides are the best in the country — mountaineers, pilots, and naturalists who've spent their lives in these mountains and rivers.
@@ -578,7 +578,7 @@ Every day offers a choice: go bigger or go deeper. Heli-hike a glacier or walk a
     slug: "the-discovery",
     title: "The Discovery",
     tagline:
-      "Seven days of curated wonder — perfect for first-time visitors seeking an authentic introduction to New Zealand.",
+      "A poetic traverse of our unique geography. Witness the dramatic shift from subtropical North to alpine South, focusing on the stories and 'in-between' secret viewpoints.",
     narrative: `The Discovery is designed for travellers who are visiting New Zealand for the first time and want to experience the essence of the country in a week. We've distilled decades of local knowledge into seven transformative days that capture what makes this place extraordinary.
 
 From the cosmopolitan energy of Auckland to the geothermal wonders of Rotorua and the harbour beauty of Wellington, this journey gives you a taste of New Zealand's remarkable diversity — without rushing. Every experience is curated to be both accessible and profound.
@@ -628,7 +628,7 @@ This is not a highlights reel. It's a carefully composed introduction that will 
     slug: "the-hidden-trail",
     title: "The Hidden Trail",
     tagline:
-      "Off the beaten path — remote lodges, forgotten trails, and encounters with New Zealand that most visitors never see.",
+      "For the independent spirit. We provide the luxury 4WD, the insider map, and the private ridgeline access; you provide the sense of adventure and the drive.",
     narrative: `The Hidden Trail exists for travellers who have done the highlights and want to go deeper. This is New Zealand beyond the postcards — remote valleys accessible only by helicopter, coastal trails where you won't see another soul, and lodges so tucked away they feel like the edge of the world.
 
 We've spent years building relationships with the guides and lodge owners who operate in New Zealand's most remote corners. These are people who don't advertise, who don't appear on booking platforms, and who only accept guests through personal referral. When you travel The Hidden Trail, you're accessing a New Zealand that very few people will ever experience.
@@ -681,7 +681,7 @@ This journey requires a spirit of adventure and a willingness to be surprised. W
     slug: "the-southern-heart",
     title: "The Southern Heart",
     tagline:
-      "Romance, renewal, and the soul of the South Island — designed for couples seeking connection.",
+      "A concentrated immersion into the rugged beauty of the South. Experience the scale of massive glaciers, turquoise lakes, and the clearest night skies on the planet.",
     narrative: `The Southern Heart is a journey for two. It's designed around the moments that bring couples closer — a candlelit dinner in a lakeside lodge, a dawn walk through a mist-filled valley, a private hot pool overlooking mountains that seem to go on forever.
 
 This is not a honeymoon package with rose petals on the bed. It's something more considered, more personal. We design each Southern Heart journey around the couple — their story, their passions, their pace. Some want adventure together. Others want stillness. Most want both.
