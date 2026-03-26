@@ -139,51 +139,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* The "Curated" Difference */}
-      <Section narrow>
-        <div className="text-center">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
-            The &ldquo;Curated&rdquo; Difference
-          </p>
-          <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
-            Every journey is a masterwork — never a template.
-          </p>
-        </div>
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-3xl mx-auto">
-          {[
-            {
-              title: "Curated, Not Created",
-              description:
-                "Each itinerary is a bespoke work of art, hand-crafted by personal curators who have spent decades perfecting the art of New Zealand travel.",
-            },
-            {
-              title: "Exclusive Access",
-              description:
-                "Private helicopter landings, closed-door vineyard tastings, and wilderness lodges that don't appear on any booking platform.",
-            },
-            {
-              title: "Local Wisdom",
-              description:
-                "Your curators are New Zealanders with generational knowledge. They know the hidden trails, the secret beaches, and the stories behind every landscape.",
-            },
-            {
-              title: "Personal Curators",
-              description:
-                "From the first conversation to your final evening, the same dedicated curator ensures every moment exceeds expectation.",
-            },
-          ].map((item) => (
-            <div key={item.title}>
-              <h3 className="font-serif text-lg text-navy tracking-tight">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm text-foreground-muted leading-relaxed">
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
       {/* Experiences (Gallery Style) */}
       <Section background="warm" id="experiences">
         <SectionHeader
@@ -202,6 +157,51 @@ export default function HomePage() {
               regions={j.regions.slice(0, 3)}
               imageSrc={j.images[0]?.src}
             />
+          ))}
+        </div>
+      </Section>
+
+      {/* The "Curated" Difference */}
+      <Section narrow>
+        <div className="text-center">
+          <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
+            The &ldquo;Curated&rdquo; Difference
+          </p>
+          <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
+            Every journey is a masterwork — never a template.
+          </p>
+        </div>
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-3xl mx-auto">
+          {[
+            {
+              title: "Curated vs. Created",
+              description:
+                "We don't just create trips; we curate moments. Every experience is a blueprint, calibrated to your specific pace and heartbeat.",
+            },
+            {
+              title: "Exclusive Access",
+              description:
+                "We open doors to private estates and 'closed-to-public' lodges that remain invisible to the standard traveller.",
+            },
+            {
+              title: "Local Wisdom",
+              description:
+                "Based in NZ, we know the secret tides, the hidden tracks, and the best tables. We are your on-the-ground experts.",
+            },
+            {
+              title: "Our Personal Curators",
+              description:
+                "With you for every step of your journey, ensuring your experience is as seamless as it is spectacular.",
+            },
+          ].map((item) => (
+            <div key={item.title}>
+              <h3 className="font-serif text-lg text-navy tracking-tight">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm text-foreground-muted leading-relaxed">
+                {item.description}
+              </p>
+            </div>
           ))}
         </div>
       </Section>
