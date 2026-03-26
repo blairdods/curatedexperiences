@@ -58,12 +58,11 @@ export function getRouteForJourney(
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 12 },
     ],
     "the-epicurean": [
-      { name: "Marlborough", coordinates: NZ_COORDINATES["Marlborough"], day: 1 },
-      { name: "Blenheim", coordinates: NZ_COORDINATES["Blenheim"], day: 3 },
-      { name: "Wellington", coordinates: NZ_COORDINATES["Wellington"], day: 4 },
-      { name: "Wairarapa", coordinates: NZ_COORDINATES["Wairarapa"], day: 6 },
-      { name: "Napier", coordinates: NZ_COORDINATES["Napier"], day: 7 },
-      { name: "Hawke's Bay", coordinates: NZ_COORDINATES["Hawke's Bay"], day: 8 },
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
+      { name: "Ahuriri Valley", coordinates: NZ_COORDINATES["Ahuriri Valley"], day: 4 },
+      { name: "Christchurch", coordinates: NZ_COORDINATES["Christchurch"], day: 6 },
+      { name: "Rotorua", coordinates: NZ_COORDINATES["Rotorua"], day: 6 },
+      { name: "Auckland", coordinates: NZ_COORDINATES["Auckland"], day: 8 },
     ],
     "the-expedition": [
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },

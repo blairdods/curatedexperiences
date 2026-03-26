@@ -114,141 +114,48 @@ By anchoring your experience with a minimum of two nights at each of the country
     title: "The Epicurean",
     tagline:
       "A love letter to New Zealand's soil and sea. Move through world-renowned vineyards and meet the makers in their private cellars for an estate-to-table experience.",
-    narrative: `New Zealand's food and wine scene has quietly become one of the world's most exciting — and this journey takes you straight to its heart. From the sauvignon blanc vineyards of Marlborough to the bold reds of Hawke's Bay, with Wellington's inventive restaurant scene in between, this is a journey for people who believe that what you eat and drink is as much a part of travel as what you see.
-
-We've designed this itinerary around the people behind the food — the winemakers who'll open a barrel just for you, the chef who forages from the hills behind her restaurant, the olive oil producer whose family has worked the same grove for three generations. These are the moments that make a culinary journey feel personal, not like a tour.
-
-In 2026, the MICHELIN Guide arrives in New Zealand for the first time. This journey takes you to the restaurants and producers that we believe will define the conversation.`,
+    narrative: `Immerse yourself in the raw majesty of Aotearoa. We have meticulously handpicked New Zealand's most prestigious estates, dramatic alpine vistas, and hidden geothermal wonders to create an effortless, high-end expedition. From the jagged peaks of the South Island to the spiritual heart of the North, this is more than a tour — it is a bespoke immersion into the soul of the South Pacific.`,
     durationDays: 10,
-    priceFromUsd: 9800,
-    regions: ["Marlborough", "Hawke's Bay", "Wellington", "Wairarapa"],
+    priceFromUsd: 0,
+    regions: ["Queenstown", "Ahuriri Valley", "Rotorua", "Auckland"],
     experienceTags: [
-      "Wine tasting",
-      "Fine dining",
-      "Cooking classes",
-      "Farm visits",
+      "Milford Sound heli-cruise",
+      "Geothermal",
+      "Glowworms",
+      "Wine",
+      "Glacier landing",
     ],
-    idealFor: ["Couples", "Food enthusiasts", "Wine lovers"],
-    seasons: ["February–April (harvest)", "Year-round"],
+    idealFor: ["Couples", "Luxury seekers", "Culture enthusiasts"],
+    seasons: ["Year-round"],
     highlights: [
-      "Private cellar door tastings in Marlborough",
-      "MICHELIN-recognised restaurants in Wellington",
-      "Hawke's Bay estate lunch with winemaker",
-      "Artisan cheese and olive oil producers",
-      "Wellington night market and waterfront dining",
+      "Milford Sound heli-cruise with glacier landing",
+      "The Lindis — architectural sanctuary in the Ahuriri Valley",
+      "Solitaire Lodge — lakeside retreat on Lake Tarawera",
+      "Wai-O-Tapu & Waimangu geothermal exploration",
+      "Footwhistle Glowworm Cave — candlelit private tour",
+      "Choice of bespoke excursions in Queenstown and Auckland",
     ],
     inclusions: [
-      "All boutique accommodation",
-      "Private wine tours with expert guides",
-      "Selected fine dining experiences",
-      "Cooking class with a local chef",
-      "All transfers between regions",
+      "9 nights ultra-luxury accommodation across 4 iconic properties",
+      "The Rees Hotel (breakfast), The Lindis (all meals), Solitaire Lodge (all meals), Sofitel Auckland (breakfast)",
+      "Milford Sound private heli-cruise with glacier landing",
+      "Choice of bespoke Queenstown excursion (Wine Tour, Routeburn Hike, or Wilderness Safari)",
+      "Privately guided Wai-O-Tapu & Waimangu geothermal tour",
+      "Private Footwhistle Glowworm Cave exploration",
+      "Choice of bespoke Auckland excursion (Waiheke, Wildlife, Cultural, or West Coast)",
+      "All private airport transfers and inter-regional chauffeur services",
     ],
     itinerary: [
-      {
-        day: 1,
-        title: "Arrive Marlborough",
-        description:
-          "Fly into Blenheim and transfer to your vineyard lodge. Afternoon orientation tasting at a family-owned estate.",
-        overnight: "The Marlborough Lodge",
-        highlights: ["Welcome wine tasting"],
-      },
-      {
-        day: 2,
-        title: "Marlborough wine country",
-        description:
-          "A full day exploring Marlborough's finest wineries with a private guide. From iconic sauvignon blanc to exceptional méthode traditionnelle, this is New Zealand winemaking at its best.",
-        overnight: "The Marlborough Lodge",
-        highlights: [
-          "Private winery tours",
-          "Vineyard lunch",
-        ],
-      },
-      {
-        day: 3,
-        title: "Marlborough Sounds",
-        description:
-          "A morning boat cruise through the Queen Charlotte Sound — wine country meets the sea. Afternoon visit to an artisan cheese producer.",
-        overnight: "Bay of Many Coves Resort",
-        highlights: [
-          "Queen Charlotte Sound cruise",
-          "Artisan cheese tasting",
-        ],
-      },
-      {
-        day: 4,
-        title: "To Wellington",
-        description:
-          "Ferry across Cook Strait — one of the world's great short sea crossings. Arrive in Wellington, New Zealand's creative capital. Evening at a chef's table restaurant.",
-        overnight: "QT Wellington",
-        highlights: [
-          "Cook Strait ferry crossing",
-          "Chef's table dinner",
-        ],
-      },
-      {
-        day: 5,
-        title: "Wellington food scene",
-        description:
-          "Morning at Wellington's harbourside market. Walking food tour through the city's laneway restaurants and cafés. Afternoon cooking class with a Wellington chef.",
-        overnight: "QT Wellington",
-        highlights: [
-          "Harbourside market",
-          "Cooking class",
-          "Laneway food tour",
-        ],
-      },
-      {
-        day: 6,
-        title: "Wairarapa wine region",
-        description:
-          "Day trip to the Wairarapa — home to some of New Zealand's finest pinot noir. Visit boutique producers in Martinborough, followed by lunch at a vineyard restaurant.",
-        overnight: "QT Wellington",
-        highlights: [
-          "Martinborough pinot noir",
-          "Vineyard restaurant lunch",
-        ],
-      },
-      {
-        day: 7,
-        title: "Fly to Hawke's Bay",
-        description:
-          "Short flight to Napier, the Art Deco capital. Settle into your estate accommodation among the vines. Evening dinner at a Hawke's Bay institution.",
-        overnight: "The Farm at Cape Kidnappers",
-        highlights: [
-          "Art Deco Napier",
-          "Estate accommodation",
-        ],
-      },
-      {
-        day: 8,
-        title: "Hawke's Bay estates",
-        description:
-          "Visit the grand estates of Hawke's Bay — bold syrah, elegant chardonnay, and long lunches overlooking the vines. A private session with a winemaker who'll share barrels not yet released.",
-        overnight: "The Farm at Cape Kidnappers",
-        highlights: [
-          "Barrel tasting with winemaker",
-          "Estate lunch",
-        ],
-      },
-      {
-        day: 9,
-        title: "Olive oil, honey & farewell",
-        description:
-          "Morning visits to artisan producers — olive oil, honey, and charcuterie. Afternoon at leisure to enjoy the estate. Farewell dinner bringing together the flavours of the journey.",
-        overnight: "The Farm at Cape Kidnappers",
-        highlights: [
-          "Artisan producer visits",
-          "Farewell dinner",
-        ],
-      },
-      {
-        day: 10,
-        title: "Departure",
-        description:
-          "Transfer to Napier Airport or connect to your next New Zealand destination.",
-        highlights: ["Private transfer"],
-      },
+      { day: 1, title: "Arrival in the Adventure Capital", description: "Welcome to Queenstown. Your private specialist guide escorts you to The Rees Hotel, perched on the serene shores of Lake Wakatipu. Settle into your Executive Lake View Apartment, where floor-to-ceiling glass frames the shifting hues of the Remarkables. We suggest a vintage from the hotel's curated 'Bacchus' cellar.", overnight: "The Rees Hotel, Queenstown", highlights: ["Private airport transfer", "The Rees Hotel", "Bacchus wine cellar"] },
+      { day: 2, title: "Milford Sound — A Study in Scale", description: "Begin with a majestic aerial traverse of the Southern Alps, trading Queenstown's peaks for the mist-veiled rainforests and towering falls of Fiordland. After a private escort to your intimate cruise, navigate deep waters beneath sheer granite cliffs. The journey's crescendo? A remote helicopter landing on a prehistoric glacier.", overnight: "The Rees Hotel, Queenstown", highlights: ["Private helicopter over Southern Alps", "Milford Sound cruise", "Prehistoric glacier landing"] },
+      { day: 3, title: "Queenstown: Bespoke Discovery", description: "Personalise your day: Gourmet Viticulture (Bannockburn & Gibbston estates, underground wine cave, vineyard lunch), The Great Walk (privately guided Routeburn Track), or High-Octane & High-Altitude (Dart River jet-boat safari, dinner and stargazing at Bob's Peak).", overnight: "The Rees Hotel, Queenstown", highlights: ["Choice of 3 signature experiences"] },
+      { day: 4, title: "To the Southern Alps & The Lindis", description: "Travel deeper into the Southern Alps to The Lindis — an architectural masterpiece that breathes with the landscape, blurring the lines between rugged high-country wilderness and world-class luxury.", overnight: "The Lindis", highlights: ["The Lindis — architectural sanctuary", "Ahuriri Valley"] },
+      { day: 5, title: "High Country Immersion", description: "The Lindis is your private sanctuary nestled within the vast Ahuriri Valley. Choose from heli-hiking with the helicopter landing on your front lawn, horse trekking through pristine alpine valleys, or private art workshops inspired by 360-degree mountain views.", overnight: "The Lindis", highlights: ["Heli-hiking from the lodge", "Horse trekking", "Art workshops"] },
+      { day: 6, title: "Mackenzie Country to Rotorua", description: "Traverse the golden Mackenzie Country with curated lunch at the Dark Sky Project. Pause in charming Geraldine, sweep through Lord of the Rings landscapes, then fly from Christchurch to the geothermal heart of Rotorua. Arrive at Solitaire Lodge on Lake Tarawera — 180-degree panoramas and the silhouette of Mt Tarawera.", overnight: "Solitaire Lodge, Rotorua", highlights: ["Dark Sky Project lunch", "Christchurch to Rotorua flight", "Solitaire Lodge on Lake Tarawera"] },
+      { day: 7, title: "Primal Earth: Wai-O-Tapu & Waimangu", description: "A day dedicated to Rotorua's volcanic grandeur. With an expert naturalist, witness the surreal hues of Wai-O-Tapu's thermal springs and the prehistoric beauty of the Waimangu Volcanic Valley. Traverse exotic forests and volcanic craters for an insider's perspective on the seismic forces that shaped New Zealand.", overnight: "Solitaire Lodge, Rotorua", highlights: ["Wai-O-Tapu thermal springs", "Waimangu Volcanic Valley", "Expert naturalist guide"] },
+      { day: 8, title: "Subterranean Stars & Auckland", description: "Traverse emerald pastures to Waitomo for an intimate Footwhistle Cave exploration — candlelit path through ancient limestone, glowing titiwai, Moa bones, and the Cathedral cavern revealed by magnesium torch. Continue to Auckland and the Sofitel Viaduct Harbour.", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Footwhistle Glowworm Cave", "Sofitel Viaduct Harbour"] },
+      { day: 9, title: "Auckland: Bespoke Urban Curations", description: "Tailor your final day: Waiheke Gourmet (oyster tastings, vineyard lunch), Nocturnal Wildlife Quest (twilight kiwi spotting), Indigenous Auckland (Māori history, private Haka), or The Wild West (rugged black-sand beaches, winery lunch).", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Choice of 4 private excursions"] },
+      { day: 10, title: "A Journey to Carry With You", description: "As your odyssey draws to a close, you carry with you the lingering notes of world-class vintages and the quiet echoes of the wilderness. A private chauffeur escorts you to the airport.", highlights: ["Private airport transfer"] },
     ],
     images: [
       {
