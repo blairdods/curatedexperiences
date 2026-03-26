@@ -256,10 +256,12 @@ export default function HomePage() {
               Why This Matters
             </p>
             <p className="text-sm text-white/70 leading-relaxed">
-              When you choose Curated Experiences, you&apos;re backed by an
-              established company with proven relationships, vetted partners,
-              and two decades of flawless execution. This isn&apos;t a startup
-              — it&apos;s a legacy, refined.
+              Luxury is easy to promise, but difficult to deliver in the remote
+              corners of New Zealand. Because Curated Experiences is powered by
+              an award-winning DMC, we don&apos;t just book your travel — we own
+              the logistics. From our private fleet to our &apos;closed-door&apos;
+              relationships with lodge owners, your journey is secured by the
+              most decorated travel team in the country.
             </p>
           </div>
         </div>
