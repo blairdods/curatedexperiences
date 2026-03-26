@@ -6,9 +6,12 @@ import { ConciergeMessage } from "./concierge-message";
 import { ConciergeThinking } from "./concierge-thinking";
 
 const SUGGESTIONS = [
-  "Fiordland & the Sounds",
-  "Wine & Culinary",
-  "Adventure & Heli-skiing",
+  "The Masterpiece — Luxury Lodges",
+  "The Epicurean — Wine & Dining",
+  "The Expedition — Wilderness & Fjords",
+  "The Discovery — North to South",
+  "The Hidden Trail — Self-Drive Adventure",
+  "The Southern Heart — Alpine Immersion",
 ];
 
 export function ConciergeThread({

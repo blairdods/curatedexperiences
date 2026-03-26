@@ -31,6 +31,9 @@ export const NZ_COORDINATES: Record<string, [number, number]> = {
   "Bay of Islands": [174.1190, -35.2282],
   "Wairarapa": [175.4576, -41.2440],
   "Martinborough": [175.4576, -41.2140],
+  "Taupo": [176.0702, -38.6857],
+  "Ahuriri Valley": [169.8500, -44.3000],
+  "Kerikeri": [174.0083, -35.2267],
 };
 
 export interface RoutePoint {
@@ -47,14 +50,11 @@ export function getRouteForJourney(
 ): RoutePoint[] {
   const routes: Record<string, RoutePoint[]> = {
     "the-masterpiece": [
-      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },
-      { name: "Glenorchy", coordinates: NZ_COORDINATES["Glenorchy"], day: 3 },
-      { name: "Te Anau", coordinates: NZ_COORDINATES["Te Anau"], day: 4 },
-      { name: "Milford Sound", coordinates: NZ_COORDINATES["Milford Sound"], day: 5 },
-      { name: "Wanaka", coordinates: NZ_COORDINATES["Wanaka"], day: 6 },
-      { name: "Aoraki / Mount Cook", coordinates: NZ_COORDINATES["Aoraki / Mount Cook"], day: 8 },
-      { name: "Lake Tekapo", coordinates: NZ_COORDINATES["Lake Tekapo"], day: 10 },
-      { name: "Arrowtown", coordinates: NZ_COORDINATES["Arrowtown"], day: 11 },
+      { name: "Bay of Islands", coordinates: NZ_COORDINATES["Bay of Islands"], day: 1 },
+      { name: "Auckland", coordinates: NZ_COORDINATES["Auckland"], day: 3 },
+      { name: "Taupo", coordinates: NZ_COORDINATES["Taupo"], day: 5 },
+      { name: "Hawke's Bay", coordinates: NZ_COORDINATES["Hawke's Bay"], day: 8 },
+      { name: "Ahuriri Valley", coordinates: NZ_COORDINATES["Ahuriri Valley"], day: 10 },
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 12 },
     ],
     "the-epicurean": [
@@ -75,8 +75,11 @@ export function getRouteForJourney(
     ],
     "the-discovery": [
       { name: "Auckland", coordinates: NZ_COORDINATES["Auckland"], day: 1 },
-      { name: "Rotorua", coordinates: NZ_COORDINATES["Rotorua"], day: 3 },
-      { name: "Wellington", coordinates: NZ_COORDINATES["Wellington"], day: 5 },
+      { name: "Taupo", coordinates: NZ_COORDINATES["Taupo"], day: 3 },
+      { name: "Hawke's Bay", coordinates: NZ_COORDINATES["Hawke's Bay"], day: 6 },
+      { name: "Wairarapa", coordinates: NZ_COORDINATES["Wairarapa"], day: 8 },
+      { name: "Christchurch", coordinates: NZ_COORDINATES["Christchurch"], day: 10 },
+      { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 12 },
     ],
     "the-hidden-trail": [
       { name: "Queenstown", coordinates: NZ_COORDINATES["Queenstown"], day: 1 },

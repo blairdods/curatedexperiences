@@ -29,179 +29,58 @@ export const JOURNEYS: Journey[] = [
     title: "The Masterpiece",
     tagline:
       "The definitive New Zealand odyssey. A 15-day symphony of 'Super Lodges' and private aviation, hand-crafted for those who refuse to compromise on icons.",
-    narrative: `There's a moment on your first morning in Queenstown when the lake catches the light and the Remarkables turn gold, and you understand why people come back to New Zealand year after year. The South Island Odyssey is built around those moments — not the postcard version, but the real thing, experienced at a pace that lets you actually feel it.
+    narrative: `This is a sophisticated curated experience that infuses the "Big Three" of New Zealand luxury: Northland, Hawke's Bay, and the Southern Alps with exclusivity, seamless travel, and the most prestigious of properties.
 
-We'll take you from the alpine energy of Queenstown through the hushed grandeur of Fiordland, across to the mirror-still lakes of Wanaka, and up through the Mackenzie Country where the skies are so clear the stars feel close enough to touch. Each day is designed to balance adventure with stillness — a glacier helicopter flight in the morning, a long lunch at a vineyard in the afternoon.
+For those who value space, grace, and the luxury of time. This itinerary isn't just a list of destinations; it is a personal recommendation from our own portfolio of lived experiences.
 
-This isn't a tour. It's a conversation with a landscape that has been millions of years in the making.`,
-    durationDays: 14,
-    priceFromUsd: 12500,
-    regions: ["Queenstown", "Fiordland", "Wanaka", "Aoraki / Mount Cook"],
+By anchoring your experience with a minimum of two nights at each of the country's most storied lodges, we ensure you transition from "tourist" to "guest." From the subtropical elegance of the far North to the dramatic alpine peaks of the deep South, discover the soul of the Islands through bespoke private tours, fine vintage wines & food and landscapes that defy description.`,
+    durationDays: 15,
+    priceFromUsd: 0,
+    regions: ["Bay of Islands", "Auckland", "Taupo", "Hawke's Bay", "Ahuriri Valley", "Queenstown"],
     experienceTags: [
-      "Hiking",
-      "Scenic flights",
-      "Wildlife",
-      "Stargazing",
-      "Cruising",
+      "Super Lodges",
+      "Private helicopter",
+      "Golf",
+      "Wine",
+      "Glacier landing",
+      "Sailing",
     ],
-    idealFor: ["Couples", "Active travellers", "Nature lovers"],
-    seasons: ["October–April (best)", "Year-round (varies)"],
+    idealFor: ["Luxury seekers", "Couples", "Discerning travellers"],
+    seasons: ["Year-round"],
     highlights: [
-      "Milford Sound overnight cruise",
-      "Helicopter flight to a glacier",
-      "Routeburn Track guided day hike",
-      "Dark sky stargazing at Aoraki",
-      "Private wine tasting in Gibbston Valley",
+      "Kauri Cliffs — 6,000-acre coastal estate and world-ranked golf",
+      "Private helicopter to Mt Tarawera summit and geothermal valleys",
+      "Private sailing charter on Lake Rotoiti with thermal hot pools",
+      "The Farm at Cape Kidnappers — clifftop architecture and Tom Doak golf",
+      "The Lindis — architectural sanctuary in the Ahuriri Valley",
+      "Milford Sound heli-odyssey with glacier landing and gourmet picnic",
     ],
     inclusions: [
-      "All luxury accommodation (lodges and boutique hotels)",
-      "Private transfers and scenic flights",
-      "All guided experiences and activities",
-      "Selected meals at recommended restaurants",
-      "24/7 concierge support throughout",
+      "14 nights ultra-luxury accommodation across 6 iconic properties",
+      "Kauri Cliffs, Huka Lodge, Cape Kidnappers, The Lindis, The Rees Hotel — all meals at lodges included",
+      "Private 'Meet & Greet' airport transfers throughout",
+      "Dedicated professional Driver/Guide and private vehicle",
+      "Choice of bespoke Auckland excursion (Waiheke, Wildlife, Cultural, or West Coast)",
+      "Private helicopter to Mt Tarawera and Orakei Korako geothermal valley",
+      "Private sailing charter on Lake Rotoiti",
+      "Private Milford Sound heli-odyssey with glacier landing",
     ],
     itinerary: [
-      {
-        day: 1,
-        title: "Arrive Queenstown",
-        description:
-          "Private transfer from the airport to your lakeside lodge. Settle in, breathe the mountain air, and enjoy a welcome dinner overlooking Lake Wakatipu.",
-        overnight: "Eichardt's Private Hotel, Queenstown",
-        highlights: ["Private airport transfer", "Welcome dinner"],
-      },
-      {
-        day: 2,
-        title: "Queenstown at your pace",
-        description:
-          "A day to find your rhythm. Choose between a morning jet boat ride on the Shotover River, a leisurely gondola ride with views to the Remarkables, or simply wander the lakefront. Afternoon wine tasting in the Gibbston Valley.",
-        overnight: "Eichardt's Private Hotel, Queenstown",
-        highlights: [
-          "Gibbston Valley wine tasting",
-          "Shotover jet boat (optional)",
-        ],
-      },
-      {
-        day: 3,
-        title: "Glenorchy & the Routeburn",
-        description:
-          "Drive the stunning road to Glenorchy — Middle-earth country at its finest. Guided day hike on the Routeburn Track, one of New Zealand's Great Walks, with a packed gourmet lunch by the river.",
-        overnight: "Camp Glenorchy Eco Retreat",
-        highlights: [
-          "Routeburn Track guided hike",
-          "Glenorchy scenic drive",
-          "Gourmet trail lunch",
-        ],
-      },
-      {
-        day: 4,
-        title: "Into Fiordland",
-        description:
-          "Transfer to Te Anau, the gateway to Fiordland National Park. Afternoon visit to the Te Anau Glowworm Caves — an underground world of luminous wonder. Evening at leisure in this peaceful lakeside town.",
-        overnight: "Fiordland Lodge, Te Anau",
-        highlights: [
-          "Te Anau Glowworm Caves",
-          "Fiordland National Park entry",
-        ],
-      },
-      {
-        day: 5,
-        title: "Milford Sound overnight",
-        description:
-          "The drive to Milford Sound is a journey in itself — through ancient beech forest, mirror lakes, and the dramatic Homer Tunnel. Board your overnight vessel for an intimate cruise through the fiord. Watch the sunset paint Mitre Peak gold.",
-        overnight: "Overnight cruise, Milford Sound",
-        highlights: [
-          "Milford Road scenic drive",
-          "Overnight fiord cruise",
-          "Mitre Peak sunset",
-        ],
-      },
-      {
-        day: 6,
-        title: "Milford Sound to Wanaka",
-        description:
-          "Wake to the sound of waterfalls. Morning kayaking in the fiord before transferring to Wanaka via the Crown Range — New Zealand's highest sealed road with staggering views.",
-        overnight: "Minaret Station Alpine Lodge",
-        highlights: [
-          "Morning kayak in Milford Sound",
-          "Crown Range crossing",
-        ],
-      },
-      {
-        day: 7,
-        title: "Wanaka — lake and sky",
-        description:
-          "A day in Wanaka, where the pace slows and the lake stretches to the mountains. Choose between a guided hike to Roy's Peak, a scenic flight over the Southern Alps, or simply enjoy the lakefront.",
-        overnight: "Minaret Station Alpine Lodge",
-        highlights: [
-          "Roy's Peak hike (optional)",
-          "Southern Alps scenic flight (optional)",
-        ],
-      },
-      {
-        day: 8,
-        title: "Helicopter to a glacier",
-        description:
-          "The highlight of many a New Zealand journey — a helicopter flight to the Franz Josef or Fox Glacier, landing on the ice for a guided walk. Afternoon transfer towards Aoraki / Mount Cook.",
-        overnight: "The Hermitage, Aoraki / Mount Cook",
-        highlights: [
-          "Glacier helicopter landing",
-          "Guided ice walk",
-          "Aoraki / Mount Cook views",
-        ],
-      },
-      {
-        day: 9,
-        title: "Aoraki / Mount Cook",
-        description:
-          "A day in the shadow of New Zealand's highest peak. Walk the Hooker Valley Track — a gentle trail through alpine meadows to a glacier lake. Evening stargazing at the Aoraki Mackenzie Dark Sky Reserve.",
-        overnight: "The Hermitage, Aoraki / Mount Cook",
-        highlights: [
-          "Hooker Valley Track",
-          "Dark Sky Reserve stargazing",
-        ],
-      },
-      {
-        day: 10,
-        title: "Lake Tekapo & Mackenzie Country",
-        description:
-          "Drive through the golden tussock of the Mackenzie Country to Lake Tekapo. Visit the Church of the Good Shepherd, and enjoy a scenic flight over the turquoise lakes.",
-        overnight: "Lakestone Lodge, Lake Tekapo",
-        highlights: [
-          "Church of the Good Shepherd",
-          "Scenic flight over turquoise lakes",
-        ],
-      },
-      {
-        day: 11,
-        title: "To Queenstown via Arrowtown",
-        description:
-          "Return to the Queenstown region via the charming gold-rush village of Arrowtown. Browse the galleries and boutiques, then enjoy a long lunch at one of Central Otago's finest restaurants.",
-        overnight: "Eichardt's Private Hotel, Queenstown",
-        highlights: ["Arrowtown village", "Central Otago dining"],
-      },
-      {
-        day: 12,
-        title: "Free day — your choice",
-        description:
-          "A day entirely at your discretion. Bungee jump at the Kawarau Bridge, take a scenic cruise on Lake Wakatipu aboard the TSS Earnslaw, play a round of golf, or simply relax at the hotel spa.",
-        overnight: "Eichardt's Private Hotel, Queenstown",
-        highlights: ["Your choice of activity", "Spa or adventure"],
-      },
-      {
-        day: 13,
-        title: "Farewell dinner",
-        description:
-          "A final day to soak in Queenstown. Evening farewell dinner at a restaurant we've chosen just for you — a meal that brings together the flavours of your journey.",
-        overnight: "Eichardt's Private Hotel, Queenstown",
-        highlights: ["Curated farewell dinner"],
-      },
-      {
-        day: 14,
-        title: "Departure",
-        description:
-          "Private transfer to Queenstown Airport. Depart with memories of a New Zealand you'll carry with you always.",
-        highlights: ["Private airport transfer"],
-      },
+      { day: 1, title: "Arrival & The Bay of Islands", description: "Touch down in Auckland and connect to Kerikeri. Your private chauffeur awaits to whisk you to The Lodge at Kauri Cliffs — a Hamptons-inspired sanctuary set upon 6,000 acres of coastal estate with sweeping Pacific views and world-renowned championship golf.", overnight: "The Lodge at Kauri Cliffs", highlights: ["Private airport meet & greet", "Kauri Cliffs coastal estate"] },
+      { day: 2, title: "Kauri Cliffs: Coastal Discovery", description: "A day of total immersion. Wander to the famous Pink Beach for a private gourmet BBQ, explore the working farm via quad bike, enjoy a guided nature walk through ancient kauri forests, or play a round on the world-ranked greens.", overnight: "The Lodge at Kauri Cliffs", highlights: ["Pink Beach private BBQ", "World-ranked golf", "Ancient kauri forest walk"] },
+      { day: 3, title: "Bay of Islands to Auckland", description: "After a final morning soak in the coastal air, transfer to Kerikeri for your flight to Auckland. Check into the Sofitel Auckland Viaduct Harbour — French 'Art de Vivre' overlooking the shimmering marina. Browse Commercial Bay and Britomart, or head to the water.", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Kerikeri scenic flight", "Sofitel Viaduct Harbour"] },
+      { day: 4, title: "Auckland: Bespoke Urban Experiences", description: "Tailor your day with one of four privately guided excursions: Waiheke Island Gourmet (oysters, vineyards, lunch), Nocturnal Wildlife Quest (twilight kiwi spotting), Indigenous Auckland (Māori history, private Haka), or The Wild West (rugged coast, winery lunch).", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Choice of 4 private excursions", "Waiheke Island or West Coast"] },
+      { day: 5, title: "The Glowworm Labyrinth to Huka Lodge", description: "Travel through rolling Waikato pastures to Waitomo. Descend into a silent, subterranean world of glowworm-lit caves before continuing to the legendary Huka Lodge — the birthplace of New Zealand luxury hospitality, nestled on the banks of the turquoise Waikato River.", overnight: "Huka Lodge", highlights: ["Footwhistle Glowworm Cave", "Huka Lodge — birthplace of NZ luxury"] },
+      { day: 6, title: "Peaks, Springs & Private Sails", description: "A day of 'Fire and Water.' Private helicopter to the summit of Mt Tarawera, followed by an aerial tour of steaming geothermal valleys. Conclude at the pier for a private sailing charter on Lake Rotoiti — soak in hidden lakeside thermal pools and fish for rainbow trout.", overnight: "Huka Lodge", highlights: ["Mt Tarawera helicopter summit", "Orakei Korako geothermal", "Private sailing on Lake Rotoiti"] },
+      { day: 7, title: "Huka Lodge: Estate Serenity", description: "Enjoy the 'Huka way of life.' Morning on the tennis courts or yoga lawn, afternoon exploring the heritage gardens. For the adventurous, private white-water rafting or a bespoke tasting in their world-class wine cellar.", overnight: "Huka Lodge", highlights: ["Heritage gardens", "Wine cellar tasting", "Day at leisure"] },
+      { day: 8, title: "Over the Ranges to Cape Kidnappers", description: "Your Driver Guide takes you through the heart of Hawke's Bay — one of only 12 Great Wine Capitals of the World. Arrive at The Farm at Cape Kidnappers, where rugged clifftop architecture contrasts with rolling vineyards below. Multi-course degustation dinner to welcome you.", overnight: "The Farm at Cape Kidnappers", highlights: ["Hawke's Bay wine country", "Clifftop lodge", "Degustation dinner"] },
+      { day: 9, title: "The Cape Kidnappers Experience", description: "Explore the 6,000-acre station via Can-Am, join a Kiwi discovery walk to see conservation in action, or play a round on the Tom Doak-designed course — frequently cited as a modern marvel of the golfing world.", overnight: "The Farm at Cape Kidnappers", highlights: ["6,000-acre station tour", "Tom Doak golf course", "Kiwi conservation walk"] },
+      { day: 10, title: "To the Southern Alps", description: "Fly to Queenstown and transfer through the historic wine country of Bannockburn to the stunning Lindis Lodge — an architectural masterpiece that breathes with the landscape, blurring the lines between rugged high-country wilderness and world-class luxury.", overnight: "The Lindis", highlights: ["Bannockburn wine country", "The Lindis — architectural sanctuary"] },
+      { day: 11, title: "High Country Immersion", description: "The Lindis is your private sanctuary in the vast Ahuriri Valley. Choose from heli-hiking with the helicopter landing on your front lawn, horse trekking through pristine alpine valleys, or private art workshops inspired by the 360-degree mountain views.", overnight: "The Lindis", highlights: ["Heli-hiking from the lodge", "Horse trekking", "360° mountain views"] },
+      { day: 12, title: "To the Heart of Queenstown", description: "Transfer to The Rees Hotel — luxury lakeside accommodation directly on the shores of Lake Wakatipu. Explore Queenstown's vibrant dining scene before your grand finale tomorrow.", overnight: "The Rees Hotel, Queenstown", highlights: ["Lake Wakatipu views", "Queenstown dining"] },
+      { day: 13, title: "The Ultimate Fiordland Heli-Odyssey", description: "Board your private helicopter for a definitive exploration of Milford Sound and the West Coast. Soar over hanging glaciers and thundering waterfalls, land on a remote beach for a gourmet picnic, and stand atop an ancient glacier.", overnight: "The Rees Hotel, Queenstown", highlights: ["Private helicopter Milford Sound", "Remote beach picnic", "Ancient glacier landing"] },
+      { day: 14, title: "Queenstown at Leisure", description: "A day for personal discovery. Ascend the Skyline Gondola, explore all Queenstown has to offer, then glide across the lake aboard the historic TSS Earnslaw steamship to Walter Peak for an unforgettable farewell.", overnight: "The Rees Hotel, Queenstown", highlights: ["TSS Earnslaw cruise", "Walter Peak", "Skyline Gondola"] },
+      { day: 15, title: "Homeward Bound", description: "Your New Zealand odyssey concludes. A private transfer takes you to Queenstown Airport, carrying memories of a landscape — and a level of service — that stays with you forever.", highlights: ["Private airport transfer"] },
     ],
     images: [
       {
@@ -579,39 +458,55 @@ Every day offers a choice: go bigger or go deeper. Heli-hike a glacier or walk a
     title: "The Discovery",
     tagline:
       "A poetic traverse of our unique geography. Witness the dramatic shift from subtropical North to alpine South, focusing on the stories and 'in-between' secret viewpoints.",
-    narrative: `The Discovery is designed for travellers who are visiting New Zealand for the first time and want to experience the essence of the country in a week. We've distilled decades of local knowledge into seven transformative days that capture what makes this place extraordinary.
+    narrative: `Embark on a sophisticated New Zealand odyssey defined by private charters, alpine helicopters, and the country's most prestigious lodges. This curated journey invites you to settle into storied properties like Huka Lodge, The Farm at Cape Kidnappers, and Wharekauhau, concluding with a lakeside sanctuary at The Rees Hotel in Queenstown.
 
-From the cosmopolitan energy of Auckland to the geothermal wonders of Rotorua and the harbour beauty of Wellington, this journey gives you a taste of New Zealand's remarkable diversity — without rushing. Every experience is curated to be both accessible and profound.
-
-This is not a highlights reel. It's a carefully composed introduction that will leave you planning your return before you've even left.`,
-    durationDays: 7,
-    priceFromUsd: 6500,
-    regions: ["Auckland", "Rotorua", "Wellington"],
-    experienceTags: ["Culture", "Geothermal", "City", "Nature"],
-    idealFor: ["First-time visitors", "Couples", "Short breaks"],
+From clay-bird shooting and private farm tours to heli-landings on age-old glaciers, every detail is designed to surpass expectation. With multi-course degustation meals included at most stays and seamless private transfers throughout, you are invited to simply sit back and savour the luxury of time.`,
+    durationDays: 15,
+    priceFromUsd: 0,
+    regions: ["Auckland", "Taupo", "Hawke's Bay", "Wairarapa", "Christchurch", "Queenstown"],
+    experienceTags: ["Luxury Lodges", "Glowworms", "Helicopter", "Farm stays", "Wine", "Glacier landing"],
+    idealFor: ["First-time visitors", "Luxury seekers", "Couples"],
     seasons: ["Year-round"],
     highlights: [
-      "Auckland harbour sailing experience",
-      "Private geothermal tour in Rotorua",
-      "Māori cultural immersion",
-      "Wellington's culinary scene",
-      "Boutique wine tasting",
+      "Huka Lodge — birthplace of New Zealand luxury hospitality",
+      "Private helicopter tour of Tongariro National Park",
+      "Private boat charter on Lake Taupo",
+      "The Farm at Cape Kidnappers — 6,000 rolling acres",
+      "Wharekauhau Country Estate — 5,500-acre working sheep station",
+      "Behind-the-scenes Te Papa Museum tour",
+      "Akaroa harbour cruise — Hector's Dolphins and Blue Penguins",
+      "Milford Sound heli-cruise-heli with glacier landing",
     ],
     inclusions: [
-      "All boutique accommodation",
-      "Private transfers throughout",
-      "All guided experiences",
-      "Selected dining experiences",
-      "Personal curator support",
+      "14 nights ultra-luxury accommodation across 6 iconic properties",
+      "Sofitel Auckland, Huka Lodge (all meals), Cape Kidnappers (B&D), Wharekauhau (B&D), Otahuna Lodge (5-course dinner), The Rees Hotel",
+      "Private airport meet & greet and all transfers",
+      "Choice of bespoke Auckland excursion (Waiheke, Wildlife, Cultural, or West Coast)",
+      "Private Footwhistle Glowworm Cave tour",
+      "Private helicopter to Tongariro National Park with wilderness landing",
+      "Private boat charter on Lake Taupo",
+      "Wharekauhau Farm Tour and Martinborough winery lunch",
+      "Private Te Papa behind-the-scenes tour",
+      "Akaroa harbour cruise and gourmet picnic",
+      "Milford Sound heli-cruise-heli with glacier landing",
+      "Choice of Queenstown signature experience (Wine Tour, Routeburn Hike, or Wilderness Safari & Stargazing)",
     ],
     itinerary: [
-      { day: 1, title: "Arrive Auckland", description: "Welcome to New Zealand. Private transfer to your harbour-view hotel. Evening orientation dinner.", overnight: "Hotel DeBrett, Auckland" },
-      { day: 2, title: "Auckland & Waiheke Island", description: "Morning sailing on the Hauraki Gulf. Afternoon ferry to Waiheke Island for vineyard lunch and olive oil tasting.", overnight: "Hotel DeBrett, Auckland" },
-      { day: 3, title: "Fly to Rotorua", description: "Short flight to Rotorua. Private geothermal tour — bubbling mud pools, erupting geysers, and silica terraces.", overnight: "Regent of Rotorua" },
-      { day: 4, title: "Rotorua — Māori culture", description: "Morning at Te Puia. Afternoon mountain biking through the Whakarewarewa Forest. Evening hāngī feast.", overnight: "Regent of Rotorua" },
-      { day: 5, title: "To Wellington", description: "Scenic drive through the Waikato. Arrive in Wellington, New Zealand's creative capital. Evening at a chef's table.", overnight: "QT Wellington" },
-      { day: 6, title: "Wellington food & culture", description: "Morning at Te Papa museum. Walking food tour through the laneways. Afternoon at a Martinborough vineyard.", overnight: "QT Wellington" },
-      { day: 7, title: "Departure", description: "Morning at leisure. Private transfer to Wellington Airport.", highlights: ["Private airport transfer"] },
+      { day: 1, title: "Arrive Auckland", description: "Welcome to New Zealand. Private transfer to the Sofitel Viaduct Harbour in the heart of the city's premier maritime precinct. Guaranteed early check-in, with time to explore Britomart boutiques or dine at Lava Dining.", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Private airport meet & greet", "Sofitel Viaduct Harbour"] },
+      { day: 2, title: "Auckland: Your Choice of Four Tours", description: "Tailor your day with one of four privately guided excursions: Waiheke Island Gourmet (oysters, vineyards, lunch), Nocturnal Wildlife Quest (twilight kiwi spotting), Indigenous Auckland (Māori history, private Haka), or The Wild West (rugged coast, winery lunch).", overnight: "Sofitel Auckland Viaduct Harbour", highlights: ["Choice of 4 private excursions"] },
+      { day: 3, title: "Auckland to Taupo via Waitomo", description: "Travel through lush farmland to the King Country. Private candlelit experience of Footwhistle Cave — glowworms, ancient Moa bones, and a cathedral lit by magnesium torch. Continue to Lake Taupo and the acclaimed Huka Lodge.", overnight: "Huka Lodge", highlights: ["Footwhistle Glowworm Cave", "Huka Lodge"] },
+      { day: 4, title: "Tongariro & Lake Taupo", description: "Fly south by helicopter into the Kaimanawa wilderness to search for wild horses. Land by the Rangitikei River, then continue to the World Heritage volcanoes — Ruapehu, Tongariro, and Ngauruhoe. Later, board your private boat on Lake Taupo.", overnight: "Huka Lodge", highlights: ["Helicopter to Tongariro", "Private Lake Taupo cruise", "Wild horse search"] },
+      { day: 5, title: "Day at Leisure — Huka Lodge", description: "Stay in at Huka Lodge to enjoy a day of leisure. Relax in your luxurious suite with gourmet cuisine and a bottle of local wine.", overnight: "Huka Lodge", highlights: ["Day at leisure", "Gourmet lodge dining"] },
+      { day: 6, title: "Huka Lodge to Cape Kidnappers", description: "Private tour to Hawke's Bay. Discover Art Deco Napier, meet a Māori elder, and take in scenic vistas. Arrive at The Farm at Cape Kidnappers — set atop 6,000 rolling acres with panoramic Pacific views. Pre-dinner drinks, hors d'oeuvres, and multi-course dinner included.", overnight: "The Farm at Cape Kidnappers", highlights: ["Art Deco Napier", "Cape Kidnappers lodge", "Degustation dinner"] },
+      { day: 7, title: "Cape Kidnappers: Estate Discovery", description: "Explore the station via Can-Am, join a Kiwi Discovery Walk, visit the spectacular Gannet colony on the coastal cliffs, or enjoy a round of golf.", overnight: "The Farm at Cape Kidnappers", highlights: ["Can-Am station tour", "Gannet colony", "Golf"] },
+      { day: 8, title: "Cape Kidnappers to Wharekauhau", description: "Scenic drive to Martinborough with a boutique winery lunch and tasting. Arrive at Wharekauhau Country Estate — a grand 5,500-acre working sheep station on the edge of Palliser Bay.", overnight: "Wharekauhau Country Estate", highlights: ["Martinborough wine lunch", "Wharekauhau — 5,500-acre estate"] },
+      { day: 9, title: "Wharekauhau: Farm Heritage", description: "4-wheel drive tour of the estate. See sheep shearing demonstrations and sheep dogs in action — the activities that created New Zealand's farming heritage.", overnight: "Wharekauhau Country Estate", highlights: ["4WD farm tour", "Sheep shearing", "Working farm heritage"] },
+      { day: 10, title: "Wharekauhau to Christchurch", description: "Private transfer to Wellington for a behind-the-scenes tour of Te Papa, the Museum of New Zealand. Explore the rugged coastline, then fly to Christchurch for a transfer to the historic Otahuna Lodge.", overnight: "Otahuna Lodge", highlights: ["Te Papa behind-the-scenes", "Otahuna Lodge"] },
+      { day: 11, title: "Akaroa & Harbour Cruise", description: "Travel to the French-influenced village of Akaroa. Board a harbour cruise to spot Hector's Dolphins, NZ Fur Seals, and Little Blue Penguins. Gourmet picnic lunch in a scenic spot before exploring Akaroa.", overnight: "Otahuna Lodge", highlights: ["Hector's Dolphins", "Akaroa harbour cruise", "Gourmet picnic"] },
+      { day: 12, title: "Otahuna to Queenstown", description: "Fly to Queenstown. Your private driver escorts you to The Rees Hotel, directly on the shores of Lake Wakatipu. Floor-to-ceiling windows frame the Remarkables. Evening glass from the award-winning Bacchus wine cellar.", overnight: "The Rees Hotel, Queenstown", highlights: ["The Rees Hotel", "Lake Wakatipu views", "Bacchus wine cellar"] },
+      { day: 13, title: "Milford Sound Heli-Cruise-Heli", description: "Soar over the Southern Alps by private helicopter to Milford Sound for a boutique cruise. On the return flight, stand atop an ancient glacier for an exclusive high-country landing.", overnight: "The Rees Hotel, Queenstown", highlights: ["Private helicopter", "Milford Sound cruise", "Glacier landing"] },
+      { day: 14, title: "Queenstown: Your Choice of Excursion", description: "Personalise your final day: Bannockburn & Gibbston Private Gourmet Wine Tour (underground cave, vineyard lunch), Routeburn Track Guided Hike (UNESCO wilderness), or Wilderness Safari & Stargazing (jet-boating, Bob's Peak dinner, guided stargazing).", overnight: "The Rees Hotel, Queenstown", highlights: ["Choice of 3 signature experiences"] },
+      { day: 15, title: "Homeward Bound", description: "Your journey concludes as a private transfer takes you to Queenstown Airport.", highlights: ["Private airport transfer"] },
     ],
     images: [
       { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Auckland harbour" },
