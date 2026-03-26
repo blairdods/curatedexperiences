@@ -39,7 +39,7 @@ const HERO_VARIANTS: Record<
   international: {
     title: "New Zealand, Reimagined.",
     subtitle:
-      "A land of extraordinary beauty, warm hospitality, and journeys designed around what moves you.",
+      "Curated Experiences for the discerning traveller. From glacial peaks to private vineyards, your journey is curated by us, but authored by you.",
     image:
       "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
   },
@@ -68,13 +68,25 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden">
+        {/* Video background */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={hero.image}
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/Alpine_Lodge_Helicopter_Landing_Video.mp4" type="video/mp4" />
+        </video>
+        {/* Fallback image for browsers that don't autoplay */}
         <Image
           src={hero.image}
           alt="New Zealand landscape"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover -z-10"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 via-navy-dark/30 to-navy-dark/10" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
