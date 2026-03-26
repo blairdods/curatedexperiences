@@ -289,14 +289,14 @@ export default function HomePage() {
                   "All communications and itinerary details are handled through secure, private channels.",
               },
               {
-                title: "Discreet arrangements",
+                title: "Absolute Privacy",
                 description:
-                  "We work with partners who understand that privacy is non-negotiable.",
+                  "For our high-profile guests, we provide an 'off-grid' experience.",
               },
               {
-                title: "No public profiles",
+                title: "Secure Logistics",
                 description:
-                  "Your journey exists for you alone — we never share guest information or experiences publicly without express consent.",
+                  "NDA-bound staffing, private terminal arrivals, and exclusive-use 'buy-out' lodge stays to ensure your journey remains entirely confidential.",
               },
             ].map((item) => (
               <div
@@ -376,7 +376,7 @@ export default function HomePage() {
                 window.dispatchEvent(new Event("ce:open-concierge"))
               }
             >
-              Begin Your Journey
+              Schedule a private consultation to tailor your Curated Experience
             </Button>
           </div>
         </div>
