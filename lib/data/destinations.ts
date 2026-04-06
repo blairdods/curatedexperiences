@@ -30,7 +30,7 @@ For American travellers, Fiordland consistently ranks as the most memorable part
     ],
     bestFor: ["Nature lovers", "Photographers", "Couples"],
     bestSeasons: "October–April, though winter has a haunting beauty",
-    relatedJourneySlugs: ["the-masterpiece", "the-expedition"],
+    relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-hidden-trail"],
     heroImage: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
     images: [
       { src: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80", alt: "Milford Sound" },
@@ -54,7 +54,7 @@ For American travellers, Fiordland consistently ranks as the most memorable part
     ],
     bestFor: ["Active travellers", "Couples", "Families"],
     bestSeasons: "Year-round — summer for hiking, winter for skiing",
-    relatedJourneySlugs: ["the-masterpiece", "the-expedition"],
+    relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-southern-heart", "the-hidden-trail"],
     heroImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
     images: [
       { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Queenstown lakefront" },
@@ -78,7 +78,7 @@ But Marlborough is more than wine. The Marlborough Sounds are a labyrinth of wat
     ],
     bestFor: ["Wine lovers", "Food enthusiasts", "Couples"],
     bestSeasons: "February–April for harvest, December–March for the Sounds",
-    relatedJourneySlugs: ["the-epicurean"],
+    relatedJourneySlugs: ["the-epicurean", "the-southern-heart"],
     heroImage: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
     images: [
       { src: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80", alt: "Marlborough vineyards" },
@@ -101,7 +101,7 @@ The Aoraki Mackenzie International Dark Sky Reserve is one of only a handful in 
     ],
     bestFor: ["Nature lovers", "Stargazers", "Photographers"],
     bestSeasons: "October–April for hiking, year-round for stargazing",
-    relatedJourneySlugs: ["the-masterpiece", "the-expedition"],
+    relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-southern-heart"],
     heroImage: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
     images: [
       { src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80", alt: "Aoraki / Mount Cook" },
