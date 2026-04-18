@@ -23,16 +23,26 @@ export default async function ContentApprovalPage() {
     .select("*")
     .eq("status", "active")
     .order("updated_at", { ascending: false })
-    .limit(10);
+    .limit(50);
 
   return (
     <div>
-      <h1 className="font-serif text-2xl text-navy tracking-tight">
-        Content
-      </h1>
-      <p className="text-sm text-foreground-muted mt-1">
-        {pending?.length ?? 0} pending approval
-      </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-serif text-2xl text-navy tracking-tight">
+            Content
+          </h1>
+          <p className="text-sm text-foreground-muted mt-1">
+            {pending?.length ?? 0} pending approval
+          </p>
+        </div>
+        <Link
+          href="/admin/content/new"
+          className="px-4 py-2.5 text-sm font-medium rounded-lg bg-navy text-white hover:bg-navy-light transition-colors"
+        >
+          + Add Content
+        </Link>
+      </div>
 
       {/* Pending approval */}
       <div className="mt-6">
@@ -40,6 +50,49 @@ export default async function ContentApprovalPage() {
           Pending Approval
         </h2>
         <ContentQueue items={pending ?? []} />
+      </div>
+
+      {/* DB content (knowledge base) */}
+      <div className="mt-10">
+        <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
+          Knowledge Base
+          <span className="ml-2 text-warm-400 normal-case tracking-normal">
+            ({dbContent?.length ?? 0} records)
+          </span>
+        </h2>
+        <div className="space-y-2">
+          {(dbContent ?? []).map((item) => (
+            <Link
+              key={item.id}
+              href={`/admin/content/${item.id}`}
+              className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-warm-200 hover:border-navy/20 hover:shadow-sm transition-all"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-foreground truncate">{item.title}</p>
+                <p className="text-xs text-foreground-muted">
+                  {item.type} — {item.source_type ?? "manual"}
+                  {item.region_tags?.length
+                    ? ` — ${(item.region_tags as string[]).join(", ")}`
+                    : ""}
+                </p>
+              </div>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 flex-shrink-0 ml-3">
+                Active
+              </span>
+            </Link>
+          ))}
+          {(!dbContent || dbContent.length === 0) && (
+            <p className="text-sm text-foreground-muted text-center py-8">
+              No knowledge base content yet.{" "}
+              <Link
+                href="/admin/content/new"
+                className="text-navy hover:text-navy-light"
+              >
+                Add your first entry
+              </Link>
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Static content: Journal articles */}
@@ -101,39 +154,6 @@ export default async function ContentApprovalPage() {
               </Link>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* DB content (knowledge base) */}
-      <div className="mt-10">
-        <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
-          Knowledge Base
-          <span className="ml-2 text-warm-400 normal-case tracking-normal">
-            ({dbContent?.length ?? 0} records in database)
-          </span>
-        </h2>
-        <div className="space-y-2">
-          {(dbContent ?? []).map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-warm-200"
-            >
-              <div className="min-w-0 flex-1">
-                <p className="text-sm text-foreground truncate">{item.title}</p>
-                <p className="text-xs text-foreground-muted">
-                  {item.type} — {item.source_type ?? "manual"}
-                </p>
-              </div>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 flex-shrink-0">
-                Active
-              </span>
-            </div>
-          ))}
-          {(!dbContent || dbContent.length === 0) && (
-            <p className="text-sm text-foreground-muted text-center py-8">
-              No knowledge base content yet.
-            </p>
-          )}
         </div>
       </div>
     </div>

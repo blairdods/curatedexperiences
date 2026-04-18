@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Journey {
   id: string;
@@ -72,6 +73,13 @@ export function JourneysList({ journeys }: { journeys: Journey[] }) {
               </span>
             )}
           </div>
+
+          <Link
+            href={`/admin/journeys/${journey.id}`}
+            className="text-xs text-navy hover:text-navy-light transition-colors flex-shrink-0"
+          >
+            Edit
+          </Link>
 
           <button
             onClick={() => toggleActive(journey.id, journey.active)}

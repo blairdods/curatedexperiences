@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Lead {
   id: string;
@@ -81,9 +82,13 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
             />
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">
+              <Link
+                href={`/admin/leads/${lead.id}`}
+                onClick={(e) => e.stopPropagation()}
+                className="text-sm font-medium text-foreground hover:text-navy transition-colors truncate block"
+              >
                 {lead.name || lead.email || "Anonymous"}
-              </p>
+              </Link>
               <p className="text-xs text-foreground-muted">
                 {lead.source} —{" "}
                 {new Date(lead.created_at).toLocaleDateString("en-NZ", {
@@ -197,6 +202,13 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
                   <option value="tony">Tony</option>
                   <option value="liam">Liam</option>
                 </select>
+
+                <Link
+                  href={`/admin/leads/${lead.id}`}
+                  className="ml-auto text-xs text-navy hover:text-navy-light transition-colors"
+                >
+                  View full details &rarr;
+                </Link>
               </div>
             </div>
           )}
@@ -205,8 +217,7 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
 
       {leads.length === 0 && (
         <div className="text-center py-12 text-foreground-muted text-sm">
-          No leads yet. They&apos;ll appear here when visitors interact with
-          the concierge.
+          No leads match your filters.
         </div>
       )}
     </div>

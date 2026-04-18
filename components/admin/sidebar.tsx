@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: "grid" },
+  { href: "/admin/analytics", label: "Analytics", icon: "chart" },
   { href: "/admin/leads", label: "Leads", icon: "users" },
   { href: "/admin/bookings", label: "Bookings", icon: "calendar" },
   { href: "/admin/content", label: "Content", icon: "file" },
@@ -38,6 +39,12 @@ const ICONS: Record<string, React.ReactNode> = {
   map: (
     <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
       <path fillRule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clipRule="evenodd" />
+    </svg>
+  ),
+  chart: (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
     </svg>
   ),
   settings: (

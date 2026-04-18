@@ -1,5 +1,7 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import { ExportButton } from "@/components/admin/export-button";
 
 const COLUMNS = [
   { key: "confirmed", label: "Confirmed" },
@@ -26,12 +28,17 @@ export default async function BookingsPage() {
 
   return (
     <div>
-      <h1 className="font-serif text-2xl text-navy tracking-tight">
-        Bookings
-      </h1>
-      <p className="text-sm text-foreground-muted mt-1">
-        {bookings?.length ?? 0} total bookings
-      </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="font-serif text-2xl text-navy tracking-tight">
+            Bookings
+          </h1>
+          <p className="text-sm text-foreground-muted mt-1">
+            {bookings?.length ?? 0} total bookings
+          </p>
+        </div>
+        <ExportButton endpoint="/api/admin/export/bookings" label="Export CSV" />
+      </div>
 
       {/* Kanban */}
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -45,9 +52,10 @@ export default async function BookingsPage() {
             </h3>
             <div className="space-y-3">
               {col.bookings.map((booking) => (
-                <div
+                <Link
                   key={booking.id}
-                  className="bg-white rounded-lg p-4 border border-warm-200 shadow-sm"
+                  href={`/admin/bookings/${booking.id}`}
+                  className="block bg-white rounded-lg p-4 border border-warm-200 shadow-sm hover:shadow-md hover:border-navy/20 transition-all"
                 >
                   <p className="text-sm font-medium text-foreground">
                     {(booking.tours as { title: string } | null)?.title ?? "Custom Journey"}
@@ -70,7 +78,7 @@ export default async function BookingsPage() {
                       <span>{(booking.guests as unknown[]).length} guests</span>
                     )}
                   </div>
-                </div>
+                </Link>
               ))}
               {col.bookings.length === 0 && (
                 <div className="text-center py-8 text-xs text-foreground-muted bg-warm-50/50 rounded-lg border border-dashed border-warm-200">
