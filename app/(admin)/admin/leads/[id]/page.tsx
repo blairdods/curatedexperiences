@@ -24,6 +24,15 @@ export default async function LeadDetailPage({
 
   if (!lead) notFound();
 
+  // Check if a booking already exists for this lead
+  const { data: existingBooking } = await serviceSupabase
+    .from("bookings")
+    .select("id")
+    .eq("enquiry_id", id)
+    .limit(1);
+
+  const hasBooking = (existingBooking?.length ?? 0) > 0;
+
   return (
     <div>
       <BackLink href="/admin/leads" label="Back to Leads" />
@@ -41,7 +50,7 @@ export default async function LeadDetailPage({
         <StatusBadge status={lead.status} />
       </div>
 
-      <LeadDetail lead={lead} />
+      <LeadDetail lead={lead} hasBooking={hasBooking} />
     </div>
   );
 }

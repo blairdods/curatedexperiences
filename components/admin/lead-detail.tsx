@@ -48,14 +48,40 @@ const STATUS_OPTIONS = [
   "closed_lost",
 ];
 
-export function LeadDetail({ lead }: { lead: Lead }) {
+export function LeadDetail({
+  lead,
+  hasBooking,
+}: {
+  lead: Lead;
+  hasBooking: boolean;
+}) {
   const router = useRouter();
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  // Editable contact fields
+  const [name, setName] = useState(lead.name ?? "");
+  const [email, setEmail] = useState(lead.email ?? "");
+  const [phone, setPhone] = useState(lead.phone ?? "");
+  const [budgetSignal, setBudgetSignal] = useState(lead.budget_signal ?? "");
+  const [journeyTypePref, setJourneyTypePref] = useState(lead.journey_type_pref ?? "");
+  const [groupSize, setGroupSize] = useState(lead.group_size?.toString() ?? "");
+  const [groupComposition, setGroupComposition] = useState(lead.group_composition ?? "");
+  const [contactDirty, setContactDirty] = useState(false);
+  const [contactSaving, setContactSaving] = useState(false);
+  const [contactSaved, setContactSaved] = useState(false);
+
+  // Status & assignment
   const [status, setStatus] = useState(lead.status);
   const [assignedTo, setAssignedTo] = useState(lead.assigned_to ?? "");
+  const [statusSaving, setStatusSaving] = useState(false);
+
+  // Notes
   const [notes, setNotes] = useState(lead.notes ?? "");
   const [notesDirty, setNotesDirty] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [activities, setActivities] = useState<Activity[]>([]);
+  const [notesSaving, setNotesSaving] = useState(false);
+
+  // Booking creation
+  const [creatingBooking, setCreatingBooking] = useState(false);
 
   const fetchActivities = useCallback(async () => {
     const res = await fetch(`/api/admin/leads/${lead.id}/activities`);
@@ -69,69 +95,191 @@ export function LeadDetail({ lead }: { lead: Lead }) {
     fetchActivities();
   }, [fetchActivities]);
 
-  const updateField = async (
-    field: string,
-    value: string | null,
-    activityType: string,
-    description: string,
-    metadata?: Record<string, unknown>
-  ) => {
-    const supabase = createClient();
-    await supabase
-      .from("enquiries")
-      .update({ [field]: value })
-      .eq("id", lead.id);
+  // Check if contact info changed
+  useEffect(() => {
+    const dirty =
+      name !== (lead.name ?? "") ||
+      email !== (lead.email ?? "") ||
+      phone !== (lead.phone ?? "") ||
+      budgetSignal !== (lead.budget_signal ?? "") ||
+      journeyTypePref !== (lead.journey_type_pref ?? "") ||
+      groupSize !== (lead.group_size?.toString() ?? "") ||
+      groupComposition !== (lead.group_composition ?? "");
+    setContactDirty(dirty);
+    setContactSaved(false);
+  }, [name, email, phone, budgetSignal, journeyTypePref, groupSize, groupComposition, lead]);
 
-    // Log activity
+  const logActivity = async (type: string, description: string, metadata?: Record<string, unknown>) => {
     await fetch(`/api/admin/leads/${lead.id}/activities`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: activityType, description, metadata }),
+      body: JSON.stringify({ type, description, metadata }),
     });
+  };
 
-    // Log audit
+  const logAudit = async (action: string, changes: Record<string, unknown>) => {
     await fetch("/api/admin/audit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         entityType: "lead",
         entityId: lead.id,
-        action: "updated",
-        changes: { before: { [field]: lead[field as keyof Lead] }, after: { [field]: value } },
+        action,
+        changes,
       }),
     });
+  };
 
+  // Save contact info
+  const handleSaveContact = async () => {
+    setContactSaving(true);
+    const supabase = createClient();
+    const updates: Record<string, unknown> = {
+      name: name.trim() || null,
+      email: email.trim() || null,
+      phone: phone.trim() || null,
+      budget_signal: budgetSignal.trim() || null,
+      journey_type_pref: journeyTypePref.trim() || null,
+      group_size: groupSize ? parseInt(groupSize) : null,
+      group_composition: groupComposition.trim() || null,
+    };
+
+    await supabase.from("enquiries").update(updates).eq("id", lead.id);
+    await logActivity("contact_updated", "Contact information updated");
+    await logAudit("updated", { after: updates });
+
+    setContactSaving(false);
+    setContactDirty(false);
+    setContactSaved(true);
+    setTimeout(() => setContactSaved(false), 3000);
     fetchActivities();
     router.refresh();
   };
 
-  const handleStatusChange = (newStatus: string) => {
+  const handleDiscardContact = () => {
+    setName(lead.name ?? "");
+    setEmail(lead.email ?? "");
+    setPhone(lead.phone ?? "");
+    setBudgetSignal(lead.budget_signal ?? "");
+    setJourneyTypePref(lead.journey_type_pref ?? "");
+    setGroupSize(lead.group_size?.toString() ?? "");
+    setGroupComposition(lead.group_composition ?? "");
+  };
+
+  // Auto-create booking when status → deposit
+  const createBookingForLead = async () => {
+    setCreatingBooking(true);
+    const supabase = createClient();
+
+    // Check if booking already exists for this lead
+    const { data: existing } = await supabase
+      .from("bookings")
+      .select("id")
+      .eq("enquiry_id", lead.id)
+      .limit(1);
+
+    if (existing && existing.length > 0) {
+      setCreatingBooking(false);
+      router.push(`/admin/bookings/${existing[0].id}`);
+      return;
+    }
+
+    // Find the tour if lead had a journey interest
+    let tourId = null;
+    if (lead.journey_type_pref) {
+      const { data: tour } = await supabase
+        .from("tours")
+        .select("id")
+        .ilike("title", `%${lead.journey_type_pref}%`)
+        .limit(1)
+        .single();
+      tourId = tour?.id ?? null;
+    }
+
+    const { data: booking, error } = await supabase
+      .from("bookings")
+      .insert({
+        enquiry_id: lead.id,
+        tour_id: tourId,
+        status: "deposit",
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      console.error("Failed to create booking:", error.message);
+      setCreatingBooking(false);
+      return;
+    }
+
+    await logActivity("booking_created", `Booking created (${booking.id.substring(0, 8)})`);
+    await logAudit("booking_created", { after: { booking_id: booking.id } });
+
+    setCreatingBooking(false);
+    fetchActivities();
+    router.refresh();
+    router.push(`/admin/bookings/${booking.id}`);
+  };
+
+  // Status change
+  const handleStatusChange = async (newStatus: string) => {
+    setStatusSaving(true);
     setStatus(newStatus);
-    updateField("status", newStatus, "status_change", `Status changed to ${newStatus.replace(/_/g, " ")}`, {
+
+    const supabase = createClient();
+    await supabase.from("enquiries").update({ status: newStatus }).eq("id", lead.id);
+
+    await logActivity("status_change", `Status changed to ${newStatus.replace(/_/g, " ")}`, {
       from: lead.status,
       to: newStatus,
     });
+    await logAudit("updated", {
+      before: { status: lead.status },
+      after: { status: newStatus },
+    });
+
+    setStatusSaving(false);
+    fetchActivities();
+    router.refresh();
+
+    // Auto-create booking on deposit
+    if (newStatus === "deposit" && !hasBooking) {
+      await createBookingForLead();
+    }
   };
 
-  const handleAssignmentChange = (newAssignee: string) => {
+  // Assignment change
+  const handleAssignmentChange = async (newAssignee: string) => {
+    setStatusSaving(true);
     setAssignedTo(newAssignee);
-    updateField(
-      "assigned_to",
-      newAssignee || null,
-      "assignment",
-      newAssignee ? `Assigned to ${newAssignee}` : "Unassigned"
-    );
-  };
 
-  const handleSaveNotes = async () => {
-    setSaving(true);
     const supabase = createClient();
     await supabase
       .from("enquiries")
-      .update({ notes })
+      .update({ assigned_to: newAssignee || null })
       .eq("id", lead.id);
+
+    await logActivity(
+      "assignment",
+      newAssignee ? `Assigned to ${newAssignee}` : "Unassigned"
+    );
+    await logAudit("updated", {
+      before: { assigned_to: lead.assigned_to },
+      after: { assigned_to: newAssignee || null },
+    });
+
+    setStatusSaving(false);
+    fetchActivities();
+    router.refresh();
+  };
+
+  // Notes
+  const handleSaveNotes = async () => {
+    setNotesSaving(true);
+    const supabase = createClient();
+    await supabase.from("enquiries").update({ notes }).eq("id", lead.id);
     setNotesDirty(false);
-    setSaving(false);
+    setNotesSaving(false);
     router.refresh();
   };
 
@@ -139,56 +287,127 @@ export function LeadDetail({ lead }: { lead: Lead }) {
     (Date.now() - new Date(lead.created_at).getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  const inputClass =
+    "w-full px-3 py-2 text-sm bg-warm-50 border border-warm-200 rounded-lg focus:outline-none focus:border-navy/30";
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Left column — main content */}
       <div className="lg:col-span-2 space-y-6">
-        {/* Contact info */}
+        {/* Editable Contact info */}
         <div className="bg-white rounded-xl p-5 border border-warm-200">
-          <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
-            Contact Information
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xs tracking-widest uppercase text-foreground-muted">
+              Contact Information
+            </h2>
+            {contactSaved && (
+              <span className="text-xs text-green-600">Saved</span>
+            )}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div>
-              <p className="text-xs text-foreground-muted">Name</p>
-              <p className="mt-0.5">{lead.name ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Name</label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full name..."
+                className={inputClass + " mt-1"}
+              />
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Email</p>
-              <p className="mt-0.5">{lead.email ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="email@example.com"
+                className={inputClass + " mt-1"}
+              />
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Phone</p>
-              <p className="mt-0.5">{lead.phone ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Phone</label>
+              <input
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="+1 555 000 0000"
+                className={inputClass + " mt-1"}
+              />
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Source</p>
-              <p className="mt-0.5">{lead.source ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Budget Signal</label>
+              <select
+                value={budgetSignal}
+                onChange={(e) => setBudgetSignal(e.target.value)}
+                className={inputClass + " mt-1"}
+              >
+                <option value="">Unknown</option>
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="ultra">Ultra</option>
+              </select>
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Campaign</p>
-              <p className="mt-0.5">{lead.utm_campaign ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Journey Preference</label>
+              <input
+                value={journeyTypePref}
+                onChange={(e) => setJourneyTypePref(e.target.value)}
+                placeholder="e.g. The Masterpiece"
+                className={inputClass + " mt-1"}
+              />
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Journey Preference</p>
-              <p className="mt-0.5">{lead.journey_type_pref ?? "—"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-foreground-muted">Budget Signal</p>
-              <p className="mt-0.5">{lead.budget_signal ?? "—"}</p>
-            </div>
-            <div>
-              <p className="text-xs text-foreground-muted">Group</p>
-              <p className="mt-0.5">
-                {lead.group_size ? `${lead.group_size} people` : "—"}
-                {lead.group_composition ? ` (${lead.group_composition})` : ""}
+              <label className="text-xs text-foreground-muted">Source</label>
+              <p className="mt-1 px-3 py-2 text-sm text-foreground-muted">
+                {lead.source ?? "—"}
               </p>
             </div>
             <div>
-              <p className="text-xs text-foreground-muted">Interests</p>
-              <p className="mt-0.5">{lead.interests?.join(", ") ?? "—"}</p>
+              <label className="text-xs text-foreground-muted">Group Size</label>
+              <input
+                type="number"
+                min="1"
+                value={groupSize}
+                onChange={(e) => setGroupSize(e.target.value)}
+                placeholder="e.g. 2"
+                className={inputClass + " mt-1"}
+              />
+            </div>
+            <div>
+              <label className="text-xs text-foreground-muted">Group Composition</label>
+              <input
+                value={groupComposition}
+                onChange={(e) => setGroupComposition(e.target.value)}
+                placeholder="e.g. couple, family"
+                className={inputClass + " mt-1"}
+              />
+            </div>
+            <div>
+              <label className="text-xs text-foreground-muted">Interests</label>
+              <p className="mt-1 px-3 py-2 text-sm text-foreground-muted">
+                {lead.interests?.join(", ") ?? "—"}
+              </p>
             </div>
           </div>
+
+          {contactDirty && (
+            <div className="mt-4 flex items-center gap-3 pt-3 border-t border-warm-100">
+              <button
+                onClick={handleSaveContact}
+                disabled={contactSaving}
+                className="px-4 py-2 text-xs font-medium rounded-lg bg-navy text-white hover:bg-navy-light transition-colors disabled:opacity-50"
+              >
+                {contactSaving ? "Saving..." : "Save Contact Info"}
+              </button>
+              <button
+                onClick={handleDiscardContact}
+                className="px-4 py-2 text-xs text-foreground-muted hover:text-foreground transition-colors"
+              >
+                Discard
+              </button>
+            </div>
+          )}
         </div>
 
         {/* AI Brief */}
@@ -223,10 +442,10 @@ export function LeadDetail({ lead }: { lead: Lead }) {
             <div className="mt-2 flex items-center gap-3">
               <button
                 onClick={handleSaveNotes}
-                disabled={saving}
+                disabled={notesSaving}
                 className="px-4 py-2 text-xs font-medium rounded-lg bg-navy text-white hover:bg-navy-light transition-colors"
               >
-                {saving ? "Saving..." : "Save Notes"}
+                {notesSaving ? "Saving..." : "Save Notes"}
               </button>
               <button
                 onClick={() => {
@@ -258,15 +477,16 @@ export function LeadDetail({ lead }: { lead: Lead }) {
         {/* Status & Assignment */}
         <div className="bg-white rounded-xl p-5 border border-warm-200">
           <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
-            Status
+            Status & Assignment
           </h2>
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-foreground-muted mb-1.5">Status</p>
+              <label className="text-xs text-foreground-muted mb-1.5 block">Status</label>
               <select
                 value={status}
                 onChange={(e) => handleStatusChange(e.target.value)}
-                className="w-full text-sm px-3 py-2 border border-warm-200 rounded-lg bg-white"
+                disabled={statusSaving}
+                className="w-full text-sm px-3 py-2 border border-warm-200 rounded-lg bg-white disabled:opacity-50"
               >
                 {STATUS_OPTIONS.map((s) => (
                   <option key={s} value={s}>
@@ -274,13 +494,17 @@ export function LeadDetail({ lead }: { lead: Lead }) {
                   </option>
                 ))}
               </select>
+              {statusSaving && (
+                <p className="text-[10px] text-foreground-muted mt-1">Saving...</p>
+              )}
             </div>
             <div>
-              <p className="text-xs text-foreground-muted mb-1.5">Assigned to</p>
+              <label className="text-xs text-foreground-muted mb-1.5 block">Assigned to</label>
               <select
                 value={assignedTo}
                 onChange={(e) => handleAssignmentChange(e.target.value)}
-                className="w-full text-sm px-3 py-2 border border-warm-200 rounded-lg bg-white"
+                disabled={statusSaving}
+                className="w-full text-sm px-3 py-2 border border-warm-200 rounded-lg bg-white disabled:opacity-50"
               >
                 <option value="">Unassigned</option>
                 <option value="tony">Tony</option>
@@ -288,6 +512,32 @@ export function LeadDetail({ lead }: { lead: Lead }) {
               </select>
             </div>
           </div>
+        </div>
+
+        {/* Create Booking */}
+        <div className="bg-white rounded-xl p-5 border border-warm-200">
+          <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
+            Booking
+          </h2>
+          {hasBooking ? (
+            <p className="text-xs text-green-600">
+              A booking exists for this lead. Check the Bookings page.
+            </p>
+          ) : (
+            <div>
+              <p className="text-xs text-foreground-muted mb-3">
+                No booking yet. One will be created automatically when status
+                changes to &ldquo;deposit&rdquo;, or you can create one manually.
+              </p>
+              <button
+                onClick={createBookingForLead}
+                disabled={creatingBooking}
+                className="w-full px-4 py-2.5 text-xs font-medium rounded-lg bg-gold text-white hover:opacity-90 transition-colors disabled:opacity-50"
+              >
+                {creatingBooking ? "Creating..." : "Create Booking"}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Quick Stats */}
