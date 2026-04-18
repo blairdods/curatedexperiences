@@ -89,6 +89,18 @@ export function LeadDetail({ lead }: { lead: Lead }) {
       body: JSON.stringify({ type: activityType, description, metadata }),
     });
 
+    // Log audit
+    await fetch("/api/admin/audit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        entityType: "lead",
+        entityId: lead.id,
+        action: "updated",
+        changes: { before: { [field]: lead[field as keyof Lead] }, after: { [field]: value } },
+      }),
+    });
+
     fetchActivities();
     router.refresh();
   };

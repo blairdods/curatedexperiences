@@ -162,6 +162,18 @@ export function JourneyForm({
         setSaving(false);
         return;
       }
+
+      // Log audit
+      await fetch("/api/admin/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          entityType: "tour",
+          entityId: data.id,
+          action: "updated",
+          changes: { after: { title: record.title, slug: record.slug, active: record.active } },
+        }),
+      });
     } else {
       const { error: err } = await supabase.from("tours").insert(record);
       if (err) {

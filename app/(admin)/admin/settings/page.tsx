@@ -1,5 +1,6 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { SettingsEditor } from "@/components/admin/settings-editor";
 
 const SETTING_GROUPS = [
@@ -92,6 +93,22 @@ export default async function SettingsPage() {
         Edit brand voice and concierge configuration. Changes take effect
         immediately on the next concierge conversation.
       </p>
+
+      {/* Quick links */}
+      <div className="mt-6 flex gap-3">
+        <Link
+          href="/admin/settings/team"
+          className="px-4 py-2.5 text-sm font-medium rounded-lg bg-white border border-warm-200 text-foreground hover:border-navy/30 transition-colors"
+        >
+          Team Management
+        </Link>
+        <Link
+          href="/admin/settings/emails"
+          className="px-4 py-2.5 text-sm font-medium rounded-lg bg-white border border-warm-200 text-foreground hover:border-navy/30 transition-colors"
+        >
+          Email Templates
+        </Link>
+      </div>
 
       <div className="mt-8 space-y-10">
         {SETTING_GROUPS.map((group) => (

@@ -7,11 +7,34 @@ import { sendNurtureEmail } from "@/lib/email/send";
  * POST /api/nurture
  *
  * Processes the nurture email queue. Called by a cron job (Vercel Cron or external).
- * Checks all enquiries with a nurture_sequence set, determines which email is due,
- * and sends it.
+ * Reads email templates from DB (email_templates table), falling back to
+ * hardcoded sequences if DB is empty.
  *
  * Auth: Requires CRON_SECRET header to prevent unauthorized calls.
  */
+
+interface DbTemplate {
+  subject: string;
+  preview_text: string | null;
+  body_html: string;
+  delay_days: number;
+}
+
+async function getSequenceFromDb(
+  supabase: Awaited<ReturnType<typeof createServiceClient>>,
+  sequenceType: string
+): Promise<DbTemplate[] | null> {
+  const { data } = await supabase
+    .from("email_templates")
+    .select("subject, preview_text, body_html, delay_days")
+    .eq("sequence_type", sequenceType)
+    .eq("active", true)
+    .order("step_index", { ascending: true });
+
+  if (data && data.length > 0) return data;
+  return null;
+}
+
 async function handleNurture(request: Request) {
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -41,7 +64,18 @@ async function handleNurture(request: Request) {
       continue;
     }
 
-    const sequence = getSequence(enquiry.intent_score);
+    // Try DB templates first, fall back to hardcoded
+    const seqType = enquiry.intent_score >= 7 ? "high_intent" : "mid_intent";
+    const dbTemplates = await getSequenceFromDb(supabase, seqType);
+    const sequence = dbTemplates
+      ? dbTemplates.map((t) => ({
+          delayDays: t.delay_days,
+          subject: t.subject,
+          previewText: t.preview_text ?? "",
+          bodyHtml: t.body_html,
+        }))
+      : getSequence(enquiry.intent_score);
+
     if (!sequence) {
       skipped++;
       continue;

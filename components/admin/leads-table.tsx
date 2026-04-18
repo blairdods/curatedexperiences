@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { BulkActionBar } from "@/components/admin/bulk-action-bar";
 
 interface Lead {
   id: string;
@@ -45,6 +46,7 @@ const STATUS_COLORS: Record<string, string> = {
 
 export function LeadsTable({ leads }: { leads: Lead[] }) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const router = useRouter();
 
   const updateLead = async (
@@ -56,20 +58,80 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
     router.refresh();
   };
 
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === leads.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(leads.map((l) => l.id)));
+    }
+  };
+
+  const handleBulkAction = useCallback(
+    async (action: "status" | "assign" | "delete", value?: string) => {
+      await fetch("/api/admin/leads/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: Array.from(selectedIds), action, value }),
+      });
+      setSelectedIds(new Set());
+      router.refresh();
+    },
+    [selectedIds, router]
+  );
+
   return (
     <div className="space-y-3">
+      {selectedIds.size > 0 && (
+        <BulkActionBar
+          selectedCount={selectedIds.size}
+          onAction={handleBulkAction}
+          onClear={() => setSelectedIds(new Set())}
+        />
+      )}
+
+      {/* Select all */}
+      {leads.length > 0 && (
+        <div className="flex items-center gap-2 px-2">
+          <input
+            type="checkbox"
+            checked={selectedIds.size === leads.length && leads.length > 0}
+            onChange={toggleSelectAll}
+            className="rounded border-warm-300"
+          />
+          <span className="text-xs text-foreground-muted">
+            {selectedIds.size === leads.length ? "Deselect all" : "Select all"}
+          </span>
+        </div>
+      )}
+
       {leads.map((lead) => (
         <div
           key={lead.id}
-          className="bg-white rounded-xl border border-warm-200 overflow-hidden"
+          className={`bg-white rounded-xl border overflow-hidden ${
+            selectedIds.has(lead.id)
+              ? "border-navy/30 ring-1 ring-navy/10"
+              : "border-warm-200"
+          }`}
         >
           {/* Header row */}
-          <div
-            className="flex items-center gap-4 px-5 py-4 cursor-pointer hover:bg-warm-50/50"
-            onClick={() =>
-              setExpandedId(expandedId === lead.id ? null : lead.id)
-            }
-          >
+          <div className="flex items-center gap-4 px-5 py-4">
+            <input
+              type="checkbox"
+              checked={selectedIds.has(lead.id)}
+              onChange={() => toggleSelect(lead.id)}
+              onClick={(e) => e.stopPropagation()}
+              className="rounded border-warm-300 flex-shrink-0"
+            />
+
             {/* Intent indicator */}
             <div
               className={`w-2 h-2 rounded-full flex-shrink-0 ${
@@ -81,7 +143,12 @@ export function LeadsTable({ leads }: { leads: Lead[] }) {
               }`}
             />
 
-            <div className="flex-1 min-w-0">
+            <div
+              className="flex-1 min-w-0 cursor-pointer"
+              onClick={() =>
+                setExpandedId(expandedId === lead.id ? null : lead.id)
+              }
+            >
               <Link
                 href={`/admin/leads/${lead.id}`}
                 onClick={(e) => e.stopPropagation()}

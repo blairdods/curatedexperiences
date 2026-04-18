@@ -2,6 +2,7 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import { BackLink } from "@/components/admin/ui/back-link";
 import { ContentForm } from "@/components/admin/content-form";
+import { ContentVersionHistory } from "@/components/admin/content-version-history";
 
 export default async function EditContentPage({
   params,
@@ -23,6 +24,12 @@ export default async function EditContentPage({
 
   if (!content) notFound();
 
+  const { data: versions } = await serviceSupabase
+    .from("content_versions")
+    .select("*")
+    .eq("content_id", id)
+    .order("version", { ascending: false });
+
   return (
     <div>
       <BackLink href="/admin/content" label="Back to Content" />
@@ -40,6 +47,9 @@ export default async function EditContentPage({
           source_type: content.source_type,
         }}
       />
+      <div className="mt-8 max-w-3xl">
+        <ContentVersionHistory contentId={id} versions={versions ?? []} />
+      </div>
     </div>
   );
 }

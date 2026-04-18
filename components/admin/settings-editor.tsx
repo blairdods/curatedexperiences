@@ -50,10 +50,22 @@ export function SettingsEditor({
     if (upsertError) {
       setError(upsertError.message);
     } else {
+      // Log audit
+      await fetch("/api/admin/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          entityType: "settings",
+          entityId: settingKey,
+          action: "updated",
+          changes: { before: { value: initialValue }, after: { value } },
+        }),
+      });
+
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     }
-  }, [settingKey, value]);
+  }, [settingKey, value, initialValue]);
 
   return (
     <div className="bg-white rounded-xl border border-warm-200 p-5">

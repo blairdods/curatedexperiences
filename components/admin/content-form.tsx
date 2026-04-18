@@ -78,6 +78,42 @@ export function ContentForm({
       let savedId = initialData?.id;
 
       if (isEditing && savedId) {
+        // Snapshot current version before updating
+        const supabaseService = createClient();
+        const { data: maxVer } = await supabaseService
+          .from("content_versions")
+          .select("version")
+          .eq("content_id", savedId)
+          .order("version", { ascending: false })
+          .limit(1)
+          .single();
+
+        await supabaseService.from("content_versions").insert({
+          content_id: savedId,
+          version: (maxVer?.version ?? 0) + 1,
+          title: initialData?.title,
+          body: initialData?.body,
+          type: initialData?.type,
+          region_tags: initialData?.region_tags,
+          status: initialData?.status,
+          created_by: (await supabase.auth.getUser()).data.user?.email,
+        });
+
+        // Log audit
+        await fetch("/api/admin/audit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            entityType: "content",
+            entityId: savedId,
+            action: "updated",
+            changes: {
+              before: { title: initialData?.title, body: initialData?.body, type: initialData?.type, status: initialData?.status },
+              after: { title: record.title, body: record.body, type: record.type, status: record.status },
+            },
+          }),
+        });
+
         const { error: err } = await supabase
           .from("content")
           .update(record)

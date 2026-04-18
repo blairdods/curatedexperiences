@@ -2,6 +2,7 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect, notFound } from "next/navigation";
 import { BackLink } from "@/components/admin/ui/back-link";
 import { JourneyForm } from "@/components/admin/journey-form";
+import { JourneyAvailability } from "@/components/admin/journey-availability";
 
 export default async function EditJourneyPage({
   params,
@@ -22,6 +23,12 @@ export default async function EditJourneyPage({
     .single();
 
   if (!journey) notFound();
+
+  const { data: availability } = await serviceSupabase
+    .from("journey_availability")
+    .select("*")
+    .eq("tour_id", id)
+    .order("start_date", { ascending: true });
 
   return (
     <div>
@@ -50,6 +57,9 @@ export default async function EditJourneyPage({
           active: journey.active ?? true,
         }}
       />
+      <div className="mt-8 max-w-4xl">
+        <JourneyAvailability tourId={id} slots={availability ?? []} />
+      </div>
     </div>
   );
 }

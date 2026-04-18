@@ -45,6 +45,19 @@ export function BookingDetail({ booking }: { booking: Booking }) {
     setSaving(true);
     const supabase = createClient();
     await supabase.from("bookings").update(updates).eq("id", booking.id);
+
+    // Log audit
+    await fetch("/api/admin/audit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        entityType: "booking",
+        entityId: booking.id,
+        action: "updated",
+        changes: { after: updates },
+      }),
+    });
+
     setSaving(false);
     router.refresh();
   };
