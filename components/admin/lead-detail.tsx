@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/components/admin/ui/status-badge";
 import { ActivityTimeline } from "@/components/admin/activity-timeline";
@@ -48,6 +47,16 @@ const STATUS_OPTIONS = [
   "closed_lost",
 ];
 
+// Helper to PATCH the lead via API route (uses service client server-side)
+async function patchLead(id: string, updates: Record<string, unknown>) {
+  const res = await fetch(`/api/admin/leads/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updates),
+  });
+  return res.ok;
+}
+
 export function LeadDetail({
   lead,
   hasBooking,
@@ -82,12 +91,12 @@ export function LeadDetail({
 
   // Booking creation
   const [creatingBooking, setCreatingBooking] = useState(false);
+  const [bookingExists, setBookingExists] = useState(hasBooking);
 
   const fetchActivities = useCallback(async () => {
     const res = await fetch(`/api/admin/leads/${lead.id}/activities`);
     if (res.ok) {
-      const data = await res.json();
-      setActivities(data);
+      setActivities(await res.json());
     }
   }, [lead.id]);
 
@@ -121,20 +130,14 @@ export function LeadDetail({
     await fetch("/api/admin/audit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        entityType: "lead",
-        entityId: lead.id,
-        action,
-        changes,
-      }),
+      body: JSON.stringify({ entityType: "lead", entityId: lead.id, action, changes }),
     });
   };
 
   // Save contact info
   const handleSaveContact = async () => {
     setContactSaving(true);
-    const supabase = createClient();
-    const updates: Record<string, unknown> = {
+    const updates = {
       name: name.trim() || null,
       email: email.trim() || null,
       phone: phone.trim() || null,
@@ -144,16 +147,17 @@ export function LeadDetail({
       group_composition: groupComposition.trim() || null,
     };
 
-    await supabase.from("enquiries").update(updates).eq("id", lead.id);
-    await logActivity("contact_updated", "Contact information updated");
-    await logAudit("updated", { after: updates });
-
+    const ok = await patchLead(lead.id, updates);
+    if (ok) {
+      await logActivity("contact_updated", "Contact information updated");
+      await logAudit("updated", { after: updates });
+      setContactDirty(false);
+      setContactSaved(true);
+      setTimeout(() => setContactSaved(false), 3000);
+      fetchActivities();
+      router.refresh();
+    }
     setContactSaving(false);
-    setContactDirty(false);
-    setContactSaved(true);
-    setTimeout(() => setContactSaved(false), 3000);
-    fetchActivities();
-    router.refresh();
   };
 
   const handleDiscardContact = () => {
@@ -166,59 +170,28 @@ export function LeadDetail({
     setGroupComposition(lead.group_composition ?? "");
   };
 
-  // Auto-create booking when status → deposit
+  // Create booking for this lead
   const createBookingForLead = async () => {
     setCreatingBooking(true);
-    const supabase = createClient();
 
-    // Check if booking already exists for this lead
-    const { data: existing } = await supabase
-      .from("bookings")
-      .select("id")
-      .eq("enquiry_id", lead.id)
-      .limit(1);
-
-    if (existing && existing.length > 0) {
-      setCreatingBooking(false);
-      router.push(`/admin/bookings/${existing[0].id}`);
-      return;
-    }
-
-    // Find the tour if lead had a journey interest
-    let tourId = null;
-    if (lead.journey_type_pref) {
-      const { data: tour } = await supabase
-        .from("tours")
-        .select("id")
-        .ilike("title", `%${lead.journey_type_pref}%`)
-        .limit(1)
-        .single();
-      tourId = tour?.id ?? null;
-    }
-
-    const { data: booking, error } = await supabase
-      .from("bookings")
-      .insert({
+    const res = await fetch("/api/admin/leads/booking", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         enquiry_id: lead.id,
-        tour_id: tourId,
-        status: "deposit",
-      })
-      .select("id")
-      .single();
+        journey_type_pref: lead.journey_type_pref,
+      }),
+    });
 
-    if (error) {
-      console.error("Failed to create booking:", error.message);
-      setCreatingBooking(false);
-      return;
+    if (res.ok) {
+      const { id: bookingId } = await res.json();
+      await logActivity("booking_created", `Booking created`);
+      await logAudit("booking_created", { after: { booking_id: bookingId } });
+      setBookingExists(true);
+      fetchActivities();
+      router.push(`/admin/bookings/${bookingId}`);
     }
-
-    await logActivity("booking_created", `Booking created (${booking.id.substring(0, 8)})`);
-    await logAudit("booking_created", { after: { booking_id: booking.id } });
-
     setCreatingBooking(false);
-    fetchActivities();
-    router.refresh();
-    router.push(`/admin/bookings/${booking.id}`);
   };
 
   // Status change
@@ -226,26 +199,25 @@ export function LeadDetail({
     setStatusSaving(true);
     setStatus(newStatus);
 
-    const supabase = createClient();
-    await supabase.from("enquiries").update({ status: newStatus }).eq("id", lead.id);
+    const ok = await patchLead(lead.id, { status: newStatus });
+    if (ok) {
+      await logActivity("status_change", `Status changed to ${newStatus.replace(/_/g, " ")}`, {
+        from: lead.status,
+        to: newStatus,
+      });
+      await logAudit("updated", {
+        before: { status: lead.status },
+        after: { status: newStatus },
+      });
+      fetchActivities();
+      router.refresh();
 
-    await logActivity("status_change", `Status changed to ${newStatus.replace(/_/g, " ")}`, {
-      from: lead.status,
-      to: newStatus,
-    });
-    await logAudit("updated", {
-      before: { status: lead.status },
-      after: { status: newStatus },
-    });
-
-    setStatusSaving(false);
-    fetchActivities();
-    router.refresh();
-
-    // Auto-create booking on deposit
-    if (newStatus === "deposit" && !hasBooking) {
-      await createBookingForLead();
+      // Auto-create booking on deposit
+      if (newStatus === "deposit" && !bookingExists) {
+        await createBookingForLead();
+      }
     }
+    setStatusSaving(false);
   };
 
   // Assignment change
@@ -253,34 +225,28 @@ export function LeadDetail({
     setStatusSaving(true);
     setAssignedTo(newAssignee);
 
-    const supabase = createClient();
-    await supabase
-      .from("enquiries")
-      .update({ assigned_to: newAssignee || null })
-      .eq("id", lead.id);
-
-    await logActivity(
-      "assignment",
-      newAssignee ? `Assigned to ${newAssignee}` : "Unassigned"
-    );
-    await logAudit("updated", {
-      before: { assigned_to: lead.assigned_to },
-      after: { assigned_to: newAssignee || null },
-    });
-
+    const ok = await patchLead(lead.id, { assigned_to: newAssignee || null });
+    if (ok) {
+      await logActivity("assignment", newAssignee ? `Assigned to ${newAssignee}` : "Unassigned");
+      await logAudit("updated", {
+        before: { assigned_to: lead.assigned_to },
+        after: { assigned_to: newAssignee || null },
+      });
+      fetchActivities();
+      router.refresh();
+    }
     setStatusSaving(false);
-    fetchActivities();
-    router.refresh();
   };
 
   // Notes
   const handleSaveNotes = async () => {
     setNotesSaving(true);
-    const supabase = createClient();
-    await supabase.from("enquiries").update({ notes }).eq("id", lead.id);
-    setNotesDirty(false);
+    const ok = await patchLead(lead.id, { notes });
+    if (ok) {
+      setNotesDirty(false);
+      router.refresh();
+    }
     setNotesSaving(false);
-    router.refresh();
   };
 
   const daysSinceCreated = Math.floor(
@@ -292,7 +258,7 @@ export function LeadDetail({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* Left column — main content */}
+      {/* Left column */}
       <div className="lg:col-span-2 space-y-6">
         {/* Editable Contact info */}
         <div className="bg-white rounded-xl p-5 border border-warm-200">
@@ -472,7 +438,7 @@ export function LeadDetail({
         </div>
       </div>
 
-      {/* Right column — sidebar */}
+      {/* Right column */}
       <div className="space-y-6">
         {/* Status & Assignment */}
         <div className="bg-white rounded-xl p-5 border border-warm-200">
@@ -495,7 +461,7 @@ export function LeadDetail({
                 ))}
               </select>
               {statusSaving && (
-                <p className="text-[10px] text-foreground-muted mt-1">Saving...</p>
+                <p className="text-[10px] text-navy mt-1">Saving...</p>
               )}
             </div>
             <div>
@@ -519,7 +485,7 @@ export function LeadDetail({
           <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
             Booking
           </h2>
-          {hasBooking ? (
+          {bookingExists ? (
             <p className="text-xs text-green-600">
               A booking exists for this lead. Check the Bookings page.
             </p>
