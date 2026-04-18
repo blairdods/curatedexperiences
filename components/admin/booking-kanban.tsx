@@ -25,16 +25,16 @@ interface Booking {
 }
 
 const COLUMNS = [
-  { key: "confirmed", label: "Confirmed" },
   { key: "deposit", label: "Deposit Paid" },
+  { key: "planning", label: "Planning" },
   { key: "in_progress", label: "In Progress" },
   { key: "completed", label: "Completed" },
 ];
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
-  confirmed: ["deposit"],
-  deposit: ["confirmed", "in_progress"],
-  in_progress: ["deposit", "completed"],
+  deposit: ["planning"],
+  planning: ["deposit", "in_progress"],
+  in_progress: ["planning", "completed"],
   completed: ["in_progress"],
 };
 

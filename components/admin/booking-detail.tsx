@@ -30,7 +30,7 @@ interface Booking {
   enquiries: { name: string | null; email: string | null } | null;
 }
 
-const STATUS_FLOW = ["confirmed", "deposit", "in_progress", "completed"];
+const STATUS_FLOW = ["deposit", "planning", "in_progress", "completed"];
 
 export function BookingDetail({ booking }: { booking: Booking }) {
   const router = useRouter();
