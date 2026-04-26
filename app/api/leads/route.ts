@@ -13,8 +13,89 @@ export async function POST(request: Request) {
 
   const supabase = await createServiceClient();
 
-  // Build ai_brief from conversation if available
   const hasConciergeContext = source === "concierge_email_capture" && conversation_summary;
+
+  // --- Try to merge with existing lead ---
+  // Two merge strategies:
+  // 1. Concierge brief creates a lead with no email → visitor provides email → merge
+  // 2. Same email submitted twice (e.g. concierge then contact form) → merge
+  const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+
+  // Strategy 1: Find recent concierge lead without email (brief was generated but no email captured)
+  const { data: noEmailLead } = await supabase
+    .from("enquiries")
+    .select("id, ai_brief, intent_score, source")
+    .eq("source", "concierge")
+    .is("email", null)
+    .gte("created_at", twoHoursAgo)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  // Strategy 2: Find any recent lead with the same email
+  const { data: sameEmailLead } = !noEmailLead
+    ? await supabase
+        .from("enquiries")
+        .select("id, ai_brief, intent_score, source")
+        .eq("email", email)
+        .gte("created_at", twoHoursAgo)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single()
+    : { data: null };
+
+  const existingLead = noEmailLead || sameEmailLead;
+
+  if (existingLead) {
+    // Merge: update the existing lead with new details
+    const transcriptNote = conversation_summary
+      ? `\n\n---\nConversation transcript:\n${conversation_summary.slice(0, 2000)}`
+      : "";
+    const mergedBrief = existingLead.ai_brief
+      ? `${existingLead.ai_brief}${transcriptNote}`
+      : conversation_summary
+        ? `Visitor provided email during concierge conversation. Transcript:\n\n${conversation_summary.slice(0, 2000)}`
+        : existingLead.ai_brief;
+
+    const updates: Record<string, unknown> = {
+      email,
+      intent_score: Math.max(existingLead.intent_score ?? 0, 6),
+    };
+    if (name) updates.name = name;
+    if (phone) updates.phone = phone;
+    if (mergedBrief) updates.ai_brief = mergedBrief;
+    if (interests?.length) updates.interests = interests;
+
+    const { error: updateError } = await supabase
+      .from("enquiries")
+      .update(updates)
+      .eq("id", existingLead.id);
+
+    if (updateError) {
+      return NextResponse.json({ error: updateError.message }, { status: 500 });
+    }
+
+    // Log activity
+    const mergeSource = source === "concierge_email_capture" ? "concierge inline form" : source ?? "form";
+    supabase
+      .from("lead_activities")
+      .insert({
+        enquiry_id: existingLead.id,
+        type: "contact_captured",
+        description: `Email captured via ${mergeSource} — merged with existing ${existingLead.source} lead`,
+        created_by: "system",
+      })
+      .then(() => {}, () => {});
+
+    // Send welcome email
+    sendWelcomeEmail(email, name).catch((err) =>
+      console.error("Welcome email failed:", err)
+    );
+
+    return NextResponse.json({ id: existingLead.id, status: "merged" });
+  }
+
+  // --- No existing lead to merge — create new ---
   const ai_brief = hasConciergeContext
     ? `Visitor provided email during concierge conversation. Transcript:\n\n${conversation_summary.slice(0, 2000)}`
     : undefined;
@@ -31,7 +112,6 @@ export async function POST(request: Request) {
       interests,
       ai_brief,
       status: "new",
-      // Start mid-intent nurture for email captures (no concierge brief)
       nurture_sequence: "mid:pending",
       intent_score: hasConciergeContext ? 5 : 3,
     })
@@ -42,7 +122,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Log activity for the lead
+  // Log activity
   if (data?.id) {
     supabase
       .from("lead_activities")
@@ -57,7 +137,7 @@ export async function POST(request: Request) {
       .then(() => {}, (err) => console.error("Activity log failed:", err));
   }
 
-  // Send welcome email (fire-and-forget)
+  // Send welcome email
   sendWelcomeEmail(email, name).catch((err) =>
     console.error("Welcome email failed:", err)
   );
