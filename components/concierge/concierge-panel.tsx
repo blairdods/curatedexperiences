@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { Message } from "./use-concierge";
 import { ConciergeHeader } from "./concierge-header";
 import { ConciergeThread } from "./concierge-thread";
 import { ConciergeInput } from "./concierge-input";
 import { ConciergeOfframp } from "./concierge-offramp";
 import { ConciergeEmailCapture } from "./concierge-email-capture";
+import { ConciergeInlineCapture } from "./concierge-inline-capture";
 
 export function ConciergePanel({
   messages,
@@ -26,6 +27,20 @@ export function ConciergePanel({
   onEmailCapture: (email: string, name?: string) => void;
 }) {
   const [showEmailCapture, setShowEmailCapture] = useState(false);
+  const [inlineCaptured, setInlineCaptured] = useState(false);
+  const [inlineDismissed, setInlineDismissed] = useState(false);
+
+  const handleInlineSubmit = useCallback(
+    (email: string, name?: string) => {
+      onEmailCapture(email, name);
+      setInlineCaptured(true);
+    },
+    [onEmailCapture]
+  );
+
+  const userMessageCount = messages.filter((m) => m.role === "user").length;
+  const showInlineCapture =
+    userMessageCount >= 3 && !inlineCaptured && !inlineDismissed && !showEmailCapture;
 
   return (
     <div
@@ -53,6 +68,13 @@ export function ConciergePanel({
         </div>
       )}
 
+      {showInlineCapture && (
+        <ConciergeInlineCapture
+          onSubmit={handleInlineSubmit}
+          onDismiss={() => setInlineDismissed(true)}
+        />
+      )}
+
       {showEmailCapture ? (
         <ConciergeEmailCapture onSubmit={onEmailCapture} />
       ) : (
@@ -65,7 +87,7 @@ export function ConciergePanel({
 
       <ConciergeOfframp />
 
-      {/* Email capture toggle — only show when no messages yet */}
+      {/* Email capture toggle — show when no messages or not yet captured */}
       {messages.length === 0 && !showEmailCapture && (
         <div className="px-5 pb-3 text-center">
           <button
