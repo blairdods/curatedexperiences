@@ -190,6 +190,18 @@ export async function POST(request: Request) {
           .single();
 
         if (data?.id) {
+          // Log activity
+          supabase
+            .from("lead_activities")
+            .insert({
+              enquiry_id: data.id,
+              type: "lead_created",
+              description: `Lead auto-created from concierge brief (intent: ${brief.intent_score}/10)`,
+              metadata: { intent_score: brief.intent_score, journey_type: brief.journey_type_pref },
+              created_by: "system",
+            })
+            .then(() => {}, () => {});
+
           // Fire-and-forget email notification
           notifyNewLead(brief, data.id).catch(() => {});
         }

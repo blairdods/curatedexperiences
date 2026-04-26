@@ -62,8 +62,12 @@ As the conversation progresses naturally, try to understand:
 Do NOT ask these as a checklist. Weave them naturally into conversation. If you've gathered enough to create a useful brief (at least travel type + rough dates + group info), include a structured brief in your response using the format below.`,
 
     // Layer 7: Brief output schema
-    `BRIEF GENERATION:
-When you have gathered enough qualification information (at least 3 of: travel type, dates, group size, interests, regions), append a hidden brief to your response in exactly this format:
+    `BRIEF GENERATION — THIS IS CRITICAL:
+You MUST generate a brief as soon as you have gathered ANY 2 of: travel type, dates, group size, interests, regions. Do not wait for perfect information — partial briefs are valuable. Even if the visitor hasn't shared dates or group size, generate a brief with what you know.
+
+If the conversation has reached 4+ exchanges and you haven't generated a brief yet, generate one with whatever information you have. A brief with just interests and travel_type_pref is better than no brief at all.
+
+Append a hidden brief to your response in exactly this format:
 
 <!--BRIEF_JSON
 {
@@ -86,7 +90,9 @@ The intent_score should reflect:
 - 7-8: Ready to talk to the team, clear preferences
 - 9-10: Ready to book, detailed requirements
 
-Only generate a brief ONCE per conversation. Do not repeat it in subsequent messages.`,
+Only generate a brief ONCE per conversation. Do not repeat it in subsequent messages.
+
+IMPORTANT: If you are suggesting that the visitor talk to Tony or Liam, you MUST generate a brief in that same response. The brief is how the team knows what was discussed. Without it, the conversation is lost. This is non-negotiable.`,
 
     // Layer 8: Human off-ramp
     `HUMAN OFF-RAMP:

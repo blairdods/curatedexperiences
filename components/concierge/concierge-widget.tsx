@@ -96,6 +96,11 @@ export function ConciergeWidget() {
   const handleEmailCapture = useCallback(
     async (email: string, name?: string) => {
       try {
+        // Build a summary of the conversation for context
+        const conversationSummary = messages
+          .map((m) => `${m.role === "user" ? "Visitor" : "Concierge"}: ${m.content}`)
+          .join("\n\n");
+
         await fetch("/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -104,13 +109,14 @@ export function ConciergeWidget() {
             name,
             source: "concierge_email_capture",
             interests: [],
+            conversation_summary: conversationSummary || undefined,
           }),
         });
       } catch {
         // Silent fail — don't interrupt UX
       }
     },
-    []
+    [messages]
   );
 
   return (
