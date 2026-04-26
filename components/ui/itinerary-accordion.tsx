@@ -8,6 +8,8 @@ export interface ItineraryDay {
   description: string;
   overnight?: string;
   highlights?: string[];
+  /** Optional activities the traveller can choose from on this day */
+  freedomOfChoice?: string[];
 }
 
 export function ItineraryAccordion({ days }: { days: ItineraryDay[] }) {
@@ -62,6 +64,21 @@ export function ItineraryAccordion({ days }: { days: ItineraryDay[] }) {
                       </li>
                     ))}
                   </ul>
+                )}
+                {day.freedomOfChoice && day.freedomOfChoice.length > 0 && (
+                  <div className="mt-4 p-4 rounded-lg bg-warm-100/60 border border-warm-200/50">
+                    <p className="text-xs tracking-widest uppercase text-warm-500 mb-2">
+                      Freedom of Choice
+                    </p>
+                    <ul className="space-y-1.5">
+                      {day.freedomOfChoice.map((option, k) => (
+                        <li key={k} className="flex items-start gap-2 text-sm text-foreground/70">
+                          <span className="text-navy/40 mt-0.5 flex-shrink-0">&#9673;</span>
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {day.overnight && (
                   <p className="mt-4 text-xs text-warm-500 tracking-wide">

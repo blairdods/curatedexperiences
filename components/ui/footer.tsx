@@ -10,6 +10,7 @@ const FOOTER_LINKS = {
   ],
   Company: [
     { href: "/about", label: "Our Story" },
+    { href: "tel:+6498895828", label: "Call Us" },
   ],
 };
 
@@ -60,11 +61,11 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} Curated Experiences. All rights
+            &copy; {new Date().getFullYear()} Curated Experiences&trade;. All rights
             reserved.
           </p>
           <p className="text-xs text-white/30">
-            A PPG Tours venture — World Travel Award winners
+            A PPG Tours venture — Best NZ DMC, World Travel Awards 2025
           </p>
         </div>
       </div>

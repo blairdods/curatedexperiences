@@ -28,8 +28,11 @@ what you've loved in past travels, what you've always dreamed of but never quite
 build something from scratch. No templates. No group departures. No compromises.
 
 Our names are Tony and Liam. We've built this on the back of PPG Tours — two decades of luxury
-travel expertise, World Travel Award recognition, and the trust of the world's leading cruise lines.
-But Curated Experiences is something more personal. It's the company we'd want to book with ourselves.
+travel expertise, winners of Best New Zealand DMC at the World Travel Awards 2025, and finalists in
+two categories for 2026 (NZ Tour Operator of the Year and NZ Destination Management Company).
+We're trusted by Silversea, Ponant, Celebrity, and MSC to deliver VIP land programs for their most
+discerning guests. But Curated Experiences is something more personal. It's the company we'd want
+to book with ourselves. We are family-owned, NZ-owned, and we focus exclusively on New Zealand.
 `;
 
 // ============================================================

@@ -128,14 +128,19 @@ export default function HomePage() {
             <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-gold">
               <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
             </svg>
-            World Travel Award Winners
+            Best NZ DMC — World Travel Awards 2025
           </span>
           <span className="text-warm-300">|</span>
-          <span>PPG Tours & PPG Events</span>
+          <span className="flex items-center gap-2">
+            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-gold">
+              <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
+            </svg>
+            2026 Finalist — NZ Tour Operator &amp; DMC of the Year
+          </span>
           <span className="text-warm-300">|</span>
-          <span>20+ Years of Excellence</span>
+          <span>Trusted by Silversea, Ponant &amp; Celebrity Cruises</span>
           <span className="text-warm-300">|</span>
-          <span>Trusted by the World&apos;s Most Discerning Travellers</span>
+          <span>NZ-Owned &amp; Operated — 20+ Years</span>
         </div>
       </div>
 
@@ -189,9 +194,9 @@ export default function HomePage() {
                 "Based in NZ, we know the secret tides, the hidden tracks, and the best tables. We are your on-the-ground experts.",
             },
             {
-              title: "Our Personal Curators",
+              title: "Your Personal Curators",
               description:
-                "With you for every step of your journey, ensuring your experience is as seamless as it is spectacular.",
+                "We care about you. Your dedicated travel designer is with you from first conversation through every day on the ground — ensuring your experience is seamless, safe, and spectacular.",
             },
           ].map((item) => (
             <div key={item.title}>
@@ -235,9 +240,9 @@ export default function HomePage() {
                 PPG Tours
               </h3>
               <p className="mt-2 text-sm text-white/50 leading-relaxed">
-                World Travel Award-winning luxury travel specialists.
-                Trusted by Silversea, Ponant, and MSC for bespoke shore
-                excursions and land programs.
+                Best New Zealand DMC — World Travel Awards 2025.
+                Trusted by Silversea, Ponant, Celebrity, and MSC for bespoke
+                shore excursions and VIP land programs across New Zealand.
               </p>
             </div>
             <div>
@@ -257,11 +262,12 @@ export default function HomePage() {
             </p>
             <p className="text-sm text-white/70 leading-relaxed">
               Luxury is easy to promise, but difficult to deliver in the remote
-              corners of New Zealand. Because Curated Experiences is powered by
-              an award-winning DMC, we don&apos;t just book your travel — we own
-              the logistics. From our private fleet to our &apos;closed-door&apos;
-              relationships with lodge owners, your journey is secured by the
-              most decorated travel team in the country.
+              corners of New Zealand. Because Curated Experiences&trade; is powered by
+              the Best New Zealand DMC (World Travel Awards 2025), we don&apos;t
+              just book your travel — we own the logistics. From our private
+              fleet to our &apos;closed-door&apos; relationships with lodge
+              owners, your journey is secured by the most decorated travel team
+              in the country.
             </p>
           </div>
         </div>
@@ -369,15 +375,25 @@ export default function HomePage() {
             Talk to your personal curator about your dream New Zealand
             experience — no obligation, just inspiration.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               size="lg"
               onClick={() =>
                 window.dispatchEvent(new Event("ce:open-concierge"))
               }
             >
-              Schedule a private consultation to tailor your Curated Experience
+              Start a Conversation
             </Button>
+            <a
+              href="tel:+6498895828"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm tracking-wide text-navy border border-navy/20
+                rounded-lg hover:bg-navy/5 transition-colors"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+              </svg>
+              Call +64 9 889 5828
+            </a>
           </div>
         </div>
       </Section>
