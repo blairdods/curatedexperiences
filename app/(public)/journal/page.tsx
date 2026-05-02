@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { ARTICLES } from "@/lib/data/journal";
+import { getArticles } from "@/lib/data/journal";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 
 export default function JournalPage() {
+  const articles = getArticles();
+
   return (
     <>
       <Hero
@@ -15,7 +17,7 @@ export default function JournalPage() {
 
       <Section>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {ARTICLES.map((article) => (
+          {articles.map((article) => (
             <Link
               key={article.slug}
               href={`/journal/${article.slug}`}

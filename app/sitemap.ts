@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { JOURNEYS } from "@/lib/data/journeys";
 import { DESTINATIONS } from "@/lib/data/destinations";
-import { ARTICLES } from "@/lib/data/journal";
+import { getArticles } from "@/lib/data/journal";
 
 const BASE_URL = "https://curatedexperiences.com";
 
@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const articlePages: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
+  const articlePages: MetadataRoute.Sitemap = getArticles().map((a) => ({
     url: `${BASE_URL}/journal/${a.slug}`,
     lastModified: a.publishedAt,
     changeFrequency: "monthly" as const,

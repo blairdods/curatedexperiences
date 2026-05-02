@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getArticleBySlug, ARTICLES } from "@/lib/data/journal";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import { getArticleBySlug, getArticleSlugs } from "@/lib/data/journal";
 import { getJourneyBySlug } from "@/lib/data/journeys";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
 
 export async function generateStaticParams() {
-  return ARTICLES.map((a) => ({ slug: a.slug }));
+  return getArticleSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -23,6 +24,30 @@ export async function generateMetadata({
     description: article.excerpt,
   };
 }
+
+const mdxComponents = {
+  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
+    <h2
+      className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mt-12 mb-4"
+      {...props}
+    />
+  ),
+  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
+    <p className="text-foreground/80 leading-relaxed" {...props} />
+  ),
+  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
+    <ul className="space-y-2 ml-1" {...props} />
+  ),
+  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
+    <li className="flex items-start gap-3 text-foreground/80 leading-relaxed">
+      <span className="text-gold flex-shrink-0 mt-1">&#9672;</span>
+      <span {...props} />
+    </li>
+  ),
+  strong: (props: React.HTMLAttributes<HTMLElement>) => (
+    <strong className="font-semibold text-foreground" {...props} />
+  ),
+};
 
 export default async function JournalArticlePage({
   params,
@@ -54,51 +79,18 @@ export default async function JournalArticlePage({
           <span className="text-warm-300">|</span>
           <span>{article.readTime}</span>
           <span className="text-warm-300">|</span>
-          <span>{new Date(article.publishedAt).toLocaleDateString("en-NZ", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}</span>
+          <span>
+            {new Date(article.publishedAt).toLocaleDateString("en-NZ", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </span>
         </div>
 
         {/* Article body */}
         <div className="space-y-6">
-          {article.content.split("\n\n").map((block, i) => {
-            if (block.startsWith("## ")) {
-              return (
-                <h2
-                  key={i}
-                  className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mt-12 mb-4"
-                >
-                  {block.replace("## ", "")}
-                </h2>
-              );
-            }
-            if (block.startsWith("- ")) {
-              const items = block.split("\n").filter((l) => l.startsWith("- "));
-              return (
-                <ul key={i} className="space-y-2 ml-1">
-                  {items.map((item, j) => (
-                    <li
-                      key={j}
-                      className="flex items-start gap-3 text-foreground/80 leading-relaxed"
-                    >
-                      <span className="text-gold flex-shrink-0 mt-1">&#9672;</span>
-                      {item.replace("- ", "").replace(/\*\*/g, "")}
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-            return (
-              <p
-                key={i}
-                className="text-foreground/80 leading-relaxed"
-              >
-                {block}
-              </p>
-            );
-          })}
+          <MDXRemote source={article.source} components={mdxComponents} />
         </div>
 
         {/* Author */}
@@ -106,9 +98,7 @@ export default async function JournalArticlePage({
           <p className="text-xs tracking-widest uppercase text-warm-500 mb-1">
             Written by
           </p>
-          <p className="text-sm font-medium text-foreground">
-            {article.author}
-          </p>
+          <p className="text-sm font-medium text-foreground">{article.author}</p>
         </div>
       </Section>
 

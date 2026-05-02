@@ -1,7 +1,7 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ContentQueue } from "@/components/admin/content-queue";
-import { ARTICLES } from "@/lib/data/journal";
+import { getArticles } from "@/lib/data/journal";
 import { DESTINATIONS } from "@/lib/data/destinations";
 import Link from "next/link";
 
@@ -100,11 +100,11 @@ export default async function ContentApprovalPage() {
         <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
           Journal Articles
           <span className="ml-2 text-warm-400 normal-case tracking-normal">
-            (static — edit in codebase)
+            (MDX files in content/journal/)
           </span>
         </h2>
         <div className="space-y-2">
-          {ARTICLES.map((article) => (
+          {getArticles().map((article) => (
             <div
               key={article.slug}
               className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-warm-200"
