@@ -27,6 +27,8 @@ export default async function BookingDetailPage({
   const tourTitle =
     (booking.tours as { title: string; slug: string } | null)?.title ??
     "Custom Journey";
+  const tourSlug =
+    (booking.tours as { title: string; slug: string } | null)?.slug ?? null;
 
   return (
     <div>
@@ -46,7 +48,14 @@ export default async function BookingDetailPage({
         <StatusBadge status={booking.status} />
       </div>
 
-      <BookingDetail booking={booking as Parameters<typeof BookingDetail>[0]["booking"]} />
+      <BookingDetail
+        booking={booking as Parameters<typeof BookingDetail>[0]["booking"]}
+        bookingInfo={{
+          guests: booking.guests as Record<string, unknown>[] | null,
+          tourTitle,
+          tourSlug,
+        }}
+      />
     </div>
   );
 }

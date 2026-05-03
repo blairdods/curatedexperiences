@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { StatusBadge } from "@/components/admin/ui/status-badge";
+import { CostingPanel } from "@/components/admin/costing/costing-panel";
 import Link from "next/link";
 
 interface Booking {
@@ -30,9 +31,21 @@ interface Booking {
   enquiries: { name: string | null; email: string | null } | null;
 }
 
+interface BookingInfo {
+  guests: Record<string, unknown>[] | null;
+  tourTitle: string | null;
+  tourSlug: string | null;
+}
+
 const STATUS_FLOW = ["deposit", "planning", "in_progress", "completed"];
 
-export function BookingDetail({ booking }: { booking: Booking }) {
+export function BookingDetail({
+  booking,
+  bookingInfo,
+}: {
+  booking: Booking;
+  bookingInfo: BookingInfo;
+}) {
   const router = useRouter();
   const [status, setStatus] = useState(booking.status);
   const [depositPaidAt, setDepositPaidAt] = useState(booking.deposit_paid_at ?? "");
@@ -274,6 +287,14 @@ export function BookingDetail({ booking }: { booking: Booking }) {
               Add
             </button>
           </div>
+        </div>
+
+        {/* Tour Costing */}
+        <div className="bg-white rounded-xl p-5 border border-warm-200">
+          <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
+            Tour Costing
+          </h2>
+          <CostingPanel bookingId={booking.id} bookingInfo={bookingInfo} />
         </div>
       </div>
 
