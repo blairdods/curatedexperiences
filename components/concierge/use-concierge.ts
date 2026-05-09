@@ -82,7 +82,7 @@ export function useConcierge() {
   }, []);
 
   const sendMessage = useCallback(
-    async (content: string) => {
+    async (content: string, customization?: import("@/lib/itinerary-refiner/types").ItineraryCustomization) => {
       if (!content.trim() || isStreaming) return;
 
       const userMessage: Message = { role: "user", content: content.trim() };
@@ -111,6 +111,7 @@ export function useConcierge() {
               currentPage: typeof window !== "undefined" ? window.location.pathname : undefined,
               referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined,
               returningVisitor: messages.length > 0,
+              customization: customization ?? undefined,
             },
           }),
           signal: controller.signal,

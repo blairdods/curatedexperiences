@@ -138,6 +138,7 @@ export async function POST(request: Request) {
     messageCount: messages.filter(
       (m: { role: string }) => m.role === "user"
     ).length,
+    customization: visitorContext?.customization,
   };
 
   const systemPrompt = buildSystemPrompt(ragContext, vCtx, brandVoice);
@@ -184,20 +185,26 @@ export async function POST(request: Request) {
             intent_score: brief.intent_score,
             ai_brief: brief.ai_brief,
             source: "concierge",
-            status: brief.intent_score >= 7 ? "nurturing" : "new",
+            status: "new",
           })
           .select("id")
           .single();
 
         if (data?.id) {
+          const hasContactInfo = !!brief.name;
           // Log activity
           supabase
             .from("lead_activities")
             .insert({
               enquiry_id: data.id,
               type: "lead_created",
-              description: `Lead auto-created from concierge brief (intent: ${brief.intent_score}/10)`,
-              metadata: { intent_score: brief.intent_score, journey_type: brief.journey_type_pref },
+              description: `Lead auto-created from concierge brief (intent: ${brief.intent_score}/10)${hasContactInfo ? "" : " — no email, set to new instead of nurturing"}`,
+              metadata: {
+                intent_score: brief.intent_score,
+                journey_type: brief.journey_type_pref,
+                has_email: false,
+                status: "new",
+              },
               created_by: "system",
             })
             .then(() => {}, () => {});

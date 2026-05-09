@@ -11,7 +11,6 @@
  */
 
 const DISMISSED_KEY = "ce-concierge-dismissed";
-const TRIGGERED_KEY = "ce-concierge-triggered";
 
 export function wasDismissed(): boolean {
   if (typeof window === "undefined") return false;
@@ -23,14 +22,22 @@ export function markDismissed() {
   sessionStorage.setItem(DISMISSED_KEY, "true");
 }
 
-export function wasTriggered(): boolean {
-  if (typeof window === "undefined") return false;
-  return sessionStorage.getItem(TRIGGERED_KEY) === "true";
+/** Triggered state is per-page-path — navigating to a different journey
+ *  page should allow the timer to fire again. Dismissed state is global. */
+function triggeredKey(pathname: string): string {
+  // Normalize: strip trailing slash and query params
+  const normalized = pathname.replace(/\/$/, "").split("?")[0];
+  return `ce-concierge-triggered:${normalized}`;
 }
 
-export function markTriggered() {
+export function wasTriggered(pathname: string): boolean {
+  if (typeof window === "undefined") return false;
+  return sessionStorage.getItem(triggeredKey(pathname)) === "true";
+}
+
+export function markTriggered(pathname: string) {
   if (typeof window === "undefined") return;
-  sessionStorage.setItem(TRIGGERED_KEY, "true");
+  sessionStorage.setItem(triggeredKey(pathname), "true");
 }
 
 /** Pages where auto-trigger and exit intent are active */

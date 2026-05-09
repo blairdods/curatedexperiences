@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "./button";
+import { dispatchOpenConcierge } from "@/lib/itinerary-refiner/events";
 import { openContactModal } from "./contact-modal";
 
 export function StickyCta({
@@ -21,23 +21,22 @@ export function StickyCta({
         )}
 
         <div className="mt-6 space-y-3">
-          <Button
-            size="md"
-            className="w-full"
-            onClick={() =>
-              window.dispatchEvent(new Event("ce:open-concierge"))
-            }
+          <button
+            onClick={() => dispatchOpenConcierge()}
+            className="w-full inline-flex items-center justify-center px-6 py-3 text-sm tracking-wide
+              bg-navy text-background rounded-lg
+              hover:bg-navy/90 transition-colors duration-200"
           >
             Begin Your Journey
-          </Button>
-          <Button
-            variant="outline"
-            size="md"
-            className="w-full"
+          </button>
+          <button
             onClick={() => openContactModal(title)}
+            className="w-full inline-flex items-center justify-center px-6 py-3 text-sm tracking-wide
+              text-navy border border-navy/20 rounded-lg
+              hover:bg-navy/5 transition-colors duration-200"
           >
             Enquire
-          </Button>
+          </button>
         </div>
 
         <p className="mt-4 text-[11px] text-center text-foreground-muted">

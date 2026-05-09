@@ -9,6 +9,10 @@ import { StickyCta } from "@/components/ui/sticky-cta";
 import { JourneyCard } from "@/components/ui/journey-card";
 import { Button } from "@/components/ui/button";
 import { JourneyMap } from "@/components/ui/journey-map";
+import { ItineraryRefinerSummary } from "@/components/ui/itinerary-refiner-summary";
+import { MobileRefinerBar } from "@/components/ui/mobile-refiner-bar";
+import { ItineraryRefinerProvider } from "@/lib/itinerary-refiner/context";
+import { dispatchOpenConcierge } from "@/lib/itinerary-refiner/events";
 import { JOURNEYS, type Journey } from "@/lib/data/journeys";
 import { getRouteForJourney } from "@/lib/data/coordinates";
 
@@ -17,9 +21,10 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
     (j) => j.slug !== journey.slug
   ).slice(0, 2);
   const route = getRouteForJourney(journey.slug);
+  const hasRefiner = (journey.locationGroups?.length ?? 0) > 0;
 
   return (
-    <>
+    <ItineraryRefinerProvider journey={journey}>
       {/* Hero */}
       <Hero
         title={journey.title}
@@ -28,8 +33,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
         compact
         cta={{
           label: "Start Planning This Journey",
-          onClick: () =>
-            window.dispatchEvent(new Event("ce:open-concierge")),
+          onClick: () => dispatchOpenConcierge({ journeySlug: journey.slug }),
         }}
       />
 
@@ -104,11 +108,15 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
             )}
 
             {/* Itinerary */}
-            <div className="mt-16">
+            <div className="mt-16" id="itinerary-section">
               <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-8">
                 Day by day
               </h2>
-              <ItineraryAccordion days={journey.itinerary} />
+              <ItineraryAccordion
+                days={journey.itinerary}
+                variant={hasRefiner ? "refinable" : "static"}
+                locationGroups={journey.locationGroups}
+              />
             </div>
 
             {/* Inclusions */}
@@ -141,14 +149,12 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               </ul>
             </div>
 
-            {/* Mobile CTA */}
+            {/* Mobile CTA — hidden when refiner bar is active */}
             <div className="mt-12 lg:hidden">
               <Button
                 size="lg"
                 className="w-full"
-                onClick={() =>
-                  window.dispatchEvent(new Event("ce:open-concierge"))
-                }
+                onClick={() => dispatchOpenConcierge({ journeySlug: journey.slug })}
               >
                 Start Planning This Journey
               </Button>
@@ -158,16 +164,23 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
             </div>
           </div>
 
-          {/* Right column — sticky CTA (desktop) */}
+          {/* Right column — refiner sidebar or sticky CTA */}
           <div>
-            <StickyCta
-              title={journey.title}
-              priceFrom={journey.priceFromUsd}
-              duration={journey.durationDays}
-            />
+            {hasRefiner ? (
+              <ItineraryRefinerSummary journey={journey} />
+            ) : (
+              <StickyCta
+                title={journey.title}
+                priceFrom={journey.priceFromUsd}
+                duration={journey.durationDays}
+              />
+            )}
           </div>
         </div>
       </div>
+
+      {/* Mobile refiner bar (only for journeys with location groups) */}
+      {hasRefiner && <MobileRefinerBar journey={journey} />}
 
       {/* Testimonial */}
       {journey.testimonial && (
@@ -201,6 +214,6 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
           ))}
         </div>
       </Section>
-    </>
+    </ItineraryRefinerProvider>
   );
 }

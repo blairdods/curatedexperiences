@@ -12,11 +12,14 @@
  * 8. Human off-ramp — always offer a human option
  */
 
+import type { ItineraryCustomization } from "@/lib/itinerary-refiner/types";
+
 export interface VisitorContext {
   currentPage?: string;
   referrer?: string;
   returningVisitor?: boolean;
   messageCount?: number;
+  customization?: ItineraryCustomization;
 }
 
 export function buildSystemPrompt(
@@ -145,6 +148,42 @@ function buildVisitorContextLayer(ctx?: VisitorContext): string {
       `- This is message ${ctx.messageCount} in the conversation — consider offering to connect with the team`
     );
   }
+  if (ctx.customization) {
+    parts.push(buildCustomizationLayer(ctx.customization));
+  }
 
   return parts.join("\n");
+}
+
+function buildCustomizationLayer(c: ItineraryCustomization): string {
+  const lines = ["- This visitor has already started customizing their itinerary:"];
+
+  lines.push(`  - Total desired duration: ${c.totalDays} days`);
+
+  // Day adjustments
+  const adjustments = Object.entries(c.dayAdjustments);
+  if (adjustments.length > 0) {
+    const adjusted = adjustments.filter(([, nights]) => nights > 0);
+    if (adjusted.length > 0) {
+      lines.push("  - Adjusted nights per location:");
+      for (const [locId, nights] of adjusted) {
+        lines.push(`    - ${locId}: ${nights} night${nights !== 1 ? "s" : ""}`);
+      }
+    }
+  }
+
+  // Activity selections
+  const selections = Object.entries(c.daySelections).filter(
+    ([, sel]) => sel.selectedActivities.length > 0
+  );
+  if (selections.length > 0) {
+    lines.push("  - Selected activities:");
+    for (const [dayNum, sel] of selections) {
+      lines.push(
+        `    - Day ${dayNum}: ${sel.selectedActivities.join("; ")}`
+      );
+    }
+  }
+
+  return lines.join("\n");
 }

@@ -6,6 +6,9 @@ import { useConcierge } from "./use-concierge";
 import { ConciergeTrigger } from "./concierge-trigger";
 import { ConciergePanel } from "./concierge-panel";
 import { trackEvent } from "@/components/ui/analytics";
+import type { ConciergeOpenDetail } from "@/lib/itinerary-refiner/events";
+import { CONCIERGE_OPEN_EVENT } from "@/lib/itinerary-refiner/events";
+import type { ItineraryCustomization } from "@/lib/itinerary-refiner/types";
 import {
   wasDismissed,
   markDismissed,
@@ -20,14 +23,22 @@ export function ConciergeWidget() {
   const [showPrompt, setShowPrompt] = useState(false);
   const pathname = usePathname();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const customizationRef = useRef<ItineraryCustomization | null>(null);
   const { messages, isStreaming, error, sendMessage, stopStreaming } =
     useConcierge();
 
-  const open = useCallback(() => {
-    setIsOpen(true);
-    setShowPrompt(false);
-    trackEvent("concierge_open", { page: pathname });
-  }, [pathname]);
+  const open = useCallback(
+    (customization?: ItineraryCustomization) => {
+      customizationRef.current = customization ?? null;
+      setIsOpen(true);
+      setShowPrompt(false);
+      trackEvent("concierge_open", {
+        page: pathname,
+        hasCustomization: !!customization,
+      });
+    },
+    [pathname]
+  );
 
   const close = useCallback(() => {
     setIsOpen(false);
@@ -52,15 +63,20 @@ export function ConciergeWidget() {
     return () => document.removeEventListener("keydown", handleKey);
   }, [isOpen, close]);
 
+  // --- Reset prompt state on navigation ---
+  useEffect(() => {
+    setShowPrompt(false);
+  }, [pathname]);
+
   // --- Auto-trigger: 45s on tour pages ---
   useEffect(() => {
-    if (isOpen || wasDismissed() || wasTriggered()) return;
+    if (isOpen || wasDismissed() || wasTriggered(pathname)) return;
     if (!isTourPage(pathname)) return;
 
     timerRef.current = setTimeout(() => {
       if (!isOpen && !wasDismissed()) {
         setShowPrompt(true);
-        markTriggered();
+        markTriggered(pathname);
       }
     }, 45000);
 
@@ -71,13 +87,13 @@ export function ConciergeWidget() {
 
   // --- Exit intent trigger ---
   useEffect(() => {
-    if (isOpen || wasDismissed() || wasTriggered()) return;
+    if (isOpen || wasDismissed() || wasTriggered(pathname)) return;
     if (!isHighValuePage(pathname)) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !isOpen && !wasDismissed()) {
         setShowPrompt(true);
-        markTriggered();
+        markTriggered(pathname);
       }
     };
 
@@ -87,10 +103,25 @@ export function ConciergeWidget() {
 
   // --- Global CTA trigger ---
   useEffect(() => {
-    const handler = () => open();
-    window.addEventListener("ce:open-concierge", handler);
-    return () => window.removeEventListener("ce:open-concierge", handler);
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<ConciergeOpenDetail>).detail;
+      open(detail?.customization);
+    };
+    window.addEventListener(CONCIERGE_OPEN_EVENT, handler);
+    return () =>
+      window.removeEventListener(CONCIERGE_OPEN_EVENT, handler);
   }, [open]);
+
+  // --- Send message with customization context ---
+  const handleSendMessage = useCallback(
+    (content: string) => {
+      const customization = customizationRef.current;
+      // Once sent, clear so it doesn't get re-sent on subsequent messages
+      customizationRef.current = null;
+      sendMessage(content, customization ?? undefined);
+    },
+    [sendMessage]
+  );
 
   // --- Email capture handler ---
   const handleEmailCapture = useCallback(
@@ -137,7 +168,7 @@ export function ConciergeWidget() {
           messages={messages}
           isStreaming={isStreaming}
           error={error}
-          onSend={sendMessage}
+          onSend={handleSendMessage}
           onStop={stopStreaming}
           onClose={close}
           onEmailCapture={handleEmailCapture}
