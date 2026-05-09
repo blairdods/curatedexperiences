@@ -7,7 +7,8 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import type { Journey, LocationGroup } from "@/lib/data/itinerary-types";
+import type { Journey } from "@/lib/data/journeys";
+import type { LocationGroup } from "@/lib/data/itinerary-types";
 import type { ItineraryCustomization, RefinerState } from "./types";
 import { buildDefaultState, refinerReducer } from "./types";
 
