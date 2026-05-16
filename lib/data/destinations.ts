@@ -31,10 +31,11 @@ For American travellers, Fiordland consistently ranks as the most memorable part
     bestFor: ["Nature lovers", "Photographers", "Couples"],
     bestSeasons: "October–April, though winter has a haunting beauty",
     relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-hidden-trail"],
-    heroImage: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC6PK49VV41FSCHRRFQD3/534674-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80", alt: "Milford Sound" },
-      { src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80", alt: "Doubtful Sound" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC6PK49VV41FSCHRRFQD3/534674-preview.webp", alt: "Milford Sound (Piopiotahi), Fiordland – towering peaks reflected in mirror-calm water" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC6N9SMHQ53DR4X6HWEQ4/534672-preview.webp", alt: "Milford Sound, Fiordland – waterfalls cascading from granite walls" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4MBQGEF50QV4DD85XQHN/250917-preview.webp", alt: "Waiau River, Fiordland – gateway waterway to Milford Sound" },
     ],
   },
   {
@@ -55,10 +56,11 @@ For American travellers, Fiordland consistently ranks as the most memorable part
     bestFor: ["Active travellers", "Couples", "Families"],
     bestSeasons: "Year-round — summer for hiking, winter for skiing",
     relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-southern-heart", "the-hidden-trail"],
-    heroImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4YD4KGVZY0KTGNW5HES1/251816-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Queenstown lakefront" },
-      { src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80", alt: "The Remarkables" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4YD4KGVZY0KTGNW5HES1/251816-preview.webp", alt: "Queenstown Hill, Otago – aerial view over Queenstown and Lake Wakatipu" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4F75SMMD94D4RV38YDDK/250473-preview.webp", alt: "Glenorchy, Queenstown – horse trekking through snowcapped mountain scenery" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4D1ZRPNFE40Z2DF02CVM/250287-preview.webp", alt: "Kawarau River, Queenstown – turquoise river canyon through Otago landscape" },
     ],
   },
   {
@@ -79,9 +81,10 @@ But Marlborough is more than wine. The Marlborough Sounds are a labyrinth of wat
     bestFor: ["Wine lovers", "Food enthusiasts", "Couples"],
     bestSeasons: "February–April for harvest, December–March for the Sounds",
     relatedJourneySlugs: ["the-epicurean", "the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4NXGH76SB3YVKZPH6NFT/251048-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80", alt: "Marlborough vineyards" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4NXGH76SB3YVKZPH6NFT/251048-preview.webp", alt: "Queen Charlotte Track, Marlborough Sounds – coastal bush above the Sounds" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4064Y9SFP1W622F6B74G/thumbnails/249250-1280.webp", alt: "Marlborough Sounds aerial – drowned river valleys and inlets from above" },
     ],
   },
   {
@@ -102,9 +105,11 @@ The Aoraki Mackenzie International Dark Sky Reserve is one of only a handful in 
     bestFor: ["Nature lovers", "Stargazers", "Photographers"],
     bestSeasons: "October–April for hiking, year-round for stargazing",
     relatedJourneySlugs: ["the-masterpiece", "the-expedition", "the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4APVXH88HZRVGXJD59CM/250070-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80", alt: "Aoraki / Mount Cook" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4APVXH88HZRVGXJD59CM/250070-preview.webp", alt: "Aoraki / Mount Cook, Canterbury – the Caroline Face seen from Ball Ridge" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H3WQNA914H2Q9MHRECGVJ/248976-preview.webp", alt: "Lake Pukaki, Canterbury – turquoise glacier-fed lake with Aoraki on the horizon" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H5336JJ6WS878GY60JPY9/252217-preview.webp", alt: "Lake Pukaki, Canterbury – expansive alpine lake in the Mackenzie Basin" },
     ],
   },
 
@@ -131,10 +136,11 @@ For guests arriving or departing via The Lodge at Kauri Cliffs — set on 6,000 
     bestFor: ["Culture & history", "Nature lovers", "Couples"],
     bestSeasons: "November–April for warmth and sailing; autumn for quiet beauty",
     relatedJourneySlugs: ["the-masterpiece", "the-hidden-trail"],
-    heroImage: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4XBGNN3W6DQ98GNK6E0K/251732-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80", alt: "Bay of Islands, Northland" },
-      { src: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=800&q=80", alt: "Hokianga Harbour" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4XBGNN3W6DQ98GNK6E0K/251732-preview.webp", alt: "Tāne Mahuta, Waipoua Forest, Northland – ancient kauri tree, Lord of the Forest" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4QEC2Z20T7ZPA2PMAVRC/251177-preview.webp", alt: "Urupukapuka Island, Bay of Islands – island bush walk in the Bay of Islands" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H3W5WYBZYXMZ0ANY7Z0EA/thumbnails/248930-1280.webp", alt: "Bay of Islands, Northland – aerial view of the 144 islands" },
     ],
   },
 
@@ -157,10 +163,10 @@ Further south, where the Waikato River narrows into a turquoise torrent, sits Hu
     bestFor: ["Nature lovers", "Couples", "Luxury seekers"],
     bestSeasons: "Year-round; summer for cave visits and lake cruising",
     relatedJourneySlugs: ["the-masterpiece", "the-epicurean", "the-discovery", "the-hidden-trail"],
-    heroImage: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FT0NBHFKJX1JRJBTMY0/250528-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=800&q=80", alt: "Waitomo Glowworm Caves" },
-      { src: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80", alt: "Huka Falls, Taupo" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FT0NBHFKJX1JRJBTMY0/250528-preview.webp", alt: "Hobbiton Movie Set, Waikato – rolling green hills and hobbit holes of the Shire" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H3W32XJ6JP6A4R2WRDYTZ/248924-preview.webp", alt: "Waitomo Glowworm Caves, Waikato – bioluminescent glow of thousands of titiwai" },
     ],
   },
 
@@ -182,9 +188,11 @@ Hot Water Beach is the Coromandel's other great peculiarity: geothermal springs 
     bestFor: ["Nature lovers", "Couples", "Photographers"],
     bestSeasons: "December–March for beaches; shoulder seasons for solitude",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FX1H78MC3GMN94PSYV5/250539-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80", alt: "Cathedral Cove, Coromandel" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FX1H78MC3GMN94PSYV5/250539-preview.webp", alt: "Hot Water Beach, Coromandel – digging thermal pools steps from the Pacific" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HW9C39F28F93SXK7JB476WE4/569010-preview.webp", alt: "Glass Bottom Boat, Whitianga, Coromandel – near Cathedral Cove" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FXGSNRJWV3D335XFWZJ/250541-preview.webp", alt: "Kūaotunu, Coromandel Peninsula – coastal township on the east coast" },
     ],
   },
 
@@ -206,9 +214,10 @@ But the Bay of Plenty's most extraordinary feature lies offshore: Whakaari / Whi
     bestFor: ["Nature lovers", "Active travellers", "Families"],
     bestSeasons: "November–April for swimming and coastal activities",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1503516459261-40c66117780a?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4S97ARENA2RS9QYYSA9W/thumbnails/251343-1280.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1503516459261-40c66117780a?w=800&q=80", alt: "Bay of Plenty coastline" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4S97ARENA2RS9QYYSA9W/thumbnails/251343-1280.webp", alt: "Mount Maunganui, Bay of Plenty – white sand surf beach at the base of the Mount" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H531W7G9KEY8GP74W2AW2/252213-preview.webp", alt: "Kokako Retreat, Rotorua – glamping couple in autumn forest, Bay of Plenty" },
     ],
   },
 
@@ -231,9 +240,11 @@ This is the heartland of the Ngāti Whakaue and other Te Arawa iwi, and genuine 
     bestFor: ["Culture & history", "Nature lovers", "Couples"],
     bestSeasons: "Year-round — geothermal wonders don't sleep",
     relatedJourneySlugs: ["the-epicurean"],
-    heroImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H49E31B5Z9JFFVDHT172D/249959-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", alt: "Rotorua geothermal pools" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H49E31B5Z9JFFVDHT172D/249959-preview.webp", alt: "Waimangu Volcanic Valley, Rotorua – world's youngest geothermal system" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4PBTSMXVCYEQVFXT9BZD/251088-preview.webp", alt: "Tikitere (Hell's Gate), Rotorua – geothermal hot springs and mud pools" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H462TCBR38GGHWW5SRV45/249688-preview.webp", alt: "Lake Rotoiti, Rotorua – tranquil lake reflecting geothermal surroundings" },
     ],
   },
 
@@ -256,9 +267,10 @@ The Tongariro Alpine Crossing is routinely ranked among the world's great day wa
     bestFor: ["Active travellers", "Nature lovers", "Photographers"],
     bestSeasons: "October–April for the Crossing; June–October for skiing",
     relatedJourneySlugs: ["the-discovery"],
-    heroImage: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H30FWRD4P1DCKW3VH78WX/246637-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80", alt: "Tongariro National Park volcanoes" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H30FWRD4P1DCKW3VH78WX/246637-preview.webp", alt: "Tongariro Alpine Crossing, Tongariro National Park – volcanic plateau traverse" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H37KZFTHC5EH1QQF9JV5G/247205-preview.webp", alt: "Lake Rotoaira, Tongariro National Park, Ruapehu" },
     ],
   },
 
@@ -281,9 +293,10 @@ New Plymouth itself surprises. The Govett-Brewster Art Gallery is among the fine
     bestFor: ["Nature lovers", "Culture & history", "Active travellers"],
     bestSeasons: "October–March for summit access; year-round for coast",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1604999565976-8913ad2ddb37?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4QX723VEPMH5W8H1QTP1/251214-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1604999565976-8913ad2ddb37?w=800&q=80", alt: "Mount Taranaki" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4QX723VEPMH5W8H1QTP1/251214-preview.webp", alt: "Taranaki Maunga (Mount Taranaki) – near-perfect volcanic cone above the coast" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC85ZKJ48EHH81AKHY32J/thumbnails/534830-1280.webp", alt: "Maunga Taranaki, Taranaki – snowcapped summit rising from native bush" },
     ],
   },
 
@@ -305,9 +318,9 @@ The Manawatū Gorge was one of the most dramatic road corridors in the country b
     bestFor: ["Active travellers", "Culture & history", "Nature lovers"],
     bestSeasons: "October–April for river journeys and outdoor activities",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H2W207QMNVYWZF87QX5Z8/246272-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80", alt: "Whanganui River, Manawatu" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H2W207QMNVYWZF87QX5Z8/246272-preview.webp", alt: "Whanganui River, Manawatu-Whanganui – New Zealand's legally recognised river ancestor" },
     ],
   },
 
@@ -330,10 +343,10 @@ Napier is the Art Deco capital of the world — rebuilt almost entirely in the s
     bestFor: ["Wine lovers", "Food enthusiasts", "Couples"],
     bestSeasons: "February–May for harvest; December–March for the best weather",
     relatedJourneySlugs: ["the-masterpiece", "the-discovery"],
-    heroImage: "https://images.unsplash.com/photo-1504198266287-1659872e6590?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC762VQJJE1FNBS4ENQ16/534719-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1504198266287-1659872e6590?w=800&q=80", alt: "Hawke's Bay vineyards" },
-      { src: "https://images.unsplash.com/photo-1558618047-f4e60cac3005?w=800&q=80", alt: "Cape Kidnappers clifftops" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC762VQJJE1FNBS4ENQ16/534719-preview.webp", alt: "Haumoana, Hawke's Bay – cycling through wine country landscape" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4B9N4W0KG3GWXMTZN5EC/250125-preview.webp", alt: "Craggy Range winery, Hawke's Bay – world-class cellar door dining" },
     ],
   },
 
@@ -356,9 +369,10 @@ Gisborne's wine scene is modest in scale and extraordinary in quality. Chardonna
     bestFor: ["Culture & history", "Wine lovers", "Nature lovers"],
     bestSeasons: "November–April; December for pohutukawa in bloom",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4QSK58J8HC9YCHAZNDDJ/251202-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80", alt: "East Cape sunrise coastline" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4QSK58J8HC9YCHAZNDDJ/251202-preview.webp", alt: "Mount Hikurangi, Gisborne – first peak in New Zealand to greet the sunrise" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4S3PJF9Z2BQKPAMFXB0R/251327-preview.webp", alt: "Mount Hikurangi, Tairāwhiti – sacred summit of the Ngāti Porou people" },
     ],
   },
 
@@ -381,9 +395,10 @@ Te Papa Tongarewa, the national museum of New Zealand, is world-class in the tru
     bestFor: ["Culture & history", "Food enthusiasts", "Couples"],
     bestSeasons: "Year-round; summer for the harbour; autumn for dining",
     relatedJourneySlugs: ["the-discovery"],
-    heroImage: "https://images.unsplash.com/photo-1589652717521-10c0d7e7d604?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4M313NREETC2XAQBCHA2/250893-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1589652717521-10c0d7e7d604?w=800&q=80", alt: "Wellington harbour" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4M313NREETC2XAQBCHA2/250893-preview.webp", alt: "Te Papa Tongarewa museum, Wellington waterfront" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4SBXQX9HD1A2SJCK7JP7/thumbnails/251351-1280.webp", alt: "Hannah's Laneway, Wellington – vibrant inner-city dining and culture precinct" },
     ],
   },
 
@@ -406,9 +421,10 @@ But the Wairarapa's character extends well beyond its cellars. Wharekauhau Count
     bestFor: ["Wine lovers", "Couples", "Nature lovers"],
     bestSeasons: "February–May for harvest; October–April for coastal walks",
     relatedJourneySlugs: ["the-discovery"],
-    heroImage: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4M5AJC32QKTE7WDEKRE5/250899-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80", alt: "Martinborough vineyard, Wairarapa" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4M5AJC32QKTE7WDEKRE5/250899-preview.webp", alt: "Martinborough, Wairarapa – wine village surrounded by world-class pinot noir estates" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4MWKFXNJZB3QRR7JAARE/250963-preview.webp", alt: "Pūkaha Mount Bruce National Wildlife Centre, Wairarapa" },
     ],
   },
 
@@ -433,9 +449,10 @@ Abel Tasman National Park — accessible by water taxi, kayak, or helicopter fro
     bestFor: ["Nature lovers", "Couples", "Culture & history"],
     bestSeasons: "October–April — one of New Zealand's sunniest regions",
     relatedJourneySlugs: ["the-hidden-trail", "the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4K0PQMTP193TDYHFAAJA/250798-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=800&q=80", alt: "Abel Tasman coastline" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4K0PQMTP193TDYHFAAJA/250798-preview.webp", alt: "Kaiteriteri Beach, Nelson – golden sand gateway to Abel Tasman National Park" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H529Y83MMTVNQG9TSRZ25/thumbnails/252152-1280.webp", alt: "Abel Tasman National Park – golden beaches and turquoise bays from above" },
     ],
   },
 
@@ -458,9 +475,10 @@ A whale-watching flight by light aircraft or helicopter is one of the great wild
     bestFor: ["Nature lovers", "Photographers", "Wildlife enthusiasts"],
     bestSeasons: "Year-round — whales are present in all seasons",
     relatedJourneySlugs: ["the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC8J6V2PK7G0WQ28YS4GZ/534871-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&q=80", alt: "Kaikoura mountains and coast" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HV0CC8J6V2PK7G0WQ28YS4GZ/534871-preview.webp", alt: "Whale Watch Kaikōura – cruise in the deep waters off Kaikōura" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4P0DVAKV55JJ1N5W32WT/251056-preview.webp", alt: "Kaikōura coastline – coastal town backed by the Kaikōura Ranges with marine wildlife" },
     ],
   },
 
@@ -483,9 +501,10 @@ A heli-hike on Franz Josef Glacier is one of the definitive New Zealand experien
     bestFor: ["Nature lovers", "Active travellers", "Photographers"],
     bestSeasons: "October–April; glacier access year-round by helicopter",
     relatedJourneySlugs: ["the-expedition", "the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H44EYA9J10MDS9W6SR9N9/thumbnails/249578-1280.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80", alt: "Franz Josef Glacier, West Coast" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H44EYA9J10MDS9W6SR9N9/thumbnails/249578-1280.webp", alt: "Franz Josef Glacier (Kā Roimata o Hine Hukatere), West Coast – vast ice field from above" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H44DM1CA8S67MQ3WYPNC8/thumbnails/249574-1280.webp", alt: "Punakaiki Pancake Rocks, West Coast – dramatic limestone stacks and blowholes" },
     ],
   },
 
@@ -532,9 +551,11 @@ But it's the night sky that elevates the Mackenzie from beautiful to extraordina
     bestFor: ["Stargazers", "Photographers", "Nature lovers"],
     bestSeasons: "October–April for hiking; June–August for clearest skies",
     relatedJourneySlugs: ["the-expedition", "the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H47YKZNKJ6YZ76F7A7JXK/249824-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80", alt: "Lake Tekapo, Mackenzie Basin" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H47YKZNKJ6YZ76F7A7JXK/249824-preview.webp", alt: "Lake Takapō, Canterbury – turquoise glacial lake in the Mackenzie Basin" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H534PJBDBRKSC6HDQ6ERR/252220-preview.webp", alt: "Lake Pukaki, Canterbury – alpine lake with Aoraki / Mount Cook beyond" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H52X9WH602FS1QDBVCGTF/252201-preview.webp", alt: "Lake Tekapo/Takapō, Canterbury – star-gazing country in the world's largest dark sky reserve" },
     ],
   },
 
@@ -557,9 +578,11 @@ The Matukituki Valley extends west from Wānaka toward Mount Aspiring National P
     bestFor: ["Active travellers", "Couples", "Nature lovers"],
     bestSeasons: "December–March for summer; June–September for skiing",
     relatedJourneySlugs: ["the-southern-heart"],
-    heroImage: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H3YJDB7XB6Q6JFHCR3F3G/249130-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80", alt: "Lake Wānaka and mountains" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H3YJDB7XB6Q6JFHCR3F3G/249130-preview.webp", alt: "Roys Peak Track, Lake Wānaka – iconic ridgeline hike above the lake" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H471ZS2S5VY248SH4E3WA/249751-preview.webp", alt: "Wānaka and Lake Wānaka – still water reflections below the Southern Alps" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H52T6SV38EKB3KVVRZ4H3/252192-preview.webp", alt: "Lake Wānaka, Otago – crystal-clear lake stretching toward Mount Aspiring National Park" },
     ],
   },
 
@@ -582,9 +605,10 @@ The Otago Central Rail Trail — a four-day cycle through gorges, viaducts, and 
     bestFor: ["Wine lovers", "Active travellers", "Couples"],
     bestSeasons: "February–April for harvest and autumn colour; December–March for cycling",
     relatedJourneySlugs: ["the-masterpiece", "the-epicurean"],
-    heroImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4Q3X3YXH9Q5AVBPA9NHY/251152-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Central Otago schist landscape" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4Q3X3YXH9Q5AVBPA9NHY/251152-preview.webp", alt: "Central Otago – ancient schist tors and semi-arid wine country landscape" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4M8A7Y41R4T26XMZ583S/250906-preview.webp", alt: "Chard Farm vineyard, Queenstown-Lakes – Central Otago pinot noir country" },
     ],
   },
 
@@ -607,10 +631,11 @@ The Otago Peninsula is where nature takes over: a narrow finger of land extendin
     bestFor: ["Nature lovers", "Culture & history", "Photographers"],
     bestSeasons: "September–March for wildlife; year-round for the city",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4ESR6S5PMW660NTTVNAK/250438-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&q=80", alt: "Dunedin railway station" },
-      { src: "https://images.unsplash.com/photo-1541956064-243b8175e9c0?w=800&q=80", alt: "Otago Peninsula coastline" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4ESR6S5PMW660NTTVNAK/250438-preview.webp", alt: "Dunedin, Otago – Victorian heritage city with Scottish character" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4FNJYK6RNTPQ1F59W5CD/250515-preview.webp", alt: "Little blue penguin colony, Dunedin – one of the world's smallest penguins" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4NKR2S91XGYAX5DAY4B9/251022-preview.webp", alt: "Larnach Castle, Dunedin – New Zealand's only castle on the Otago Peninsula" },
     ],
   },
 
@@ -683,9 +708,10 @@ Bluff, at the very tip of the South Island, is the home of the Bluff oyster — 
     bestFor: ["Nature lovers", "Food enthusiasts", "Photographers"],
     bestSeasons: "October–March for wildlife; March–August for oysters",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRT9QGPRDWP8XYHVDAYJ09W/469476-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80", alt: "Southland wild coastline" },
+      { src: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRT9QGPRDWP8XYHVDAYJ09W/469476-preview.webp", alt: "Dock Bay, Te Anau – lakeside gateway to Fiordland and Doubtful Sound" },
+      { src: "https://cdn-syd.brandkit.com/accounts/201/files/01HF8H4ANDSPWQNR9X9M94Z5PW/250066-preview.webp", alt: "Bluff, Southland – New Zealand's southernmost port and home of the Bluff oyster" },
     ],
   },
 
@@ -708,9 +734,11 @@ The reason most visitors come is the kiwi. Rakiura has one of the highest wild k
     bestFor: ["Wildlife enthusiasts", "Nature lovers", "Active travellers"],
     bestSeasons: "October–March for walks; year-round for kiwi and wildlife",
     relatedJourneySlugs: [],
-    heroImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80",
+    heroImage: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRTBDXGGDDTCYKZ5EJ6A4AX/475292-preview.webp",
     images: [
-      { src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80", alt: "Rakiura / Stewart Island forest coast" },
+      { src: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRTBDXGGDDTCYKZ5EJ6A4AX/475292-preview.webp", alt: "Maori Beach, Rakiura Track, Stewart Island – serene beach with native podocarp forest" },
+      { src: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRTB13NTF9K22Z2SP27GBSJ/473857-preview.webp", alt: "Mt Anglem (Hananui), Stewart Island – panoramic view from Rakiura's highest point at 980m" },
+      { src: "https://cdn-syd.brandkit.com/accounts/505/files/01HSRT83XRWF8G36MRKX3HKFZY/464443-preview.webp", alt: "Halfmoon Bay, Rakiura – the island's only village, calm waters and fishing boats" },
     ],
   },
 ];
