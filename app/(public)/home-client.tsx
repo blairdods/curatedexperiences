@@ -98,6 +98,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
+              variant="gold"
               size="lg"
               onClick={() =>
                 window.dispatchEvent(new Event("ce:open-concierge"))
@@ -108,7 +109,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
             <Button
               variant="ghost"
               size="lg"
-              className="text-white hover:bg-white/10"
+              className="text-cream/80 hover:bg-cream/10 border border-cream/25"
               onClick={() =>
                 document
                   .getElementById("experiences")
@@ -122,24 +123,24 @@ export default function HomePage({ articles }: { articles: Article[] }) {
       </section>
 
       {/* Trust Bar */}
-      <div className="bg-white border-b border-warm-200">
-        <div className="max-w-5xl mx-auto px-6 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-xs tracking-wide text-foreground-muted">
+      <div className="bg-stone/25 border-b border-stone/40">
+        <div className="max-w-5xl mx-auto px-6 py-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-xs tracking-[0.12em] uppercase text-navy/60">
           <span className="flex items-center gap-2">
             <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-gold">
               <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
             </svg>
             Best NZ DMC — World Travel Awards 2025
           </span>
-          <span className="text-warm-300">|</span>
+          <span className="text-stone">·</span>
           <span className="flex items-center gap-2">
-            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-gold">
+            <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-gold">
               <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
             </svg>
             2026 Finalist — NZ Tour Operator &amp; DMC of the Year
           </span>
-          <span className="text-warm-300">|</span>
+          <span className="text-stone">·</span>
           <span>Trusted by Silversea, Ponant &amp; Celebrity Cruises</span>
-          <span className="text-warm-300">|</span>
+          <span className="text-stone">·</span>
           <span>NZ-Owned &amp; Operated — 20+ Years</span>
         </div>
       </div>
@@ -169,7 +170,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
       {/* The "Curated" Difference */}
       <Section narrow>
         <div className="text-center">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
+          <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mb-6">
             The &ldquo;Curated&rdquo; Difference
           </p>
           <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
@@ -256,8 +257,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               </p>
             </div>
           </div>
-          <div className="mt-10 p-6 rounded-xl bg-white/5 border border-white/10">
-            <p className="text-xs tracking-widest uppercase text-white/40 mb-2">
+          <div className="mt-10 p-8 bg-cream/5 border-t border-gold/20">
+            <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold/70 mb-3">
               Why This Matters
             </p>
             <p className="text-sm text-white/70 leading-relaxed">
@@ -276,7 +277,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
       {/* Privacy & Discretion */}
       <Section>
         <div className="max-w-2xl mx-auto text-center">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-500 mb-6">
+          <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mb-6">
             A Covenant of Discretion
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-navy">
@@ -307,7 +308,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-5 rounded-xl bg-warm-100/50"
+                className="p-6 bg-stone/25"
               >
                 <h3 className="text-sm font-medium text-navy">
                   {item.title}
@@ -335,7 +336,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               href={`/journal/${article.slug}`}
               className="group block"
             >
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-warm-100 mb-4">
+              <div className="relative aspect-[16/10] overflow-hidden bg-warm-200 mb-4">
                 <Image
                   src={article.heroImage}
                   alt={article.title}
@@ -344,7 +345,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <p className="text-xs tracking-widest uppercase text-warm-500">
+              <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold">
                 {article.category}
               </p>
               <h3 className="mt-2 font-serif text-lg text-navy tracking-tight group-hover:text-navy-light transition-colors">
@@ -358,7 +359,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         </div>
         <div className="mt-12 text-center">
           <Link href="/journal">
-            <Button variant="outline" size="md">
+            <Button variant="gold" size="md">
               Read the Journal
             </Button>
           </Link>
@@ -377,6 +378,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
+              variant="gold"
               size="lg"
               onClick={() =>
                 window.dispatchEvent(new Event("ce:open-concierge"))
@@ -386,8 +388,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
             </Button>
             <a
               href="tel:+6498895828"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm tracking-wide text-navy border border-navy/20
-                rounded-lg hover:bg-navy/5 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-4 text-xs tracking-[0.2em] uppercase font-medium text-navy/60
+                border border-navy/15 hover:border-navy/30 hover:text-navy transition-colors"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />

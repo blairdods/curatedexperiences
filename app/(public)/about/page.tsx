@@ -62,11 +62,11 @@ export default function AboutPage() {
             },
           ].map((person) => (
             <div key={person.name}>
-              <div className="w-24 h-24 rounded-full bg-warm-200 mb-6" />
+              <div className="w-24 h-24 rounded-full bg-stone/50 mb-6" />
               <h3 className="font-serif text-xl text-navy tracking-tight">
                 {person.name}
               </h3>
-              <p className="text-xs tracking-widest uppercase text-warm-500 mt-1">
+              <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mt-1">
                 {person.role}
               </p>
               <p className="mt-4 text-sm text-foreground/70 leading-relaxed">
@@ -164,14 +164,15 @@ export default function AboutPage() {
               onClick={() =>
                 typeof window !== "undefined" && window.dispatchEvent(new Event("ce:open-concierge"))
               }
-              className="px-8 py-3 text-sm tracking-wide bg-navy text-white rounded-lg hover:bg-navy-light transition-colors"
+              className="px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium text-gold
+                border border-gold hover:bg-gold/8 transition-colors"
             >
               Start a Conversation
             </button>
             <a
               href="tel:+6498895828"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm tracking-wide text-navy border border-navy/20
-                rounded-lg hover:bg-navy/5 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-4 text-xs tracking-[0.2em] uppercase font-medium text-navy/60
+                border border-navy/15 hover:border-navy/30 hover:text-navy transition-colors"
             >
               Call +64 9 889 5828
             </a>

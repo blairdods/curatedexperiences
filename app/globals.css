@@ -1,58 +1,68 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Design System — Curated Experiences
+   Design System — Curated Experiences v2
+   Four colours only: Navy, Cream, Stone, Gold
+   Two typefaces only: Cormorant Garamond (display), Inter (functional)
    ============================================================ */
 
 :root {
-  /* Brand */
-  --navy: #1f3864;
-  --navy-light: #2a4a7f;
-  --navy-dark: #152848;
+  /* Brand — four colours */
+  --navy:  #0F1C2E;
+  --cream: #EDEAE2;
+  --stone: #C8BCAD;
+  --gold:  #B8965A;
 
-  /* Warm neutrals */
-  --warm-50: #faf9f7;
-  --warm-100: #f5f0eb;
-  --warm-200: #e8dfd6;
-  --warm-300: #d4c5b5;
-  --warm-400: #b8a594;
-  --warm-500: #9a8574;
+  /* Hover / gradient derivations of Navy (not additional brand colours) */
+  --navy-light: #1D3050;
+  --navy-dark:  #0A1420;
 
-  /* Accent */
-  --gold: #b8860b;
-  --gold-light: #d4a843;
+  /* Neutral scale (all anchored to the four-colour palette) */
+  --warm-50:  #EDEAE2;   /* cream */
+  --warm-100: #E4E0D6;   /* cream, very slightly deeper */
+  --warm-200: #D8D2C6;   /* between cream and stone */
+  --warm-300: #C8BCAD;   /* stone */
+  --warm-400: #B0A090;   /* mid-stone */
+  --warm-500: #9A8878;   /* muted stone — secondary text only */
 
   /* Semantic */
-  --background: var(--warm-50);
-  --foreground: #1a1a1a;
-  --foreground-muted: #6b6560;
+  --background:       var(--cream);
+  --foreground:       var(--navy);
+  --foreground-muted: #6B6B72;
 
   /* Spacing scale */
   --space-section: 120px;
-  --space-group: 64px;
-  --space-element: 24px;
+  --space-group:    64px;
+  --space-element:  24px;
 }
 
 @theme inline {
-  /* Colours */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-foreground-muted: var(--foreground-muted);
-  --color-navy: var(--navy);
+  /* Core brand */
+  --color-navy:       var(--navy);
+  --color-cream:      var(--cream);
+  --color-stone:      var(--stone);
+  --color-gold:       var(--gold);
+
+  /* Hover/gradient derivations */
   --color-navy-light: var(--navy-light);
-  --color-navy-dark: var(--navy-dark);
-  --color-warm-50: var(--warm-50);
+  --color-navy-dark:  var(--navy-dark);
+
+  /* Neutral scale */
+  --color-warm-50:  var(--warm-50);
   --color-warm-100: var(--warm-100);
   --color-warm-200: var(--warm-200);
   --color-warm-300: var(--warm-300);
   --color-warm-400: var(--warm-400);
   --color-warm-500: var(--warm-500);
-  --color-gold: var(--gold);
-  --color-gold-light: var(--gold-light);
+
+  /* Semantic */
+  --color-background:       var(--background);
+  --color-foreground:       var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
 
   /* Typography */
   --font-serif: var(--font-serif);
-  --font-sans: var(--font-sans);
+  --font-sans:  var(--font-sans);
 }
 
 /* ============================================================
@@ -63,10 +73,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-serif), "Playfair Display", Georgia, serif;
+  font-family: var(--font-serif), "Georgia", serif;
 }
 
 /* ============================================================
@@ -75,15 +86,15 @@ h1, h2, h3, h4 {
 
 @keyframes concierge-fade-in {
   from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes concierge-panel-in {
   from { opacity: 0; transform: scale(0.95) translateY(8px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 @keyframes concierge-dot-pulse {
   0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+  50%       { opacity: 1; }
 }

@@ -47,7 +47,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               {journey.idealFor.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 text-xs tracking-wide text-navy bg-warm-100 rounded-full"
+                  className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy bg-stone/30"
                 >
                   {tag}
                 </span>
@@ -55,7 +55,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               {journey.seasons.slice(0, 1).map((s) => (
                 <span
                   key={s}
-                  className="px-3 py-1 text-xs tracking-wide text-warm-500 bg-warm-100 rounded-full"
+                  className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-gold bg-gold/8"
                 >
                   {s}
                 </span>
@@ -83,7 +83,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
                 {journey.highlights.map((h) => (
                   <div
                     key={h}
-                    className="flex items-start gap-3 p-4 rounded-lg bg-warm-100/50"
+                    className="flex items-start gap-3 p-4 bg-stone/20"
                   >
                     <span className="text-gold flex-shrink-0 mt-0.5">&#9672;</span>
                     <span className="text-sm text-foreground/80">{h}</span>

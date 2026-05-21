@@ -23,23 +23,23 @@ export default function JournalPage() {
               href={`/journal/${article.slug}`}
               className="group block"
             >
-              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-warm-100 mb-4">
+              <div className="aspect-[16/10] overflow-hidden bg-warm-200 mb-4">
                 <img
                   src={article.heroImage}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <p className="text-xs tracking-widest uppercase text-warm-500">
+              <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold">
                 {article.category}
               </p>
-              <h2 className="mt-2 font-serif text-xl text-navy tracking-tight group-hover:text-navy-light transition-colors">
+              <h2 className="mt-2 font-serif font-medium text-xl text-navy tracking-tight group-hover:text-navy-light transition-colors">
                 {article.title}
               </h2>
               <p className="mt-2 text-sm text-foreground-muted leading-relaxed line-clamp-2">
                 {article.excerpt}
               </p>
-              <p className="mt-3 text-xs text-warm-400">
+              <p className="mt-3 text-xs text-foreground-muted/60">
                 {article.readTime}
               </p>
             </Link>

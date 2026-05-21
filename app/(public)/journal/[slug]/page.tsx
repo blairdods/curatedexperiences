@@ -73,12 +73,12 @@ export default async function JournalArticlePage({
       <Section narrow>
         {/* Meta */}
         <div className="flex items-center gap-3 text-xs text-foreground-muted mb-10">
-          <span className="tracking-widest uppercase text-warm-500">
+          <span className="tracking-[0.25em] uppercase font-medium text-gold">
             {article.category}
           </span>
-          <span className="text-warm-300">|</span>
+          <span className="text-stone">·</span>
           <span>{article.readTime}</span>
-          <span className="text-warm-300">|</span>
+          <span className="text-stone">·</span>
           <span>
             {new Date(article.publishedAt).toLocaleDateString("en-NZ", {
               day: "numeric",
@@ -94,8 +94,8 @@ export default async function JournalArticlePage({
         </div>
 
         {/* Author */}
-        <div className="mt-16 pt-8 border-t border-warm-200">
-          <p className="text-xs tracking-widest uppercase text-warm-500 mb-1">
+        <div className="mt-16 pt-8 border-t border-stone/40">
+          <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mb-1">
             Written by
           </p>
           <p className="text-sm font-medium text-foreground">{article.author}</p>

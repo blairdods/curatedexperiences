@@ -56,13 +56,13 @@ export default async function DestinationPage({
       <Section>
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-wrap gap-2 mb-10">
-            <span className="px-3 py-1 text-xs tracking-wide text-warm-500 bg-warm-100 rounded-full">
+            <span className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-gold bg-gold/10">
               {dest.region}
             </span>
             {dest.bestFor.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-xs tracking-wide text-navy bg-warm-100 rounded-full"
+                className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy/70 bg-stone/40"
               >
                 {tag}
               </span>
@@ -86,7 +86,7 @@ export default async function DestinationPage({
           {dest.highlights.map((h) => (
             <div
               key={h}
-              className="flex items-start gap-3 p-4 rounded-lg bg-white/60"
+              className="flex items-start gap-3 p-4 bg-stone/20"
             >
               <span className="text-gold flex-shrink-0 mt-0.5">&#9672;</span>
               <span className="text-sm text-foreground/80">{h}</span>
@@ -132,7 +132,7 @@ export default async function DestinationPage({
             {dest.name} — tailored to exactly what you love.
           </p>
           <div className="mt-8">
-            <ConciergeCTAButton variant="secondary" size="lg">
+            <ConciergeCTAButton variant="gold" size="lg">
               Start Planning
             </ConciergeCTAButton>
           </div>

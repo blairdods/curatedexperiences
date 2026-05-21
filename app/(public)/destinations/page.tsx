@@ -20,24 +20,21 @@ export default function DestinationsPage() {
             <Link
               key={dest.slug}
               href={`/destinations/${dest.slug}`}
-              className="group block overflow-hidden rounded-xl bg-white
-                shadow-[0_2px_20px_-4px_rgba(31,56,100,0.06)]
-                hover:shadow-[0_8px_40px_-8px_rgba(31,56,100,0.12)]
-                transition-shadow duration-300"
+              className="group block overflow-hidden bg-stone/25"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-warm-100">
+              <div className="relative aspect-[16/9] overflow-hidden bg-warm-200">
                 <img
                   src={dest.heroImage}
                   alt={dest.name}
                   className="w-full h-full object-cover
-                    group-hover:scale-105 transition-transform duration-500 ease-out"
+                    group-hover:scale-103 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-5 sm:p-6">
-                  <p className="text-xs tracking-widest uppercase text-white/60">
+                  <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold">
                     {dest.region}
                   </p>
-                  <h2 className="font-serif text-2xl text-white tracking-tight mt-1">
+                  <h2 className="font-serif font-medium text-2xl text-cream tracking-tight mt-1">
                     {dest.name}
                   </h2>
                 </div>
@@ -46,11 +43,11 @@ export default function DestinationsPage() {
                 <p className="text-sm text-foreground-muted leading-relaxed">
                   {dest.tagline}
                 </p>
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {dest.bestFor.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 text-xs tracking-wide text-navy bg-warm-100 rounded-full"
+                      className="px-2.5 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy/70 bg-stone/40"
                     >
                       {tag}
                     </span>

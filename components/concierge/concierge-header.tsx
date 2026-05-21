@@ -7,7 +7,7 @@ export function ConciergeHeader({ onClose }: { onClose: () => void }) {
         <h2 className="text-base font-light tracking-widest uppercase">
           Your Curator
         </h2>
-        <p className="text-xs text-warm-300 mt-0.5">
+        <p className="text-xs text-stone mt-0.5">
           New Zealand Travel Concierge
         </p>
       </div>

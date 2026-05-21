@@ -9,7 +9,7 @@ export function ConciergeCTAButton({
   className,
 }: {
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "ghost" | "outline";
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "gold";
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
