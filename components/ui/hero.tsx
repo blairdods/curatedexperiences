@@ -11,6 +11,8 @@ interface HeroProps {
   secondaryCta?: { label: string; href?: string; onClick?: () => void };
   overlay?: boolean;
   compact?: boolean;
+  /** Set true on inner pages (adds top padding for fixed nav, centres text) */
+  inner?: boolean;
 }
 
 export function Hero({
@@ -23,11 +25,13 @@ export function Hero({
   secondaryCta,
   overlay = true,
   compact = false,
+  inner = false,
 }: HeroProps) {
   return (
     <section
-      className={`relative w-full flex items-center justify-center overflow-hidden
-        ${compact ? "min-h-[50vh]" : "min-h-[85vh]"}`}
+      className={`relative w-full flex items-end overflow-hidden
+        ${compact ? "min-h-[55vh]" : "min-h-screen"}
+        ${!imageSrc ? "bg-navy" : ""}`}
     >
       {/* Background image */}
       {imageSrc && (
@@ -41,46 +45,52 @@ export function Hero({
             className="object-cover"
           />
           {overlay && (
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/75 via-navy/30 to-navy/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/85 via-navy/40 to-navy/10" />
           )}
         </>
       )}
 
-      {/* Content */}
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      {/* Content — left-aligned, sits above the bottom gradient */}
+      <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10
+        ${compact ? "pb-14 sm:pb-20 pt-36 sm:pt-44" : "pb-20 sm:pb-28"}`}
+      >
         {eyebrow && (
-          <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mb-5">
+          <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
             {eyebrow}
           </p>
         )}
 
         <h1
-          className={`font-serif font-semibold tracking-tight leading-[1.05]
-            ${imageSrc ? "text-cream" : "text-navy"}
-            ${compact ? "text-4xl sm:text-5xl" : "text-5xl sm:text-6xl lg:text-7xl"}`}
+          className={`font-serif font-semibold tracking-tight leading-[1.0]
+            ${imageSrc ? "text-cream" : "text-cream"}
+            ${compact
+              ? "text-4xl sm:text-5xl lg:text-6xl max-w-3xl"
+              : "text-6xl sm:text-7xl lg:text-8xl max-w-4xl"
+            }`}
         >
           {title}
         </h1>
 
-        {/* Gold rule below hero headline */}
+        {/* Gold rule */}
         {!compact && (
-          <div className="mt-6 h-px w-10 bg-gold mx-auto" />
+          <div className="mt-7 h-px w-12 bg-gold" />
         )}
 
         {subtitle && (
           <p
-            className={`mt-6 text-base sm:text-lg leading-relaxed max-w-xl mx-auto
-              ${imageSrc ? "text-cream/80" : "text-foreground-muted"}`}
+            className={`mt-6 text-base sm:text-lg leading-relaxed
+              ${imageSrc ? "text-cream/75" : "text-cream/60"}
+              ${compact ? "max-w-xl" : "max-w-lg"}`}
           >
             {subtitle}
           </p>
         )}
 
         {(cta || secondaryCta) && (
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-10 flex flex-col sm:flex-row items-start gap-4">
             {cta && (
               <Button
-                variant={imageSrc ? "gold" : "primary"}
+                variant="gold"
                 size="lg"
                 onClick={cta.onClick}
               >
@@ -92,7 +102,7 @@ export function Hero({
                 variant="ghost"
                 size="lg"
                 onClick={secondaryCta.onClick}
-                className={imageSrc ? "text-cream/80 hover:bg-cream/10 border border-cream/20" : ""}
+                className="text-cream/70 hover:bg-cream/10 border border-cream/20"
               >
                 {secondaryCta.label}
               </Button>

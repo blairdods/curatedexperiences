@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -14,20 +14,51 @@ const NAV_LINKS = [
 
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-40 bg-cream/90 backdrop-blur-md border-b border-stone/30">
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 sm:h-20">
+  // Detect scroll to toggle between transparent (hero) and solid (scrolled)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-        {/* Logo — horizontal lockup, cream background (CB) */}
-        <Link href="/" className="flex items-center">
+  const isHome = pathname === "/";
+  // On home page: transparent over hero, solid cream when scrolled
+  // On other pages: always solid cream
+  const navBg = isHome && !scrolled && !mobileOpen
+    ? "bg-transparent"
+    : "bg-cream/95 backdrop-blur-md border-b border-stone/25";
+
+  const logoSrc = isHome && !scrolled && !mobileOpen
+    ? "/logos/CE_Horizontal_TB_Cream_1200x400.svg"
+    : "/logos/CE_Horizontal_CB_1200x400.svg";
+
+  const linkColor = isHome && !scrolled && !mobileOpen
+    ? "text-cream/70 hover:text-cream"
+    : "text-navy/50 hover:text-navy";
+
+  const activeLinkColor = isHome && !scrolled && !mobileOpen
+    ? "text-cream"
+    : "text-navy";
+
+  const ctaColor = isHome && !scrolled && !mobileOpen
+    ? "text-cream/80 border-cream/40 hover:bg-cream/10"
+    : "text-gold border-gold hover:bg-gold/8";
+
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 flex items-center justify-between h-20 sm:h-24">
+
+        {/* Logo — larger, proper proportion */}
+        <Link href="/" className="flex items-center flex-shrink-0">
           <Image
-            src="/logos/CE_Horizontal_CB_1200x400.svg"
+            src={logoSrc}
             alt="Curated Experiences"
-            width={180}
-            height={60}
-            className="h-8 sm:h-9 w-auto"
+            width={220}
+            height={73}
+            className="h-10 sm:h-11 w-auto transition-all duration-300"
             priority
           />
         </Link>
@@ -38,10 +69,8 @@ export function Navigation() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-xs tracking-[0.15em] uppercase font-medium transition-colors ${
-                pathname.startsWith(link.href)
-                  ? "text-navy"
-                  : "text-navy/50 hover:text-navy"
+              className={`text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-300 ${
+                pathname.startsWith(link.href) ? activeLinkColor : linkColor
               }`}
             >
               {link.label}
@@ -50,7 +79,7 @@ export function Navigation() {
 
           <a
             href="tel:+6498895828"
-            className="text-navy/40 hover:text-navy transition-colors"
+            className={`transition-colors duration-300 ${linkColor}`}
             aria-label="Call us"
             title="Call +64 9 889 5828"
           >
@@ -59,11 +88,9 @@ export function Navigation() {
             </svg>
           </a>
 
-          {/* Primary CTA — gold ghost per brand editorial guidelines */}
           <button
             onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-            className="px-5 py-2 text-xs tracking-[0.2em] uppercase font-medium text-gold
-              border border-gold hover:bg-gold/8 transition-colors"
+            className={`px-5 py-2.5 text-xs tracking-[0.2em] uppercase font-medium border transition-colors duration-300 ${ctaColor}`}
           >
             Start Planning
           </button>
@@ -72,7 +99,9 @@ export function Navigation() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-navy"
+          className={`md:hidden p-2 transition-colors duration-300 ${
+            isHome && !scrolled && !mobileOpen ? "text-cream" : "text-navy"
+          }`}
           aria-label="Toggle menu"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
@@ -92,16 +121,23 @@ export function Navigation() {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — always solid cream */}
       {mobileOpen && (
         <div className="md:hidden bg-cream border-t border-stone/30 px-6 py-8 space-y-5">
+          <Image
+            src="/logos/CE_Horizontal_CB_1200x400.svg"
+            alt="Curated Experiences"
+            width={180}
+            height={60}
+            className="h-9 w-auto mb-6"
+          />
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className={`block font-serif text-xl tracking-tight ${
-                pathname.startsWith(link.href) ? "text-navy" : "text-navy/60"
+              className={`block font-serif text-2xl tracking-tight ${
+                pathname.startsWith(link.href) ? "text-navy" : "text-navy/50"
               }`}
             >
               {link.label}
@@ -112,7 +148,7 @@ export function Navigation() {
               setMobileOpen(false);
               window.dispatchEvent(new Event("ce:open-concierge"));
             }}
-            className="mt-4 w-full px-5 py-3 text-xs tracking-[0.2em] uppercase font-medium
+            className="mt-6 w-full px-5 py-3.5 text-xs tracking-[0.2em] uppercase font-medium
               text-gold border border-gold hover:bg-gold/8 transition-colors"
           >
             Start Planning

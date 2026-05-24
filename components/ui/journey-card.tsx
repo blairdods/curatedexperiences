@@ -8,6 +8,8 @@ interface JourneyCardProps {
   durationDays?: number;
   regions?: string[];
   imageSrc?: string;
+  /** Set true when rendering on a navy background */
+  dark?: boolean;
 }
 
 export function JourneyCard({
@@ -17,11 +19,12 @@ export function JourneyCard({
   durationDays,
   regions,
   imageSrc,
+  dark = false,
 }: JourneyCardProps) {
   return (
     <Link
       href={`/journeys/${slug}`}
-      className="group block overflow-hidden bg-stone/30"
+      className={`group block overflow-hidden ${dark ? "bg-cream/5" : "bg-stone/30"}`}
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-warm-200">
@@ -36,9 +39,9 @@ export function JourneyCard({
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-warm-200 to-stone" />
         )}
-        {/* Category label overlay */}
+        {/* Region label overlay */}
         {regions && regions.length > 0 && (
-          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-gradient-to-t from-navy-dark/60 to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 bg-gradient-to-t from-navy-dark/70 to-transparent">
             <p className="text-xs tracking-[0.2em] uppercase font-medium text-gold">
               {regions[0]}
             </p>
@@ -48,17 +51,25 @@ export function JourneyCard({
 
       {/* Content */}
       <div className="p-5 sm:p-6">
-        <h3 className="font-serif font-medium text-xl tracking-tight text-navy group-hover:text-navy-light transition-colors">
+        <h3 className={`font-serif font-medium text-xl tracking-tight transition-colors ${
+          dark
+            ? "text-cream group-hover:text-cream/80"
+            : "text-navy group-hover:text-navy-light"
+        }`}>
           {title}
         </h3>
 
         {tagline && (
-          <p className="mt-2 text-sm text-foreground-muted leading-relaxed line-clamp-2">
+          <p className={`mt-2 text-sm leading-relaxed line-clamp-2 ${
+            dark ? "text-cream/50" : "text-foreground-muted"
+          }`}>
             {tagline}
           </p>
         )}
 
-        <div className="mt-4 flex items-center gap-3 text-xs text-foreground-muted">
+        <div className={`mt-4 flex items-center gap-2 text-xs ${
+          dark ? "text-cream/40" : "text-foreground-muted"
+        }`}>
           {durationDays && (
             <span className="flex items-center gap-1.5">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5 opacity-50">
@@ -71,13 +82,13 @@ export function JourneyCard({
           )}
           {regions && regions.length > 1 && (
             <>
-              <span className="text-stone">—</span>
+              <span className={dark ? "text-cream/20" : "text-stone"}>—</span>
               <span>{regions.slice(1).join(", ")}</span>
             </>
           )}
         </div>
 
-        {/* Arrow — editorial secondary CTA pattern */}
+        {/* Arrow */}
         <div className="mt-5 flex items-center gap-2 text-xs tracking-[0.15em] uppercase font-medium text-gold">
           <span>Explore</span>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1">

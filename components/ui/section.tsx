@@ -45,18 +45,18 @@ export function SectionHeader({
   return (
     <div className={`mb-12 sm:mb-16 ${align === "center" ? "text-center" : ""}`}>
       {eyebrow && (
-        <p className="text-xs tracking-[0.25em] uppercase text-gold font-medium mb-3">
+        <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
           {eyebrow}
         </p>
       )}
-      <h2 className="font-serif font-medium text-3xl sm:text-4xl lg:text-5xl tracking-tight">
+      <h2 className="font-serif font-medium text-4xl sm:text-5xl tracking-tight leading-[1.05]">
         {title}
       </h2>
-      {/* Gold rule — the CE editorial language */}
-      <div className={`mt-5 h-px w-12 bg-gold ${align === "center" ? "mx-auto" : ""}`} />
+      {/* Gold rule */}
+      <div className={`mt-6 h-px w-10 bg-gold ${align === "center" ? "mx-auto" : ""}`} />
       {subtitle && (
         <p
-          className={`mt-6 text-base text-foreground-muted leading-relaxed ${
+          className={`mt-7 text-base leading-relaxed opacity-70 ${
             align === "center" ? "max-w-xl mx-auto" : "max-w-xl"
           }`}
         >
