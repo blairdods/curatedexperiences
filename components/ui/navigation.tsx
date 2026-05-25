@@ -50,9 +50,9 @@ export function Navigation() {
           <Image
             src={logoSrc}
             alt="Curated Experiences"
-            width={220}
-            height={73}
-            className="h-10 sm:h-11 w-auto transition-all duration-300"
+            width={440}
+            height={146}
+            className="h-20 sm:h-22 w-auto transition-all duration-300"
             priority
           />
         </Link>
