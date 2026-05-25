@@ -52,13 +52,27 @@ export default function AboutPage() {
           {[
             {
               name: "Tony",
-              role: "Co-founder & Lead Curator",
+              role: "Strategy, Marketing & Curator",
+              tagline: "New Zealand holds a special place in my heart and we want to share this with the World.",
               bio: "With decades of luxury travel experience across New Zealand and the Pacific, Tony brings an encyclopaedic knowledge of the country's best lodges, guides, and hidden experiences. His background with PPG Tours — Best New Zealand DMC at the World Travel Awards 2025, and finalist in two categories for 2026 — means he's worked with the most discerning travellers in the world. From designing VIP land programs for Silversea, Ponant, and Celebrity to crafting private journeys for high-net-worth clients, Tony knows exactly how to exceed expectations.",
             },
             {
               name: "Liam",
-              role: "Co-founder & Experience Designer",
-              bio: "Liam's passion is in the details — the restaurant that just opened, the guide who knows the mountain like the back of his hand, the new vineyard that's doing something genuinely different. He designs every itinerary as if he were travelling it himself, balancing adventure with rest, and always leaving room for the unexpected.",
+              role: "Head of Digital",
+              tagline: "It's all about connecting with people, informing and educating them, to create the pathway to curating and developing great experiences.",
+              bio: "Liam leads the digital experience — from the first search to the final conversation. His focus is on making sure every touchpoint is seamless, personal, and true to the Curated Experiences standard.",
+            },
+            {
+              name: "Jade",
+              role: "Marketing, Sustainability & Curator",
+              tagline: "I love the creativity in developing memorable programmes, personal to each individual.",
+              bio: "Jade brings a passion for thoughtful design and a deep commitment to sustainable travel. She crafts programmes that feel truly unique to each traveller, while ensuring every journey treads lightly on the landscapes we cherish.",
+            },
+            {
+              name: "Tracy",
+              role: "Travel Curator",
+              tagline: "I'm a World Traveller but with deep set roots in New Zealand.",
+              bio: "Tracy's global perspective is what sets her apart — having travelled extensively, she understands exactly what discerning travellers are looking for and how to deliver it with genuine, on-the-ground New Zealand knowledge.",
             },
           ].map((person) => (
             <div key={person.name}>
@@ -69,7 +83,10 @@ export default function AboutPage() {
               <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mt-1">
                 {person.role}
               </p>
-              <p className="mt-4 text-sm text-foreground/70 leading-relaxed">
+              <p className="mt-4 font-serif text-base text-navy/80 leading-relaxed italic">
+                &ldquo;{person.tagline}&rdquo;
+              </p>
+              <p className="mt-3 text-sm text-foreground/70 leading-relaxed">
                 {person.bio}
               </p>
             </div>
