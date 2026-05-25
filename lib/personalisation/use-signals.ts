@@ -10,6 +10,8 @@ export interface ClientSignals {
   country: string;
   device: string;
   source: string;
+  isUS: boolean;
+  isSingapore: boolean;
 }
 
 const DEFAULT_SIGNALS: ClientSignals = {
@@ -20,6 +22,8 @@ const DEFAULT_SIGNALS: ClientSignals = {
   country: "unknown",
   device: "desktop",
   source: "direct",
+  isUS: false,
+  isSingapore: false,
 };
 
 export function useSignals(): ClientSignals {

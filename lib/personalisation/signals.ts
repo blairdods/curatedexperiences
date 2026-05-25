@@ -3,6 +3,11 @@ import { type NextRequest } from "next/server";
 /**
  * Visitor personalisation signals extracted at the edge.
  * These are set as cookies so client components can read them.
+ *
+ * Key markets:
+ *   US  — luxury, adventure, culinary segments via Google Ads campaigns
+ *   SG  — nature/landscape first (90% hike/trek, 74% South Island, 41% glacier)
+ *         Couples dominant (63%), avg 11 days, South Island bias
  */
 
 export interface VisitorSignals {
@@ -12,6 +17,8 @@ export interface VisitorSignals {
   city: string;
   /** true if country is US */
   isUS: boolean;
+  /** true if country is Singapore */
+  isSingapore: boolean;
   /** Traffic source: google_ads | organic | social | direct | referral */
   source: string;
   /** UTM campaign name if present */
@@ -41,6 +48,7 @@ export function extractSignals(request: NextRequest): VisitorSignals {
     request.headers.get("cf-ipcity") ??
     "";
   const isUS = country === "US";
+  const isSingapore = country === "SG";
 
   // --- Traffic source ---
   const url = new URL(request.url);
@@ -70,15 +78,16 @@ export function extractSignals(request: NextRequest): VisitorSignals {
   const returning = request.cookies.has("ce-visitor");
 
   // --- Derive personalisation variants ---
-  const heroVariant = deriveHeroVariant(isUS, source, utmCampaign);
-  const featuredJourney = deriveFeaturedJourney(utmCampaign, source);
+  const heroVariant = deriveHeroVariant(isUS, isSingapore, source, utmCampaign);
+  const featuredJourney = deriveFeaturedJourney(utmCampaign, source, isSingapore);
   const ctaTone = source === "google_ads" ? "direct" : "exploratory";
-  const conciergeVariant = deriveConciergeVariant(isUS, returning, source);
+  const conciergeVariant = deriveConciergeVariant(isUS, isSingapore, returning, source);
 
   return {
     country,
     city,
     isUS,
+    isSingapore,
     source,
     campaign: utmCampaign,
     device,
@@ -92,38 +101,66 @@ export function extractSignals(request: NextRequest): VisitorSignals {
 
 function deriveHeroVariant(
   isUS: boolean,
+  isSingapore: boolean,
   source: string,
   campaign: string
 ): string {
-  if (!isUS) return "international";
-  if (source === "google_ads") {
-    if (campaign.includes("adventure")) return "adventure-us";
-    if (campaign.includes("wine") || campaign.includes("culinary"))
-      return "culinary-us";
+  // ── Singapore ──────────────────────────────────────────────────────────────
+  // SG visitors: nature-first (90% hike/trek, 74% South Island, 41% glacier).
+  // Campaign overrides allow more specific targeting.
+  if (isSingapore) {
+    if (source === "google_ads") {
+      if (campaign.includes("adventure") || campaign.includes("nature") || campaign.includes("fiordland"))
+        return "adventure-sg";
+      if (campaign.includes("wine") || campaign.includes("culinary"))
+        return "culinary-sg";
+    }
+    return "nature-sg"; // default SG: landscapes, glaciers, South Island
+  }
+
+  // ── United States ──────────────────────────────────────────────────────────
+  if (isUS) {
+    if (source === "google_ads") {
+      if (campaign.includes("adventure")) return "adventure-us";
+      if (campaign.includes("wine") || campaign.includes("culinary"))
+        return "culinary-us";
+    }
     return "luxury-us";
   }
-  return "luxury-us";
+
+  // ── All other markets ──────────────────────────────────────────────────────
+  return "international";
 }
 
-function deriveFeaturedJourney(campaign: string, source: string): string {
+function deriveFeaturedJourney(
+  campaign: string,
+  source: string,
+  isSingapore: boolean
+): string {
+  // Campaign-level overrides (apply to all markets)
   if (campaign.includes("adventure") || campaign.includes("wilderness"))
     return "the-expedition";
   if (campaign.includes("wine") || campaign.includes("culinary"))
     return "the-epicurean";
   if (campaign.includes("fiordland") || campaign.includes("south-island"))
     return "the-masterpiece";
-  // Default based on source
-  if (source === "google_ads") return "the-masterpiece";
+
+  // Singapore default: Queenstown-Lakes (62%) + Fiordland (18%) = South Island bias
+  // "The Masterpiece" covers Queenstown + Fiordland which maps perfectly to SG travel patterns
+  if (isSingapore) return "the-masterpiece";
+
   return "the-masterpiece";
 }
 
 function deriveConciergeVariant(
   isUS: boolean,
+  isSingapore: boolean,
   returning: boolean,
   source: string
 ): string {
   if (returning) return "welcome-back";
   if (source === "google_ads") return "high-intent";
+  if (isSingapore) return "sg-visitor";
   if (isUS) return "us-visitor";
   return "default";
 }

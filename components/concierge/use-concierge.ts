@@ -8,6 +8,22 @@ export type Message = {
 };
 
 const STORAGE_KEY = "ce-concierge-messages";
+
+/** Pull country + conciergeVariant from the ce-signals cookie so the API can tailor its system prompt. */
+function readSignalsFromCookie(): { country?: string; conciergeVariant?: string } {
+  if (typeof document === "undefined") return {};
+  try {
+    const raw = document.cookie.split("; ").find((c) => c.startsWith("ce-signals="));
+    if (!raw) return {};
+    const parsed = JSON.parse(decodeURIComponent(raw.split("=").slice(1).join("=")));
+    return {
+      country: parsed.country,
+      conciergeVariant: parsed.conciergeVariant,
+    };
+  } catch {
+    return {};
+  }
+}
 const SESSION_ID_KEY = "ce-session-id";
 const BRIEF_PATTERN = /<!--BRIEF_JSON[\s\S]*?BRIEF_JSON-->/g;
 
@@ -112,6 +128,7 @@ export function useConcierge() {
               referrer: typeof document !== "undefined" ? document.referrer || undefined : undefined,
               returningVisitor: messages.length > 0,
               customization: customization ?? undefined,
+              ...readSignalsFromCookie(),
             },
           }),
           signal: controller.signal,

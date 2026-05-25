@@ -20,6 +20,10 @@ export interface VisitorContext {
   returningVisitor?: boolean;
   messageCount?: number;
   customization?: ItineraryCustomization;
+  /** ISO country code — used to tailor concierge tone and default recommendations */
+  country?: string;
+  /** Derived market segment from signals */
+  conciergeVariant?: string;
 }
 
 export function buildSystemPrompt(
@@ -148,6 +152,36 @@ function buildVisitorContextLayer(ctx?: VisitorContext): string {
       `- This is message ${ctx.messageCount} in the conversation — consider offering to connect with the team`
     );
   }
+
+  // Market-specific context — informs default recommendations and tone
+  if (ctx.country === "SG" || ctx.conciergeVariant === "sg-visitor") {
+    parts.push(
+      "- MARKET: Singapore. Key profile: couples (63%), avg 11-day trip, strongly nature-motivated " +
+      "(90% hike/trek, 41% glacier, 56% national park). South Island dominant — Queenstown-Lakes (62%), " +
+      "Christchurch (51%), Fiordland (18%). Open to off-peak (81%). Currently 15% use luxury accommodation — " +
+      "significant upgrade opportunity. Lead with landscapes, then reveal the private lodge layer. " +
+      "Do NOT assume they have pre-existing NZ knowledge — many are first-time visitors. " +
+      "NZ is a 10-hour direct flight from Singapore (Singapore Airlines, daily)."
+    );
+  } else if (ctx.country === "US" || ctx.conciergeVariant === "us-visitor") {
+    parts.push(
+      "- MARKET: United States. Typical profile: VHNWI/UHNWI couples aged 40-60, " +
+      "$25K-$80K USD budget per couple. Familiar with luxury travel; position NZ as the " +
+      "world's last great undiscovered luxury destination. Emphasise exclusivity, privacy, " +
+      "and the Rosewood lodge trio (Kauri Cliffs, Cape Kidnappers, Matakauri)."
+    );
+  } else if (ctx.conciergeVariant === "high-intent") {
+    parts.push(
+      "- HIGH INTENT: Visitor arrived via paid search — likely actively comparing options. " +
+      "Be direct, specific, and move quickly toward understanding their travel dates and group."
+    );
+  } else if (ctx.conciergeVariant === "welcome-back") {
+    parts.push(
+      "- RETURNING VISITOR: Acknowledge they've explored the site before. " +
+      "Ask if they have questions about a specific journey or are ready to start planning."
+    );
+  }
+
   if (ctx.customization) {
     parts.push(buildCustomizationLayer(ctx.customization));
   }

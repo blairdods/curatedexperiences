@@ -14,6 +14,7 @@ const HERO_VARIANTS: Record<
   string,
   { title: string; subtitle: string; image: string }
 > = {
+  // ── US market ──────────────────────────────────────────────────────────────
   "luxury-us": {
     title: "New Zealand,\nPersonally Curated.",
     subtitle:
@@ -35,6 +36,33 @@ const HERO_VARIANTS: Record<
     image:
       "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
   },
+
+  // ── Singapore market ───────────────────────────────────────────────────────
+  // Data: 90% hike/trek, 74% South Island, 41% glacier, Queenstown (62%) +
+  // Fiordland (18%) dominant. Couples (63%), avg 11 days. Nature-first motivation.
+  "nature-sg": {
+    title: "New Zealand,\nPersonally Curated.",
+    subtitle:
+      "From the glaciers of the Southern Alps to the ancient sounds of Fiordland — private journeys built around New Zealand's wildest places.",
+    image:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+  },
+  "adventure-sg": {
+    title: "New Zealand,\nPersonally Curated.",
+    subtitle:
+      "Fiordland by private charter, glacier heli-hikes above the Southern Alps, and trails that reach places no tour bus finds.",
+    image:
+      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
+  },
+  "culinary-sg": {
+    title: "New Zealand,\nPersonally Curated.",
+    subtitle:
+      "Central Otago's celebrated pinot, Marlborough's world-renowned vineyards, and MICHELIN-recognised restaurants — journeys built around what you eat and drink.",
+    image:
+      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
+  },
+
+  // ── All other markets ──────────────────────────────────────────────────────
   international: {
     title: "New Zealand,\nPersonally Curated.",
     subtitle:
@@ -147,9 +175,9 @@ export default function HomePage({ articles }: { articles: Article[] }) {
                 quite found elsewhere. Then we build something that answers it precisely.
               </p>
               <p className="mt-5 text-base text-foreground-muted leading-relaxed">
-                We open doors that don&apos;t appear on booking platforms: private estates,
-                closed-to-public lodges, the guide who knows the mountain like the back of
-                his hand, the table that isn&apos;t on the menu.
+                We know where the light falls best, which guide has walked the high
+                country for thirty years, and which lodge sits above a fiord that
+                most people never reach. That knowledge is what we sell.
               </p>
               <div className="mt-10">
                 <Button
