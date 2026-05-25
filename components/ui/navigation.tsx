@@ -25,27 +25,21 @@ export function Navigation() {
   }, []);
 
   const isHome = pathname === "/";
-  // On home page: transparent over hero, solid cream when scrolled
-  // On other pages: always solid cream
+  // Home page: transparent over hero, solid navy when scrolled
+  // Internal pages: always solid navy
+  const isDark = !isHome || scrolled || mobileOpen;
+
   const navBg = isHome && !scrolled && !mobileOpen
     ? "bg-transparent"
-    : "bg-cream/95 backdrop-blur-md border-b border-stone/25";
+    : "bg-navy border-b border-white/10";
 
-  const logoSrc = isHome && !scrolled && !mobileOpen
-    ? "/logos/CE_Horizontal_TB_Cream_1200x400.svg"
-    : "/logos/CE_Horizontal_CB_1200x400.svg";
+  const logoSrc = isDark
+    ? "/logos/CE_Horizontal_NB_1200x400.svg"
+    : "/logos/CE_Horizontal_TB_Cream_1200x400.svg";
 
-  const linkColor = isHome && !scrolled && !mobileOpen
-    ? "text-cream/70 hover:text-cream"
-    : "text-navy/50 hover:text-navy";
-
-  const activeLinkColor = isHome && !scrolled && !mobileOpen
-    ? "text-cream"
-    : "text-navy";
-
-  const ctaColor = isHome && !scrolled && !mobileOpen
-    ? "text-cream/80 border-cream/40 hover:bg-cream/10"
-    : "text-gold border-gold hover:bg-gold/8";
+  const linkColor = "text-cream/60 hover:text-cream";
+  const activeLinkColor = "text-cream";
+  const ctaColor = "text-gold border-gold/60 hover:bg-gold/10";
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${navBg}`}>
@@ -99,9 +93,7 @@ export function Navigation() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className={`md:hidden p-2 transition-colors duration-300 ${
-            isHome && !scrolled && !mobileOpen ? "text-cream" : "text-navy"
-          }`}
+          className="md:hidden p-2 text-cream transition-colors duration-300"
           aria-label="Toggle menu"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
@@ -121,11 +113,11 @@ export function Navigation() {
         </button>
       </div>
 
-      {/* Mobile menu — always solid cream */}
+      {/* Mobile menu — always navy */}
       {mobileOpen && (
-        <div className="md:hidden bg-cream border-t border-stone/30 px-6 py-8 space-y-5">
+        <div className="md:hidden bg-navy border-t border-white/10 px-6 py-8 space-y-5">
           <Image
-            src="/logos/CE_Horizontal_CB_1200x400.svg"
+            src="/logos/CE_Horizontal_NB_1200x400.svg"
             alt="Curated Experiences"
             width={180}
             height={60}
@@ -137,7 +129,7 @@ export function Navigation() {
               href={link.href}
               onClick={() => setMobileOpen(false)}
               className={`block font-serif text-2xl tracking-tight ${
-                pathname.startsWith(link.href) ? "text-navy" : "text-navy/50"
+                pathname.startsWith(link.href) ? "text-cream" : "text-cream/50"
               }`}
             >
               {link.label}
@@ -149,7 +141,7 @@ export function Navigation() {
               window.dispatchEvent(new Event("ce:open-concierge"));
             }}
             className="mt-6 w-full px-5 py-3.5 text-xs tracking-[0.2em] uppercase font-medium
-              text-gold border border-gold hover:bg-gold/8 transition-colors"
+              text-gold border border-gold/60 hover:bg-gold/10 transition-colors"
           >
             Start Planning
           </button>
