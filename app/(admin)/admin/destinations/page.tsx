@@ -1,6 +1,7 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { DestinationsList } from "@/components/admin/destinations-list";
+import { SeedImportButton } from "@/components/admin/seed-import-button";
 import { DESTINATIONS } from "@/lib/data/destinations";
 import Link from "next/link";
 
@@ -44,15 +45,28 @@ export default async function DestinationsPage() {
           <DestinationsList destinations={dbDestinations} />
         ) : (
           <div className="space-y-3">
+            <div className="p-5 bg-gold/10 border border-gold/20 rounded-xl flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-medium text-navy">Destinations are not yet in the database</p>
+                <p className="text-xs text-foreground-muted mt-0.5">
+                  Import the {DESTINATIONS.length} existing destinations to make them editable. One-time action — won't overwrite anything already in the database.
+                </p>
+              </div>
+              <SeedImportButton
+                endpoint="/api/admin/seed/destinations"
+                label="destinations"
+                count={DESTINATIONS.length}
+              />
+            </div>
             {DESTINATIONS.map((dest) => (
               <div
                 key={dest.slug}
-                className="flex items-center gap-4 bg-white rounded-xl border border-warm-200 px-5 py-4"
+                className="flex items-center gap-4 bg-white rounded-xl border border-warm-200 px-5 py-4 opacity-60"
               >
                 <div className="w-2 h-2 rounded-full bg-warm-300 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground">{dest.name}</p>
-                  <p className="text-xs text-foreground-muted">{dest.region} — static data</p>
+                  <p className="text-xs text-foreground-muted">{dest.region}</p>
                 </div>
                 <Link
                   href={`/destinations/${dest.slug}`}
@@ -63,12 +77,6 @@ export default async function DestinationsPage() {
                 </Link>
               </div>
             ))}
-            <div className="mt-6 p-4 bg-gold/10 border border-gold/20 rounded-xl">
-              <p className="text-sm text-navy font-medium">Destinations are currently static data</p>
-              <p className="text-xs text-foreground-muted mt-1">
-                Add your first destination via the button above to switch to database-managed content. Once any destination is in the database, all public destination pages will read from the database first.
-              </p>
-            </div>
           </div>
         )}
       </div>
