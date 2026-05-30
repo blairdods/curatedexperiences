@@ -48,6 +48,8 @@ export function BookingDetail({
 }) {
   const router = useRouter();
   const [status, setStatus] = useState(booking.status);
+  const [totalValueInput, setTotalValueInput] = useState(booking.total_value_usd?.toString() ?? "");
+  const [depositAmountInput, setDepositAmountInput] = useState(booking.deposit_amount?.toString() ?? "");
   const [depositPaidAt, setDepositPaidAt] = useState(booking.deposit_paid_at ?? "");
   const [balancePaidAt, setBalancePaidAt] = useState(booking.balance_paid_at ?? "");
   const [saving, setSaving] = useState(false);
@@ -142,8 +144,8 @@ export function BookingDetail({
     updateBooking({ documents: updated });
   };
 
-  const totalValue = Number(booking.total_value_usd ?? 0);
-  const depositAmount = Number(booking.deposit_amount ?? 0);
+  const totalValue = parseFloat(totalValueInput) || 0;
+  const depositAmount = parseFloat(depositAmountInput) || 0;
   const balanceRemaining = totalValue - depositAmount;
 
   return (
@@ -348,19 +350,44 @@ export function BookingDetail({
           </h2>
           <div className="space-y-4">
             <div>
-              <p className="text-xs text-foreground-muted">Total Value</p>
-              <p className="text-2xl font-serif text-navy mt-0.5">
-                ${totalValue.toLocaleString()}
-              </p>
+              <p className="text-xs text-foreground-muted mb-1">Total Value (USD)</p>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-foreground-muted">$</span>
+                <input
+                  type="number"
+                  value={totalValueInput}
+                  onChange={(e) => setTotalValueInput(e.target.value)}
+                  onBlur={() => {
+                    const val = parseFloat(totalValueInput) || 0;
+                    updateBooking({ total_value_usd: val });
+                  }}
+                  placeholder="0"
+                  min={0}
+                  className="w-full pl-7 pr-3 py-2 text-sm border border-warm-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy/20 font-serif text-navy"
+                />
+              </div>
             </div>
 
             <div className="border-t border-warm-100 pt-4">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs text-foreground-muted">Deposit</p>
-                  <p className="text-sm font-medium mt-0.5">
-                    ${depositAmount.toLocaleString()}
-                  </p>
+                <div className="flex-1 mr-3">
+                  <p className="text-xs text-foreground-muted mb-1">Deposit (USD)</p>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-foreground-muted">$</span>
+                    <input
+                      type="number"
+                      value={depositAmountInput}
+                      onChange={(e) => setDepositAmountInput(e.target.value)}
+                      onBlur={() => {
+                        const val = parseFloat(depositAmountInput) || 0;
+                        updateBooking({ deposit_amount: val });
+                      }}
+                      placeholder="0"
+                      min={0}
+                      disabled={!!depositPaidAt}
+                      className="w-full pl-7 pr-3 py-1.5 text-sm border border-warm-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy/20 disabled:bg-warm-50 disabled:text-foreground-muted"
+                    />
+                  </div>
                 </div>
                 {depositPaidAt ? (
                   <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-700">
