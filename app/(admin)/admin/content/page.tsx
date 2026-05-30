@@ -2,7 +2,6 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ContentQueue } from "@/components/admin/content-queue";
 import { getArticles, getArticleSlugs } from "@/lib/data/journal";
-import { DESTINATIONS } from "@/lib/data/destinations";
 import Link from "next/link";
 
 const TABS = [
@@ -43,7 +42,6 @@ export default async function ContentApprovalPage({
   ]);
 
   const journalCount = getArticleSlugs().length;
-  const destinationCount = DESTINATIONS.length;
 
   // Full data only for the active tab
   const pending =
@@ -75,7 +73,7 @@ export default async function ContentApprovalPage({
     pending: pendingCount ?? 0,
     "knowledge-base": kbCount ?? 0,
     journal: journalCount,
-    destinations: destinationCount,
+    destinations: 0,
   };
 
   return (
@@ -219,26 +217,16 @@ export default async function ContentApprovalPage({
 
       {/* Destinations */}
       {activeTab === "destinations" && (
-        <div className="space-y-2">
-          {DESTINATIONS.map((dest) => (
-            <div
-              key={dest.slug}
-              className="flex items-center justify-between bg-white px-4 py-3 rounded-lg border border-warm-200"
-            >
-              <div>
-                <p className="text-sm text-foreground">{dest.name}</p>
-                <p className="text-xs text-foreground-muted">
-                  {dest.region} — {dest.highlights.length} highlights
-                </p>
-              </div>
-              <Link
-                href={`/destinations/${dest.slug}`}
-                className="text-xs text-foreground-muted hover:text-foreground transition-colors"
-              >
-                View
-              </Link>
-            </div>
-          ))}
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <p className="text-sm text-foreground-muted mb-4">
+            Destinations are now managed in their own section.
+          </p>
+          <Link
+            href="/admin/destinations"
+            className="px-4 py-2.5 text-sm font-medium rounded-lg bg-navy text-white hover:bg-navy-light transition-colors"
+          >
+            Go to Destinations →
+          </Link>
         </div>
       )}
     </div>

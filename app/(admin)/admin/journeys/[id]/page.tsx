@@ -42,6 +42,7 @@ export default async function EditJourneyPage({
           slug: journey.slug,
           title: journey.title,
           tagline: journey.tagline ?? "",
+          narrative: (journey as Record<string, unknown>).narrative as string ?? "",
           duration_days: journey.duration_days ?? 10,
           price_from_usd: journey.price_from_usd ?? 0,
           journey_type: journey.journey_type ?? [],

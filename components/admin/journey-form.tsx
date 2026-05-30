@@ -16,6 +16,7 @@ interface JourneyData {
   slug: string;
   title: string;
   tagline: string;
+  narrative: string;
   duration_days: number;
   price_from_usd: number;
   journey_type: string[];
@@ -35,6 +36,7 @@ const emptyJourney: JourneyData = {
   slug: "",
   title: "",
   tagline: "",
+  narrative: "",
   duration_days: 10,
   price_from_usd: 0,
   journey_type: [],
@@ -137,6 +139,7 @@ export function JourneyForm({
       slug: data.slug,
       title: data.title.trim(),
       tagline: data.tagline.trim() || null,
+      narrative: data.narrative.trim() || null,
       duration_days: data.duration_days,
       price_from_usd: data.price_from_usd,
       journey_type: data.journey_type,
@@ -216,6 +219,14 @@ export function JourneyForm({
               onChange={(v) => update("tagline", v)}
               placeholder="Short compelling tagline..."
               rows={2}
+            />
+          </FormField>
+          <FormField label="Narrative" hint="Editorial description shown on the public journey page">
+            <TextArea
+              value={data.narrative}
+              onChange={(v) => update("narrative", v)}
+              placeholder="Full description of this journey — the story behind it, who it's for, what makes it exceptional..."
+              rows={6}
             />
           </FormField>
           <div className="grid grid-cols-2 gap-4">

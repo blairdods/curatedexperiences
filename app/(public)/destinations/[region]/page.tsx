@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getDestinationBySlug, DESTINATIONS } from "@/lib/data/destinations";
+import { getDestinationBySlug, DESTINATIONS, type Destination } from "@/lib/data/destinations";
 import { getJourneyBySlug } from "@/lib/data/journeys";
+import { createServiceClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/ui/hero";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
@@ -12,13 +13,46 @@ export async function generateStaticParams() {
   return DESTINATIONS.map((d) => ({ region: d.slug }));
 }
 
+async function getDestination(slug: string): Promise<Destination | null> {
+  // Try database first
+  try {
+    const supabase = await createServiceClient();
+    const { data } = await supabase
+      .from("destinations")
+      .select("*")
+      .eq("slug", slug)
+      .eq("active", true)
+      .single();
+
+    if (data) {
+      return {
+        slug: data.slug,
+        name: data.name,
+        region: data.region as "North Island" | "South Island",
+        tagline: data.tagline ?? "",
+        description: data.description ?? "",
+        highlights: data.highlights ?? [],
+        bestFor: data.best_for ?? [],
+        bestSeasons: data.best_seasons ?? "",
+        relatedJourneySlugs: data.related_journey_slugs ?? [],
+        heroImage: data.hero_image ?? "",
+        images: (data.images as { src: string; alt: string }[]) ?? [],
+      };
+    }
+  } catch {
+    // Fall through to static
+  }
+
+  return getDestinationBySlug(slug) ?? null;
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ region: string }>;
 }): Promise<Metadata> {
   const { region } = await params;
-  const dest = getDestinationBySlug(region);
+  const dest = await getDestination(region);
   if (!dest) return {};
   return {
     title: `${dest.name} | Curated Experiences`,
@@ -32,7 +66,7 @@ export default async function DestinationPage({
   params: Promise<{ region: string }>;
 }) {
   const { region } = await params;
-  const dest = getDestinationBySlug(region);
+  const dest = await getDestination(region);
   if (!dest) notFound();
 
   const relatedJourneys = dest.relatedJourneySlugs
@@ -93,9 +127,11 @@ export default async function DestinationPage({
             </div>
           ))}
         </div>
-        <p className="mt-8 text-center text-sm text-foreground-muted">
-          Best seasons: {dest.bestSeasons}
-        </p>
+        {dest.bestSeasons && (
+          <p className="mt-8 text-center text-sm text-foreground-muted">
+            Best seasons: {dest.bestSeasons}
+          </p>
+        )}
       </Section>
 
       {relatedJourneys.length > 0 && (

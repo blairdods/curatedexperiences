@@ -19,6 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/admin/leads", label: "Leads", icon: "users" },
   { href: "/admin/bookings", label: "Bookings", icon: "calendar" },
   { href: "/admin/accommodations", label: "Accommodations", icon: "building", roles: ["admin", "curator"] },
+  { href: "/admin/destinations", label: "Destinations", icon: "globe", roles: ["admin", "curator"] },
   { href: "/admin/content", label: "Content", icon: "file", roles: ["admin", "curator"] },
   { href: "/admin/journeys", label: "Journeys", icon: "map", roles: ["admin", "curator"] },
   { href: "/admin/audit", label: "Audit Log", icon: "clock", roles: ["admin"] },
@@ -65,6 +66,11 @@ const ICONS: Record<string, React.ReactNode> = {
   building: (
     <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
       <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h2v2H7V5zm0 4h2v2H7V9zm0 4h2v2H7v-2zm4-8h2v2h-2V5zm0 4h2v2h-2V9zm0 4h2v2h-2v-2z" clipRule="evenodd" />
+    </svg>
+  ),
+  globe: (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clipRule="evenodd" />
     </svg>
   ),
   settings: (

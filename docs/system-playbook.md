@@ -92,9 +92,19 @@ Magic links expire after 1 hour. If it doesn't work, request a new one.
 - All changes go into a version history — nothing is permanently deleted
 - **To restore a previous version**: open the content item → click Version History → select and restore
 
+### Destinations (`/admin/destinations`)
+- Full CRUD for destination pages — add, edit, or delete destinations
+- Fields: name, region (North Island / South Island), tagline, full description, highlights, "Best for" tags, best seasons, hero image, gallery images, related journey slugs
+- Changes publish immediately to the public `/destinations` pages
+- Until at least one destination is in the database, the public site falls back to the built-in static content — so you can add destinations gradually without breaking anything
+
 ### Journeys (`/admin/journeys`)
-- Toggle journey availability on/off (e.g. seasonal closures)
-- View all 6 journeys; editing itinerary content currently requires a code change by Blair
+- **Edit any journey**: click a journey → edit all fields including the narrative, tagline, itinerary days, highlights, inclusions, regions, images, pricing, and availability windows
+- **Narrative field**: the long editorial description shown on the public journey page — add this to make admin-edited journeys look complete on the public site
+- **Availability**: manage seasonal windows with pricing and capacity within each journey's edit page
+- **Create new journeys**: use the + Create Journey button — once created in the database, they appear on the public site
+- Toggle journey active/inactive status to control public visibility
+- The public journey pages read from the database first; if a journey slug isn't in the database, it falls back to the built-in content
 
 ### Analytics (`/admin/analytics`)
 - **Summary cards** — total leads, revenue, bookings, conversion rate; GA4 sessions/users/bounce rate (once GA4 is configured)
