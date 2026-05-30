@@ -70,6 +70,19 @@ EXTERNAL SERVICES
 
 Magic links expire after 1 hour. If it doesn't work, request a new one.
 
+### Main Dashboard (`/admin`)
+The first thing you see after logging in. Four at-a-glance summary cards:
+- **Total Leads** — all enquiries ever received
+- **Hot Leads (7+)** — leads scored 7 or above by the AI; these need immediate attention
+- **Bookings** — total bookings in the system
+- **Pending Approval** — knowledge base content items waiting for review
+
+Below the cards, two panels run side by side:
+- **CEO Daily Brief** — an AI-generated morning summary (see below)
+- **Recent Leads** — the five most recent enquiries with name, source, date, and intent badge
+
+**CEO Daily Brief**: generated each morning at 7am NZT. It reads the database directly and summarises overnight lead activity, hot leads needing contact, content pending approval, and priorities for the day. No action required — it refreshes automatically. If you see "No brief available yet", it means the brief cron hasn't run since the database was last cleared.
+
 ### Leads (`/admin/leads`)
 - Every concierge conversation that produces a brief automatically creates a lead here
 - Filter by status (new / contacted / qualified / booked / closed) or intent score (hot / warm / cold)
@@ -108,9 +121,10 @@ Magic links expire after 1 hour. If it doesn't work, request a new one.
 
 ### Analytics (`/admin/analytics`)
 - **Summary cards** — total leads, revenue, bookings, conversion rate; GA4 sessions/users/bounce rate (once GA4 is configured)
+- **Marketing AI Agent** — click **Generate Recommendations** to get AI-powered budget suggestions based on live lead data. Each suggestion shows rationale and requires Approve or Dismiss before anything is logged. Previous decisions are shown in the history below.
 - **Geographic Breakdown** — lead split by Singapore / US / Other; populates automatically as new leads come in
 - **Website Traffic** — sessions and users from GA4 over the last 30 days
-- **Cost Per Lead** — enter ad spend per market to calculate CPA; will be replaced with live Google Ads data when ad accounts are connected
+- **Cost Per Lead** — ad spend per market → live CPA calculation; will connect to Google Ads API automatically when ad accounts are linked
 - **Conversion Funnel** — leads by pipeline stage
 - **Lead Sources** — where leads are coming from (concierge, email capture, contact form)
 - **Intent Distribution** — cold / warm / hot lead breakdown
@@ -119,6 +133,27 @@ Magic links expire after 1 hour. If it doesn't work, request a new one.
 - Brand voice settings for the AI concierge
 - Email template editor — edit the nurture email copy here
 - Team member management
+
+### Audit Log (`/admin/audit`) — admin only
+Every change made through the admin dashboard is recorded here automatically. You cannot turn it off, and entries cannot be deleted.
+
+**What it records:**
+- Lead status changes, notes added, assignments
+- Booking status changes, costing updates, payment link generation
+- Content edits (title, body, status changes)
+- Journey and destination edits
+- All entries include: who made the change, what changed (before and after values), and a timestamp
+
+**When to use it:**
+- If a lead or booking looks wrong and you're not sure what happened — check the audit log for that entity's history
+- If you need to confirm when a payment link was sent to a client
+- If multiple team members are working on leads and there's a dispute about what was changed
+
+**How to search it:**
+- Filter by entity type (lead, booking, content, journey) and date range
+- Click any entry to see the full before/after diff
+
+This log is also what Blair uses to investigate any data issues remotely without needing to call you.
 
 ### Taking a Deposit via Stripe (`/admin/bookings/[id]`)
 
