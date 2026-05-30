@@ -101,6 +101,25 @@ Magic links expire after 1 hour. If it doesn't work, request a new one.
 - Email template editor — edit the nurture email copy here
 - Team member management
 
+### Taking a Deposit via Stripe (`/admin/bookings/[id]`)
+
+Once a booking has a deposit amount set in the Financials panel:
+
+1. Click **Generate Payment Link** — creates a secure Stripe payment page for the exact deposit amount
+2. Click **Send to client** — fires a branded email to the client's address with a pay button (one click)
+3. Alternatively click **Copy link** to paste it into WhatsApp, iMessage, or an email manually
+
+When the client pays:
+- The booking automatically advances to **Planning** status
+- The deposit is marked paid with a timestamp
+- No manual action needed
+
+**Notes:**
+- Each booking gets one payment link — clicking Generate again returns the same link
+- The link never expires unless you deactivate it in the Stripe dashboard
+- Payment is in USD; Stripe handles card processing and currency conversion for international clients
+- If a client says the link isn't working, check the Stripe dashboard (stripe.com → Payment Links) to confirm it's still active
+
 ---
 
 ## 4. The AI Concierge — How It Works
