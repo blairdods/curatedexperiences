@@ -96,6 +96,15 @@ Magic links expire after 1 hour. If it doesn't work, request a new one.
 - Toggle journey availability on/off (e.g. seasonal closures)
 - View all 6 journeys; editing itinerary content currently requires a code change by Blair
 
+### Analytics (`/admin/analytics`)
+- **Summary cards** — total leads, revenue, bookings, conversion rate; GA4 sessions/users/bounce rate (once GA4 is configured)
+- **Geographic Breakdown** — lead split by Singapore / US / Other; populates automatically as new leads come in
+- **Website Traffic** — sessions and users from GA4 over the last 30 days
+- **Cost Per Lead** — enter ad spend per market to calculate CPA; will be replaced with live Google Ads data when ad accounts are connected
+- **Conversion Funnel** — leads by pipeline stage
+- **Lead Sources** — where leads are coming from (concierge, email capture, contact form)
+- **Intent Distribution** — cold / warm / hot lead breakdown
+
 ### Settings (`/admin/settings`)
 - Brand voice settings for the AI concierge
 - Email template editor — edit the nurture email copy here
@@ -147,6 +156,7 @@ The concierge at the bottom-right of every public page is powered by **Claude So
 | **Nurture email cron** | Daily at 9am UTC (9pm NZT) | Processes the nurture email queue — sends the next email in sequence to every lead in an active nurture programme |
 | **Vercel auto-deploy** | On every push to `main` on GitHub | Builds and deploys the site in ~60 seconds |
 | **Supabase daily backups** | Daily (Supabase managed) | Automatic point-in-time recovery available |
+| **GDPR consent banner** | On every page load | Automatically shown to EU/EEA/UK/Switzerland visitors who haven't consented. Not shown to US or Singapore visitors. Once a visitor accepts or declines, the banner never shows again for that browser. |
 
 The nurture cron is configured in `vercel.json` and secured with a `CRON_SECRET` environment variable. It runs automatically — you don't need to do anything.
 
@@ -256,6 +266,8 @@ All secret keys live in Vercel → project → **Settings** → **Environment Va
 | `RESEND_API_KEY` | Sends all emails. Losing this stops all email notifications. |
 | `CRON_SECRET` | Authenticates the daily nurture cron job |
 | `MAPBOX_ACCESS_TOKEN` | Powers the journey route maps |
+| `STRIPE_SECRET_KEY` | Generates deposit payment links. Losing this disables payment link generation. |
+| `STRIPE_WEBHOOK_SECRET` | Verifies incoming Stripe webhook events. Required for auto-marking deposits paid. |
 
 If a key needs to be rotated (e.g. after a suspected leak): update it in Vercel → **Environment Variables** → **Edit** → redeploy. The old key should also be revoked in the respective service's dashboard.
 
