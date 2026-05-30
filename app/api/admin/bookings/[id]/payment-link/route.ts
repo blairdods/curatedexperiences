@@ -3,9 +3,11 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { getUserRole } from "@/lib/auth/roles";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-05-27.dahlia",
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2026-05-27.dahlia",
+  });
+}
 
 export async function POST(
   _request: Request,
@@ -48,6 +50,7 @@ export async function POST(
   const clientName = enquiry?.name ?? "Guest";
 
   // Create a one-time Stripe price
+  const stripe = getStripe();
   const price = await stripe.prices.create({
     currency: "usd",
     unit_amount: Math.round(depositAmount * 100), // convert to cents
