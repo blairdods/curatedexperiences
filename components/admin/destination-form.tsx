@@ -173,14 +173,14 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
           </FormField>
           <FormField label="Best For" hint="Tags like Nature lovers, Couples, Wine lovers">
             <TagInput
-              tags={data.best_for}
+              value={data.best_for}
               onChange={(v) => update("best_for", v)}
               placeholder="Add a tag..."
             />
           </FormField>
           <FormField label="Related Journey Slugs" hint="Slugs of journeys that visit this destination">
             <TagInput
-              tags={data.related_journey_slugs}
+              value={data.related_journey_slugs}
               onChange={(v) => update("related_journey_slugs", v)}
               placeholder="e.g. the-masterpiece"
             />

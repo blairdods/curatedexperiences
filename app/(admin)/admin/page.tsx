@@ -87,8 +87,7 @@ export default async function AdminDashboardPage() {
             <CeoBrief content={brief.content} createdAt={brief.created_at} />
           ) : (
             <p className="text-sm text-foreground-muted">
-              No brief available yet. The CEO agent will generate one daily
-              once Paperclip is configured.
+              No brief yet — generates automatically at 7am NZT each morning.
             </p>
           )}
         </div>
