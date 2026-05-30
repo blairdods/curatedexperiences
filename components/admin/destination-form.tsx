@@ -166,7 +166,7 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
         <div className="space-y-4">
           <FormField label="Highlights" hint="Key experiences at this destination">
             <ListEditor
-              items={data.highlights}
+              value={data.highlights}
               onChange={(v) => update("highlights", v)}
               placeholder="Add a highlight..."
             />
