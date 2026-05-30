@@ -19,7 +19,7 @@ export default function AboutPage() {
       <Section narrow>
         <div className="text-center">
           <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
-            Curated Experiences was born from a simple belief: New Zealand
+            Curated Experiences&trade; was born from a simple belief: New Zealand
             deserves to be experienced properly — not rushed through, not
             reduced to a checklist, but felt.
           </p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
         <SectionHeader
           eyebrow="Our Heritage"
           title="Built on PPG Tours"
-          subtitle="Curated Experiences is a venture of PPG Tours — an established New Zealand travel company with an exceptional track record."
+          subtitle="Curated Experiences&trade; is a venture of PPG Tours — an established New Zealand travel company with an exceptional track record."
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {[

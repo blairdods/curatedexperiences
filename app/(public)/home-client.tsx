@@ -258,7 +258,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               </h2>
               <div className="mt-6 h-px w-10 bg-gold" />
               <p className="mt-8 text-base text-cream/60 leading-relaxed">
-                Curated Experiences is the luxury travel division of the PPG Collective —
+                Curated Experiences&trade; is the luxury travel division of the PPG Collective —
                 comprising PPG Tours and PPG Events. For over two decades, PPG has set the
                 standard for premium experiences in New Zealand and the Pacific.
               </p>

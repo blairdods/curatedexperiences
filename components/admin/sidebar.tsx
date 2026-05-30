@@ -18,6 +18,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/admin/analytics", label: "Analytics", icon: "chart" },
   { href: "/admin/leads", label: "Leads", icon: "users" },
   { href: "/admin/bookings", label: "Bookings", icon: "calendar" },
+  { href: "/admin/accommodations", label: "Accommodations", icon: "building", roles: ["admin", "curator"] },
   { href: "/admin/content", label: "Content", icon: "file", roles: ["admin", "curator"] },
   { href: "/admin/journeys", label: "Journeys", icon: "map", roles: ["admin", "curator"] },
   { href: "/admin/audit", label: "Audit Log", icon: "clock", roles: ["admin"] },
@@ -59,6 +60,11 @@ const ICONS: Record<string, React.ReactNode> = {
   clock: (
     <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+    </svg>
+  ),
+  building: (
+    <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+      <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h2v2H7V5zm0 4h2v2H7V9zm0 4h2v2H7v-2zm4-8h2v2h-2V5zm0 4h2v2h-2V9zm0 4h2v2h-2v-2z" clipRule="evenodd" />
     </svg>
   ),
   settings: (
