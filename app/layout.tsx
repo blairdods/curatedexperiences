@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import { Analytics } from "@/components/ui/analytics";
 import { OrganizationSchema } from "@/components/ui/schema-markup";
+import { ConsentBanner } from "@/components/ui/consent-banner";
 import "./globals.css";
 
 const cormorant = localFont({
@@ -83,6 +84,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <OrganizationSchema />
         {children}
+        <ConsentBanner />
         <Analytics />
       </body>
     </html>

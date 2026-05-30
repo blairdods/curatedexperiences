@@ -46,6 +46,25 @@ export async function middleware(request: NextRequest) {
     sameSite: "lax",
   });
 
+  // Set consent requirement flag for EU/EEA visitors
+  const EU_COUNTRIES = new Set([
+    "AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE",
+    "IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE",
+    // EEA non-EU
+    "IS","LI","NO",
+    // UK (post-Brexit, still applies GDPR equivalent)
+    "GB",
+    // Switzerland
+    "CH",
+  ]);
+  if (EU_COUNTRIES.has(signals.country) && !request.cookies.has("ce-consent")) {
+    response.cookies.set("ce-needs-consent", "1", {
+      maxAge: 60 * 60, // 1 hour — re-evaluate on next session if not yet accepted
+      path: "/",
+      sameSite: "lax",
+    });
+  }
+
   // Mark as visited for returning visitor detection
   if (!request.cookies.has("ce-visitor")) {
     response.cookies.set("ce-visitor", "1", {
