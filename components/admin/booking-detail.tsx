@@ -58,6 +58,9 @@ export function BookingDetail({
   );
   const [generatingLink, setGeneratingLink] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const updateBooking = async (updates: Record<string, unknown>) => {
     setSaving(true);
@@ -114,6 +117,21 @@ export function BookingDetail({
     await navigator.clipboard.writeText(paymentLinkUrl);
     setLinkCopied(true);
     setTimeout(() => setLinkCopied(false), 2000);
+  };
+
+  const handleSendEmail = async () => {
+    setSendingEmail(true);
+    setEmailError(null);
+    const res = await fetch(`/api/admin/bookings/${booking.id}/send-payment-link`, {
+      method: "POST",
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setEmailError(data.error ?? "Failed to send email");
+    } else {
+      setEmailSent(true);
+    }
+    setSendingEmail(false);
   };
 
   const handleAddDocument = () => {
@@ -380,10 +398,24 @@ export function BookingDetail({
                       </a>
                     </div>
                     <button
-                      onClick={handleCopyLink}
-                      className="w-full py-2 text-xs font-medium border border-navy text-navy rounded-lg hover:bg-navy hover:text-white transition-colors"
+                      onClick={handleSendEmail}
+                      disabled={sendingEmail || emailSent}
+                      className="w-full py-2 text-xs font-medium bg-navy text-white rounded-lg hover:bg-navy-light transition-colors disabled:opacity-60"
                     >
-                      {linkCopied ? "✓ Copied!" : "Copy Link"}
+                      {sendingEmail
+                        ? "Sending…"
+                        : emailSent
+                          ? "✓ Sent to client"
+                          : `Send to ${booking.enquiries?.email ?? "client"}`}
+                    </button>
+                    {emailError && (
+                      <p className="text-xs text-red-500">{emailError}</p>
+                    )}
+                    <button
+                      onClick={handleCopyLink}
+                      className="w-full py-2 text-xs font-medium border border-warm-200 text-foreground-muted rounded-lg hover:bg-warm-50 transition-colors"
+                    >
+                      {linkCopied ? "✓ Copied!" : "Copy link"}
                     </button>
                   </div>
                 ) : (

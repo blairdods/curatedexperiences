@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { WelcomeEmail } from "./templates/welcome";
+import { PaymentLinkEmail } from "./templates/payment-link";
 import { EmailLayout, BRAND } from "./templates/base-layout";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -66,5 +67,35 @@ export async function sendNurtureEmail(
     to: email,
     subject,
     html: fullHtml,
+  });
+}
+
+/**
+ * Send a payment link to a client for their booking deposit.
+ */
+export async function sendPaymentLinkEmail({
+  email,
+  clientName,
+  depositAmountUsd,
+  paymentUrl,
+  curatorName,
+}: {
+  email: string;
+  clientName: string;
+  depositAmountUsd: number;
+  paymentUrl: string;
+  curatorName?: string;
+}) {
+  if (!process.env.RESEND_API_KEY) return;
+
+  const html = await render(
+    PaymentLinkEmail({ clientName, depositAmountUsd, paymentUrl, curatorName })
+  );
+
+  await resend.emails.send({
+    from: FROM,
+    to: email,
+    subject: `Your deposit payment link — Curated Experiences`,
+    html,
   });
 }
