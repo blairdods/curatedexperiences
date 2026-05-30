@@ -7,7 +7,7 @@
 
 **Due: This weekend (before 12-day travel period)**
 
-- [ ] **System playbook** — Comprehensive documentation with screenshots and visual diagrams covering:
+- [x] **System playbook** — Written at `docs/system-playbook.md`. Covers:
   - Full architecture flow: Concierge → Leads → Bookings + AI layer + mapping + campaigns
   - Emergency procedures and worst-case scenario protocols
   - CloudFlare emergency shutdown procedures (edge-level kill switch)
