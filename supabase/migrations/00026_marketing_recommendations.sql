@@ -13,5 +13,22 @@ create table public.marketing_recommendations (
   data_snapshot jsonb
 );
 
+alter table public.marketing_recommendations enable row level security;
+
+create policy "authenticated users can read recommendations"
+  on public.marketing_recommendations for select
+  to authenticated
+  using (true);
+
+create policy "authenticated users can insert recommendations"
+  on public.marketing_recommendations for insert
+  to authenticated
+  with check (true);
+
+create policy "authenticated users can update recommendations"
+  on public.marketing_recommendations for update
+  to authenticated
+  using (true);
+
 grant all on public.marketing_recommendations to service_role;
 grant select, insert, update on public.marketing_recommendations to authenticated;
