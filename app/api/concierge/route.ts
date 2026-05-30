@@ -186,6 +186,7 @@ export async function POST(request: Request) {
             ai_brief: brief.ai_brief,
             source: "concierge",
             status: "new",
+            country: visitorContext?.country ?? null,
           })
           .select("id")
           .single();
