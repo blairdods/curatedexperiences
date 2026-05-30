@@ -19,9 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/admin/leads", label: "Leads", icon: "users" },
   { href: "/admin/bookings", label: "Bookings", icon: "calendar" },
   { href: "/admin/accommodations", label: "Accommodations", icon: "building", roles: ["admin", "curator"] },
-  { href: "/admin/destinations", label: "Destinations", icon: "globe", roles: ["admin", "curator"] },
   { href: "/admin/content", label: "Content", icon: "file", roles: ["admin", "curator"] },
-  { href: "/admin/journeys", label: "Journeys", icon: "map", roles: ["admin", "curator"] },
   { href: "/admin/audit", label: "Audit Log", icon: "clock", roles: ["admin"] },
   { href: "/admin/settings", label: "Settings", icon: "settings", roles: ["admin"] },
 ];

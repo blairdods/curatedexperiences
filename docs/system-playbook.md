@@ -101,23 +101,38 @@ Below the cards, two panels run side by side:
 - This is the master list Blair uses when building itineraries in the costing module
 
 ### Content (`/admin/content`)
-- Edit journal articles and pages
-- All changes go into a version history — nothing is permanently deleted
-- **To restore a previous version**: open the content item → click Version History → select and restore
+Everything editable on the public site lives here, organised across five tabs:
 
-### Destinations (`/admin/destinations`)
-- Full CRUD for destination pages — add, edit, or delete destinations
-- Fields: name, region (North Island / South Island), tagline, full description, highlights, "Best for" tags, best seasons, hero image, gallery images, related journey slugs
-- Changes publish immediately to the public `/destinations` pages
-- Until at least one destination is in the database, the public site falls back to the built-in static content — so you can add destinations gradually without breaking anything
+**Destinations tab**
+- Full list of destination pages. Click **Edit** to update any destination's name, region, tagline, description, highlights, "Best for" tags, best seasons, hero image, gallery, and related journeys
+- Use **+ Add Destination** to create a new destination page
+- Green dot = live on the public site; grey dot = hidden
+- If no destinations appear (first time), ask Blair to run the one-time static data import
+- Changes publish immediately to the public `/destinations` pages; if a slug isn't in the database yet, the site falls back to built-in static content
 
-### Journeys (`/admin/journeys`)
-- **Edit any journey**: click a journey → edit all fields including the narrative, tagline, itinerary days, highlights, inclusions, regions, images, pricing, and availability windows
-- **Narrative field**: the long editorial description shown on the public journey page — add this to make admin-edited journeys look complete on the public site
-- **Availability**: manage seasonal windows with pricing and capacity within each journey's edit page
-- **Create new journeys**: use the + Create Journey button — once created in the database, they appear on the public site
-- Toggle journey active/inactive status to control public visibility
-- The public journey pages read from the database first; if a journey slug isn't in the database, it falls back to the built-in content
+**Journeys tab**
+- Full list of itinerary pages. Click **Edit** to update title, narrative, tagline, highlights, inclusions, itinerary days, pricing, regions, images, and availability windows
+- Use **+ Create Journey** to add a new journey
+- **Narrative field**: the long editorial description shown on the public journey page — fill this in for fully-edited journeys
+- Toggle active/inactive to control public visibility
+- If no journeys appear (first time), ask Blair to run the one-time static data import
+- The public journey pages read from the database first; if a slug isn't in the database it falls back to built-in content
+
+**Journal Articles tab**
+- All editorial articles published under `/journal`. Click **Edit** to update any article or **View** to see the live page
+- Use **+ New Article** to draft a new one
+
+**Pending Approval tab**
+- Knowledge base entries that have been drafted or auto-generated (by the AI concierge or import tools) but not yet reviewed. These entries are *not yet visible to the concierge* — it only reads content with status `active`.
+- Review each item, edit if needed, then click **Approve** to make it active, or **Reject** to discard it
+- The count badge on the tab shows how many items are waiting — aim to keep this at zero so the concierge always has up-to-date, reviewed information
+
+**Knowledge Base tab**
+- All active content the AI concierge uses to answer visitor questions: lodge details, destination guides, itinerary notes, FAQs, supplier info
+- Each entry has a type (property / destination / itinerary / faq / general), a source type (manual or auto-generated), and optional region tags
+- Click any entry to edit it. Use **+ Add Content** to write a new entry manually
+- Entries here are live immediately — the concierge will use them in its next conversation
+- Keep this accurate and up-to-date; it is the primary source of truth for everything the AI says to visitors
 
 ### Analytics (`/admin/analytics`)
 - **Summary cards** — total leads, revenue, bookings, conversion rate; GA4 sessions/users/bounce rate (once GA4 is configured)
