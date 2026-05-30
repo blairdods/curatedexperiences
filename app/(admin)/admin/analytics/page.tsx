@@ -8,6 +8,7 @@ import { IntentDistribution } from "@/components/admin/charts/intent-distributio
 import { GeoBreakdown } from "@/components/admin/charts/geo-breakdown";
 import { Ga4TrafficChart } from "@/components/admin/charts/ga4-traffic";
 import { CpaWidget } from "@/components/admin/cpa-widget";
+import { MarketingAgent } from "@/components/admin/marketing-agent";
 
 const FUNNEL_STAGES = [
   "new",
@@ -187,6 +188,14 @@ export default async function AnalyticsPage() {
           )}
         </div>
       )}
+
+      {/* Marketing AI Agent */}
+      <div className="bg-white rounded-xl p-6 border border-warm-200 mt-8">
+        <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-1">
+          Marketing AI Agent
+        </h2>
+        <MarketingAgent />
+      </div>
 
       {/* Charts — first row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
