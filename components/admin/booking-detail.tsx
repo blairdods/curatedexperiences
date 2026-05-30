@@ -53,6 +53,11 @@ export function BookingDetail({
   const [saving, setSaving] = useState(false);
   const [newDoc, setNewDoc] = useState("");
   const [documents, setDocuments] = useState<string[]>(booking.documents ?? []);
+  const [paymentLinkUrl, setPaymentLinkUrl] = useState<string | null>(
+    (booking as Booking & { stripe_payment_link_url?: string }).stripe_payment_link_url ?? null
+  );
+  const [generatingLink, setGeneratingLink] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const updateBooking = async (updates: Record<string, unknown>) => {
     setSaving(true);
@@ -90,6 +95,25 @@ export function BookingDetail({
     const now = new Date().toISOString();
     setBalancePaidAt(now);
     updateBooking({ balance_paid_at: now });
+  };
+
+  const handleGeneratePaymentLink = async () => {
+    setGeneratingLink(true);
+    const res = await fetch(`/api/admin/bookings/${booking.id}/payment-link`, {
+      method: "POST",
+    });
+    const data = await res.json();
+    if (data.url) {
+      setPaymentLinkUrl(data.url);
+    }
+    setGeneratingLink(false);
+  };
+
+  const handleCopyLink = async () => {
+    if (!paymentLinkUrl) return;
+    await navigator.clipboard.writeText(paymentLinkUrl);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
   };
 
   const handleAddDocument = () => {
@@ -338,6 +362,45 @@ export function BookingDetail({
                 )}
               </div>
             </div>
+
+            {/* Stripe Payment Link */}
+            {!depositPaidAt && (
+              <div className="border-t border-warm-100 pt-4">
+                <p className="text-xs text-foreground-muted mb-2">Payment Link</p>
+                {paymentLinkUrl ? (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 bg-warm-50 rounded-lg px-3 py-2">
+                      <a
+                        href={paymentLinkUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-navy hover:text-navy-light truncate flex-1"
+                      >
+                        {paymentLinkUrl}
+                      </a>
+                    </div>
+                    <button
+                      onClick={handleCopyLink}
+                      className="w-full py-2 text-xs font-medium border border-navy text-navy rounded-lg hover:bg-navy hover:text-white transition-colors"
+                    >
+                      {linkCopied ? "✓ Copied!" : "Copy Link"}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleGeneratePaymentLink}
+                    disabled={generatingLink || depositAmount <= 0}
+                    className="w-full py-2 text-xs font-medium bg-gold text-white rounded-lg hover:bg-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {generatingLink
+                      ? "Generating…"
+                      : depositAmount <= 0
+                        ? "Set deposit amount first"
+                        : `Generate Payment Link — $${depositAmount.toLocaleString()}`}
+                  </button>
+                )}
+              </div>
+            )}
 
             <div className="border-t border-warm-100 pt-4">
               <div className="flex items-center justify-between">
