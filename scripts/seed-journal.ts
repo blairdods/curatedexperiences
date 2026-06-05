@@ -6,10 +6,6 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { createClient } from "@supabase/supabase-js";
-import * as dotenv from "dotenv";
-
-dotenv.config({ path: ".env.local" });
-
 const JOURNAL_DIR = path.join(process.cwd(), "content/journal");
 
 async function main() {

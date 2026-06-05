@@ -127,8 +127,10 @@ export function JournalForm({
         body: JSON.stringify({ frontmatter, content }),
       });
       if (!res.ok) {
-        const data = await res.json();
-        setError(data.error ?? "Failed to save");
+        const text = await res.text();
+        let msg = "Failed to save";
+        try { msg = JSON.parse(text).error ?? msg; } catch { msg = text || msg; }
+        setError(msg);
         setSaving(false);
         return;
       }
@@ -140,7 +142,9 @@ export function JournalForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ frontmatter, content }),
       });
-      const data = await res.json();
+      const text = await res.text();
+      let data: { error?: string; slug?: string } = {};
+      try { data = JSON.parse(text); } catch { /* empty */ }
       if (!res.ok) {
         setError(data.error ?? "Failed to create");
         setSaving(false);
