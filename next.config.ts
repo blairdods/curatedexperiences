@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         hostname: "cdn-syd.brandkit.com",
         pathname: "/accounts/**",
       },
+      {
+        protocol: "https",
+        hostname: "bwpbvdmdwjqguiliymnq.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
 };
