@@ -11,7 +11,7 @@ const COMPANY_NAME = "Curated Experiences™";
 const LEGAL_ENTITY = "PPG Tours Limited";
 const REGISTERED_COUNTRY = "New Zealand";
 const EMAIL = "enquiries@curatedexperiences.com";
-const PHONE = "+64 9 889 5828";
+const PHONE = "0800 287 283";
 
 export default function TermsPage() {
   return (

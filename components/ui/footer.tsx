@@ -12,7 +12,7 @@ const FOOTER_LINKS = {
   Company: [
     { href: "/about",           label: "Our Story" },
     { href: "/terms",           label: "Terms & Conditions" },
-    { href: "tel:+6498895828",  label: "Call Us" },
+    { href: "tel:0800287283",  label: "0800 CURATE" },
   ],
 };
 
