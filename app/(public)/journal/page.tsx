@@ -3,8 +3,8 @@ import { getArticles } from "@/lib/data/journal";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 
-export default function JournalPage() {
-  const articles = getArticles();
+export default async function JournalPage() {
+  const articles = await getArticles();
 
   return (
     <>

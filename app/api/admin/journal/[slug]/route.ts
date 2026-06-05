@@ -1,10 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-
-const JOURNAL_DIR = path.join(process.cwd(), "content/journal");
 
 export async function GET(
   _req: NextRequest,
@@ -17,14 +12,29 @@ export async function GET(
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { slug } = await params;
-  const filePath = path.join(JOURNAL_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
+  const service = await createServiceClient();
 
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(raw);
-  return NextResponse.json({ frontmatter: data, content });
+  const { data, error } = await service
+    .from("journal_articles")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error || !data) return NextResponse.json({ error: "Not found" }, { status: 404 });
+
+  return NextResponse.json({
+    frontmatter: {
+      title: data.title,
+      excerpt: data.excerpt,
+      category: data.category,
+      author: data.author,
+      publishedAt: data.published_at,
+      readTime: data.read_time,
+      heroImage: data.hero_image,
+      relatedJourneySlugs: data.related_journey_slugs ?? [],
+    },
+    content: data.content ?? "",
+  });
 }
 
 export async function PATCH(
@@ -38,14 +48,49 @@ export async function PATCH(
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { slug } = await params;
-  const filePath = path.join(JOURNAL_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
-
   const { frontmatter, content } = await req.json();
-  const output = matter.stringify("\n" + (content ?? ""), frontmatter);
-  fs.writeFileSync(filePath, output, "utf8");
+
+  const service = await createServiceClient();
+
+  const { error } = await service
+    .from("journal_articles")
+    .update({
+      title: frontmatter.title,
+      excerpt: frontmatter.excerpt ?? null,
+      category: frontmatter.category ?? null,
+      author: frontmatter.author ?? null,
+      published_at: frontmatter.publishedAt ?? null,
+      read_time: frontmatter.readTime ?? null,
+      hero_image: frontmatter.heroImage ?? null,
+      related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
+      content: content ?? "",
+    })
+    .eq("slug", slug);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  return NextResponse.json({ success: true });
+}
+
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { slug } = await params;
+  const service = await createServiceClient();
+
+  const { error } = await service
+    .from("journal_articles")
+    .delete()
+    .eq("slug", slug);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({ success: true });
 }

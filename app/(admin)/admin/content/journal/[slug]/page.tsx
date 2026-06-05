@@ -16,7 +16,7 @@ export default async function EditJournalArticlePage({
   if (!user) redirect("/admin/login");
 
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
   return (

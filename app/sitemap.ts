@@ -5,7 +5,7 @@ import { getArticles } from "@/lib/data/journal";
 
 const BASE_URL = "https://curatedexperiences.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date().toISOString();
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -30,7 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const articlePages: MetadataRoute.Sitemap = getArticles().map((a) => ({
+  const articles = await getArticles();
+  const articlePages: MetadataRoute.Sitemap = articles.map((a) => ({
     url: `${BASE_URL}/journal/${a.slug}`,
     lastModified: a.publishedAt,
     changeFrequency: "monthly" as const,

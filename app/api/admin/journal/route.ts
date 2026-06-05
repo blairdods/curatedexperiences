@@ -1,10 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-
-const JOURNAL_DIR = path.join(process.cwd(), "content/journal");
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -26,16 +21,35 @@ export async function POST(req: NextRequest) {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 
-  const filePath = path.join(JOURNAL_DIR, `${slug}.mdx`);
-  if (fs.existsSync(filePath)) {
+  const service = await createServiceClient();
+
+  const { data: existing } = await service
+    .from("journal_articles")
+    .select("slug")
+    .eq("slug", slug)
+    .single();
+
+  if (existing) {
     return NextResponse.json(
       { error: "An article with this title already exists" },
       { status: 409 }
     );
   }
 
-  const output = matter.stringify("\n" + (content ?? ""), frontmatter);
-  fs.writeFileSync(filePath, output, "utf8");
+  const { error } = await service.from("journal_articles").insert({
+    slug,
+    title: frontmatter.title,
+    excerpt: frontmatter.excerpt ?? null,
+    category: frontmatter.category ?? null,
+    author: frontmatter.author ?? null,
+    published_at: frontmatter.publishedAt ?? null,
+    read_time: frontmatter.readTime ?? null,
+    hero_image: frontmatter.heroImage ?? null,
+    related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
+    content: content ?? "",
+  });
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   return NextResponse.json({ slug });
 }

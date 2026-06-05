@@ -1,7 +1,7 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ContentQueue } from "@/components/admin/content-queue";
-import { getArticles, getArticleSlugs } from "@/lib/data/journal";
+import { getArticles } from "@/lib/data/journal";
 import { DESTINATIONS } from "@/lib/data/destinations";
 import { JOURNEYS } from "@/lib/data/journeys";
 import Link from "next/link";
@@ -51,7 +51,10 @@ export default async function ContentApprovalPage({
     serviceSupabase.from("tours").select("*", { count: "exact", head: true }),
   ]);
 
-  const journalCount = getArticleSlugs().length;
+  const journalCount = await serviceSupabase
+    .from("journal_articles")
+    .select("*", { count: "exact", head: true })
+    .then(({ count }) => count ?? 0);
 
   // Full data only for the active tab
   const pending =
@@ -77,7 +80,7 @@ export default async function ContentApprovalPage({
         ).data
       : null;
 
-  const articles = activeTab === "journal" ? getArticles() : [];
+  const articles = activeTab === "journal" ? await getArticles() : [];
 
   const dbDestinations =
     activeTab === "destinations"

@@ -1,15 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getArticleBySlug, getArticleSlugs } from "@/lib/data/journal";
+import { getArticleBySlug } from "@/lib/data/journal";
 import { getJourneyBySlug } from "@/lib/data/journeys";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
-
-export async function generateStaticParams() {
-  return getArticleSlugs().map((slug) => ({ slug }));
-}
 
 export async function generateMetadata({
   params,
@@ -17,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) return {};
   return {
     title: `${article.title} | Curated Experiences Journal`,
@@ -55,7 +51,7 @@ export default async function JournalArticlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) notFound();
 
   const relatedJourneys = article.relatedJourneySlugs
