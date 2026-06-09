@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+curated-experiences-*.json
+oauth_client.json
 
 # debug
 npm-debug.log*
