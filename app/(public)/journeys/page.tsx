@@ -7,14 +7,15 @@ export default function JourneysPage() {
   return (
     <>
       <Hero
-        title="Our Journeys"
-        subtitle="Every journey is a starting point — fully customisable around your interests, pace, and the season."
-        imageSrc="https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80"
-        imageAlt="Lake Wanaka, New Zealand"
+        eyebrow="Signature Journeys"
+        title="Considered frameworks, never fixed itineraries."
+        subtitle="Each journey begins as a point of orientation, then is reshaped around your pace, preferences, season, and reason for travelling."
+        imageSrc="/homepage-draft/e7df34af1180e68943e14157c7d064f99c0af99c.png"
+        imageAlt="Lake Wakatipu and alpine ridgeline"
         compact
       />
 
-      <Section>
+      <Section background="navy">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {JOURNEYS.map((j) => (
             <JourneyCard
@@ -25,6 +26,7 @@ export default function JourneysPage() {
               durationDays={j.durationDays}
               regions={j.regions.slice(0, 3)}
               imageSrc={j.images[0]?.src}
+              dark
             />
           ))}
         </div>

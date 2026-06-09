@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FooterContactLink } from "./footer-contact-link";
 
 const FOOTER_LINKS = {
   Explore: [
@@ -11,72 +10,68 @@ const FOOTER_LINKS = {
   ],
   Company: [
     { href: "/about",           label: "Our Story" },
-    { href: "/terms",           label: "Terms & Conditions" },
-    { href: "tel:0800287283",  label: "0800 CURATE" },
+    { href: "/terms",           label: "Privacy" },
+    { href: "/terms",           label: "Terms" },
+    { href: "tel:0800287283",   label: "0800 CURATE" },
   ],
 };
 
 export function Footer() {
   return (
-    <footer className="bg-navy text-cream/60">
-      {/* Gold rule at top */}
-      <div className="h-px bg-gold/40" />
-
-      <div className="max-w-7xl mx-auto px-6 py-16 sm:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
-
-          {/* Brand */}
+    <footer className="bg-navy text-cream/48">
+      <div className="mx-auto max-w-[1120px] px-6 pb-12 pt-12 sm:px-10 sm:pt-16">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
           <div>
             <Image
-              src="/logos/CE_Horizontal_NB_1200x400.svg"
+              src="/homepage-draft/9cf76b02ac6a6a86dfb8ce66b57c03f6a861ab1a.png"
               alt="Curated Experiences"
-              width={180}
-              height={60}
-              className="h-8 w-auto opacity-90"
+              width={295}
+              height={40}
+              className="h-8 w-auto"
             />
-            <p className="mt-4 text-sm leading-relaxed max-w-xs">
-              Bespoke luxury travel across New Zealand, crafted by local experts
-              for discerning travellers.
-            </p>
           </div>
 
-          {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <h4 className="text-xs tracking-[0.25em] uppercase font-medium text-cream/30 mb-5">
+              <h4 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
                 {heading}
               </h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link.href}>
+                  <li key={`${heading}-${link.href}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="text-sm hover:text-cream transition-colors"
+                      className="text-[12px] hover:text-cream transition-colors"
                     >
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-              {heading === "Company" && (
-                <ul className="space-y-3 mt-3">
-                  <li><FooterContactLink /></li>
-                </ul>
-              )}
             </div>
           ))}
+
+          <div>
+            <h4 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
+              Contact
+            </h4>
+            <div className="space-y-3 text-[12px]">
+              <p>Auckland, New Zealand</p>
+              <a href="tel:0800287283" className="block hover:text-cream">
+                0800 CURATE
+              </a>
+              <a href="mailto:discover@curatedexperiences.co.nz" className="block hover:text-cream">
+                discover@curatedexperiences.co.nz
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Gold rule divider */}
-        <div className="mt-16 h-px bg-gold/25" />
-
-        <div className="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-cream/30">
-            &copy; {new Date().getFullYear()} Curated Experiences&trade;. All rights reserved.
+        <div className="mt-14 flex flex-col gap-3 text-[11px] text-cream/28 sm:flex-row sm:justify-between">
+          <p>
+            &copy; {new Date().getFullYear()} Curated Experiences. All rights reserved.
           </p>
-          <p className="text-xs text-cream/30">
-            A PPG Tours venture — Best NZ DMC, World Travel Awards 2025
-          </p>
+          <p>Privacy · Terms</p>
         </div>
       </div>
     </footer>

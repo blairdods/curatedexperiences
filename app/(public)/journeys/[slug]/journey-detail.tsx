@@ -47,7 +47,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               {journey.idealFor.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy bg-stone/30"
+                  className="border-t border-navy/15 pt-2 text-[10px] tracking-[0.16em] uppercase font-semibold text-navy/55"
                 >
                   {tag}
                 </span>
@@ -55,7 +55,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               {journey.seasons.slice(0, 1).map((s) => (
                 <span
                   key={s}
-                  className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-gold bg-gold/8"
+                  className="border-t border-gold/40 pt-2 text-[10px] tracking-[0.16em] uppercase font-semibold text-gold"
                 >
                   {s}
                 </span>
@@ -67,7 +67,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
               {journey.narrative.split("\n\n").map((p, i) => (
                 <p
                   key={i}
-                  className="text-foreground/80 leading-relaxed mb-6 last:mb-0"
+                  className="text-[15px] text-foreground/80 leading-7 mb-6 last:mb-0"
                 >
                   {p}
                 </p>
@@ -76,14 +76,14 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
 
             {/* Highlights */}
             <div className="mt-16">
-              <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-8">
+              <h2 className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mb-8">
                 Key experiences
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {journey.highlights.map((h) => (
                   <div
                     key={h}
-                    className="flex items-start gap-3 p-4 bg-stone/20"
+                    className="flex items-start gap-3 border-t border-navy/12 bg-[#d8d1c5] p-5"
                   >
                     <span className="text-gold flex-shrink-0 mt-0.5">&#9672;</span>
                     <span className="text-sm text-foreground/80">{h}</span>
@@ -100,7 +100,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
             {/* Route Map */}
             {route.length > 0 && (
               <div className="mt-16">
-                <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-8">
+                <h2 className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mb-8">
                   Your route
                 </h2>
                 <JourneyMap route={route} />
@@ -109,7 +109,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
 
             {/* Itinerary */}
             <div className="mt-16" id="itinerary-section">
-              <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-8">
+              <h2 className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mb-8">
                 Day by day
               </h2>
               <ItineraryAccordion
@@ -121,7 +121,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
 
             {/* Inclusions */}
             <div className="mt-16">
-              <h2 className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mb-6">
+              <h2 className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mb-6">
                 What&apos;s included
               </h2>
               <ul className="space-y-3">

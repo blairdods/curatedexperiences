@@ -8,31 +8,32 @@ export default function AboutPage() {
   return (
     <>
       <Hero
-        title="Our Story"
-        subtitle="We don't sell tours. We curate time."
-        imageSrc="https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80"
-        imageAlt="New Zealand landscape"
+        eyebrow="Our Story"
+        title="Shaped by New Zealand, held by experience."
+        subtitle="We do not sell tours. We curate time."
+        imageSrc="/homepage-draft/8e90a7bfa445db54f6f07a5bcbf89d3577680dc4.png"
+        imageAlt="New Zealand fiord landscape"
         compact
       />
 
       {/* Philosophy */}
       <Section narrow>
         <div className="text-center">
-          <p className="font-serif text-2xl sm:text-3xl leading-relaxed text-navy tracking-tight">
+          <p className="font-serif text-[32px] sm:text-[42px] leading-[1.12] text-navy tracking-normal">
             Curated Experiences&trade; was born from a simple belief: New Zealand
             deserves to be experienced properly — not rushed through, not
             reduced to a checklist, but felt.
           </p>
         </div>
         <div className="mt-12 space-y-6 max-w-2xl mx-auto">
-          <p className="text-foreground/80 leading-relaxed">
+          <p className="text-[15px] text-foreground/80 leading-7">
             We are a small team of New Zealanders who have spent our lives
             exploring this country — not as tourists, but as locals who know
             where the light falls best, which lodge has the owner who&apos;ll
             open a bottle of something special, and which trail leads to a
             view that will stop you in your tracks.
           </p>
-          <p className="text-foreground/80 leading-relaxed">
+          <p className="text-[15px] text-foreground/80 leading-7">
             Every journey we design is built from scratch. No templates, no
             group departures, no compromises. Just a conversation about what
             moves you, and a team that knows how to turn that into something
@@ -75,18 +76,17 @@ export default function AboutPage() {
               bio: "Tracy's global perspective is what sets her apart — having travelled extensively, she understands exactly what discerning travellers are looking for and how to deliver it with genuine, on-the-ground New Zealand knowledge.",
             },
           ].map((person) => (
-            <div key={person.name}>
-              <div className="w-24 h-24 rounded-full bg-stone/50 mb-6" />
-              <h3 className="font-serif text-xl text-navy tracking-tight">
+            <div key={person.name} className="border-t border-navy/12 pt-6">
+              <h3 className="font-serif text-[28px] leading-[1.08] text-navy tracking-normal">
                 {person.name}
               </h3>
-              <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mt-1">
+              <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold mt-3">
                 {person.role}
               </p>
-              <p className="mt-4 font-serif text-base text-navy/80 leading-relaxed italic">
+              <p className="mt-5 font-serif text-[20px] text-navy/80 leading-[1.2]">
                 &ldquo;{person.tagline}&rdquo;
               </p>
-              <p className="mt-3 text-sm text-foreground/70 leading-relaxed">
+              <p className="mt-4 text-[13px] text-foreground/70 leading-6">
                 {person.bio}
               </p>
             </div>
@@ -108,11 +108,11 @@ export default function AboutPage() {
             { stat: "2026 Finalist", label: "NZ Tour Operator & DMC of the Year" },
             { stat: "Silversea, Ponant, Celebrity", label: "Trusted by the world's leading cruise lines" },
           ].map((item) => (
-            <div key={item.label}>
-              <p className="font-serif text-2xl sm:text-3xl text-navy tracking-tight">
+            <div key={item.label} className="border-t border-navy/12 pt-5">
+              <p className="font-serif text-[28px] sm:text-[34px] text-navy tracking-normal leading-[1.08]">
                 {item.stat}
               </p>
-              <p className="mt-2 text-sm text-foreground-muted">
+              <p className="mt-3 text-[12px] leading-5 text-foreground-muted">
                 {item.label}
               </p>
             </div>
@@ -146,10 +146,10 @@ export default function AboutPage() {
             },
           ].map((item) => (
             <div key={item.title}>
-              <h3 className="font-serif text-lg text-navy tracking-tight">
+              <h3 className="font-serif text-[26px] leading-[1.08] text-navy tracking-normal">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm text-foreground/70 leading-relaxed">
+              <p className="mt-4 text-[13px] text-foreground/70 leading-6">
                 {item.description}
               </p>
             </div>
@@ -169,7 +169,7 @@ export default function AboutPage() {
       {/* CTA */}
       <Section narrow>
         <div className="text-center">
-          <h2 className="font-serif text-3xl sm:text-4xl tracking-tight text-navy">
+          <h2 className="font-serif text-[38px] sm:text-[46px] leading-[1.08] tracking-normal text-navy">
             Ready to Talk?
           </h2>
           <p className="mt-4 text-foreground-muted leading-relaxed">

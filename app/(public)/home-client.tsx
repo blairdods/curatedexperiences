@@ -1,402 +1,585 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { useSignals } from "@/lib/personalisation/use-signals";
-import { Section, SectionHeader } from "@/components/ui/section";
-import { JourneyCard } from "@/components/ui/journey-card";
-import { Testimonial } from "@/components/ui/testimonial";
-import { Button } from "@/components/ui/button";
-import { JOURNEYS } from "@/lib/data/journeys";
+import Link from "next/link";
 import type { Article } from "@/lib/data/journal";
 
-const HERO_VARIANTS: Record<
-  string,
-  { title: string; subtitle: string; image: string }
-> = {
-  // ── US market ──────────────────────────────────────────────────────────────
-  "luxury-us": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "Private journeys for discerning travellers. Designed from first conversation to final farewell.",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
-  },
-  "adventure-us": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "Glacier heli-hikes, canyon jet boats, and starlit skies — designed for those who seek more.",
-    image:
-      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
-  },
-  "culinary-us": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "From Marlborough's world-renowned vineyards to MICHELIN-recognised restaurants — a journey built around flavour.",
-    image:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
-  },
+const img = (name: string) => `/homepage-draft/${name}.png`;
 
-  // ── Singapore market ───────────────────────────────────────────────────────
-  // Data: 90% hike/trek, 74% South Island, 41% glacier, Queenstown (62%) +
-  // Fiordland (18%) dominant. Couples (63%), avg 11 days. Nature-first motivation.
-  "nature-sg": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "From the glaciers of the Southern Alps to the ancient sounds of Fiordland — private journeys built around New Zealand's wildest places.",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+const TRUST_ITEMS = [
+  {
+    label: "World Travel Awards Winner",
+    text: "New Zealand's Leading Destination Management Company 2025",
   },
-  "adventure-sg": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "Fiordland by private charter, glacier heli-hikes above the Southern Alps, and trails that reach places no tour bus finds.",
-    image:
-      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
+  {
+    label: "World Travel Awards Finalist",
+    text: "New Zealand's Leading Tour Operator 2025 & 2026",
   },
-  "culinary-sg": {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "Central Otago's celebrated pinot, Marlborough's world-renowned vineyards, and MICHELIN-recognised restaurants — journeys built around what you eat and drink.",
-    image:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
+  {
+    label: "World Travel Awards Finalist",
+    text: "New Zealand & Oceania Destination Management Company 2026",
   },
+  {
+    label: "Trusted By Leading Cruise Lines",
+    text: "Silversea, Ponant, & Celebrity Cruises",
+  },
+];
 
-  // ── All other markets ──────────────────────────────────────────────────────
-  international: {
-    title: "New Zealand,\nPersonally Curated.",
-    subtitle:
-      "From glacial peaks to private vineyards — your journey is curated by us, authored by you.",
-    image:
-      "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+const SIGNATURE_JOURNEYS = [
+  {
+    href: "/journeys/the-masterpiece",
+    eyebrow: "The Masterpiece",
+    title: "The definitive New Zealand journey.",
+    text: "A composed introduction to the country's most remarkable lodges, landscapes, and private experiences.",
+    meta: "15 days · Auckland · Taupo · Queenstown",
+    image: img("48a3273c7255767c28d1f25669b70144be4e7d1e"),
   },
-};
+  {
+    href: "/journeys/the-epicurean",
+    eyebrow: "The Epicurean",
+    title: "A private study of food, wine, soil, and sea.",
+    text: "A slower journey through producers, private cellars, chefs, coastlines, and the rituals of place.",
+    meta: "10 days · Hawke's Bay · Central Otago",
+    image: img("044ee02e4778cba0a4342b257f4b98aa8e19b27c"),
+  },
+  {
+    href: "/journeys/the-expedition",
+    eyebrow: "The Expedition",
+    title: "Remote access and elemental scale.",
+    text: "For travellers drawn to wilderness, private charter, alpine silence, and landscapes that feel privately opened.",
+    meta: "12 days · Fiordland · Aoraki · West Coast",
+    image: img("1c6bc62af0ea1255c3f26fc1ab3dd9bb97bc2561"),
+  },
+];
 
-function getOrderedJourneys(featured: string) {
-  const sorted = [...JOURNEYS];
-  const idx = sorted.findIndex((j) => j.slug === featured);
-  if (idx > 0) {
-    const [item] = sorted.splice(idx, 1);
-    sorted.unshift(item);
-  }
-  return sorted;
+const DESTINATIONS = [
+  {
+    href: "/destinations/northland",
+    title: "Northland & Bay of Islands",
+    image: img("2f7f49a291dd914b036dcc3a80c73d67f77c244d"),
+  },
+  {
+    href: "/destinations/rotorua",
+    title: "Taupo & Rotorua",
+    image: img("8e90a7bfa445db54f6f07a5bcbf89d3577680dc4"),
+  },
+  {
+    href: "/destinations/central-otago",
+    title: "Queenstown & Central Otago",
+    image: img("46426794ba5e7a0566cb9783e734a3aacd63ef28"),
+  },
+];
+
+const PRIVACY_POINTS = [
+  {
+    title: "Private Arrivals",
+    text: "Transfers and access are planned to feel calm from the first moment.",
+  },
+  {
+    title: "Discreet Hosting",
+    text: "Guides and hosts are selected for judgement, presence, and restraint.",
+  },
+  {
+    title: "Unseen Detail",
+    text: "The work sits behind the experience, so each day unfolds naturally.",
+  },
+];
+
+const DESIGN_JOURNAL: Article[] = [
+  {
+    slug: "when-to-visit-new-zealand",
+    title: "When to visit New Zealand: a month-by-month guide",
+    excerpt: "",
+    category: "Travel Intelligence",
+    author: "Curated Experiences",
+    publishedAt: "",
+    readTime: "",
+    heroImage: img("261e02d5ebcf6dedeb222a01c029acf105eb2c60"),
+    relatedJourneySlugs: [],
+  },
+  {
+    slug: "night-on-milford-sound",
+    title: "Why we always add a night on Milford Sound",
+    excerpt: "",
+    category: "Wild Interior",
+    author: "Curated Experiences",
+    publishedAt: "",
+    readTime: "",
+    heroImage: img("47c70aeba3ae7a09d370ddc54fe7552ddf4a58d9"),
+    relatedJourneySlugs: [],
+  },
+  {
+    slug: "minaret-station",
+    title: "Minaret Station: New Zealand's most remote luxury lodge",
+    excerpt: "",
+    category: "Lodge Notes",
+    author: "Curated Experiences",
+    publishedAt: "",
+    readTime: "",
+    heroImage: img("48764584ca42c1588af02f8887b38cc193c107f3"),
+    relatedJourneySlugs: [],
+  },
+];
+
+function openConcierge() {
+  window.dispatchEvent(new Event("ce:open-concierge"));
+}
+
+function journalItems(articles: Article[]) {
+  if (!articles.length) return DESIGN_JOURNAL;
+  return DESIGN_JOURNAL.map((fallback, index) => {
+    const article = articles[index];
+    if (!article) return fallback;
+    return {
+      ...article,
+      category: article.category || fallback.category,
+      heroImage: article.heroImage || fallback.heroImage,
+    };
+  });
 }
 
 export default function HomePage({ articles }: { articles: Article[] }) {
-  const signals = useSignals();
-  const hero = HERO_VARIANTS[signals.heroVariant] ?? HERO_VARIANTS["luxury-us"];
-  const journeys = getOrderedJourneys(signals.featuredJourney);
+  const featuredArticles = journalItems(articles);
 
   return (
-    <>
-      {/* ─── HERO — full-screen, nav overlays top ─── */}
-      <section className="relative w-full min-h-screen flex items-end overflow-hidden">
-        <video
-          autoPlay muted loop playsInline
-          poster={hero.image}
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/Alpine_Lodge_Helicopter_Landing_Video.mp4" type="video/mp4" />
-        </video>
+    <div className="ce-homepage-exact bg-cream text-navy">
+      <style>{`main:has(.ce-homepage-exact) + footer { display: none; }`}</style>
+
+      <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
         <Image
-          src={hero.image}
-          alt="New Zealand landscape"
-          fill priority sizes="100vw"
-          className="object-cover -z-10"
+          src={img("e7df34af1180e68943e14157c7d064f99c0af99c")}
+          alt="Lake Wakatipu, alpine ridgeline, and private lodge at golden hour"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
-        {/* Gradient heavier at base for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-navy-dark/40 to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
 
-        {/* Content — left-aligned at bottom of frame */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 pb-20 sm:pb-28">
-          <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-6">
-            New Zealand Travel
-          </p>
-          <h1 className="font-serif font-semibold text-cream text-6xl sm:text-7xl lg:text-8xl tracking-tight leading-[1.0] max-w-4xl whitespace-pre-line">
-            {hero.title}
-          </h1>
-          <div className="mt-7 h-px w-12 bg-gold" />
-          <p className="mt-7 text-base sm:text-lg text-cream/70 leading-relaxed max-w-lg">
-            {hero.subtitle}
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row items-start gap-4">
-            <Button
-              variant="gold"
-              size="lg"
-              onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-            >
-              Begin Your Journey
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="text-cream/70 hover:bg-cream/10 border border-cream/20"
-              onClick={() => document.getElementById("experiences")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Explore Experiences
-            </Button>
+        <div className="relative z-10 mx-auto flex min-h-[1010px] max-w-[1120px] items-center px-6 pt-20 md:min-h-[1018px] md:px-0">
+          <div className="max-w-[610px]">
+            <p className="text-[11px] font-medium uppercase tracking-[0.34em] text-gold">
+              Private New Zealand Travel
+            </p>
+            <div className="mt-4 h-px w-[300px] max-w-full bg-cream/38" />
+            <h1 className="mt-6 font-serif text-[56px] font-medium leading-[1.02] text-cream sm:text-[68px] md:text-[76px]">
+              New Zealand,
+              <br />
+              composed entirely
+              <br />
+              around you.
+            </h1>
+            <p className="mt-8 max-w-[430px] text-[15px] leading-7 text-cream/72">
+              Private travel designed with precision, restraint, and a deep
+              understanding of place.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ─── TRUST BAR ─── */}
-      <div className="bg-navy border-t border-gold/20">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 py-5 flex flex-wrap items-center justify-start gap-x-10 gap-y-2 text-xs tracking-[0.15em] uppercase text-cream/40">
-          <span className="flex items-center gap-2">
-            <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 text-gold flex-shrink-0">
-              <path d="M8 0l2.5 5 5.5.8-4 3.8 1 5.4L8 12.5 2.5 15l1-5.4L0 5.8l5.5-.8z" />
-            </svg>
-            Best NZ DMC — World Travel Awards 2025
-          </span>
-          <span className="text-cream/20 hidden sm:inline">·</span>
-          <span>2026 Finalist — NZ Tour Operator &amp; DMC of the Year</span>
-          <span className="text-cream/20 hidden sm:inline">·</span>
-          <span>Trusted by Silversea, Ponant &amp; Celebrity Cruises</span>
-          <span className="text-cream/20 hidden sm:inline">·</span>
-          <span>NZ-Owned &amp; Operated — 20+ Years</span>
-        </div>
-      </div>
-
-      {/* ─── EDITORIAL INTRO — ESSENCE split layout ─── */}
-      <section className="bg-cream py-24 sm:py-32">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div>
-              <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
-                The Curated Difference
-              </p>
-              <h2 className="font-serif font-medium text-navy text-4xl sm:text-5xl tracking-tight leading-[1.05]">
-                We don&apos;t create trips.<br />We curate time.
-              </h2>
-              <div className="mt-6 h-px w-10 bg-gold" />
-              <p className="mt-8 text-base text-foreground-muted leading-relaxed">
-                Every journey we design begins with a conversation — not a catalogue.
-                We listen to what moves you, what slows you down, what you&apos;ve never
-                quite found elsewhere. Then we build something that answers it precisely.
-              </p>
-              <p className="mt-5 text-base text-foreground-muted leading-relaxed">
-                We know where the light falls best, which guide has walked the high
-                country for thirty years, and which lodge sits above a fiord that
-                most people never reach. That knowledge is what we sell.
-              </p>
-              <div className="mt-10">
-                <Button
-                  variant="gold"
-                  size="md"
-                  onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-                >
-                  Start a Conversation
-                </Button>
-              </div>
-            </div>
-            <div className="relative aspect-[4/5] overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=900&q=80"
-                alt="New Zealand landscape"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── JOURNEYS GRID ─── */}
-      <Section background="navy" id="experiences">
-        <SectionHeader
-          eyebrow="Six Signature Journeys"
-          title="Curators of Exceptional Experiences"
-          subtitle="Each journey is a starting point — fully remade around you."
-          align="left"
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {journeys.map((j) => (
-            <JourneyCard
-              key={j.slug}
-              slug={j.slug}
-              title={j.title}
-              tagline={j.tagline}
-              durationDays={j.durationDays}
-              regions={j.regions.slice(0, 3)}
-              imageSrc={j.images[0]?.src}
-              dark
-            />
-          ))}
-        </div>
-      </Section>
-
-      {/* ─── TESTIMONIAL ─── */}
-      <Section background="default">
-        <Testimonial
-          quote="We've travelled the world, but nothing has come close to what Tony and the team crafted for us in New Zealand. Every single day exceeded our expectations."
-          author="Sarah & David Chen"
-          location="San Francisco, CA"
-          journey="The Masterpiece"
-        />
-      </Section>
-
-      {/* ─── CURATORS — dark editorial split ─── */}
-      <section className="bg-navy py-24 sm:py-32">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <div className="relative aspect-[3/4] overflow-hidden order-2 lg:order-1">
-              <Image
-                src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=900&q=80"
-                alt="New Zealand wilderness"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="order-1 lg:order-2">
-              <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
-                Heritage of Excellence
-              </p>
-              <h2 className="font-serif font-medium text-cream text-4xl sm:text-5xl tracking-tight leading-[1.05]">
-                The PPG Collective
-              </h2>
-              <div className="mt-6 h-px w-10 bg-gold" />
-              <p className="mt-8 text-base text-cream/60 leading-relaxed">
-                Curated Experiences&trade; is the luxury travel division of the PPG Collective —
-                comprising PPG Tours and PPG Events. For over two decades, PPG has set the
-                standard for premium experiences in New Zealand and the Pacific.
-              </p>
-              <div className="mt-10 grid grid-cols-2 gap-6">
-                <div className="border-t border-gold/30 pt-5">
-                  <p className="font-serif text-cream text-lg tracking-tight">PPG Tours</p>
-                  <p className="mt-2 text-xs text-cream/40 leading-relaxed">
-                    Best New Zealand DMC — World Travel Awards 2025. Trusted by Silversea, Ponant, Celebrity and MSC.
-                  </p>
-                </div>
-                <div className="border-t border-gold/30 pt-5">
-                  <p className="font-serif text-cream text-lg tracking-tight">PPG Events</p>
-                  <p className="mt-2 text-xs text-cream/40 leading-relaxed">
-                    Premium event management across New Zealand — corporate retreats, incentive programs, milestone celebrations.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PRIVACY ─── */}
-      <Section background="default" narrow>
-        <div className="text-center">
-          <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-6">
-            A Covenant of Discretion
+      <section className="px-6 py-[58px] md:px-0 md:py-[62px]">
+        <div className="mx-auto max-w-[1120px] bg-[#cfc5b7] px-10 py-10 md:min-h-[325px] md:px-12">
+          <p className="text-[11px] font-semibold uppercase leading-none tracking-[0.42em] text-gold">
+            Powered By PPG
           </p>
-          <h2 className="font-serif font-medium text-3xl sm:text-4xl tracking-tight text-navy">
-            Your Privacy, Our Promise
+          <h2 className="mt-8 max-w-[980px] font-sans text-[18px] font-medium leading-[1.7] text-navy md:text-[19px]">
+            Recognised by the World Travel Awards, trusted by leading cruise
+            lines, and New Zealand owned and operated for more than 20 years.
           </h2>
-          <div className="mt-6 h-px w-10 bg-gold mx-auto" />
-          <p className="mt-8 text-foreground-muted leading-relaxed">
-            We understand that our guests value privacy as much as they value
-            extraordinary experiences.
-          </p>
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-0 text-left">
-            {[
-              {
-                title: "Confidential planning",
-                description:
-                  "All communications and itinerary details handled through secure, private channels.",
-              },
-              {
-                title: "Absolute privacy",
-                description:
-                  "For our high-profile guests, we provide a fully off-grid experience.",
-              },
-              {
-                title: "Secure logistics",
-                description:
-                  "NDA-bound staffing, private terminal arrivals, and exclusive-use lodge buy-outs.",
-              },
-            ].map((item, i) => (
-              <div key={item.title} className={`p-8 bg-stone/20 ${i > 0 ? "border-l border-stone/40" : ""}`}>
-                <div className="w-6 h-px bg-gold mb-4" />
-                <h3 className="text-sm font-medium text-navy mb-2">{item.title}</h3>
-                <p className="text-xs text-foreground-muted leading-relaxed">{item.description}</p>
+          <div className="mt-7 h-px bg-gold/30" />
+          <div className="mt-7 grid gap-x-24 gap-y-7 md:grid-cols-2">
+            {TRUST_ITEMS.map((item) => (
+              <div key={`${item.label}-${item.text}`}>
+                <p className="text-[11px] font-semibold uppercase leading-none tracking-[0.42em] text-navy/52">
+                  {item.label}
+                </p>
+                <p className="mt-4 text-[15px] font-medium leading-snug text-navy md:text-[16px]">
+                  {item.text}
+                </p>
               </div>
             ))}
           </div>
         </div>
-      </Section>
+      </section>
 
-      {/* ─── JOURNAL ─── */}
-      <Section background="warm">
-        <SectionHeader
-          eyebrow="From the Journal"
-          title="The Art of Slow Travel"
-          subtitle="Insights from our curators on New Zealand destinations, lodges, and the craft of slow exploration."
-          align="left"
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-          {articles.slice(0, 3).map((article) => (
-            <Link key={article.slug} href={`/journal/${article.slug}`} className="group block">
-              <div className="relative aspect-[16/10] overflow-hidden bg-warm-200 mb-5">
-                <Image
-                  src={article.heroImage}
-                  alt={article.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-103 transition-transform duration-700 ease-out"
-                />
-              </div>
-              <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold">
-                {article.category}
-              </p>
-              <h3 className="mt-2 font-serif font-medium text-lg text-navy tracking-tight group-hover:text-navy-light transition-colors">
-                {article.title}
-              </h3>
-              <p className="mt-2 text-sm text-foreground-muted leading-relaxed line-clamp-2">
-                {article.excerpt}
-              </p>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-14">
-          <Link href="/journal">
-            <Button variant="gold" size="md">Read the Journal</Button>
-          </Link>
-        </div>
-      </Section>
-
-      {/* ─── FINAL CTA — dark editorial ─── */}
-      <section className="bg-navy py-28 sm:py-36">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10">
-          <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-6">
-            Let&apos;s Design Something Exceptional
-          </p>
-          <h2 className="font-serif font-semibold text-cream text-5xl sm:text-6xl lg:text-7xl tracking-tight leading-[1.0] max-w-3xl">
-            Begin Your Journey
-          </h2>
-          <div className="mt-8 h-px w-12 bg-gold" />
-          <p className="mt-8 text-base text-cream/60 leading-relaxed max-w-lg">
-            Talk to your personal curator about your New Zealand experience.
-            No obligation — just a conversation.
-          </p>
-          <div className="mt-12 flex flex-col sm:flex-row items-start gap-5">
-            <Button
-              variant="gold"
-              size="lg"
-              onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-            >
-              Start a Conversation
-            </Button>
-            <a
-              href="tel:0800287283"
-              className="inline-flex items-center gap-2 px-8 py-4 text-xs tracking-[0.2em] uppercase font-medium
-                text-cream/50 border border-cream/15 hover:border-cream/30 hover:text-cream/70 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 flex-shrink-0">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-              </svg>
-              0800 CURATE · 0800 287 283
-            </a>
+      <section className="px-6 py-[82px] md:px-0 md:py-[88px]">
+        <div className="mx-auto grid max-w-[1120px] items-start gap-20 md:grid-cols-[520px_460px] md:gap-[140px]">
+          <div className="pt-7">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              The Curated Difference
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-navy md:text-[46px]">
+              We do not sell itineraries.
+              <br />
+              We shape time.
+            </h2>
+            <p className="mt-8 max-w-[475px] text-[15px] leading-7 text-foreground-muted">
+              Curated Experiences designs private New Zealand travel around who
+              you are, how you want to travel, and the experiences you are drawn
+              to. Every itinerary is shaped with a clear understanding of how
+              the day should unfold, where time should be shaped with intention,
+              and how each arrangement should feel effortless.
+            </p>
+          </div>
+          <div className="relative aspect-[0.77] w-full overflow-hidden">
+            <Image
+              src={img("57ccdcb44d29a980dfa573f99ec29646a2c77aa9")}
+              alt="Milford Sound at dawn"
+              fill
+              loading="eager"
+              sizes="460px"
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
-    </>
+
+      <section id="experiences" className="bg-navy px-6 py-[104px] text-cream md:px-0">
+        <div className="mx-auto max-w-[1250px]">
+          <div className="ml-0 max-w-[720px] md:ml-[72px]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Signature Journeys
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] md:text-[46px]">
+              Considered frameworks, never fixed
+              <br />
+              itineraries.
+            </h2>
+            <p className="mt-7 max-w-[560px] text-[14px] leading-7 text-cream/56">
+              Each journey begins as a point of orientation, then is reshaped
+              around your pace, preferences, season, and reason for travelling.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 md:grid-cols-3">
+            {SIGNATURE_JOURNEYS.map((journey) => (
+              <Link
+                key={journey.title}
+                href={journey.href}
+                className="group block bg-[#d8d1c5] text-navy"
+              >
+                <div className="relative aspect-[1.45] overflow-hidden">
+                  <Image
+                    src={journey.image}
+                    alt={journey.title}
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="min-h-[246px] px-6 py-6">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                    {journey.eyebrow}
+                  </p>
+                  <h3 className="mt-4 font-serif text-[26px] font-medium leading-[1.08]">
+                    {journey.title}
+                  </h3>
+                  <p className="mt-4 text-[13px] leading-6 text-navy/58">
+                    {journey.text}
+                  </p>
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-navy/35">
+                    {journey.meta}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <Link
+            href="/journeys"
+            className="mt-10 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold md:ml-[72px]"
+          >
+            View The Full Collection +
+          </Link>
+        </div>
+      </section>
+
+      <section className="px-6 py-[108px] md:px-0">
+        <div className="mx-auto grid max-w-[1120px] gap-16 md:grid-cols-[360px_1fr] md:gap-[110px]">
+          <div className="pt-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Destinations
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] text-navy md:text-[46px]">
+              Distinct regions,
+              <br />
+              one rhythm.
+            </h2>
+            <p className="mt-8 text-[14px] leading-7 text-foreground-muted">
+              From private lodges and alpine landscapes to vineyards, coastlines,
+              and cultural encounters, every place is considered for how it
+              contributes to the rhythm of the wider journey.
+            </p>
+            <Link
+              href="/destinations"
+              className="mt-8 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold"
+            >
+              View All Destinations +
+            </Link>
+          </div>
+
+          <div className="grid gap-3 md:grid-cols-[1fr_250px]">
+            <Link
+              href="/destinations/fiordland"
+              className="group relative min-h-[570px] overflow-hidden"
+            >
+              <Image
+                src={img("6040daae4b1b2b9a0fe908f22263709262b4200e")}
+                alt="Fiordland and the Southern Alps"
+                fill
+                loading="eager"
+                sizes="430px"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
+              <p className="absolute bottom-6 left-6 font-serif text-[25px] text-cream">
+                Fiordland &amp; the Southern
+                <br />
+                Alps
+              </p>
+            </Link>
+            <div className="grid gap-3">
+              {DESTINATIONS.map((destination) => (
+                <Link
+                  key={destination.title}
+                  href={destination.href}
+                  className="group relative min-h-[178px] overflow-hidden"
+                >
+                  <Image
+                    src={destination.image}
+                    alt={destination.title}
+                    fill
+                    loading="eager"
+                    sizes="250px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/65 via-transparent to-transparent" />
+                  <p className="absolute bottom-4 left-4 font-serif text-[18px] leading-tight text-cream">
+                    {destination.title}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 pb-[104px] md:px-0">
+        <div className="mx-auto grid max-w-[1120px] gap-12 bg-[#d8d1c5] px-10 py-12 md:grid-cols-[0.9fr_1.1fr] md:px-14">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Local Knowledge
+            </p>
+            <h2 className="mt-6 font-serif text-[36px] font-medium leading-[1.08] text-navy md:text-[44px]">
+              Shaped by New Zealand,
+              <br />
+              held by experience.
+            </h2>
+            <p className="mt-7 max-w-[390px] text-[14px] leading-7 text-navy/62">
+              Curated Experiences is supported by PPG, a New Zealand-owned team
+              with more than two decades of experience designing and delivering
+              private travel across the country.
+            </p>
+          </div>
+          <div className="space-y-7">
+            <div className="border-t border-navy/14 pt-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                Built For Nuance
+              </p>
+              <p className="mt-3 text-[14px] leading-7 text-navy/66">
+                Every journey is shaped with an understanding of season,
+                distance, weather, pace, and the small details that change how a
+                place is felt.
+              </p>
+            </div>
+            <div className="border-t border-navy/14 pt-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                Quiet Coordination
+              </p>
+              <p className="mt-3 text-[14px] leading-7 text-navy/66">
+                Behind the visible itinerary sits careful planning, trusted local
+                relationships, and the ability to adjust without drawing
+                attention to the work.
+              </p>
+            </div>
+            <div className="border-t border-navy/14 pt-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                A Sense Of Place
+              </p>
+              <p className="mt-3 text-[14px] leading-7 text-navy/66">
+                The result is travel that feels considered in the moment,
+                grounded in New Zealand, and held with calm precision from
+                beginning to end.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-navy px-6 py-[104px] text-cream md:px-0">
+        <div className="mx-auto grid max-w-[1120px] items-center gap-18 md:grid-cols-[480px_1fr] md:gap-[118px]">
+          <div className="relative aspect-[0.86] overflow-hidden">
+            <Image
+              src={img("f033c3797f5cf6887179cd544937e47b4feece3b")}
+              alt="Private lodge interior overlooking a lake"
+              fill
+              loading="eager"
+              sizes="480px"
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Privacy &amp; Discretion
+            </p>
+            <h2 className="mt-6 font-serif text-[42px] font-medium leading-[1.05] md:text-[56px]">
+              Arranged quietly,
+              <br />
+              held with care.
+            </h2>
+            <p className="mt-8 max-w-[455px] text-[15px] leading-7 text-cream/60">
+              For clients who value privacy, the best arrangements are often the
+              least visible. We manage arrivals, guiding, timing, and access with
+              quiet care.
+            </p>
+            <div className="mt-9 space-y-6">
+              {PRIVACY_POINTS.map((point) => (
+                <div key={point.title}>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                    {point.title}
+                  </p>
+                  <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-cream/50">
+                    {point.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-[96px] md:px-0">
+        <div className="mx-auto max-w-[1120px]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+            Journal
+          </p>
+          <h2 className="mt-6 max-w-[560px] font-serif text-[42px] font-medium leading-[1.06] text-navy md:text-[54px]">
+            Before a journey begins,
+            <br />
+            there is a way of seeing.
+          </h2>
+          <p className="mt-7 max-w-[620px] text-[14px] leading-7 text-foreground-muted">
+            Selected perspectives on timing, remote places, and the details that
+            shape a more considered New Zealand journey.
+          </p>
+
+          <div className="mt-14 grid gap-8 md:grid-cols-3">
+            {featuredArticles.map((article) => (
+              <Link key={article.slug} href={`/journal/${article.slug}`} className="group block">
+                <div className="relative aspect-[1.7] overflow-hidden">
+                  <Image
+                    src={article.heroImage}
+                    alt={article.title}
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                  {article.category}
+                </p>
+                <h3 className="mt-3 font-serif text-[24px] font-medium leading-[1.12] text-navy">
+                  {article.title}
+                </h3>
+              </Link>
+            ))}
+          </div>
+
+          <Link
+            href="/journal"
+            className="mt-10 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold"
+          >
+            Read The Journal +
+          </Link>
+        </div>
+      </section>
+
+      <section className="bg-navy px-6 py-[112px] text-center text-cream md:px-0">
+        <div className="mx-auto max-w-[620px]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+            Private Journeys
+          </p>
+          <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] md:text-[46px]">
+            Begin with a conversation.
+          </h2>
+          <p className="mx-auto mt-7 max-w-[520px] text-[14px] leading-7 text-cream/56">
+            Every journey begins quietly: with timing, preferences, privacy, and
+            the details that matter before anything is designed.
+          </p>
+          <button
+            onClick={openConcierge}
+            className="mt-9 border border-gold px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gold transition-colors hover:bg-gold hover:text-navy"
+          >
+            Plan A Private Journey +
+          </button>
+        </div>
+      </section>
+
+      <footer className="bg-navy px-6 pb-12 pt-9 text-cream/48 md:px-0">
+        <div className="mx-auto grid max-w-[1120px] gap-10 md:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
+          <div>
+            <Image
+              src={img("9cf76b02ac6a6a86dfb8ce66b57c03f6a861ab1a")}
+              alt="Curated Experiences"
+              width={295}
+              height={40}
+              className="h-8 w-auto"
+            />
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
+              Explore
+            </p>
+            <div className="mt-4 space-y-2 text-[12px]">
+              <Link href="/journeys" className="block hover:text-cream">Journeys</Link>
+              <Link href="/destinations" className="block hover:text-cream">Destinations</Link>
+              <Link href="/journal" className="block hover:text-cream">Journal</Link>
+            </div>
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
+              Company
+            </p>
+            <div className="mt-4 space-y-2 text-[12px]">
+              <Link href="/about" className="block hover:text-cream">Our Story</Link>
+              <Link href="/terms" className="block hover:text-cream">Privacy</Link>
+              <button onClick={openConcierge} className="block hover:text-cream">
+                Enquire
+              </button>
+            </div>
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
+              Contact
+            </p>
+            <div className="mt-4 space-y-2 text-[12px]">
+              <p>Enquire</p>
+              <p>Auckland, New Zealand</p>
+              <a href="tel:0800287283" className="block hover:text-cream">0800 287 283</a>
+              <a href="mailto:discover@curatedexperiences.co.nz" className="block hover:text-cream">
+                discover@curatedexperiences.co.nz
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="mx-auto mt-14 flex max-w-[1120px] flex-col gap-3 text-[11px] text-cream/28 md:flex-row md:justify-between">
+          <p>&copy; 2026 Curated Experiences. All rights reserved.</p>
+          <p>Privacy · Terms</p>
+        </div>
+      </footer>
+    </div>
   );
 }

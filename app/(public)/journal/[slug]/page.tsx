@@ -24,18 +24,18 @@ export async function generateMetadata({
 const mdxComponents = {
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
-      className="font-serif text-2xl sm:text-3xl text-navy tracking-tight mt-12 mb-4"
+      className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mt-14 mb-5"
       {...props}
     />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-foreground/80 leading-relaxed" {...props} />
+    <p className="text-[15px] text-foreground/80 leading-7" {...props} />
   ),
   ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className="space-y-2 ml-1" {...props} />
   ),
   li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="flex items-start gap-3 text-foreground/80 leading-relaxed">
+    <li className="flex items-start gap-3 text-[15px] text-foreground/80 leading-7">
       <span className="text-gold flex-shrink-0 mt-1">&#9672;</span>
       <span {...props} />
     </li>
@@ -68,8 +68,8 @@ export default async function JournalArticlePage({
 
       <Section narrow>
         {/* Meta */}
-        <div className="flex items-center gap-3 text-xs text-foreground-muted mb-10">
-          <span className="tracking-[0.25em] uppercase font-medium text-gold">
+        <div className="flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.16em] text-foreground-muted mb-10">
+          <span className="tracking-[0.28em] font-semibold text-gold">
             {article.category}
           </span>
           <span className="text-stone">·</span>
@@ -91,7 +91,7 @@ export default async function JournalArticlePage({
 
         {/* Author */}
         <div className="mt-16 pt-8 border-t border-stone/40">
-          <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold mb-1">
+          <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold mb-2">
             Written by
           </p>
           <p className="text-sm font-medium text-foreground">{article.author}</p>

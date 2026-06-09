@@ -25,12 +25,11 @@ export function Hero({
   secondaryCta,
   overlay = true,
   compact = false,
-  inner = false,
 }: HeroProps) {
   return (
     <section
-      className={`relative w-full flex items-end overflow-hidden
-        ${compact ? "min-h-[55vh]" : "min-h-screen"}
+      className={`relative w-full flex items-center overflow-hidden
+        ${compact ? "min-h-[520px] sm:min-h-[600px]" : "min-h-screen"}
         ${!imageSrc ? "bg-navy" : ""}`}
     >
       {/* Background image */}
@@ -45,42 +44,39 @@ export function Hero({
             className="object-cover"
           />
           {overlay && (
-            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/85 via-navy/40 to-navy/10" />
+            <>
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.72)_0%,rgba(10,20,32,0.34)_48%,rgba(10,20,32,0.08)_100%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.38)_0%,rgba(10,20,32,0)_50%)]" />
+            </>
           )}
         </>
       )}
 
-      {/* Content — left-aligned, sits above the bottom gradient */}
-      <div className={`relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10
-        ${compact ? "pb-14 sm:pb-20 pt-36 sm:pt-44" : "pb-20 sm:pb-28"}`}
+      <div className={`relative z-10 w-full max-w-[1120px] mx-auto px-6 sm:px-10
+        ${compact ? "pt-24 sm:pt-32" : "pt-24"}`}
       >
         {eyebrow && (
-          <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
+          <p className="text-[10px] tracking-[0.32em] uppercase font-semibold text-gold mb-5">
             {eyebrow}
           </p>
         )}
 
         <h1
-          className={`font-serif font-semibold tracking-tight leading-[1.0]
+          className={`font-serif font-medium tracking-normal leading-[1.04]
             ${imageSrc ? "text-cream" : "text-cream"}
             ${compact
-              ? "text-4xl sm:text-5xl lg:text-6xl max-w-3xl"
-              : "text-6xl sm:text-7xl lg:text-8xl max-w-4xl"
+              ? "text-[48px] sm:text-[66px] max-w-[760px]"
+              : "text-[64px] sm:text-[86px] max-w-4xl"
             }`}
         >
           {title}
         </h1>
 
-        {/* Gold rule */}
-        {!compact && (
-          <div className="mt-7 h-px w-12 bg-gold" />
-        )}
-
         {subtitle && (
           <p
-            className={`mt-6 text-base sm:text-lg leading-relaxed
+            className={`mt-7 text-[15px] sm:text-[16px] leading-7
               ${imageSrc ? "text-cream/75" : "text-cream/60"}
-              ${compact ? "max-w-xl" : "max-w-lg"}`}
+              ${compact ? "max-w-[560px]" : "max-w-lg"}`}
           >
             {subtitle}
           </p>

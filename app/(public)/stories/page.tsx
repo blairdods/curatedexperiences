@@ -1,5 +1,6 @@
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
+import Image from "next/image";
 
 const STORIES = [
   {
@@ -38,9 +39,10 @@ export default function StoriesPage() {
   return (
     <>
       <Hero
-        title="Traveller Stories"
-        subtitle="Not star ratings — real stories from real journeys."
-        imageSrc="https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80"
+        eyebrow="Traveller Stories"
+        title="Journeys remembered by the way they felt."
+        subtitle="Not star ratings, but considered accounts of journeys shaped around people, pace, and place."
+        imageSrc="/homepage-draft/0bf62082fa80fc2ba4b8adb0cbd36d6c2aff6d51.png"
         compact
       />
 
@@ -54,28 +56,33 @@ export default function StoriesPage() {
               } gap-10 lg:gap-16 items-center`}
             >
               {/* Image */}
-              <div className="w-full lg:w-1/2 aspect-[4/3] rounded-xl overflow-hidden bg-warm-100">
-                <img
+              <div className="relative w-full lg:w-1/2 aspect-[1.25] overflow-hidden bg-warm-100">
+                <Image
                   src={story.image}
                   alt={story.journey}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
                 />
               </div>
 
               {/* Content */}
               <div className="w-full lg:w-1/2">
-                <blockquote className="font-serif text-xl sm:text-2xl text-navy leading-relaxed tracking-tight">
+                <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
+                  {story.journey}
+                </p>
+                <blockquote className="font-serif text-[30px] sm:text-[38px] text-navy leading-[1.08] tracking-normal">
                   &ldquo;{story.quote}&rdquo;
                 </blockquote>
-                <p className="mt-6 text-sm text-foreground/70 leading-relaxed">
+                <p className="mt-7 text-[14px] text-foreground/70 leading-7">
                   {story.story}
                 </p>
                 <div className="mt-6">
-                  <p className="text-sm font-medium text-foreground">
+                  <p className="text-sm font-medium text-navy">
                     {story.author}
                   </p>
-                  <p className="text-xs text-foreground-muted mt-0.5">
-                    {story.location} — {story.journey}
+                  <p className="text-[10px] uppercase tracking-[0.16em] text-foreground-muted mt-2">
+                    {story.location}
                   </p>
                 </div>
               </div>

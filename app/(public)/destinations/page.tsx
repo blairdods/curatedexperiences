@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { DESTINATIONS, type Destination } from "@/lib/data/destinations";
 import { createServiceClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/ui/hero";
@@ -42,10 +43,11 @@ export default async function DestinationsPage() {
   return (
     <>
       <Hero
-        title="Destinations"
-        subtitle="From ancient fiords to alpine peaks, wine country to starlit skies — discover the New Zealand we know and love."
-        imageSrc="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80"
-        imageAlt="New Zealand landscape"
+        eyebrow="Destinations"
+        title="Distinct regions, one rhythm."
+        subtitle="From private lodges and alpine landscapes to vineyards, coastlines, and cultural encounters, every place is considered for how it contributes to the rhythm of the wider journey."
+        imageSrc="/homepage-draft/6040daae4b1b2b9a0fe908f22263709262b4200e.png"
+        imageAlt="Fiordland and the Southern Alps"
         compact
       />
 
@@ -55,34 +57,35 @@ export default async function DestinationsPage() {
             <Link
               key={dest.slug}
               href={`/destinations/${dest.slug}`}
-              className="group block overflow-hidden bg-stone/25"
+              className="group block overflow-hidden bg-[#d8d1c5]"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-warm-200">
-                <img
+              <div className="relative aspect-[1.45] overflow-hidden bg-warm-200">
+                <Image
                   src={dest.heroImage}
                   alt={dest.name}
-                  className="w-full h-full object-cover
-                    group-hover:scale-103 transition-transform duration-700 ease-out"
+                  fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-5 sm:p-6">
-                  <p className="text-xs tracking-[0.25em] uppercase font-medium text-gold">
+                  <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold">
                     {dest.region}
                   </p>
-                  <h2 className="font-serif font-medium text-2xl text-cream tracking-tight mt-1">
+                  <h2 className="font-serif font-medium text-[28px] leading-[1.08] text-cream tracking-normal mt-2">
                     {dest.name}
                   </h2>
                 </div>
               </div>
               <div className="p-5 sm:p-6">
-                <p className="text-sm text-foreground-muted leading-relaxed">
+                <p className="text-[13px] text-navy/58 leading-6">
                   {dest.tagline}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {dest.bestFor.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy/70 bg-stone/40"
+                      className="border-t border-navy/15 pt-2 text-[10px] tracking-[0.16em] uppercase font-semibold text-navy/45"
                     >
                       {tag}
                     </span>

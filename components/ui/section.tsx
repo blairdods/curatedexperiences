@@ -10,8 +10,8 @@ interface SectionProps {
 
 const backgrounds = {
   default: "bg-background",
-  warm:    "bg-warm-100",
-  stone:   "bg-stone/30",
+  warm:    "bg-[#e4e0d6]",
+  stone:   "bg-[#d8d1c5]",
   navy:    "bg-navy text-cream",
 };
 
@@ -23,8 +23,8 @@ export function Section({
   narrow = false,
 }: SectionProps) {
   return (
-    <section id={id} className={`py-20 sm:py-28 ${backgrounds[background]} ${className}`}>
-      <div className={`mx-auto px-6 ${narrow ? "max-w-3xl" : "max-w-7xl"}`}>
+    <section id={id} className={`py-24 sm:py-[108px] ${backgrounds[background]} ${className}`}>
+      <div className={`mx-auto px-6 sm:px-10 ${narrow ? "max-w-3xl" : "max-w-[1120px]"}`}>
         {children}
       </div>
     </section>
@@ -43,20 +43,18 @@ export function SectionHeader({
   align?: "left" | "center";
 }) {
   return (
-    <div className={`mb-12 sm:mb-16 ${align === "center" ? "text-center" : ""}`}>
+    <div className={`mb-12 sm:mb-14 ${align === "center" ? "text-center" : ""}`}>
       {eyebrow && (
-        <p className="text-xs tracking-[0.3em] uppercase font-medium text-gold mb-5">
+        <p className="text-[10px] tracking-[0.32em] uppercase font-semibold text-gold mb-6">
           {eyebrow}
         </p>
       )}
-      <h2 className="font-serif font-medium text-4xl sm:text-5xl tracking-tight leading-[1.05]">
+      <h2 className="font-serif font-medium text-[38px] sm:text-[46px] tracking-normal leading-[1.06]">
         {title}
       </h2>
-      {/* Gold rule */}
-      <div className={`mt-6 h-px w-10 bg-gold ${align === "center" ? "mx-auto" : ""}`} />
       {subtitle && (
         <p
-          className={`mt-7 text-base leading-relaxed opacity-70 ${
+          className={`mt-7 text-[14px] leading-7 opacity-70 ${
             align === "center" ? "max-w-xl mx-auto" : "max-w-xl"
           }`}
         >

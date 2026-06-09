@@ -90,13 +90,13 @@ export default async function DestinationPage({
       <Section>
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-wrap gap-2 mb-10">
-            <span className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-gold bg-gold/10">
+            <span className="border-t border-gold/40 pt-2 text-[10px] tracking-[0.16em] uppercase font-semibold text-gold">
               {dest.region}
             </span>
             {dest.bestFor.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 text-xs tracking-[0.1em] uppercase font-medium text-navy/70 bg-stone/40"
+                className="border-t border-navy/15 pt-2 text-[10px] tracking-[0.16em] uppercase font-semibold text-navy/55"
               >
                 {tag}
               </span>
@@ -106,7 +106,7 @@ export default async function DestinationPage({
           {dest.description.split("\n\n").map((p, i) => (
             <p
               key={i}
-              className="text-foreground/80 leading-relaxed mb-6 last:mb-0"
+              className="text-[15px] text-foreground/80 leading-7 mb-6 last:mb-0"
             >
               {p}
             </p>
@@ -120,7 +120,7 @@ export default async function DestinationPage({
           {dest.highlights.map((h) => (
             <div
               key={h}
-              className="flex items-start gap-3 p-4 bg-stone/20"
+              className="flex items-start gap-3 border-t border-navy/12 bg-[#d8d1c5] p-5"
             >
               <span className="text-gold flex-shrink-0 mt-0.5">&#9672;</span>
               <span className="text-sm text-foreground/80">{h}</span>
@@ -128,7 +128,7 @@ export default async function DestinationPage({
           ))}
         </div>
         {dest.bestSeasons && (
-          <p className="mt-8 text-center text-sm text-foreground-muted">
+          <p className="mt-8 text-center text-[10px] uppercase tracking-[0.16em] text-foreground-muted">
             Best seasons: {dest.bestSeasons}
           </p>
         )}
@@ -160,7 +160,7 @@ export default async function DestinationPage({
 
       <Section background="navy" narrow>
         <div className="text-center">
-          <h2 className="font-serif text-3xl tracking-tight text-white">
+          <h2 className="font-serif text-[38px] leading-[1.08] tracking-normal text-white">
             Want to explore {dest.name}?
           </h2>
           <p className="mt-4 text-white/60 leading-relaxed">
