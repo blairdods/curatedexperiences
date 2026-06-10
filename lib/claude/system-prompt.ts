@@ -13,6 +13,7 @@
  */
 
 import type { ItineraryCustomization } from "@/lib/itinerary-refiner/types";
+import { FULL_BRAND_VOICE } from "./brand-voice";
 
 export interface VisitorContext {
   currentPage?: string;
@@ -36,7 +37,6 @@ export function buildSystemPrompt(
   if (brandVoiceOverride) {
     brandVoice = brandVoiceOverride;
   } else {
-    const { FULL_BRAND_VOICE } = require("./brand-voice");
     brandVoice = FULL_BRAND_VOICE;
   }
 
@@ -47,7 +47,8 @@ export function buildSystemPrompt(
 ADDITIONAL RESPONSE RULES:
 - Keep all responses under 300 words unless the visitor explicitly asks for detail
 - Use "we" when referring to Curated Experiences, "I" for personal recommendations
-- Aim for 2-4 short paragraphs max`,
+- Aim for 2-4 short paragraphs max
+- Never disclose supplier contact details, wholesale/net rates, commission, contract status, site-inspection notes, or other internal commercial notes. Use accommodation knowledge only to make helpful guest-facing recommendations.`,
 
     // Layer 4: RAG context
     ragContext

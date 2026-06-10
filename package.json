@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "scrape:tnz": "tsx --env-file=.env.local scripts/scrape-tnz.ts",
+    "enrich:accommodations": "tsx --env-file=.env.local scripts/enrich-accommodations.ts",
+    "fallback:accommodations": "tsx --env-file=.env.local scripts/apply-accommodation-fallbacks.ts",
+    "sync:concierge-knowledge": "tsx --env-file=.env.local scripts/seed-concierge-knowledge.ts",
     "reembed": "tsx --env-file=.env.local scripts/reembed-content.ts",
     "snapshot:daily": "tsx --env-file=.env.local scripts/run-daily-snapshot.ts",
     "gsc:setup": "tsx --env-file=.env.local scripts/setup-search-console.ts"

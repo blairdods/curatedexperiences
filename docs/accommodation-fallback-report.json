@@ -1,0 +1,352 @@
+{
+  "generated_at": "2026-06-10T04:52:13.576Z",
+  "updated": 32,
+  "failed": 0,
+  "entries": [
+    {
+      "id": "1308caa8-f9e3-4ee7-9977-493e9a3fb948",
+      "name": "Hilton Auckland",
+      "region": "Auckland",
+      "slug": "hilton-auckland",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hilton.com/en/hotels/aklhihi-hilton-auckland/",
+        "https://www.hilton.com/en/hotels/aklhihi-hilton-auckland/dining/"
+      ]
+    },
+    {
+      "id": "a773aecd-2a81-4f09-9cc4-8b3d1816ae2a",
+      "name": "JW Marriott Auckland",
+      "region": "Auckland",
+      "slug": "jw-marriott-auckland",
+      "status": "updated",
+      "source_urls": [
+        "https://www.marriott.com/en-us/hotels/akljw-jw-marriott-auckland/overview/",
+        "https://www.marriott.com/en-us/hotels/akljw-jw-marriott-auckland/rooms/"
+      ]
+    },
+    {
+      "id": "335f9950-1574-4899-b013-c2ddb021da98",
+      "name": "Oaks Auckland Hotel",
+      "region": "Auckland",
+      "slug": "oaks-auckland-hotel",
+      "status": "updated",
+      "source_urls": [
+        "https://www.oakshotels.com/en/oaks-auckland-hotel"
+      ]
+    },
+    {
+      "id": "ccd4bc3b-2228-4e13-bfce-d7f1caadd3ab",
+      "name": "Park Hyatt Auckland",
+      "region": "Auckland",
+      "slug": "park-hyatt-auckland",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hyatt.com/park-hyatt/en-US/aklph-park-hyatt-auckland",
+        "https://www.hyatt.com/park-hyatt/en-US/aklph-park-hyatt-auckland/rooms"
+      ]
+    },
+    {
+      "id": "a563a849-695b-42aa-ae01-470e794952f8",
+      "name": "Sofitel Auckland Viaduct Harbour",
+      "region": "Auckland",
+      "slug": "sofitel-auckland-viaduct-harbour",
+      "status": "updated",
+      "source_urls": [
+        "https://sofitel.accor.com/en/hotels/8577.html",
+        "https://www.sofitel-auckland-viaduct.com"
+      ]
+    },
+    {
+      "id": "3afa60b6-0328-4eec-8691-5ca1d0d37b6c",
+      "name": "Swiss-Bel Suites Auckland",
+      "region": "Auckland",
+      "slug": "swiss-bel-suites-auckland",
+      "status": "updated",
+      "source_urls": [
+        "https://www.swiss-belhotel.com/hotels/swiss-belsuites-victoria-park"
+      ]
+    },
+    {
+      "id": "6e0a7933-e77c-46a1-b1a5-19c165235e1c",
+      "name": "Lindis Lodge",
+      "region": "Canterbury",
+      "slug": "lindis-lodge",
+      "status": "updated",
+      "source_urls": [
+        "https://www.thelindisgroup.com/thelindislodge",
+        "https://www.thelindisgroup.com/"
+      ]
+    },
+    {
+      "id": "7850f2b0-8bd5-4f78-aff2-80c8f5b31738",
+      "name": "Mt Cook Lodge & Motels Aoraki",
+      "region": "Canterbury",
+      "slug": "mt-cook-lodge-motels-aoraki",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hermitage.co.nz/stay/mt-cook-lodge/",
+        "https://www.newzealand.com/in/plan/business/mt-cook-lodge-and-motels/"
+      ]
+    },
+    {
+      "id": "12c868ab-6ac3-457e-8b18-da81447a3ba7",
+      "name": "Sudima Kaikōura",
+      "region": "Canterbury",
+      "slug": "sudima-kaik-ura",
+      "status": "updated",
+      "source_urls": [
+        "https://www.sudimahotels.com/en/hotels/kaikoura/"
+      ]
+    },
+    {
+      "id": "485086dd-319f-49a6-b695-c9b95317af81",
+      "name": "Distinction Dunedin Hotel",
+      "region": "Dunedin",
+      "slug": "distinction-dunedin-hotel",
+      "status": "updated",
+      "source_urls": [
+        "https://www.distinctionhotelsdunedin.co.nz/",
+        "https://www.dunedinnz.com/visit/all-accommodation/distinction-dunedin-hotel"
+      ]
+    },
+    {
+      "id": "57226349-0e0e-419f-94d1-c63b4c616b38",
+      "name": "Fable Dunedin",
+      "region": "Dunedin",
+      "slug": "fable-dunedin",
+      "status": "updated",
+      "source_urls": [
+        "https://www.fablehotelsandresorts.com/hotels/fable-dunedin"
+      ]
+    },
+    {
+      "id": "541b86ab-c428-4826-a400-e4bd18cd36a1",
+      "name": "Scenic Hotel Southern Cross Dunedin",
+      "region": "Dunedin",
+      "slug": "scenic-hotel-southern-cross-dunedin",
+      "status": "updated",
+      "source_urls": [
+        "https://www.scenichotelgroup.co.nz/dunedin/scenic-hotel-southern-cross/",
+        "https://www.newzealand.com/us/plan/business/scenic-hotel-southern-cross/"
+      ]
+    },
+    {
+      "id": "67f9619c-5dd0-490b-b7c2-28c1016649f5",
+      "name": "Craggy Range Accommodation",
+      "region": "Hawke's Bay",
+      "slug": "craggy-range-accommodation",
+      "status": "updated",
+      "source_urls": [
+        "https://craggyrange.com/pages/accommodation",
+        "https://www.hawkesbaynz.com/visit/us/craggy-range-vineyard-accommodation"
+      ]
+    },
+    {
+      "id": "67e269da-48b1-4852-b802-b96575fe5a4c",
+      "name": "Swiss-Bel Suites Napier",
+      "region": "Hawke's Bay",
+      "slug": "swiss-bel-suites-napier",
+      "status": "updated",
+      "source_urls": [
+        "https://www.swiss-belhotel.com/hotels/swiss-belhotel-napier",
+        "https://www.hotels.com/ho1102343488/swiss-belboutique-napier-napier-new-zealand/"
+      ]
+    },
+    {
+      "id": "b27512ff-1d9d-463d-a3ca-5851868ff5c5",
+      "name": "Hilton Lake Taupo",
+      "region": "Lake Taupo",
+      "slug": "hilton-lake-taupo",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hilton.com/en/hotels/akllthi-hilton-lake-taupo/",
+        "https://www.hilton.com/en/hotels/akllthi-hilton-lake-taupo/dining/"
+      ]
+    },
+    {
+      "id": "8d38037d-a573-4e6f-8acb-c6d46fac1133",
+      "name": "Millennium Hotel Taupo",
+      "region": "Lake Taupo",
+      "slug": "millennium-hotel-taupo",
+      "status": "updated",
+      "source_urls": [
+        "https://www.millenniumhotels.com/en/taupo/millennium-hotel-and-resort-manuels-taupo/"
+      ]
+    },
+    {
+      "id": "e404eb10-c0c6-424f-a7e9-f3ec69ea5ce4",
+      "name": "Wairakei Resort Taupo",
+      "region": "Lake Taupo",
+      "slug": "wairakei-resort-taupo",
+      "status": "updated",
+      "source_urls": [
+        "https://www.wairakei.co.nz/",
+        "https://www.lovetaupo.com/en/operators/wairakei-resort-taupo/"
+      ]
+    },
+    {
+      "id": "4c5faced-f6af-4fca-bc44-6906d919c81a",
+      "name": "Copthorne Hotel Waitangi",
+      "region": "Northland",
+      "slug": "copthorne-hotel-waitangi",
+      "status": "updated",
+      "source_urls": [
+        "https://www.millenniumhotels.com/en/bay-of-islands/copthorne-hotel-and-resort-bay-of-islands/",
+        "https://www.newzealand.com/in/plan/business/copthorne-hotel-and-resort-bay-of-islands/"
+      ]
+    },
+    {
+      "id": "deb0dddc-c0c2-4fec-a48b-21ed388df846",
+      "name": "The Boathouse at The Landing",
+      "region": "Northland",
+      "slug": "the-boathouse-at-the-landing",
+      "status": "updated",
+      "source_urls": [
+        "https://thelandingnz.com/stay/the-boathouse/",
+        "https://www.luxuryvillasnz.com/the-boathouse-the-landing"
+      ]
+    },
+    {
+      "id": "a754cb94-21d1-4f67-a12a-0c924d563223",
+      "name": "The Landing Bay of Islands",
+      "region": "Northland",
+      "slug": "the-landing-bay-of-islands",
+      "status": "updated",
+      "source_urls": [
+        "https://thelandingnz.com/",
+        "https://www.newzealand.com/us/plan/business/the-landing-residences/"
+      ]
+    },
+    {
+      "id": "ba4c9d6e-9b4d-4994-afd1-557a497f1a97",
+      "name": "Coronet Ridge Resort",
+      "region": "Queenstown",
+      "slug": "coronet-ridge-resort",
+      "status": "updated",
+      "source_urls": [
+        "https://www.coronetridge.co.nz/",
+        "https://www.queenstownnz.co.nz/listing/coronet-ridge-resort/1656/"
+      ]
+    },
+    {
+      "id": "ff8b4151-d174-45e6-92b2-d9e2f870a60f",
+      "name": "Swiss-Bel Suites Pounamu",
+      "region": "Queenstown",
+      "slug": "swiss-bel-suites-pounamu",
+      "status": "updated",
+      "source_urls": [
+        "https://www.swiss-belhotel.com/hotels/swiss-belsuites-pounamu-queenstown"
+      ]
+    },
+    {
+      "id": "62c61216-1d90-4965-b173-8d0278ed157d",
+      "name": "Moose Lodge",
+      "region": "Rotorua",
+      "slug": "moose-lodge",
+      "status": "updated",
+      "source_urls": [
+        "https://www.newzealand.com/us/plan/business/moose-lodge-estate-1/",
+        "https://book-directonline.com/properties/moosedirect/about"
+      ]
+    },
+    {
+      "id": "bd27f211-a470-49a8-917e-c5651fc4bd1c",
+      "name": "Novotel Rotorua Lakeside",
+      "region": "Rotorua",
+      "slug": "novotel-rotorua-lakeside",
+      "status": "updated",
+      "source_urls": [
+        "https://all.accor.com/hotel/1874/index.en.shtml"
+      ]
+    },
+    {
+      "id": "f3153961-9f9c-4276-b2e0-108b16fd1fb7",
+      "name": "Clements Hotel Hamilton",
+      "region": "Waikato",
+      "slug": "clements-hotel-hamilton",
+      "status": "updated",
+      "source_urls": [
+        "https://clements.co.nz/",
+        "https://www.newzealand.com/us/plan/business/the-clements-hotel/"
+      ]
+    },
+    {
+      "id": "e5e6db05-1197-46e1-8076-2a71ea1eba22",
+      "name": "Novotel Hamilton Tainui",
+      "region": "Waikato",
+      "slug": "novotel-hamilton-tainui",
+      "status": "updated",
+      "source_urls": [
+        "https://all.accor.com/hotel/2159/index.en.shtml",
+        "https://www.newzealand.com/us/plan/business/novotel-tainui-hamilton/"
+      ]
+    },
+    {
+      "id": "8734fad2-34fc-4d99-95ae-7183c4242751",
+      "name": "Pullman Hamilton",
+      "region": "Waikato",
+      "slug": "pullman-hamilton",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hospitalitynet.org/announcement/41011196/premium-pullman-hotel-announced-for-hamilton",
+        "https://www.hotelnewsresource.com/article131972.html"
+      ]
+    },
+    {
+      "id": "343012a8-04d5-46a5-87de-bc673754b4e0",
+      "name": "Boulcott Suites",
+      "region": "Wellington",
+      "slug": "boulcott-suites",
+      "status": "updated",
+      "source_urls": [
+        "https://villagegroup.nz/stay/boulcott-suites/",
+        "https://www.newzealand.com/us/plan/business/boulcott-suites-/"
+      ]
+    },
+    {
+      "id": "e0e89cb0-cad7-4186-ba01-f7ff6e67b93a",
+      "name": "Double Tree by Hilton",
+      "region": "Wellington",
+      "slug": "double-tree-by-hilton",
+      "status": "updated",
+      "source_urls": [
+        "https://www.hilton.com/en/hotels/wlgntdi-doubletree-wellington/",
+        "https://www.hilton.com/en/hotels/wlgntdi-doubletree-wellington/hotel-location/"
+      ]
+    },
+    {
+      "id": "6f7e5b04-71eb-4736-bfed-085bf8532296",
+      "name": "InterContinental Wellington",
+      "region": "Wellington",
+      "slug": "intercontinental-wellington",
+      "status": "updated",
+      "source_urls": [
+        "https://www.ihg.com/intercontinental/hotels/us/en/wellington/wlggs/hoteldetail",
+        "https://wellington.intercontinental.com/"
+      ]
+    },
+    {
+      "id": "39401fe2-15ac-485e-b937-4b89d2f7d5b2",
+      "name": "Rydges Wellington",
+      "region": "Wellington",
+      "slug": "rydges-wellington",
+      "status": "updated",
+      "source_urls": [
+        "https://www.rydges.com/accommodation/new-zealand/wellington/",
+        "https://www.rydges.com/accommodation/new-zealand/wellington/hotel-rooms/"
+      ]
+    },
+    {
+      "id": "f6c76b0b-97f6-4afa-a35d-582ecae41e4f",
+      "name": "Sofitel Wellington",
+      "region": "Wellington",
+      "slug": "sofitel-wellington",
+      "status": "updated",
+      "source_urls": [
+        "https://sofitel.accor.com/en/hotels/9051.html",
+        "https://www.sofitel-wellington.co.nz"
+      ]
+    }
+  ]
+}
