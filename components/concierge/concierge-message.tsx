@@ -5,21 +5,32 @@ import type { Message } from "./use-concierge";
 import { openContactModal } from "@/components/ui/contact-modal";
 
 const BRIEF_PATTERN = /<!--BRIEF_JSON[\s\S]*?BRIEF_JSON-->/g;
-const LINK_PATTERN = /\[([^\]]+)\]\(([^)]+)\)/g;
+const MARKDOWN_PATTERN = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*/g;
 
-/** Parse markdown links in assistant messages. #contact opens the contact modal. */
+/** Parse limited markdown in assistant messages. #contact opens the contact modal. */
 function renderContent(text: string) {
   const parts: (string | ReactNode)[] = [];
   let lastIndex = 0;
   let match: RegExpExecArray | null;
 
-  while ((match = LINK_PATTERN.exec(text)) !== null) {
+  while ((match = MARKDOWN_PATTERN.exec(text)) !== null) {
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
 
     const label = match[1];
     const href = match[2];
+    const boldText = match[3];
+
+    if (boldText) {
+      parts.push(
+        <strong key={match.index} className="font-semibold">
+          {boldText}
+        </strong>
+      );
+      lastIndex = match.index + match[0].length;
+      continue;
+    }
 
     if (href === "#contact" || href === "#") {
       parts.push(

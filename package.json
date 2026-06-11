@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "scrape:tnz": "tsx --env-file=.env.local scripts/scrape-tnz.ts",
+    "import:accommodations": "tsx --env-file=.env.local scripts/import-accommodation-suppliers.ts",
     "enrich:accommodations": "tsx --env-file=.env.local scripts/enrich-accommodations.ts",
     "fallback:accommodations": "tsx --env-file=.env.local scripts/apply-accommodation-fallbacks.ts",
     "sync:concierge-knowledge": "tsx --env-file=.env.local scripts/seed-concierge-knowledge.ts",

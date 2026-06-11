@@ -70,7 +70,7 @@ export async function POST(request: Request) {
         supabase.rpc("match_content", {
           query_embedding: queryEmbedding,
           match_threshold: 0.5,
-          match_count: 5,
+          match_count: 8,
         }),
         supabase.rpc("match_tours", {
           query_embedding: queryEmbedding,

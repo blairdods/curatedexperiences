@@ -306,6 +306,41 @@ Whole-property buyouts and eco-luxury: yes, many private villas, residences and 
     ],
   },
   {
+    type: "accommodation_comparison_guide",
+    title: "Accommodation Comparison Style Guide — Luxury NZ Properties",
+    body: `Use this whenever comparing New Zealand lodges, hotels, villas, retreats or private estates.
+
+Comparison structure: cover setting, access/distance, privacy, service style, best fit and one useful tradeoff for each property. Avoid flat lists. The visitor should understand how each stay feels, not just which one is "best."
+
+Recommendation calibration:
+- Do not say "our first recommendation" unless the traveller's exact needs clearly support that.
+- Prefer calibrated phrasing: "one of the first we'd discuss", "a strong fit if...", "best suited to...", "sits in our platinum tier", "the right choice if..."
+- A tier is an internal quality signal, not a ranking by itself. Say "sits in our platinum tier" rather than "our platinum-tier recommendation."
+- Do not imply exclusivity, remoteness or service level from tier alone; ground the claim in the property description.
+
+Precision rules:
+- Say "lakefront" for properties on Lake Wakatipu or other lakes unless the source specifically says beach.
+- Use "remote" carefully. Differentiate no-road access, private-estate feel, geographical isolation, low room count and simply being outside town.
+- Do not call a property a destination lodge if it is better described as a city hotel, wine-country lodge, serviced apartment, villa or practical base.
+
+Positive tradeoff language:
+- Avoid dismissive phrasing like "pleasant property" or "not as good as."
+- Use specific fit language: "strongest for wine-focused stays and cellar-door access, but not the same remote destination-lodge proposition as Blanket Bay or Matakauri."
+- If a hotel is more practical than exceptional, say what it is good for: "reliable city logistics", "family space", "arrival night", "walkable dining", "event access" or "longer-stay independence."
+
+Follow-up style: end comparisons with a fit question that helps qualify the traveller: town vs retreat, privacy vs hosted service, wine vs scenery, family space vs couple's lodge, active days vs slow lodge time.`,
+    region_tags: [
+      "New Zealand",
+      "Queenstown",
+      "Auckland",
+      "Northland",
+      "Hawke's Bay",
+      "Taupo",
+      "Rotorua",
+      "Wellington",
+    ],
+  },
+  {
     type: "hnw_na_experiences_faq",
     title: "HNW North America NZ Private Experiences FAQ",
     body: `Use this for luxury activity and experience questions.
@@ -511,13 +546,38 @@ function sanitizeNotes(notes: string | null): string | null {
   return fragments.length ? fragments.join(" ") : null;
 }
 
+function originalTier(notes: string | null): string | null {
+  if (!notes) return null;
+  const match = notes.match(/(?:^|\|)\s*Original tier:\s*([^|]+)/i);
+  return match?.[1]?.trim() || null;
+}
+
+function directoryCategory(accommodation: Accommodation): string | null {
+  const tier = originalTier(accommodation.notes);
+  if (!tier) return null;
+  return tier.toLowerCase() === accommodation.tier ? null : tier;
+}
+
+function accommodationTitle(accommodation: Accommodation): string {
+  return [
+    `Accommodation: ${accommodation.name}`,
+    accommodation.region,
+    accommodation.location,
+    directoryCategory(accommodation),
+  ]
+    .filter(Boolean)
+    .join(" — ");
+}
+
 function accommodationBody(accommodation: Accommodation): string {
+  const category = directoryCategory(accommodation);
   const lines = [
     `Concierge accommodation profile for ${accommodation.name}.`,
     `Name: ${accommodation.name}.`,
     `Region: ${accommodation.region}.`,
     accommodation.location ? `Location: ${accommodation.location}.` : null,
     `Accommodation tier: ${accommodation.tier}.`,
+    category ? `Supplier directory category: ${category}.` : null,
     `Property type: ${displayType(accommodation.property_type)}.`,
     `Positioning: ${tierPositioning(accommodation.tier)}`,
     `Best use: ${propertyUseCase(accommodation)}`,
@@ -586,7 +646,7 @@ async function replaceAccommodationKnowledge(): Promise<string[]> {
   const records = ((accommodations ?? []) as Accommodation[]).map(
     (accommodation) => ({
       type: "accommodation",
-      title: `Accommodation: ${accommodation.name} — ${accommodation.region}`,
+      title: accommodationTitle(accommodation),
       body: accommodationBody(accommodation),
       source_type: SOURCE_ACCOMMODATION,
       source_id: accommodation.id,

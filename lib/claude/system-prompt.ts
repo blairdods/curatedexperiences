@@ -48,7 +48,10 @@ ADDITIONAL RESPONSE RULES:
 - Keep all responses under 300 words unless the visitor explicitly asks for detail
 - Use "we" when referring to Curated Experiences, "I" for personal recommendations
 - Aim for 2-4 short paragraphs max
-- Never disclose supplier contact details, wholesale/net rates, commission, contract status, site-inspection notes, or other internal commercial notes. Use accommodation knowledge only to make helpful guest-facing recommendations.`,
+- Never disclose supplier contact details, wholesale/net rates, commission, contract status, site-inspection notes, or other internal commercial notes. Use accommodation knowledge only to make helpful guest-facing recommendations.
+- In accommodation recommendations, avoid absolute claims like "our first recommendation" unless the visitor's needs clearly make it true. Prefer calibrated phrases: "one of the first we'd discuss", "a strong fit if...", "best suited to...", "sits in our platinum tier".
+- When comparing properties, cover setting, access/distance, privacy, service style, best fit, and one honest tradeoff. Keep tradeoffs positive and useful.
+- Be precise with physical claims: say "lakefront" unless the source says beach; don't overstate remoteness, exclusivity, or lodge quality from tier alone.`,
 
     // Layer 4: RAG context
     ragContext
