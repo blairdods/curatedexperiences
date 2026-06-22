@@ -46,3 +46,9 @@ paperclip/data/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# video assets — served from Supabase Storage, not committed to git
+/public/assets/videos/
+
+# large asset library source files — local only
+/asset-library/

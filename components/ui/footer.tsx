@@ -23,7 +23,7 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
           <div>
             <Image
-              src="/homepage-draft/9cf76b02ac6a6a86dfb8ce66b57c03f6a861ab1a.png"
+              src="/logos/CE_Horizontal_NB_1200x400.svg"
               alt="Curated Experiences"
               width={295}
               height={40}

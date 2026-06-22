@@ -10,7 +10,7 @@ export default function JourneysPage() {
         eyebrow="Signature Journeys"
         title="Considered frameworks, never fixed itineraries."
         subtitle="Each journey begins as a point of orientation, then is reshaped around your pace, preferences, season, and reason for travelling."
-        imageSrc="/homepage-draft/e7df34af1180e68943e14157c7d064f99c0af99c.png"
+        imageSrc="/assets/images/233460-glenorchy-queenstown.jpg"
         imageAlt="Lake Wakatipu and alpine ridgeline"
         compact
       />

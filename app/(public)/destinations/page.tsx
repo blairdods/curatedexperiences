@@ -46,7 +46,7 @@ export default async function DestinationsPage() {
         eyebrow="Destinations"
         title="Distinct regions, one rhythm."
         subtitle="From private lodges and alpine landscapes to vineyards, coastlines, and cultural encounters, every place is considered for how it contributes to the rhythm of the wider journey."
-        imageSrc="/homepage-draft/6040daae4b1b2b9a0fe908f22263709262b4200e.png"
+        imageSrc="/assets/images/233461-milford-sound-fiordland.jpg"
         imageAlt="Fiordland and the Southern Alps"
         compact
       />

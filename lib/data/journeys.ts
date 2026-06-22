@@ -93,25 +93,12 @@ By anchoring your experience with a minimum of two nights at each of the country
       { id: "queenstown", label: "Queenstown", dayStart: 12, dayEnd: 14, minDays: 2, maxDays: 5, accommodation: "Matakauri Lodge, Queenstown" },
     ],
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80",
-        alt: "Milford Sound, Fiordland",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80",
-        alt: "Mount Cook, Canterbury",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80",
-        alt: "Lake Wanaka",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        alt: "Queenstown",
-      },
+      { src: "/assets/images/230332-milford-sound-fiordland.jpg", alt: "Milford Sound, Fiordland — Mitre Peak above still water" },
+      { src: "/assets/images/233206-aoraki-mt-cook-canterbury.jpg", alt: "Aoraki / Mount Cook, Canterbury — New Zealand's highest peak" },
+      { src: "/assets/images/233244-wanaka-lake-wanaka.jpg", alt: "Lake Wānaka, Otago — the iconic lone willow tree" },
+      { src: "/assets/images/230043-lake-wakatipu-queenstown.jpg", alt: "Lake Wakatipu, Queenstown — alpine lake at golden hour" },
     ],
-    heroImage:
-      "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+    heroImage: "/assets/images/233455-glenorchy-queenstown.jpg",
     testimonial: {
       quote:
         "We've travelled the world, but nothing has come close to what Tony and the team crafted for us in New Zealand. Every single day exceeded our expectations.",
@@ -168,21 +155,11 @@ By anchoring your experience with a minimum of two nights at each of the country
       { day: 10, title: "A Journey to Carry With You", description: "As your odyssey draws to a close, you carry with you the lingering notes of world-class vintages and the quiet echoes of the wilderness. A private chauffeur escorts you to the airport.", highlights: ["Private airport transfer"] },
     ],
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80",
-        alt: "Marlborough vineyards",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
-        alt: "Fine dining",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?w=800&q=80",
-        alt: "Wellington harbour",
-      },
+      { src: "/assets/images/233179-craggy-range-hawkes-bay.jpg", alt: "Craggy Range winery, Hawke's Bay — Te Mata Peak and vineyard at dusk" },
+      { src: "/assets/images/233431-wai-o-tapu-rotorua.jpg", alt: "Wai-O-Tapu thermal wonderland, Rotorua — the Champagne Pool" },
+      { src: "/assets/images/234051-lake-dunstan-central-otago.jpg", alt: "Lake Dunstan, Central Otago — vineyard country above the reservoir" },
     ],
-    heroImage:
-      "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1920&q=80",
+    heroImage: "/assets/images/233179-craggy-range-hawkes-bay.jpg",
     testimonial: {
       quote:
         "The wine knowledge was incredible — but it was the people we met and the stories behind every bottle that made this trip unforgettable.",
@@ -348,21 +325,11 @@ Every day offers a choice: go bigger or go deeper. Heli-hike a glacier or walk a
       },
     ],
     images: [
-      {
-        src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80",
-        alt: "Franz Josef Glacier",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-        alt: "Queenstown adventure",
-      },
-      {
-        src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80",
-        alt: "Milford Sound kayaking",
-      },
+      { src: "/assets/images/233456-franz-josef-west-coast.jpg", alt: "Franz Josef Glacier, West Coast — blue ice and ancient moraine" },
+      { src: "/assets/images/234734-shotover-river-queenstown.jpg", alt: "Shotover River, Queenstown — turquoise canyon waters" },
+      { src: "/assets/images/230332-milford-sound-fiordland.jpg", alt: "Milford Sound, Fiordland — kayaking beneath Mitre Peak" },
     ],
-    heroImage:
-      "https://images.unsplash.com/photo-1469521669194-babb45599def?w=1920&q=80",
+    heroImage: "/assets/images/233206-aoraki-mt-cook-canterbury.jpg",
     testimonial: {
       quote:
         "Landing on that glacier was the single most incredible moment of my life. And then somehow every day after that topped it.",
@@ -426,10 +393,10 @@ From clay-bird shooting and private farm tours to heli-landings on age-old glaci
       { day: 15, title: "Homeward Bound", description: "Your journey concludes as a private transfer takes you to Queenstown Airport.", highlights: ["Private airport transfer"] },
     ],
     images: [
-      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Auckland harbour" },
-      { src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80", alt: "Rotorua geothermal" },
+      { src: "/assets/images/232376-cape-kidnappers-hawkes-bay.jpg", alt: "Cape Kidnappers, Hawke's Bay — clifftop gannet colony and ocean views" },
+      { src: "/assets/images/233431-wai-o-tapu-rotorua.jpg", alt: "Wai-O-Tapu, Rotorua — geothermal wonderland" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80",
+    heroImage: "/assets/images/232376-cape-kidnappers-hawkes-bay.jpg",
     testimonial: {
       quote: "Seven days was all it took to fall completely in love with New Zealand. The Discovery gave us the perfect introduction.",
       author: "Emily & James Wright",
@@ -494,10 +461,11 @@ This is a journey for those who want to experience the very best of both islands
       { day: 15, title: "Depart Queenstown", description: "Your incredible New Zealand adventure comes to an end today as we transfer you to the airport to begin the journey home.", highlights: ["Private airport transfer"] },
     ],
     images: [
-      { src: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80", alt: "Bay of Islands sailing" },
-      { src: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&q=80", alt: "Abel Tasman golden beaches" },
+      { src: "/assets/images/229483-bay-of-islands-northland.jpg", alt: "Bay of Islands, Northland — 144 islands and turquoise water" },
+      { src: "/assets/images/235198-abel-tasman-national-park-nelson.jpg", alt: "Abel Tasman National Park, Nelson — golden beaches and clear turquoise water" },
+      { src: "/assets/images/233268-queen-charlotte-track-marlborough.jpg", alt: "Queen Charlotte Track, Marlborough Sounds — coastal trail above the Sounds" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1920&q=80",
+    heroImage: "/assets/images/231817-bay-of-islands-northland.jpg",
     testimonial: {
       quote: "The Hidden Trail showed us a New Zealand we didn't know existed. The sailing in Abel Tasman and the helicopter over Milford Sound were life-changing.",
       author: "Richard & Anne Chambers",
@@ -563,10 +531,11 @@ Get alongside the wildlife, enjoy world-class wine and food, and take in the eve
       { day: 14, title: "Mount Cook to Christchurch — Departure", description: "Today's journey takes you north through the Mackenzie Country, passing through Tekapo and the tiny Church of the Good Shepherd built of local stone and oak on the shores of Lake Tekapo. Follow the foothills of the Southern Alps into Canterbury Plains, stop in Geraldine for a café lunch, and continue to Christchurch Airport for your onward travels.", highlights: ["Church of the Good Shepherd", "Lake Tekapo", "Geraldine café lunch", "Christchurch Airport transfer"] },
     ],
     images: [
-      { src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80", alt: "Queenstown lakeside" },
-      { src: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80", alt: "Southern Alps" },
+      { src: "/assets/images/233181-kaikoura-canterbury.jpg", alt: "Kaikōura, Canterbury — Seaward Kaikōuras meeting the Pacific coast" },
+      { src: "/assets/images/233206-aoraki-mt-cook-canterbury.jpg", alt: "Aoraki / Mount Cook — the Southern Alps under clear alpine sky" },
+      { src: "/assets/images/233456-franz-josef-west-coast.jpg", alt: "Franz Josef Glacier, West Coast — blue ice descending the valley" },
     ],
-    heroImage: "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=1920&q=80",
+    heroImage: "/assets/images/516641-kaikoura-canterbury.jpg",
     testimonial: {
       quote: "The Southern Heart gave us the South Island experience of a lifetime. From Kaikoura's wildlife to stargazing at Mount Cook — every day was a revelation.",
       author: "Lauren & Michael Torres",

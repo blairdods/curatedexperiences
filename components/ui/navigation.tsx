@@ -35,7 +35,7 @@ export function Navigation() {
 
   const logoSrc = isDark
     ? "/logos/CE_Horizontal_NB_1200x400.svg"
-    : "/homepage-draft/9cf76b02ac6a6a86dfb8ce66b57c03f6a861ab1a.png";
+    : "/logos/CE_Horizontal_TB_Cream_1200x400.svg";
 
   const linkColor = "text-cream/60 hover:text-cream";
   const activeLinkColor = "text-cream";

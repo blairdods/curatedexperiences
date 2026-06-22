@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/data/journal";
 
-const img = (name: string) => `/homepage-draft/${name}.png`;
+const A = (name: string) => `/assets/images/${name}`;
 
 const TRUST_ITEMS = [
   {
@@ -32,7 +32,7 @@ const SIGNATURE_JOURNEYS = [
     title: "The definitive New Zealand journey.",
     text: "A composed introduction to the country's most remarkable lodges, landscapes, and private experiences.",
     meta: "15 days · Auckland · Taupo · Queenstown",
-    image: img("48a3273c7255767c28d1f25669b70144be4e7d1e"),
+    image: A("233455-glenorchy-queenstown.jpg"),
   },
   {
     href: "/journeys/the-epicurean",
@@ -40,7 +40,7 @@ const SIGNATURE_JOURNEYS = [
     title: "A private study of food, wine, soil, and sea.",
     text: "A slower journey through producers, private cellars, chefs, coastlines, and the rituals of place.",
     meta: "10 days · Hawke's Bay · Central Otago",
-    image: img("044ee02e4778cba0a4342b257f4b98aa8e19b27c"),
+    image: A("233179-craggy-range-hawkes-bay.jpg"),
   },
   {
     href: "/journeys/the-expedition",
@@ -48,7 +48,7 @@ const SIGNATURE_JOURNEYS = [
     title: "Remote access and elemental scale.",
     text: "For travellers drawn to wilderness, private charter, alpine silence, and landscapes that feel privately opened.",
     meta: "12 days · Fiordland · Aoraki · West Coast",
-    image: img("1c6bc62af0ea1255c3f26fc1ab3dd9bb97bc2561"),
+    image: A("233456-franz-josef-west-coast.jpg"),
   },
 ];
 
@@ -56,17 +56,17 @@ const DESTINATIONS = [
   {
     href: "/destinations/northland",
     title: "Northland & Bay of Islands",
-    image: img("2f7f49a291dd914b036dcc3a80c73d67f77c244d"),
+    image: A("229483-bay-of-islands-northland.jpg"),
   },
   {
     href: "/destinations/rotorua",
     title: "Taupo & Rotorua",
-    image: img("8e90a7bfa445db54f6f07a5bcbf89d3577680dc4"),
+    image: A("229251-rotorua-bay-of-plenty.jpg"),
   },
   {
     href: "/destinations/central-otago",
     title: "Queenstown & Central Otago",
-    image: img("46426794ba5e7a0566cb9783e734a3aacd63ef28"),
+    image: A("230043-lake-wakatipu-queenstown.jpg"),
   },
 ];
 
@@ -94,7 +94,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: img("261e02d5ebcf6dedeb222a01c029acf105eb2c60"),
+    heroImage: A("233207-aoraki-mt-cook-canterbury.jpg"),
     relatedJourneySlugs: [],
   },
   {
@@ -105,7 +105,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: img("47c70aeba3ae7a09d370ddc54fe7552ddf4a58d9"),
+    heroImage: A("230334-milford-sound-fiordland.jpg"),
     relatedJourneySlugs: [],
   },
   {
@@ -116,7 +116,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: img("48764584ca42c1588af02f8887b38cc193c107f3"),
+    heroImage: A("233448-minaret-station-wanaka.jpg"),
     relatedJourneySlugs: [],
   },
 ];
@@ -147,12 +147,12 @@ export default function HomePage({ articles }: { articles: Article[] }) {
 
       <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
         <Image
-          src={img("e7df34af1180e68943e14157c7d064f99c0af99c")}
-          alt="Lake Wakatipu, alpine ridgeline, and private lodge at golden hour"
+          src={A("233206-aoraki-mt-cook-canterbury.jpg")}
+          alt="Aoraki / Mount Cook rising above the Southern Alps, New Zealand"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
@@ -224,12 +224,12 @@ export default function HomePage({ articles }: { articles: Article[] }) {
           </div>
           <div className="relative aspect-[0.77] w-full overflow-hidden">
             <Image
-              src={img("57ccdcb44d29a980dfa573f99ec29646a2c77aa9")}
-              alt="Milford Sound at dawn"
+              src={A("230332-milford-sound-fiordland.jpg")}
+              alt="Milford Sound, Fiordland — Mitre Peak reflected in dawn-still water"
               fill
               loading="eager"
               sizes="460px"
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
         </div>
@@ -326,12 +326,12 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               className="group relative min-h-[570px] overflow-hidden"
             >
               <Image
-                src={img("6040daae4b1b2b9a0fe908f22263709262b4200e")}
-                alt="Fiordland and the Southern Alps"
+                src={A("233461-milford-sound-fiordland.jpg")}
+                alt="Milford Sound, Fiordland — towering granite walls and waterfalls"
                 fill
                 loading="eager"
                 sizes="430px"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
               <p className="absolute bottom-6 left-6 font-serif text-[25px] text-cream">
@@ -422,12 +422,12 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         <div className="mx-auto grid max-w-[1120px] items-center gap-18 md:grid-cols-[480px_1fr] md:gap-[118px]">
           <div className="relative aspect-[0.86] overflow-hidden">
             <Image
-              src={img("f033c3797f5cf6887179cd544937e47b4feece3b")}
-              alt="Private lodge interior overlooking a lake"
+              src={A("233460-glenorchy-queenstown.jpg")}
+              alt="Glenorchy, Queenstown — alpine valley reflected in the still waters of Lake Wakatipu"
               fill
               loading="eager"
               sizes="480px"
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
           <div>
@@ -532,7 +532,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         <div className="mx-auto grid max-w-[1120px] gap-10 md:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
           <div>
             <Image
-              src={img("9cf76b02ac6a6a86dfb8ce66b57c03f6a861ab1a")}
+              src="/logos/CE_Horizontal_NB_1200x400.svg"
               alt="Curated Experiences"
               width={295}
               height={40}

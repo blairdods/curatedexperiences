@@ -13,7 +13,7 @@ export default async function JournalPage() {
         eyebrow="Journal"
         title="Before a journey begins, there is a way of seeing."
         subtitle="Selected perspectives on timing, remote places, and the details that shape a more considered New Zealand journey."
-        imageSrc="/homepage-draft/261e02d5ebcf6dedeb222a01c029acf105eb2c60.png"
+        imageSrc="/assets/images/233207-aoraki-mt-cook-canterbury.jpg"
         compact
       />
 

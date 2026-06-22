@@ -11,7 +11,7 @@ export default function AboutPage() {
         eyebrow="Our Story"
         title="Shaped by New Zealand, held by experience."
         subtitle="We do not sell tours. We curate time."
-        imageSrc="/homepage-draft/8e90a7bfa445db54f6f07a5bcbf89d3577680dc4.png"
+        imageSrc="/assets/images/233206-aoraki-mt-cook-canterbury.jpg"
         imageAlt="New Zealand fiord landscape"
         compact
       />

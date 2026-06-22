@@ -11,7 +11,7 @@ const STORIES = [
     author: "Sarah & David Chen",
     location: "San Francisco, CA",
     journey: "The Masterpiece",
-    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800&q=80",
+    image: "/assets/images/230332-milford-sound-fiordland.jpg",
   },
   {
     quote:
@@ -21,7 +21,7 @@ const STORIES = [
     author: "Michael & Patricia Ross",
     location: "Napa Valley, CA",
     journey: "The Epicurean",
-    image: "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80",
+    image: "/assets/images/233179-craggy-range-hawkes-bay.jpg",
   },
   {
     quote:
@@ -31,7 +31,7 @@ const STORIES = [
     author: "Jake Morrison",
     location: "Denver, CO",
     journey: "The Expedition",
-    image: "https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&q=80",
+    image: "/assets/images/233456-franz-josef-west-coast.jpg",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function StoriesPage() {
         eyebrow="Traveller Stories"
         title="Journeys remembered by the way they felt."
         subtitle="Not star ratings, but considered accounts of journeys shaped around people, pace, and place."
-        imageSrc="/homepage-draft/0bf62082fa80fc2ba4b8adb0cbd36d6c2aff6d51.png"
+        imageSrc="/assets/images/233455-glenorchy-queenstown.jpg"
         compact
       />
 
