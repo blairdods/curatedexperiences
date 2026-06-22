@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/data/journal";
+import { getVideosByPlacement } from "@/lib/data/videos";
+import { VideoShowcase } from "@/components/ui/video-showcase";
 
 const A = (name: string) => `/assets/images/${name}`;
 
@@ -296,6 +298,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         </div>
       </section>
 
+      <HomeVideoSection />
+
       <section className="px-6 py-[108px] md:px-0">
         <div className="mx-auto grid max-w-[1120px] gap-16 md:grid-cols-[360px_1fr] md:gap-[110px]">
           <div className="pt-4">
@@ -581,5 +585,34 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         </div>
       </footer>
     </div>
+  );
+}
+
+function HomeVideoSection() {
+  const videos = getVideosByPlacement("home");
+  if (!videos.length) return null;
+
+  return (
+    <section className="bg-navy px-6 py-[96px] md:px-0">
+      <div className="mx-auto max-w-[1120px]">
+        <div className="grid gap-16 md:grid-cols-[380px_1fr] md:gap-[100px] items-start">
+          <div className="pt-2">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              New Zealand in motion
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-cream md:text-[46px]">
+              Some places ask
+              <br />
+              to be seen moving.
+            </h2>
+            <p className="mt-8 max-w-[340px] text-[14px] leading-7 text-cream/56">
+              These are the landscapes, experiences, and moments that define a
+              private New Zealand journey.
+            </p>
+          </div>
+          <VideoShowcase videos={videos} dark />
+        </div>
+      </div>
+    </section>
   );
 }

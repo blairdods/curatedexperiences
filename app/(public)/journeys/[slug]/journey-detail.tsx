@@ -15,6 +15,8 @@ import { ItineraryRefinerProvider } from "@/lib/itinerary-refiner/context";
 import { dispatchOpenConcierge } from "@/lib/itinerary-refiner/events";
 import { JOURNEYS, type Journey } from "@/lib/data/journeys";
 import { getRouteForJourney } from "@/lib/data/coordinates";
+import { getVideosByPlacement } from "@/lib/data/videos";
+import { VideoShowcase } from "@/components/ui/video-showcase";
 
 export function JourneyDetail({ journey }: { journey: Journey }) {
   const relatedJourneys = JOURNEYS.filter(
@@ -22,6 +24,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
   ).slice(0, 2);
   const route = getRouteForJourney(journey.slug);
   const hasRefiner = (journey.locationGroups?.length ?? 0) > 0;
+  const videos = getVideosByPlacement(`journeys/${journey.slug}`);
 
   return (
     <ItineraryRefinerProvider journey={journey}>
@@ -96,6 +99,13 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
             <div className="mt-16">
               <ImageGrid images={journey.images} columns={2} />
             </div>
+
+            {/* Video showcase */}
+            {videos.length > 0 && (
+              <div className="mt-16">
+                <VideoShowcase videos={videos} />
+              </div>
+            )}
 
             {/* Route Map */}
             {route.length > 0 && (
