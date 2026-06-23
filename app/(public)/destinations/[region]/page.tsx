@@ -9,6 +9,8 @@ import { JourneyCard } from "@/components/ui/journey-card";
 import { ConciergeCTAButton } from "@/components/ui/concierge-cta-button";
 import { TouristDestinationSchema } from "@/components/ui/schema-markup";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   return DESTINATIONS.map((d) => ({ region: d.slug }));
 }

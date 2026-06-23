@@ -6,6 +6,8 @@ import { createServiceClient } from "@/lib/supabase/server";
 import { TravelActionSchema } from "@/components/ui/schema-markup";
 import { JourneyDetail } from "./journey-detail";
 
+export const revalidate = 60; // re-fetch from DB at most once per minute
+
 export async function generateStaticParams() {
   return JOURNEYS.map((j) => ({ slug: j.slug }));
 }
