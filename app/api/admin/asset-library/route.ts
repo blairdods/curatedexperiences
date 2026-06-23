@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const paidAdsOkParam = searchParams.get("paidAdsOk");
   const paidAdsOk = paidAdsOkParam === "true" ? true : paidAdsOkParam === "false" ? false : undefined;
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
-  const perPage = 60;
+  const perPage = Math.min(9999, parseInt(searchParams.get("perPage") ?? "60", 10));
 
   const all = getAssets();
   const filtered = searchAssets(all, { q, region, licence, paidAdsOk, fileType });

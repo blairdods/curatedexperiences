@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { FormField, TextInput, TextArea } from "@/components/admin/ui/form-field";
 import { TagInput } from "@/components/admin/ui/tag-input";
 import { ListEditor } from "@/components/admin/ui/list-editor";
+import { GalleryPickerField } from "@/components/admin/image-picker";
 import {
   ItineraryDayEditor,
   type ItineraryDay,
@@ -62,9 +63,6 @@ export function JourneyForm({
   const [data, setData] = useState<JourneyData>(initialData ?? emptyJourney);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [newMediaSrc, setNewMediaSrc] = useState("");
-  const [newMediaAlt, setNewMediaAlt] = useState("");
-
   const update = <K extends keyof JourneyData>(
     key: K,
     value: JourneyData[K]
@@ -110,19 +108,6 @@ export function JourneyForm({
     update("itinerary_days", days);
   };
 
-  const addMedia = () => {
-    if (!newMediaSrc.trim()) return;
-    update("media", [
-      ...data.media,
-      { src: newMediaSrc.trim(), alt: newMediaAlt.trim() || data.title },
-    ]);
-    setNewMediaSrc("");
-    setNewMediaAlt("");
-  };
-
-  const removeMedia = (index: number) => {
-    update("media", data.media.filter((_, i) => i !== index));
-  };
 
   const handleSave = useCallback(async () => {
     if (!data.title.trim() || !data.slug.trim()) {
@@ -332,49 +317,13 @@ export function JourneyForm({
       {/* Media */}
       <div className="bg-white rounded-xl p-6 border border-warm-200">
         <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">
-          Media ({data.media.length} images)
+          Media
         </h2>
-        <div className="space-y-2 mb-4">
-          {data.media.map((m, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 bg-warm-50 rounded-lg px-3 py-2"
-            >
-              <span className="flex-1 text-sm text-foreground truncate">
-                {m.src}
-              </span>
-              <span className="text-xs text-foreground-muted">{m.alt}</span>
-              <button
-                type="button"
-                onClick={() => removeMedia(i)}
-                className="text-red-400 hover:text-red-600 text-xs"
-              >
-                &times;
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="flex gap-2">
-          <input
-            value={newMediaSrc}
-            onChange={(e) => setNewMediaSrc(e.target.value)}
-            placeholder="Image URL..."
-            className="flex-1 px-3 py-2 text-sm bg-warm-50 border border-warm-200 rounded-lg focus:outline-none focus:border-navy/30"
-          />
-          <input
-            value={newMediaAlt}
-            onChange={(e) => setNewMediaAlt(e.target.value)}
-            placeholder="Alt text..."
-            className="w-40 px-3 py-2 text-sm bg-warm-50 border border-warm-200 rounded-lg focus:outline-none focus:border-navy/30"
-          />
-          <button
-            type="button"
-            onClick={addMedia}
-            className="px-3 py-2 text-xs bg-warm-100 text-foreground-muted rounded-lg hover:bg-warm-200 transition-colors"
-          >
-            Add
-          </button>
-        </div>
+        <GalleryPickerField
+          images={data.media}
+          onAdd={(src, alt) => update("media", [...data.media, { src, alt }])}
+          onRemove={(i) => update("media", data.media.filter((_, idx) => idx !== i))}
+        />
       </div>
 
       {error && <p className="text-sm text-red-500">{error}</p>}

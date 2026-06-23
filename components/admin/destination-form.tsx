@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormField, TextInput, TextArea } from "@/components/admin/ui/form-field";
 import { TagInput } from "@/components/admin/ui/tag-input";
 import { ListEditor } from "@/components/admin/ui/list-editor";
+import { ImagePickerField, GalleryPickerField } from "@/components/admin/image-picker";
 
 interface DestinationData {
   id?: string;
@@ -43,9 +44,6 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
   const [data, setData] = useState<DestinationData>(initialData ?? empty);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
-  const [newImgSrc, setNewImgSrc] = useState("");
-  const [newImgAlt, setNewImgAlt] = useState("");
-
   const update = <K extends keyof DestinationData>(key: K, value: DestinationData[K]) => {
     setData((prev) => ({ ...prev, [key]: value }));
   };
@@ -56,17 +54,6 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
   const handleNameChange = (name: string) => {
     update("name", name);
     if (!isEditing) update("slug", generateSlug(name));
-  };
-
-  const addImage = () => {
-    if (!newImgSrc.trim()) return;
-    update("images", [...data.images, { src: newImgSrc.trim(), alt: newImgAlt.trim() || data.name }]);
-    setNewImgSrc("");
-    setNewImgAlt("");
-  };
-
-  const removeImage = (index: number) => {
-    update("images", data.images.filter((_, i) => i !== index));
   };
 
   const handleSave = useCallback(async () => {
@@ -191,61 +178,20 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
       {/* Images */}
       <div className="bg-white rounded-xl p-6 border border-warm-200">
         <h2 className="text-xs tracking-widest uppercase text-foreground-muted mb-4">Images</h2>
-        <div className="space-y-4">
-          <FormField label="Hero Image URL">
-            <TextInput
-              value={data.hero_image}
-              onChange={(v) => update("hero_image", v)}
-              placeholder="https://..."
-            />
-          </FormField>
-          {data.hero_image && (
-            <img
-              src={data.hero_image}
-              alt="Hero preview"
-              className="w-full max-h-48 object-cover rounded-lg border border-warm-200"
-            />
-          )}
-
-          {/* Gallery images */}
-          {data.images.length > 0 && (
-            <div className="space-y-2">
-              {data.images.map((img, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 bg-warm-50 rounded-lg border border-warm-100">
-                  <img src={img.src} alt={img.alt} className="w-12 h-12 object-cover rounded flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-foreground truncate">{img.src}</p>
-                    <p className="text-xs text-foreground-muted truncate">{img.alt}</p>
-                  </div>
-                  <button
-                    onClick={() => removeImage(i)}
-                    className="text-xs text-red-500 hover:text-red-700 flex-shrink-0"
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <div className="flex gap-2">
-            <TextInput
-              value={newImgSrc}
-              onChange={setNewImgSrc}
-              placeholder="Image URL..."
-            />
-            <TextInput
-              value={newImgAlt}
-              onChange={setNewImgAlt}
-              placeholder="Alt text..."
-            />
-            <button
-              onClick={addImage}
-              className="flex-shrink-0 px-3 py-2 text-xs font-medium bg-navy text-cream rounded-lg hover:bg-navy/90 transition-colors"
-            >
-              Add
-            </button>
-          </div>
+        <div className="space-y-6">
+          <ImagePickerField
+            label="Hero Image"
+            value={data.hero_image}
+            onChange={(v) => update("hero_image", v)}
+            defaultRegion={data.region}
+          />
+          <GalleryPickerField
+            label="Gallery Images"
+            images={data.images}
+            onAdd={(src, alt) => update("images", [...data.images, { src, alt }])}
+            onRemove={(i) => update("images", data.images.filter((_, idx) => idx !== i))}
+            defaultRegion={data.region}
+          />
         </div>
       </div>
 
