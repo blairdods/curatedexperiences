@@ -8,7 +8,8 @@ interface ListEditorProps {
   placeholder?: string;
 }
 
-export function ListEditor({ value, onChange, placeholder }: ListEditorProps) {
+export function ListEditor({ value: valueProp, onChange, placeholder }: ListEditorProps) {
+  const value = valueProp ?? [];
   const [input, setInput] = useState("");
 
   const addItem = () => {

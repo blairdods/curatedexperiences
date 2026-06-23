@@ -30,6 +30,19 @@ export default async function EditJourneyPage({
     .eq("tour_id", id)
     .order("start_date", { ascending: true });
 
+  // Normalise itinerary days to the admin editor shape.
+  // The seed script stored the public format { overnight, highlights, ... };
+  // the editor needs { location, activities, accommodation }.
+  type RawDay = Record<string, unknown>;
+  const itinerary_days = ((journey.itinerary_days ?? []) as RawDay[]).map((d) => ({
+    day: (d.day as number) ?? 0,
+    title: (d.title as string) ?? "",
+    location: (d.overnight as string) ?? (d.location as string) ?? "",
+    description: (d.description as string) ?? "",
+    activities: (d.activities as string[]) ?? (d.highlights as string[]) ?? [],
+    accommodation: (d.accommodation as string) ?? (d.overnight as string) ?? "",
+  }));
+
   return (
     <div>
       <BackLink href="/admin/journeys" label="Back to Journeys" />
@@ -53,7 +66,7 @@ export default async function EditJourneyPage({
           seasons: journey.seasons ?? [],
           highlights: journey.highlights ?? [],
           inclusions: journey.inclusions ?? [],
-          itinerary_days: (journey.itinerary_days ?? []) as Parameters<typeof JourneyForm>[0]["initialData"] extends undefined ? never : NonNullable<Parameters<typeof JourneyForm>[0]["initialData"]>["itinerary_days"],
+          itinerary_days,
           media: (journey.media ?? []) as { src: string; alt: string }[],
           active: journey.active ?? true,
         }}
