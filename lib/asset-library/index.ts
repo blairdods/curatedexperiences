@@ -16,87 +16,64 @@ export interface AssetRecord {
   resolution: string;
   dateAdded: string;
   sourceUrl: string;
-  filename: string; // basename of local file
-  inLibrary: boolean;
+  filename: string;
+  /** `/assets/images/[filename]` if committed to git, null otherwise. */
+  publicSrc: string | null;
+  /** True when the raw file is available in asset-library/Images (local dev only). */
+  hasLocalFile: boolean;
 }
 
 const CSV_PATH = path.join(process.cwd(), "docs/_Images_Index.csv");
 const IMAGES_DIR = path.join(process.cwd(), "asset-library/Images");
+const PUBLIC_DIR = path.join(process.cwd(), "public/assets/images");
 
-/** RFC 4180 CSV parser that handles quoted fields with embedded commas and newlines. */
+/** RFC 4180 CSV parser — handles quoted fields with embedded commas and newlines. */
 function parseCsv(text: string): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
   let field = "";
   let inQuote = false;
   let i = 0;
-
   while (i < text.length) {
     const ch = text[i];
     if (inQuote) {
       if (ch === '"') {
-        if (text[i + 1] === '"') {
-          field += '"';
-          i += 2;
-        } else {
-          inQuote = false;
-          i++;
-        }
-      } else {
-        field += ch;
-        i++;
-      }
+        if (text[i + 1] === '"') { field += '"'; i += 2; }
+        else { inQuote = false; i++; }
+      } else { field += ch; i++; }
     } else {
-      if (ch === '"') {
-        inQuote = true;
-        i++;
-      } else if (ch === ",") {
-        row.push(field);
-        field = "";
-        i++;
-      } else if (ch === "\r" && text[i + 1] === "\n") {
-        row.push(field);
-        rows.push(row);
-        row = [];
-        field = "";
-        i += 2;
-      } else if (ch === "\n") {
-        row.push(field);
-        rows.push(row);
-        row = [];
-        field = "";
-        i++;
-      } else {
-        field += ch;
-        i++;
-      }
+      if (ch === '"') { inQuote = true; i++; }
+      else if (ch === ",") { row.push(field); field = ""; i++; }
+      else if (ch === "\r" && text[i + 1] === "\n") { row.push(field); rows.push(row); row = []; field = ""; i += 2; }
+      else if (ch === "\n") { row.push(field); rows.push(row); row = []; field = ""; i++; }
+      else { field += ch; i++; }
     }
   }
-  if (field || row.length > 0) {
-    row.push(field);
-    rows.push(row);
-  }
+  if (field || row.length > 0) { row.push(field); rows.push(row); }
   return rows;
 }
 
-const KNOWN_FILES: Set<string> = new Set(
-  fs.existsSync(IMAGES_DIR) ? fs.readdirSync(IMAGES_DIR) : []
-);
-
 function extractFilename(localPath: string): string {
-  // Windows path: C:\...\filename.jpg  OR  Unix path
   const parts = localPath.replace(/\\/g, "/").split("/");
   return parts[parts.length - 1] ?? "";
 }
 
+// Built once at startup — which files are available in each location
+const PUBLIC_FILES = new Set(
+  fs.existsSync(PUBLIC_DIR) ? fs.readdirSync(PUBLIC_DIR) : []
+);
+const LOCAL_FILES = new Set(
+  fs.existsSync(IMAGES_DIR) ? fs.readdirSync(IMAGES_DIR) : []
+);
+
 export const getAssets = cache((): AssetRecord[] => {
+  if (!fs.existsSync(CSV_PATH)) return [];
   const text = fs.readFileSync(CSV_PATH, "utf-8");
   const rows = parseCsv(text);
   if (rows.length < 2) return [];
 
   const header = rows[0].map((h) => h.trim());
   const COL = (name: string) => header.indexOf(name);
-
   const results: AssetRecord[] = [];
 
   for (let r = 1; r < rows.length; r++) {
@@ -107,8 +84,7 @@ export const getAssets = cache((): AssetRecord[] => {
     const inLibrary = get(COL("In Library")) === "Yes";
     const filename = extractFilename(get(COL("Local Path")));
 
-    // Skip items not in the library or with no local file present
-    if (!inLibrary || !filename || !KNOWN_FILES.has(filename)) continue;
+    if (!inLibrary || !filename) continue;
 
     const tagsRaw = get(COL("Tags"));
     const tags = tagsRaw
@@ -130,7 +106,8 @@ export const getAssets = cache((): AssetRecord[] => {
       dateAdded: get(COL("Date Added")),
       sourceUrl: get(COL("Source URL")),
       filename,
-      inLibrary,
+      publicSrc: PUBLIC_FILES.has(filename) ? `/assets/images/${filename}` : null,
+      hasLocalFile: LOCAL_FILES.has(filename),
     });
   }
 

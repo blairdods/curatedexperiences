@@ -3,6 +3,13 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import type { AssetRecord } from "@/lib/asset-library";
 
+/** Returns the best available src for a thumbnail/preview image. */
+function imgSrc(asset: AssetRecord): string | null {
+  if (asset.publicSrc) return asset.publicSrc;
+  if (asset.hasLocalFile) return `/api/admin/asset-library/image/${asset.filename}`;
+  return null;
+}
+
 const LICENCE_LABELS: Record<string, { label: string; colour: string }> = {
   "WorldWide - Unpaid Only": { label: "Worldwide · Unpaid", colour: "bg-emerald-100 text-emerald-800" },
   "Paid Activity - Paid and Unpaid": { label: "Paid OK", colour: "bg-blue-100 text-blue-800" },
@@ -73,7 +80,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
   );
 
   const copyPath = useCallback((a: AssetRecord) => {
-    const path = `/api/admin/asset-library/image/${a.filename}`;
+    const path = a.publicSrc ?? `/api/admin/asset-library/image/${a.filename}`;
     navigator.clipboard.writeText(path).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
@@ -259,14 +266,26 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             ✕ Close
           </button>
 
-          <div className="aspect-video overflow-hidden rounded bg-warm-100">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/api/admin/asset-library/image/${selected.filename}`}
-              alt={selected.title}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
+          <div className="aspect-video overflow-hidden rounded bg-warm-100 flex items-center justify-center">
+            {imgSrc(selected) ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={imgSrc(selected)!}
+                alt={selected.title}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div className="text-center px-4">
+                <p className="text-xs text-foreground-muted">Preview unavailable</p>
+                {selected.sourceUrl && (
+                  <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer"
+                    className="mt-1 text-xs text-navy underline">
+                    View on TNZ →
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="space-y-3 text-sm">
@@ -410,14 +429,23 @@ function AssetCard({
     >
       {/* Thumbnail */}
       <div className="aspect-[4/3] overflow-hidden bg-warm-100">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/api/admin/asset-library/image/${asset.filename}`}
-          alt={asset.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
-          decoding="async"
-        />
+        {imgSrc(asset) ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imgSrc(asset)!}
+            alt={asset.title}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-1 px-2 text-center">
+            <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 text-warm-400">
+              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+            </svg>
+            <p className="text-[9px] text-warm-400 leading-tight">{asset.assetId}</p>
+          </div>
+        )}
       </div>
 
       {/* Overlay badges */}
