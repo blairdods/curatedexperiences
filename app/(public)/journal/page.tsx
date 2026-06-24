@@ -3,9 +3,15 @@ import Image from "next/image";
 import { getArticles } from "@/lib/data/journal";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
+import { getImageSlotOverrides } from "@/lib/image-slot-settings";
+import { getSlotImage } from "@/lib/image-slots";
 
 export default async function JournalPage() {
-  const articles = await getArticles().catch(() => []);
+  const [articles, imageSlots] = await Promise.all([
+    getArticles().catch(() => []),
+    getImageSlotOverrides(),
+  ]);
+  const heroImage = getSlotImage(imageSlots, "page.journal.hero");
 
   return (
     <>
@@ -13,7 +19,8 @@ export default async function JournalPage() {
         eyebrow="Journal"
         title="Before a journey begins, there is a way of seeing."
         subtitle="Selected perspectives on timing, remote places, and the details that shape a more considered New Zealand journey."
-        imageSrc="/assets/images/233207-aoraki-mt-cook-canterbury.jpg"
+        imageSrc={heroImage.src}
+        imageAlt={heroImage.alt}
         compact
       />
 

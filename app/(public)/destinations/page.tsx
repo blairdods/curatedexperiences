@@ -4,6 +4,8 @@ import { DESTINATIONS, type Destination } from "@/lib/data/destinations";
 import { createServiceClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
+import { getImageSlotOverrides } from "@/lib/image-slot-settings";
+import { getSlotImage } from "@/lib/image-slots";
 
 async function getDestinations(): Promise<Destination[]> {
   try {
@@ -38,7 +40,11 @@ async function getDestinations(): Promise<Destination[]> {
 }
 
 export default async function DestinationsPage() {
-  const destinations = await getDestinations();
+  const [destinations, imageSlots] = await Promise.all([
+    getDestinations(),
+    getImageSlotOverrides(),
+  ]);
+  const heroImage = getSlotImage(imageSlots, "page.destinations.hero");
 
   return (
     <>
@@ -46,8 +52,8 @@ export default async function DestinationsPage() {
         eyebrow="Destinations"
         title="Distinct regions, one rhythm."
         subtitle="From private lodges and alpine landscapes to vineyards, coastlines, and cultural encounters, every place is considered for how it contributes to the rhythm of the wider journey."
-        imageSrc="/assets/images/233461-milford-sound-fiordland.jpg"
-        imageAlt="Fiordland and the Southern Alps"
+        imageSrc={heroImage.src}
+        imageAlt={heroImage.alt}
         compact
       />
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useSyncExternalStore } from "react";
 
 export interface ClientSignals {
   heroVariant: string;
@@ -26,23 +26,36 @@ const DEFAULT_SIGNALS: ClientSignals = {
   isSingapore: false,
 };
 
+let lastCookieValue = "";
+let lastSignals = DEFAULT_SIGNALS;
+
 export function useSignals(): ClientSignals {
-  return useMemo(() => {
-    if (typeof document === "undefined") return DEFAULT_SIGNALS;
+  return useSyncExternalStore(
+    () => () => {},
+    readSignalsFromCookie,
+    () => DEFAULT_SIGNALS
+  );
+}
 
-    const cookie = document.cookie
-      .split("; ")
-      .find((c) => c.startsWith("ce-signals="));
+function readSignalsFromCookie(): ClientSignals {
+  const cookie = document.cookie
+    .split("; ")
+    .find((c) => c.startsWith("ce-signals="));
 
-    if (!cookie) return DEFAULT_SIGNALS;
+  if (!cookie) return DEFAULT_SIGNALS;
 
-    try {
-      return {
-        ...DEFAULT_SIGNALS,
-        ...JSON.parse(decodeURIComponent(cookie.split("=").slice(1).join("="))),
-      };
-    } catch {
-      return DEFAULT_SIGNALS;
-    }
-  }, []);
+  if (cookie === lastCookieValue) return lastSignals;
+
+  try {
+    lastCookieValue = cookie;
+    lastSignals = {
+      ...DEFAULT_SIGNALS,
+      ...JSON.parse(decodeURIComponent(cookie.split("=").slice(1).join("="))),
+    };
+    return lastSignals;
+  } catch {
+    lastCookieValue = cookie;
+    lastSignals = DEFAULT_SIGNALS;
+    return DEFAULT_SIGNALS;
+  }
 }

@@ -1,6 +1,8 @@
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import Image from "next/image";
+import { getImageSlotOverrides } from "@/lib/image-slot-settings";
+import { getSlotImage, type ImageSlotOverrides } from "@/lib/image-slots";
 
 const STORIES = [
   {
@@ -11,7 +13,7 @@ const STORIES = [
     author: "Sarah & David Chen",
     location: "San Francisco, CA",
     journey: "The Masterpiece",
-    image: "/assets/images/230332-milford-sound-fiordland.jpg",
+    imageSlot: "page.stories.masterpiece",
   },
   {
     quote:
@@ -21,7 +23,7 @@ const STORIES = [
     author: "Michael & Patricia Ross",
     location: "Napa Valley, CA",
     journey: "The Epicurean",
-    image: "/assets/images/233179-craggy-range-hawkes-bay.jpg",
+    imageSlot: "page.stories.epicurean",
   },
   {
     quote:
@@ -31,18 +33,26 @@ const STORIES = [
     author: "Jake Morrison",
     location: "Denver, CO",
     journey: "The Expedition",
-    image: "/assets/images/233456-franz-josef-west-coast.jpg",
+    imageSlot: "page.stories.expedition",
   },
 ];
 
-export default function StoriesPage() {
+function storyImage(imageSlots: ImageSlotOverrides, imageSlot: string) {
+  return getSlotImage(imageSlots, imageSlot);
+}
+
+export default async function StoriesPage() {
+  const imageSlots = await getImageSlotOverrides();
+  const heroImage = getSlotImage(imageSlots, "page.stories.hero");
+
   return (
     <>
       <Hero
         eyebrow="Traveller Stories"
         title="Journeys remembered by the way they felt."
         subtitle="Not star ratings, but considered accounts of journeys shaped around people, pace, and place."
-        imageSrc="/assets/images/233455-glenorchy-queenstown.jpg"
+        imageSrc={heroImage.src}
+        imageAlt={heroImage.alt}
         compact
       />
 
@@ -58,7 +68,7 @@ export default function StoriesPage() {
               {/* Image */}
               <div className="relative w-full lg:w-1/2 aspect-[1.25] overflow-hidden bg-warm-100">
                 <Image
-                  src={story.image}
+                  src={storyImage(imageSlots, story.imageSlot).src}
                   alt={story.journey}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -21,6 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/admin/accommodations", label: "Accommodations", icon: "building", roles: ["admin", "curator"] },
   { href: "/admin/content", label: "Content", icon: "file", roles: ["admin", "curator"] },
   { href: "/admin/asset-library", label: "Asset Library", icon: "image", roles: ["admin", "curator"] },
+  { href: "/admin/images", label: "Website Images", icon: "image", roles: ["admin", "curator"] },
   { href: "/admin/audit", label: "Audit Log", icon: "clock", roles: ["admin"] },
   { href: "/admin/settings", label: "Settings", icon: "settings", roles: ["admin"] },
 ];
@@ -103,9 +105,11 @@ export function AdminSidebar({ role }: { role: Role }) {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-white/10">
         <Link href="/admin">
-          <img
+          <Image
             src="/curated-experiences.png"
             alt="Curated Experiences"
+            width={240}
+            height={64}
             className="h-8 w-auto brightness-0 invert opacity-80"
           />
         </Link>

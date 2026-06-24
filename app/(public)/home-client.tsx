@@ -2,11 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import type { Article } from "@/lib/data/journal";
 import { getVideosByPlacement } from "@/lib/data/videos";
 import { VideoShowcase } from "@/components/ui/video-showcase";
-
-const A = (name: string) => `/assets/images/${name}`;
+import {
+  getSlotImage,
+  getSlotImages,
+  homepageHeroSlotKey,
+  type ImageSlotOverrides,
+  type ManagedImage,
+} from "@/lib/image-slots";
 
 const TRUST_ITEMS = [
   {
@@ -34,7 +40,7 @@ const SIGNATURE_JOURNEYS = [
     title: "The definitive New Zealand journey.",
     text: "A composed introduction to the country's most remarkable lodges, landscapes, and private experiences.",
     meta: "15 days · Auckland · Taupo · Queenstown",
-    image: A("233455-glenorchy-queenstown.jpg"),
+    imageSlot: "home.journey.masterpiece",
   },
   {
     href: "/journeys/the-epicurean",
@@ -42,7 +48,7 @@ const SIGNATURE_JOURNEYS = [
     title: "A private study of food, wine, soil, and sea.",
     text: "A slower journey through producers, private cellars, chefs, coastlines, and the rituals of place.",
     meta: "10 days · Hawke's Bay · Central Otago",
-    image: A("233179-craggy-range-hawkes-bay.jpg"),
+    imageSlot: "home.journey.epicurean",
   },
   {
     href: "/journeys/the-expedition",
@@ -50,7 +56,7 @@ const SIGNATURE_JOURNEYS = [
     title: "Remote access and elemental scale.",
     text: "For travellers drawn to wilderness, private charter, alpine silence, and landscapes that feel privately opened.",
     meta: "12 days · Fiordland · Aoraki · West Coast",
-    image: A("233456-franz-josef-west-coast.jpg"),
+    imageSlot: "home.journey.expedition",
   },
 ];
 
@@ -58,17 +64,17 @@ const DESTINATIONS = [
   {
     href: "/destinations/northland",
     title: "Northland & Bay of Islands",
-    image: A("229483-bay-of-islands-northland.jpg"),
+    imageSlot: "home.destinations.northland",
   },
   {
     href: "/destinations/rotorua",
     title: "Taupo & Rotorua",
-    image: A("229251-rotorua-bay-of-plenty.jpg"),
+    imageSlot: "home.destinations.rotorua",
   },
   {
     href: "/destinations/central-otago",
     title: "Queenstown & Central Otago",
-    image: A("230043-lake-wakatipu-queenstown.jpg"),
+    imageSlot: "home.destinations.central-otago",
   },
 ];
 
@@ -87,7 +93,11 @@ const PRIVACY_POINTS = [
   },
 ];
 
-const DESIGN_JOURNAL: Article[] = [
+type DesignJournalArticle = Omit<Article, "heroImage"> & {
+  imageSlot: string;
+};
+
+const DESIGN_JOURNAL: DesignJournalArticle[] = [
   {
     slug: "when-to-visit-new-zealand",
     title: "When to visit New Zealand: a month-by-month guide",
@@ -96,7 +106,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: A("233207-aoraki-mt-cook-canterbury.jpg"),
+    imageSlot: "home.journal.when-to-visit",
     relatedJourneySlugs: [],
   },
   {
@@ -107,7 +117,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: A("230334-milford-sound-fiordland.jpg"),
+    imageSlot: "home.journal.milford",
     relatedJourneySlugs: [],
   },
   {
@@ -118,7 +128,7 @@ const DESIGN_JOURNAL: Article[] = [
     author: "Curated Experiences",
     publishedAt: "",
     readTime: "",
-    heroImage: A("233448-minaret-station-wanaka.jpg"),
+    imageSlot: "home.journal.minaret",
     relatedJourneySlugs: [],
   },
 ];
@@ -127,35 +137,91 @@ function openConcierge() {
   window.dispatchEvent(new Event("ce:open-concierge"));
 }
 
-function journalItems(articles: Article[]) {
-  if (!articles.length) return DESIGN_JOURNAL;
+function journalItems(articles: Article[], imageSlots: ImageSlotOverrides) {
+  const fallbackJournal = DESIGN_JOURNAL.map((article) => ({
+    ...article,
+    heroImage: getSlotImage(imageSlots, article.imageSlot).src,
+  })) satisfies Article[];
+
+  if (!articles.length) return fallbackJournal;
   return DESIGN_JOURNAL.map((fallback, index) => {
     const article = articles[index];
-    if (!article) return fallback;
+    const fallbackImage = getSlotImage(imageSlots, fallback.imageSlot).src;
+    if (!article) return { ...fallback, heroImage: fallbackImage };
     return {
       ...article,
       category: article.category || fallback.category,
-      heroImage: article.heroImage || fallback.heroImage,
+      heroImage: article.heroImage || fallbackImage,
     };
   });
 }
 
-export default function HomePage({ articles }: { articles: Article[] }) {
-  const featuredArticles = journalItems(articles);
+function HeroImageRotator({
+  images,
+  className,
+}: {
+  images: ManagedImage[];
+  className?: string;
+}) {
+  const safeImages = images.filter((image) => image.src);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const displayIndex = safeImages.length ? activeIndex % safeImages.length : 0;
+
+  useEffect(() => {
+    if (safeImages.length <= 1) return;
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % safeImages.length);
+    }, 7000);
+
+    return () => window.clearInterval(interval);
+  }, [safeImages.length]);
+
+  return (
+    <div className="absolute inset-0" data-slot="home-hero-image">
+      {safeImages.map((image, index) => (
+        <Image
+          key={image.src}
+          src={image.src}
+          alt={image.alt}
+          fill
+          priority={index === 0}
+          sizes="100vw"
+          className={`${className ?? ""} transition-opacity duration-1000 ${
+            index === displayIndex ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
+export default function HomePage({
+  articles,
+  imageSlots,
+  heroVariant,
+}: {
+  articles: Article[];
+  imageSlots: ImageSlotOverrides;
+  heroVariant: string;
+}) {
+  const heroImages = useMemo(
+    () => getSlotImages(imageSlots, homepageHeroSlotKey(heroVariant)),
+    [imageSlots, heroVariant]
+  );
+  const featuredArticles = journalItems(articles, imageSlots);
+  const differenceImage = getSlotImage(imageSlots, "home.difference.image");
+  const destinationFeatureImage = getSlotImage(
+    imageSlots,
+    "home.destinations.feature"
+  );
+  const privacyImage = getSlotImage(imageSlots, "home.privacy.image");
 
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
       <style>{`main:has(.ce-homepage-exact) + footer { display: none; }`}</style>
 
       <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
-        <Image
-          src={A("233206-aoraki-mt-cook-canterbury.jpg")}
-          alt="Aoraki / Mount Cook rising above the Southern Alps, New Zealand"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+        <HeroImageRotator images={heroImages} className="object-cover object-center" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
 
@@ -226,8 +292,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
           </div>
           <div className="relative aspect-[0.77] w-full overflow-hidden">
             <Image
-              src={A("230332-milford-sound-fiordland.jpg")}
-              alt="Milford Sound, Fiordland — Mitre Peak reflected in dawn-still water"
+              src={differenceImage.src}
+              alt={differenceImage.alt}
               fill
               loading="eager"
               sizes="460px"
@@ -263,7 +329,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               >
                 <div className="relative aspect-[1.45] overflow-hidden">
                   <Image
-                    src={journey.image}
+                    src={getSlotImage(imageSlots, journey.imageSlot).src}
                     alt={journey.title}
                     fill
                     loading="eager"
@@ -330,8 +396,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
               className="group relative min-h-[570px] overflow-hidden"
             >
               <Image
-                src={A("233461-milford-sound-fiordland.jpg")}
-                alt="Milford Sound, Fiordland — towering granite walls and waterfalls"
+                src={destinationFeatureImage.src}
+                alt={destinationFeatureImage.alt}
                 fill
                 loading="eager"
                 sizes="430px"
@@ -352,7 +418,7 @@ export default function HomePage({ articles }: { articles: Article[] }) {
                   className="group relative min-h-[178px] overflow-hidden"
                 >
                   <Image
-                    src={destination.image}
+                    src={getSlotImage(imageSlots, destination.imageSlot).src}
                     alt={destination.title}
                     fill
                     loading="eager"
@@ -426,8 +492,8 @@ export default function HomePage({ articles }: { articles: Article[] }) {
         <div className="mx-auto grid max-w-[1120px] items-center gap-18 md:grid-cols-[480px_1fr] md:gap-[118px]">
           <div className="relative aspect-[0.86] overflow-hidden">
             <Image
-              src={A("233460-glenorchy-queenstown.jpg")}
-              alt="Glenorchy, Queenstown — alpine valley reflected in the still waters of Lake Wakatipu"
+              src={privacyImage.src}
+              alt={privacyImage.alt}
               fill
               loading="eager"
               sizes="480px"

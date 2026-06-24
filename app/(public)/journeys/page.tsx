@@ -2,16 +2,21 @@ import { JOURNEYS } from "@/lib/data/journeys";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { JourneyCard } from "@/components/ui/journey-card";
+import { getImageSlotOverrides } from "@/lib/image-slot-settings";
+import { getSlotImage } from "@/lib/image-slots";
 
-export default function JourneysPage() {
+export default async function JourneysPage() {
+  const imageSlots = await getImageSlotOverrides();
+  const heroImage = getSlotImage(imageSlots, "page.journeys.hero");
+
   return (
     <>
       <Hero
         eyebrow="Signature Journeys"
         title="Considered frameworks, never fixed itineraries."
         subtitle="Each journey begins as a point of orientation, then is reshaped around your pace, preferences, season, and reason for travelling."
-        imageSrc="/assets/images/233460-glenorchy-queenstown.jpg"
-        imageAlt="Lake Wakatipu and alpine ridgeline"
+        imageSrc={heroImage.src}
+        imageAlt={heroImage.alt}
         compact
       />
 
