@@ -626,6 +626,7 @@ export default function HomePage({
             <div className="mt-4 space-y-2 text-[12px]">
               <Link href="/about" className="block hover:text-cream">Our Story</Link>
               <Link href="/terms" className="block hover:text-cream">Privacy</Link>
+              <Link href="/terms" className="block hover:text-cream">Terms</Link>
               <button onClick={openConcierge} className="block hover:text-cream">
                 Enquire
               </button>
@@ -647,7 +648,15 @@ export default function HomePage({
         </div>
         <div className="mx-auto mt-14 flex max-w-[1120px] flex-col gap-3 text-[11px] text-cream/28 md:flex-row md:justify-between">
           <p>&copy; 2026 Curated Experiences. All rights reserved.</p>
-          <p>Privacy · Terms</p>
+          <p className="flex gap-2">
+            <Link href="/terms" className="hover:text-cream">
+              Privacy
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/terms" className="hover:text-cream">
+              Terms
+            </Link>
+          </p>
         </div>
       </footer>
     </div>

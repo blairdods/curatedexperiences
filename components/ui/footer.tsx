@@ -71,7 +71,15 @@ export function Footer() {
           <p>
             &copy; {new Date().getFullYear()} Curated Experiences. All rights reserved.
           </p>
-          <p>Privacy · Terms</p>
+          <p className="flex gap-2">
+            <Link href="/terms" className="hover:text-cream transition-colors">
+              Privacy
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/terms" className="hover:text-cream transition-colors">
+              Terms
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
