@@ -118,7 +118,9 @@ export function AdminSidebar({ role }: { role: Role }) {
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {visibleItems.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive =
+            pathname === item.href ||
+            (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
           return (
             <Link
               key={item.href}

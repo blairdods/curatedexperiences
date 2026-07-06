@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function SettingsEditor({
@@ -19,11 +19,17 @@ export function SettingsEditor({
   lastUpdatedAt?: string;
 }) {
   const [value, setValue] = useState(initialValue);
+  const [savedValue, setSavedValue] = useState(initialValue);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
 
-  const isDirty = value !== initialValue;
+  useEffect(() => {
+    setValue(initialValue);
+    setSavedValue(initialValue);
+  }, [initialValue]);
+
+  const isDirty = value !== savedValue;
 
   const handleSave = useCallback(async () => {
     setSaving(true);
@@ -58,14 +64,15 @@ export function SettingsEditor({
           entityType: "settings",
           entityId: settingKey,
           action: "updated",
-          changes: { before: { value: initialValue }, after: { value } },
+          changes: { before: { value: savedValue }, after: { value } },
         }),
       });
 
+      setSavedValue(value);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     }
-  }, [settingKey, value, initialValue]);
+  }, [settingKey, value, savedValue]);
 
   return (
     <div className="bg-white rounded-xl border border-warm-200 p-5">
@@ -106,7 +113,7 @@ export function SettingsEditor({
 
         {isDirty && (
           <button
-            onClick={() => setValue(initialValue)}
+            onClick={() => setValue(savedValue)}
             className="px-4 py-2 text-xs text-foreground-muted hover:text-foreground transition-colors"
           >
             Discard
