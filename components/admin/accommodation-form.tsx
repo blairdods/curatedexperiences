@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface AccommodationData {
   id?: string;
+  property_id?: string;
   slug?: string;
   name?: string;
   tier?: string;
@@ -66,6 +67,7 @@ export function AccommodationForm({
   const isEdit = !!accommodation?.id;
 
   const [form, setForm] = useState({
+    property_id: accommodation?.property_id ?? "",
     name: accommodation?.name ?? "",
     slug: accommodation?.slug ?? "",
     tier: accommodation?.tier ?? "gold",
@@ -145,6 +147,22 @@ export function AccommodationForm({
         <h2 className="text-sm font-medium text-navy uppercase tracking-wider">
           Property Details
         </h2>
+
+        <div>
+          <label className="block text-xs font-medium text-foreground-muted mb-1">
+            Property ID
+          </label>
+          <input
+            type="text"
+            value={form.property_id}
+            onChange={(e) => setForm((f) => ({ ...f, property_id: e.target.value.toUpperCase() }))}
+            placeholder="e.g. AKL-GLD-001"
+            className="w-full px-3 py-2 text-sm border border-warm-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy/20 font-mono"
+          />
+          <p className="mt-1 text-xs text-foreground-muted">
+            Used as the unique identifier when importing the supplier directory.
+          </p>
+        </div>
 
         <div>
           <label className="block text-xs font-medium text-foreground-muted mb-1">

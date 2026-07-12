@@ -2,6 +2,7 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { AccommodationsList } from "@/components/admin/accommodations-list";
+import { AccommodationImport } from "@/components/admin/accommodation-import";
 
 export const metadata = { title: "Accommodations | CE Admin" };
 
@@ -65,6 +66,8 @@ export default async function AccommodationsPage({
           + Add Property
         </Link>
       </div>
+
+      <AccommodationImport />
 
       {/* Tier summary */}
       {!isFiltered && (totalCount ?? 0) > 0 && (

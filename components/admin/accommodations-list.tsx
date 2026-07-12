@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 interface Accommodation {
   id: string;
+  property_id: string | null;
   name: string;
   tier: "platinum" | "gold" | "silver";
   region: string;
@@ -74,6 +75,11 @@ export function AccommodationsList({
             <tr key={a.id} className="hover:bg-warm-50 transition-colors">
               <td className="px-4 py-3">
                 <p className="font-medium text-foreground">{a.name}</p>
+                {a.property_id && (
+                  <p className="mt-0.5 font-mono text-[10px] text-foreground-muted">
+                    {a.property_id}
+                  </p>
+                )}
                 {a.location && (
                   <p className="text-xs text-foreground-muted mt-0.5">
                     {a.location}

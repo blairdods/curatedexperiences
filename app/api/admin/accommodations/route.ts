@@ -41,7 +41,7 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   const allowed = [
-    "slug", "name", "tier", "region", "location", "property_type", "description",
+    "property_id", "slug", "name", "tier", "region", "location", "property_type", "description",
     "nightly_rate_nzd_min", "nightly_rate_nzd_max", "highlights", "images",
     "contact_name", "contact_email", "contact_phone", "website_url",
     "contracted", "notes", "active",
@@ -49,6 +49,10 @@ export async function POST(request: Request) {
   const record: Record<string, unknown> = {};
   for (const key of allowed) {
     if (key in body) record[key] = body[key];
+  }
+  if ("property_id" in record) {
+    const propertyId = String(record.property_id ?? "").trim().toUpperCase();
+    record.property_id = propertyId || null;
   }
 
   if (!record.name || !record.tier || !record.region) {
