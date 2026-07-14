@@ -56,6 +56,30 @@ const SIGNATURE_JOURNEYS = [
     meta: "12 days · Fiordland · Aoraki · West Coast",
     imageSlot: "home.journey.expedition",
   },
+  {
+    href: "/journeys/the-discovery",
+    eyebrow: "The Discovery",
+    title: "A poetic traverse from subtropical north to alpine south.",
+    text: "Prestigious lodges, private charters, cultural encounters, and landscapes that shift with every chapter.",
+    meta: "15 days · Auckland · Wairarapa · Queenstown",
+    imageSlot: "home.journey.discovery",
+  },
+  {
+    href: "/journeys/the-hidden-trail",
+    eyebrow: "The Hidden Trail",
+    title: "The best of both islands, quietly revealed.",
+    text: "Private sailing, geothermal wonders, golden shores, and alpine horizons shaped into one seamless journey.",
+    meta: "15 days · Bay of Islands · Taupo · Nelson · Queenstown",
+    imageSlot: "home.journey.hidden-trail",
+  },
+  {
+    href: "/journeys/the-southern-heart",
+    eyebrow: "The Southern Heart",
+    title: "The South Island in all its elemental contrast.",
+    text: "Wildlife, wine country, glaciers, big skies, and remote coastlines connected by a dedicated private guide.",
+    meta: "14 days · Kaikoura · Marlborough · West Coast · Aoraki",
+    imageSlot: "home.journey.southern-heart",
+  },
 ];
 
 const DESTINATIONS = [
@@ -231,14 +255,46 @@ export default function HomePage({
         </div>
       </section>
 
+      <section className="px-6 py-[82px] md:px-0 md:py-[88px]">
+        <div className="mx-auto grid max-w-[1120px] items-start gap-20 md:grid-cols-[520px_460px] md:gap-[140px]">
+          <div className="pt-7">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              The Curated Difference
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-navy md:text-[46px]">
+              Exceptional private travel built on deep local knowledge and
+              seamlessly blended service.
+            </h2>
+            <p className="mt-8 max-w-[475px] text-[15px] leading-7 text-foreground-muted">
+              Part of the PPG Tours group, a New Zealand-owned travel company
+              with more than two decades’ of experience creating and delivering
+              private journeys across New Zealand. We will curate your journey
+              to reflect your interests, pace and style of travel, creating an
+              experience that feels effortless, personal and unforgettable.
+            </p>
+          </div>
+          <div className="relative aspect-[0.77] w-full overflow-hidden">
+            <Image
+              src={differenceImage.src}
+              alt={differenceImage.alt}
+              fill
+              loading="eager"
+              sizes="460px"
+              className="object-cover object-center"
+            />
+          </div>
+        </div>
+      </section>
+
       <section className="px-6 py-[58px] md:px-0 md:py-[62px]">
         <div className="mx-auto max-w-[1120px] bg-[#cfc5b7] px-10 py-10 md:min-h-[325px] md:px-12">
           <p className="text-[11px] font-semibold uppercase leading-none tracking-[0.42em] text-gold">
             Powered By PPG
           </p>
           <h2 className="mt-8 max-w-[980px] font-sans text-[18px] font-medium leading-[1.7] text-navy md:text-[19px]">
-            Recognised by the World Travel Awards, trusted by leading cruise
-            lines, and New Zealand owned and operated for more than 20 years.
+            Recognised as New Zealand&apos;s Leading Destination Management
+            Company for 2025 at the World Travel Awards, we are driven by an
+            unwavering commitment to excellence in every journey we create.
           </h2>
           <div className="mt-7 h-px bg-gold/30" />
           <div className="mt-7 grid gap-x-24 gap-y-7 md:grid-cols-2">
@@ -256,38 +312,6 @@ export default function HomePage({
         </div>
       </section>
 
-      <section className="px-6 py-[82px] md:px-0 md:py-[88px]">
-        <div className="mx-auto grid max-w-[1120px] items-start gap-20 md:grid-cols-[520px_460px] md:gap-[140px]">
-          <div className="pt-7">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-              The Curated Difference
-            </p>
-            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-navy md:text-[46px]">
-              We do not sell itineraries.
-              <br />
-              We shape time.
-            </h2>
-            <p className="mt-8 max-w-[475px] text-[15px] leading-7 text-foreground-muted">
-              Curated Experiences designs private New Zealand travel around who
-              you are, how you want to travel, and the experiences you are drawn
-              to. Every itinerary is shaped with a clear understanding of how
-              the day should unfold, where time should be shaped with intention,
-              and how each arrangement should feel effortless.
-            </p>
-          </div>
-          <div className="relative aspect-[0.77] w-full overflow-hidden">
-            <Image
-              src={differenceImage.src}
-              alt={differenceImage.alt}
-              fill
-              loading="eager"
-              sizes="460px"
-              className="object-cover object-center"
-            />
-          </div>
-        </div>
-      </section>
-
       <section id="experiences" className="bg-navy px-6 py-[104px] text-cream md:px-0">
         <div className="mx-auto max-w-[1250px]">
           <div className="ml-0 max-w-[720px] md:ml-[72px]">
@@ -295,14 +319,14 @@ export default function HomePage({
               Signature Journeys
             </p>
             <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] md:text-[46px]">
-              Considered frameworks, never fixed
+              Thoughtfully considered foundations, never fixed
               <br />
               itineraries.
             </h2>
             <p className="mt-7 max-w-[560px] text-[14px] leading-7 text-cream/56">
-              Take a moment to be inspired by some of our signature journeys.
-              Every journey can be customised to evolve around your interests,
-              pace and preferences for travelling.
+              Take a moment to be inspired by some of our Signature journeys.
+              Every journey can be customised to evolve around your pace and
+              preferences for travelling.
             </p>
           </div>
 
@@ -341,12 +365,6 @@ export default function HomePage({
             ))}
           </div>
 
-          <Link
-            href="/journeys"
-            className="mt-10 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold md:ml-[72px]"
-          >
-            View The Full Collection +
-          </Link>
         </div>
       </section>
 
