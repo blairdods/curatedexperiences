@@ -315,8 +315,9 @@ export default function HomePage({
               itineraries.
             </h2>
             <p className="mt-7 max-w-[560px] text-[14px] leading-7 text-cream/56">
-              Each journey begins as a point of orientation, then is reshaped
-              around your pace, preferences, season, and reason for travelling.
+              Take a moment to be inspired by some of our signature journeys.
+              Every journey can be customised to evolve around your interests,
+              pace and preferences for travelling.
             </p>
           </div>
 

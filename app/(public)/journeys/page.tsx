@@ -14,7 +14,7 @@ export default async function JourneysPage() {
       <Hero
         eyebrow="Signature Journeys"
         title="Considered frameworks, never fixed itineraries."
-        subtitle="Each journey begins as a point of orientation, then is reshaped around your pace, preferences, season, and reason for travelling."
+        subtitle="Take a moment to be inspired by some of our signature journeys. Every journey can be customised to evolve around your interests, pace and preferences for travelling."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
         compact
@@ -31,6 +31,7 @@ export default async function JourneysPage() {
               durationDays={j.durationDays}
               regions={j.regions.slice(0, 3)}
               imageSrc={j.images[0]?.src}
+              showPrimaryRegion={false}
               dark
             />
           ))}

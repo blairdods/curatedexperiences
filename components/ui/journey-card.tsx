@@ -8,6 +8,8 @@ interface JourneyCardProps {
   durationDays?: number;
   regions?: string[];
   imageSrc?: string;
+  /** Set false to hide the primary region above the journey title */
+  showPrimaryRegion?: boolean;
   /** Set true when rendering on a navy background */
   dark?: boolean;
 }
@@ -19,6 +21,7 @@ export function JourneyCard({
   durationDays,
   regions,
   imageSrc,
+  showPrimaryRegion = true,
   dark = false,
 }: JourneyCardProps) {
   return (
@@ -41,13 +44,13 @@ export function JourneyCard({
       </div>
 
       <div className="min-h-[230px] p-6">
-        {regions && regions.length > 0 && (
+        {showPrimaryRegion && regions && regions.length > 0 && (
           <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold">
             {regions[0]}
           </p>
         )}
 
-        <h3 className="mt-4 font-serif font-medium text-[26px] leading-[1.08] tracking-normal text-navy transition-colors group-hover:text-navy-light">
+        <h3 className={`${showPrimaryRegion ? "mt-4" : ""} font-serif font-medium text-[26px] leading-[1.08] tracking-normal text-navy transition-colors group-hover:text-navy-light`}>
           {title}
         </h3>
 

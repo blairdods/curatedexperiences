@@ -97,7 +97,7 @@ export function ItineraryRefinerSummary({ journey }: { journey: Journey }) {
         </div>
 
         <p className="mt-4 text-[11px] text-center text-foreground-muted">
-          Every experience is fully customisable
+          Every journey is fully customisable.
         </p>
       </div>
     </div>
