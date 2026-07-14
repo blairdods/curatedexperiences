@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import type { Article } from "@/lib/data/journal";
 import { getVideosByPlacement } from "@/lib/data/videos";
 import { VideoShowcase } from "@/components/ui/video-showcase";
@@ -11,7 +10,6 @@ import {
   getSlotImages,
   homepageHeroSlotKey,
   type ImageSlotOverrides,
-  type ManagedImage,
 } from "@/lib/image-slots";
 
 const TRUST_ITEMS = [
@@ -156,45 +154,6 @@ function journalItems(articles: Article[], imageSlots: ImageSlotOverrides) {
   });
 }
 
-function HeroImageRotator({
-  images,
-  className,
-}: {
-  images: ManagedImage[];
-  className?: string;
-}) {
-  const safeImages = images.filter((image) => image.src);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const displayIndex = safeImages.length ? activeIndex % safeImages.length : 0;
-
-  useEffect(() => {
-    if (safeImages.length <= 1) return;
-    const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % safeImages.length);
-    }, 7000);
-
-    return () => window.clearInterval(interval);
-  }, [safeImages.length]);
-
-  return (
-    <div className="absolute inset-0" data-slot="home-hero-image">
-      {safeImages.map((image, index) => (
-        <Image
-          key={image.src}
-          src={image.src}
-          alt={image.alt}
-          fill
-          priority={index === 0}
-          sizes="100vw"
-          className={`${className ?? ""} transition-opacity duration-1000 ${
-            index === displayIndex ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function HomePage({
   articles,
   imageSlots,
@@ -204,10 +163,10 @@ export default function HomePage({
   imageSlots: ImageSlotOverrides;
   heroVariant: string;
 }) {
-  const heroImages = useMemo(
-    () => getSlotImages(imageSlots, homepageHeroSlotKey(heroVariant)),
-    [imageSlots, heroVariant]
-  );
+  const heroPoster = getSlotImages(
+    imageSlots,
+    homepageHeroSlotKey(heroVariant)
+  )[0];
   const featuredArticles = journalItems(articles, imageSlots);
   const differenceImage = getSlotImage(imageSlots, "home.difference.image");
   const destinationFeatureImage = getSlotImage(
@@ -221,14 +180,40 @@ export default function HomePage({
       <style>{`main:has(.ce-homepage-exact) + footer { display: none; }`}</style>
 
       <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
-        <HeroImageRotator images={heroImages} className="object-cover object-center" />
+        <div className="absolute inset-0" data-slot="home-hero-video">
+          {heroPoster?.src ? (
+            <Image
+              src={heroPoster.src}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          ) : null}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster={heroPoster?.src}
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover object-center motion-reduce:hidden"
+          >
+            <source
+              src="/media/hero-video-curated-experiences.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
 
         <div className="relative z-10 mx-auto flex min-h-[1010px] max-w-[1120px] items-center px-6 pt-20 md:min-h-[1018px] md:px-0">
           <div className="max-w-[610px]">
             <p className="text-[11px] font-medium uppercase tracking-[0.34em] text-gold">
-              Private New Zealand Travel
+              The New Zealand Luxury Travel Experts
             </p>
             <div className="mt-4 h-px w-[300px] max-w-full bg-cream/38" />
             <h1 className="mt-6 font-serif text-[56px] font-medium leading-[1.02] text-cream sm:text-[68px] md:text-[76px]">
@@ -239,8 +224,8 @@ export default function HomePage({
               around you.
             </h1>
             <p className="mt-8 max-w-[430px] text-[15px] leading-7 text-cream/72">
-              Private travel designed with precision, restraint, and a deep
-              understanding of place.
+              Private travel designed by an Award winning agency with precision,
+              restraint and a deep understanding of place.
             </p>
           </div>
         </div>
