@@ -6,6 +6,8 @@ import { FormField, TextInput, TextArea } from "@/components/admin/ui/form-field
 import { SelectField } from "@/components/admin/ui/select-field";
 import { TagInput } from "@/components/admin/ui/tag-input";
 import { ImagePickerField } from "@/components/admin/image-picker";
+import { JournalHtmlEditor } from "@/components/admin/journal-html-editor";
+import { hasMeaningfulJournalContent } from "@/lib/journal-content";
 
 const CATEGORY_OPTIONS = [
   { value: "Wild Interior", label: "Wild Interior" },
@@ -80,7 +82,7 @@ export function JournalForm({
       setError("Title is required");
       return;
     }
-    if (!content.trim()) {
+    if (!hasMeaningfulJournalContent(content)) {
       setError("Article body is required");
       return;
     }
@@ -231,15 +233,10 @@ export function JournalForm({
           Article Body
         </h2>
         <FormField
-          label="Content (Markdown)"
-          hint="Use ## for headings, **bold**, *italic*. MDX format."
+          label="Content (HTML)"
+          hint="Format visually or edit the semantic HTML source. Article content is saved as HTML."
         >
-          <TextArea
-            value={content}
-            onChange={setContent}
-            placeholder="Write your article here..."
-            rows={28}
-          />
+          <JournalHtmlEditor value={content} onChange={setContent} />
         </FormField>
       </div>
 

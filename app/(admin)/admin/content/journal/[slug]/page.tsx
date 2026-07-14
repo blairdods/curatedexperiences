@@ -37,7 +37,7 @@ export default async function EditJournalArticlePage({
           heroImage: article.heroImage,
           relatedJourneySlugs: article.relatedJourneySlugs,
         }}
-        initialContent={article.source}
+        initialContent={article.html}
       />
     </div>
   );

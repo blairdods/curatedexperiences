@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { getArticleBySlug } from "@/lib/data/journal";
 import { getJourneyBySlug } from "@/lib/data/journeys";
 import { Hero } from "@/components/ui/hero";
@@ -20,30 +19,6 @@ export async function generateMetadata({
     description: article.excerpt,
   };
 }
-
-const mdxComponents = {
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className="font-serif text-[34px] sm:text-[42px] text-navy tracking-normal leading-[1.08] mt-14 mb-5"
-      {...props}
-    />
-  ),
-  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-[15px] text-foreground/80 leading-7" {...props} />
-  ),
-  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="space-y-2 ml-1" {...props} />
-  ),
-  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="flex items-start gap-3 text-[15px] text-foreground/80 leading-7">
-      <span className="text-gold flex-shrink-0 mt-1">&#9672;</span>
-      <span {...props} />
-    </li>
-  ),
-  strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-semibold text-foreground" {...props} />
-  ),
-};
 
 export default async function JournalArticlePage({
   params,
@@ -85,9 +60,10 @@ export default async function JournalArticlePage({
         </div>
 
         {/* Article body */}
-        <div className="space-y-6">
-          <MDXRemote source={article.source} components={mdxComponents} />
-        </div>
+        <div
+          className="text-[15px] text-foreground/80 leading-7 [&_h2]:font-serif [&_h2]:text-[34px] sm:[&_h2]:text-[42px] [&_h2]:text-navy [&_h2]:tracking-normal [&_h2]:leading-[1.08] [&_h2]:mt-14 [&_h2]:mb-5 [&_h3]:font-serif [&_h3]:text-2xl [&_h3]:text-navy [&_h3]:mt-10 [&_h3]:mb-4 [&_h4]:font-semibold [&_h4]:text-foreground [&_h4]:mt-8 [&_h4]:mb-3 [&_p]:mt-6 [&_p:first-child]:mt-0 [&_ul]:my-6 [&_ul]:ml-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ol]:my-6 [&_ol]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_li]:pl-2 [&_strong]:font-semibold [&_strong]:text-foreground [&_a]:text-gold [&_a]:underline [&_a]:underline-offset-2 [&_blockquote]:my-8 [&_blockquote]:border-l-2 [&_blockquote]:border-gold [&_blockquote]:pl-6 [&_blockquote]:font-serif [&_blockquote]:text-xl [&_blockquote]:italic [&_blockquote]:text-navy [&_hr]:my-10 [&_hr]:border-stone/40"
+          dangerouslySetInnerHTML={{ __html: article.html }}
+        />
 
         {/* Author */}
         <div className="mt-16 pt-8 border-t border-stone/40">

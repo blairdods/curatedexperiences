@@ -1,4 +1,5 @@
 import { createServiceClient } from "@/lib/supabase/server";
+import { resolveJournalHtml } from "@/lib/journal-content";
 
 export interface Article {
   slug: string;
@@ -12,8 +13,8 @@ export interface Article {
   relatedJourneySlugs: string[];
 }
 
-export interface ArticleWithSource extends Article {
-  source: string;
+export interface ArticleWithHtml extends Article {
+  html: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +51,7 @@ export async function getArticleSlugs(): Promise<string[]> {
   return (data ?? []).map((r) => r.slug);
 }
 
-export async function getArticleBySlug(slug: string): Promise<ArticleWithSource | undefined> {
+export async function getArticleBySlug(slug: string): Promise<ArticleWithHtml | undefined> {
   const supabase = await createServiceClient();
   const { data, error } = await supabase
     .from("journal_articles")
@@ -58,5 +59,5 @@ export async function getArticleBySlug(slug: string): Promise<ArticleWithSource 
     .eq("slug", slug)
     .single();
   if (error || !data) return undefined;
-  return { ...mapRow(data), source: data.content ?? "" };
+  return { ...mapRow(data), html: resolveJournalHtml(data.content) };
 }

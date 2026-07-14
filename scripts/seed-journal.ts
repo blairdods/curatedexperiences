@@ -1,11 +1,12 @@
 /**
- * One-time script: seeds all MDX journal articles into the journal_articles table.
+ * One-time script: seeds all MDX journal sources as HTML in journal_articles.
  * Run with: npx tsx scripts/seed-journal.ts
  */
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { createClient } from "@supabase/supabase-js";
+import { resolveJournalHtml } from "../lib/journal-content";
 const JOURNAL_DIR = path.join(process.cwd(), "content/journal");
 
 async function main() {
@@ -36,7 +37,7 @@ async function main() {
         read_time: data.readTime ?? null,
         hero_image: data.heroImage ?? null,
         related_journey_slugs: data.relatedJourneySlugs ?? [],
-        content: content.trim(),
+        content: resolveJournalHtml(content),
       },
       { onConflict: "slug" }
     );

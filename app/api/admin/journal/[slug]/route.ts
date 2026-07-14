@@ -1,5 +1,9 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { revalidateJournal } from "@/lib/data/revalidate-journal";
+import {
+  hasMeaningfulJournalContent,
+  resolveJournalHtml,
+} from "@/lib/journal-content";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -35,7 +39,7 @@ export async function GET(
         heroImage: data.hero_image,
         relatedJourneySlugs: data.related_journey_slugs ?? [],
       },
-      content: data.content ?? "",
+      content: resolveJournalHtml(data.content),
     });
   } catch (e) {
     console.error("[journal GET]", e);
@@ -57,6 +61,14 @@ export async function PATCH(
     const { slug } = await params;
     const { frontmatter, content } = await req.json();
 
+    if (!frontmatter?.title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    }
+
+    if (!hasMeaningfulJournalContent(content)) {
+      return NextResponse.json({ error: "Article body is required" }, { status: 400 });
+    }
+
     const service = await createServiceClient();
 
     const { error } = await service
@@ -70,7 +82,7 @@ export async function PATCH(
         read_time: frontmatter.readTime ?? null,
         hero_image: frontmatter.heroImage ?? null,
         related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
-        content: content ?? "",
+        content: resolveJournalHtml(content),
       })
       .eq("slug", slug);
 

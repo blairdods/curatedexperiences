@@ -1,5 +1,9 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { revalidateJournal } from "@/lib/data/revalidate-journal";
+import {
+  hasMeaningfulJournalContent,
+  resolveJournalHtml,
+} from "@/lib/journal-content";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -13,6 +17,10 @@ export async function POST(req: NextRequest) {
 
   if (!frontmatter?.title) {
     return NextResponse.json({ error: "Title is required" }, { status: 400 });
+  }
+
+  if (!hasMeaningfulJournalContent(content)) {
+    return NextResponse.json({ error: "Article body is required" }, { status: 400 });
   }
 
   const slug = frontmatter.title
@@ -47,7 +55,7 @@ export async function POST(req: NextRequest) {
     read_time: frontmatter.readTime ?? null,
     hero_image: frontmatter.heroImage ?? null,
     related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
-    content: content ?? "",
+    content: resolveJournalHtml(content),
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
