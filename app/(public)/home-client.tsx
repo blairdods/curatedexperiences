@@ -319,9 +319,7 @@ export default function HomePage({
               Signature Journeys
             </p>
             <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] md:text-[46px]">
-              Thoughtfully considered foundations, never fixed
-              <br />
-              itineraries.
+              Thoughtfully considered foundations, never fixed itineraries.
             </h2>
             <p className="mt-7 max-w-[560px] text-[14px] leading-7 text-cream/56">
               Take a moment to be inspired by some of our Signature journeys.
