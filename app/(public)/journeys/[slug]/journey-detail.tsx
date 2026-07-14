@@ -22,7 +22,7 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
   const relatedJourneys = JOURNEYS.filter(
     (j) => j.slug !== journey.slug
   ).slice(0, 2);
-  const route = getRouteForJourney(journey.slug);
+  const route = getRouteForJourney(journey.slug, journey.durationDays);
   const hasRefiner = (journey.locationGroups?.length ?? 0) > 0;
   const videos = getVideosByPlacement(`journeys/${journey.slug}`);
 

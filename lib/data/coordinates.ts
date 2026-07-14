@@ -44,6 +44,13 @@ export const NZ_COORDINATES: Record<string, [number, number]> = {
 export interface RoutePoint {
   name: string;
   coordinates: [number, number];
+  dayStart?: number;
+  dayEnd?: number;
+}
+
+interface RouteStopDefinition {
+  name: string;
+  coordinates: [number, number];
   day?: number;
 }
 
@@ -51,9 +58,10 @@ export interface RoutePoint {
  * Get route points for a journey based on its itinerary.
  */
 export function getRouteForJourney(
-  slug: string
+  slug: string,
+  durationDays?: number
 ): RoutePoint[] {
-  const routes: Record<string, RoutePoint[]> = {
+  const routes: Record<string, RouteStopDefinition[]> = {
     "the-masterpiece": [
       { name: "Bay of Islands", coordinates: NZ_COORDINATES["Bay of Islands"], day: 1 },
       { name: "Auckland", coordinates: NZ_COORDINATES["Auckland"], day: 3 },
@@ -106,5 +114,22 @@ export function getRouteForJourney(
     ],
   };
 
-  return routes[slug] ?? [];
+  const route = routes[slug] ?? [];
+
+  return route.map((point, index) => {
+    if (point.day === undefined) return point;
+
+    const nextDay = route[index + 1]?.day;
+    const finalDay = durationDays ?? point.day;
+    const dayEnd = nextDay === undefined
+      ? Math.max(point.day, finalDay)
+      : Math.max(point.day, nextDay - 1);
+
+    return {
+      name: point.name,
+      coordinates: point.coordinates,
+      dayStart: point.day,
+      dayEnd,
+    };
+  });
 }

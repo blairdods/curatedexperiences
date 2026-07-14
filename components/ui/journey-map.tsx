@@ -6,6 +6,61 @@ import type { RoutePoint } from "@/lib/data/coordinates";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
 
+interface RouteMarker {
+  names: string[];
+  coordinates: [number, number];
+  visits: Array<{ dayStart: number; dayEnd: number }>;
+  isEndpoint: boolean;
+}
+
+function formatVisit(dayStart: number, dayEnd: number) {
+  return dayStart === dayEnd ? String(dayStart) : `${dayStart}\u2013${dayEnd}`;
+}
+
+export function formatDayLabel(
+  visits: Array<{ dayStart: number; dayEnd: number }>
+) {
+  if (visits.length === 0) return "";
+
+  const ranges = visits.map(({ dayStart, dayEnd }) =>
+    formatVisit(dayStart, dayEnd)
+  );
+  const isSingleDay = visits.length === 1 && visits[0].dayStart === visits[0].dayEnd;
+
+  return `${isSingleDay ? "Day" : "Days"} ${ranges.join(", ")}`;
+}
+
+export function groupRouteMarkers(route: RoutePoint[]): RouteMarker[] {
+  const markers = new Map<string, RouteMarker>();
+
+  route.forEach((point, index) => {
+    const key = point.coordinates.join(",");
+    const existing = markers.get(key);
+    const visit = point.dayStart === undefined
+      ? undefined
+      : {
+          dayStart: point.dayStart,
+          dayEnd: point.dayEnd ?? point.dayStart,
+        };
+
+    if (existing) {
+      if (!existing.names.includes(point.name)) existing.names.push(point.name);
+      if (visit) existing.visits.push(visit);
+      existing.isEndpoint ||= index === route.length - 1;
+      return;
+    }
+
+    markers.set(key, {
+      names: [point.name],
+      coordinates: point.coordinates,
+      visits: visit ? [visit] : [],
+      isEndpoint: index === 0 || index === route.length - 1,
+    });
+  });
+
+  return Array.from(markers.values());
+}
+
 export function JourneyMap({ route }: { route: RoutePoint[] }) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
@@ -67,34 +122,52 @@ export function JourneyMap({ route }: { route: RoutePoint[] }) {
         },
       });
 
-      // Add markers for each stop
-      route.forEach((point, i) => {
+      // A location can be visited more than once. Render one marker containing
+      // every visit so a later stop cannot obscure the earlier day range.
+      groupRouteMarkers(route).forEach((point) => {
         if (!map.current) return;
+
+        const dayLabel = formatDayLabel(point.visits);
 
         const el = document.createElement("div");
         el.className = "journey-map-marker";
         el.style.cssText = `
-          width: 28px; height: 28px; border-radius: 50%;
-          background: ${i === 0 || i === route.length - 1 ? "#1F3864" : "#ffffff"};
+          min-width: 30px; height: 30px; padding: 0 9px; border-radius: 999px;
+          background: ${point.isEndpoint ? "#1F3864" : "#ffffff"};
           border: 2.5px solid #1F3864;
           display: flex; align-items: center; justify-content: center;
           font-size: 11px; font-weight: 600;
-          color: ${i === 0 || i === route.length - 1 ? "#ffffff" : "#1F3864"};
+          font-family: Inter, sans-serif; white-space: nowrap;
+          color: ${point.isEndpoint ? "#ffffff" : "#1F3864"};
           box-shadow: 0 2px 8px rgba(31,56,100,0.2);
           cursor: pointer;
         `;
-        el.textContent = point.day ? String(point.day) : "";
+        el.textContent = dayLabel;
+        el.setAttribute(
+          "aria-label",
+          `${point.names.join(" and ")}${dayLabel ? `, ${dayLabel}` : ""}`
+        );
+
+        const popupContent = document.createElement("div");
+        popupContent.style.cssText = "font-family: Inter, sans-serif; padding: 4px 0;";
+
+        const popupName = document.createElement("p");
+        popupName.style.cssText = "font-size: 13px; font-weight: 600; color: #1F3864; margin: 0;";
+        popupName.textContent = point.names.join(" / ");
+        popupContent.appendChild(popupName);
+
+        if (dayLabel) {
+          const popupDays = document.createElement("p");
+          popupDays.style.cssText = "font-size: 11px; color: #9a8574; margin: 2px 0 0;";
+          popupDays.textContent = dayLabel;
+          popupContent.appendChild(popupDays);
+        }
 
         const popup = new mapboxgl.Popup({
           offset: 20,
           closeButton: false,
           className: "journey-map-popup",
-        }).setHTML(
-          `<div style="font-family: Inter, sans-serif; padding: 4px 0;">
-            <p style="font-size: 13px; font-weight: 600; color: #1F3864; margin: 0;">${point.name}</p>
-            ${point.day ? `<p style="font-size: 11px; color: #9a8574; margin: 2px 0 0;">Day ${point.day}</p>` : ""}
-          </div>`
-        );
+        }).setDOMContent(popupContent);
 
         new mapboxgl.Marker({ element: el })
           .setLngLat(point.coordinates)
