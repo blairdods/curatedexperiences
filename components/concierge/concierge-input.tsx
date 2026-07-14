@@ -57,6 +57,7 @@ export function ConciergeInput({
         onKeyDown={handleKeyDown}
         placeholder="Tell us what you're imagining, or ask anything about New Zealand..."
         aria-label="Message your travel curator"
+        maxLength={4000}
         rows={1}
         className="flex-1 resize-none bg-transparent text-sm text-foreground
           placeholder:text-foreground/35 leading-relaxed
