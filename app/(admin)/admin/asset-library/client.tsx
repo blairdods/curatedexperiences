@@ -2,14 +2,9 @@
 
 import { useState, useMemo, useCallback, useRef } from "react";
 import type { AssetRecord } from "@/lib/asset-library";
+import { getAssetContentSrc, getAssetThumbnailSrc } from "@/lib/asset-library/sources";
 
 /** Returns the best available src for a thumbnail/preview image. */
-function imgSrc(asset: AssetRecord): string | null {
-  if (asset.publicSrc) return asset.publicSrc;
-  if (asset.hasLocalFile) return `/api/admin/asset-library/image/${asset.filename}`;
-  return null;
-}
-
 const LICENCE_LABELS: Record<string, { label: string; colour: string }> = {
   "WorldWide - Unpaid Only": { label: "Worldwide · Unpaid", colour: "bg-emerald-100 text-emerald-800" },
   "Paid Activity - Paid and Unpaid": { label: "Paid OK", colour: "bg-blue-100 text-blue-800" },
@@ -80,7 +75,8 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
   );
 
   const copyPath = useCallback((a: AssetRecord) => {
-    const path = a.publicSrc ?? `/api/admin/asset-library/image/${a.filename}`;
+    const path = getAssetContentSrc(a);
+    if (!path) return;
     navigator.clipboard.writeText(path).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
@@ -267,10 +263,10 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
           </button>
 
           <div className="aspect-video overflow-hidden rounded bg-warm-100 flex items-center justify-center">
-            {imgSrc(selected) ? (
+            {getAssetThumbnailSrc(selected) ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={imgSrc(selected)!}
+                src={getAssetThumbnailSrc(selected)!}
                 alt={selected.title}
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -429,10 +425,10 @@ function AssetCard({
     >
       {/* Thumbnail */}
       <div className="aspect-[4/3] overflow-hidden bg-warm-100">
-        {imgSrc(asset) ? (
+        {getAssetThumbnailSrc(asset) ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={imgSrc(asset)!}
+            src={getAssetThumbnailSrc(asset)!}
             alt={asset.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"

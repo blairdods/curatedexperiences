@@ -22,7 +22,7 @@ export default async function AssetLibraryPage() {
         <h1 className="text-2xl font-semibold text-navy">Asset Library</h1>
         <p className="mt-1 text-sm text-foreground-muted">
           {assets.length.toLocaleString()} licensed TNZ images ·{" "}
-          {assets.filter((a) => a.publicSrc).length} with preview · search by location, tags, or rights
+          {assets.filter((a) => a.thumbnailSrc || a.publicSrc).length.toLocaleString()} with preview · search by location, tags, or rights
         </p>
       </div>
       <AssetLibraryClient

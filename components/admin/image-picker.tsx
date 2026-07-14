@@ -2,14 +2,9 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import type { AssetRecord } from "@/lib/asset-library";
+import { getAssetContentSrc, getAssetThumbnailSrc } from "@/lib/asset-library/sources";
 
 // ─── Thumbnail helper ────────────────────────────────────────────────────────
-
-function imgSrc(asset: AssetRecord): string | null {
-  if (asset.publicSrc) return asset.publicSrc;
-  if (asset.hasLocalFile) return `/api/admin/asset-library/image/${asset.filename}`;
-  return null;
-}
 
 const LICENCE_LABELS: Record<string, string> = {
   "WorldWide - Unpaid Only": "Worldwide · Unpaid",
@@ -85,7 +80,8 @@ function ImagePickerModal({ onSelect, onClose, defaultRegion = "" }: ModalProps)
   }, [defaultRegion]);
 
   function handleSelect(asset: AssetRecord) {
-    const src = asset.publicSrc ?? `/api/admin/asset-library/image/${asset.filename}`;
+    const src = getAssetContentSrc(asset);
+    if (!src) return;
     const alt = asset.location || asset.title;
     onSelect(src, alt);
     onClose();
@@ -201,7 +197,7 @@ function ImagePickerModal({ onSelect, onClose, defaultRegion = "" }: ModalProps)
 }
 
 function PickerCard({ asset, onSelect }: { asset: AssetRecord; onSelect: (a: AssetRecord) => void }) {
-  const src = imgSrc(asset);
+  const src = getAssetThumbnailSrc(asset);
   return (
     <button
       onClick={() => onSelect(asset)}

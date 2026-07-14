@@ -1,6 +1,14 @@
 import fs from "fs";
 import path from "path";
 import { cache } from "react";
+import remoteImages from "./remote-images.json";
+
+interface RemoteImageRecord {
+  thumbnailSrc: string;
+  contentSrc: string;
+}
+
+const REMOTE_IMAGES = remoteImages as Record<string, RemoteImageRecord>;
 
 export interface AssetRecord {
   assetId: string;
@@ -21,6 +29,10 @@ export interface AssetRecord {
   publicSrc: string | null;
   /** True when the raw file is available in asset-library/Images (local dev only). */
   hasLocalFile: boolean;
+  /** Optimized catalogue thumbnail hosted by the asset provider. */
+  thumbnailSrc: string | null;
+  /** Public web-ready image hosted by the asset provider. */
+  contentSrc: string | null;
 }
 
 const CSV_PATH = path.join(process.cwd(), "docs/_Images_Index.csv");
@@ -91,8 +103,11 @@ export const getAssets = cache((): AssetRecord[] => {
       ? tagsRaw.split(",").map((t) => t.trim()).filter(Boolean)
       : [];
 
+    const assetId = get(COL("Asset ID"));
+    const remoteImage = REMOTE_IMAGES[assetId];
+
     results.push({
-      assetId: get(COL("Asset ID")),
+      assetId,
       title: get(COL("Title")),
       region: get(COL("Region")),
       location: get(COL("Location")),
@@ -108,6 +123,8 @@ export const getAssets = cache((): AssetRecord[] => {
       filename,
       publicSrc: PUBLIC_FILES.has(filename) ? `/assets/images/${filename}` : null,
       hasLocalFile: LOCAL_FILES.has(filename),
+      thumbnailSrc: remoteImage?.thumbnailSrc ?? null,
+      contentSrc: remoteImage?.contentSrc ?? null,
     });
   }
 
