@@ -1,4 +1,5 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { revalidateJournal } from "@/lib/data/revalidate-journal";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -75,6 +76,8 @@ export async function PATCH(
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
+    revalidateJournal(slug);
+
     return NextResponse.json({ success: true });
   } catch (e) {
     console.error("[journal PATCH]", e);
@@ -102,6 +105,8 @@ export async function DELETE(
       .eq("slug", slug);
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    revalidateJournal(slug);
 
     return NextResponse.json({ success: true });
   } catch (e) {

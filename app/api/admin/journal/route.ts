@@ -1,4 +1,5 @@
 import { createClient, createServiceClient } from "@/lib/supabase/server";
+import { revalidateJournal } from "@/lib/data/revalidate-journal";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -50,6 +51,8 @@ export async function POST(req: NextRequest) {
   });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  revalidateJournal(slug);
 
   return NextResponse.json({ slug });
 }
