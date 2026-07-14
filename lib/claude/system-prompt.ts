@@ -14,6 +14,7 @@
 
 import type { ItineraryCustomization } from "@/lib/itinerary-refiner/types";
 import { FULL_BRAND_VOICE } from "./brand-voice";
+import { MANDATORY_CONCIERGE_POLICY } from "./concierge-guardrails";
 
 export interface VisitorContext {
   currentPage?: string;
@@ -41,6 +42,9 @@ export function buildSystemPrompt(
   }
 
   const layers = [
+    // This policy is code-owned so editable DB brand settings cannot weaken it.
+    MANDATORY_CONCIERGE_POLICY,
+
     // Layers 1-3: Identity, Brand Voice, Constraints
     `${brandVoice}
 

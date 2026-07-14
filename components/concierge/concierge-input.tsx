@@ -49,6 +49,7 @@ export function ConciergeInput({
         }}
         onKeyDown={handleKeyDown}
         placeholder="Ask about New Zealand..."
+        maxLength={4000}
         rows={1}
         className="flex-1 resize-none bg-transparent text-sm text-foreground
           placeholder:text-foreground/35 leading-relaxed

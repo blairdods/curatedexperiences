@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:guardrails": "tsx --test lib/claude/concierge-guardrails.test.ts",
     "scrape:tnz": "tsx --env-file=.env.local scripts/scrape-tnz.ts",
     "import:accommodations": "tsx --env-file=.env.local scripts/import-accommodation-suppliers.ts",
     "enrich:accommodations": "tsx --env-file=.env.local scripts/enrich-accommodations.ts",

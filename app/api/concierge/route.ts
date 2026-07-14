@@ -6,6 +6,31 @@ import { buildSystemPrompt, type VisitorContext } from "@/lib/claude/system-prom
 import { extractBrief } from "@/lib/claude/extract-brief";
 import { checkRateLimit, checkSessionBudget, trackSessionTokens } from "@/lib/claude/rate-limit";
 import { notifyNewLead } from "@/lib/email/notify-lead";
+import {
+  CONCIERGE_SCOPE_REFUSAL,
+  MAX_CONCIERGE_REQUEST_BYTES,
+  parseConciergeRequest,
+} from "@/lib/claude/concierge-guardrails";
+import { isConciergeRequestInScope } from "@/lib/claude/concierge-scope";
+
+function jsonError(message: string, status: number) {
+  return Response.json({ error: "invalid_request", message }, { status });
+}
+
+function textStreamResponse(text: string, extraHeaders?: HeadersInit) {
+  const payload = JSON.stringify({
+    type: "content_block_delta",
+    delta: { type: "text_delta", text },
+  });
+
+  return new Response(`${payload}\n`, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-store",
+      ...extraHeaders,
+    },
+  });
+}
 
 export async function POST(request: Request) {
   // --- Rate limiting ---
@@ -31,15 +56,37 @@ export async function POST(request: Request) {
     );
   }
 
-  // --- Parse request ---
-  const { messages, sessionId, visitorContext } = await request.json();
-
-  if (!messages || messages.length === 0) {
-    return new Response("Messages required", { status: 400 });
+  // --- Parse and validate the untrusted browser request ---
+  const declaredLength = Number(request.headers.get("content-length") ?? "0");
+  if (declaredLength > MAX_CONCIERGE_REQUEST_BYTES) {
+    return jsonError("Request body is too large", 413);
   }
 
+  let rawBody: string;
+  try {
+    rawBody = await request.text();
+  } catch {
+    return jsonError("Unable to read request body", 400);
+  }
+  if (new TextEncoder().encode(rawBody).byteLength > MAX_CONCIERGE_REQUEST_BYTES) {
+    return jsonError("Request body is too large", 413);
+  }
+
+  let parsedBody: unknown;
+  try {
+    parsedBody = JSON.parse(rawBody);
+  } catch {
+    return jsonError("Request body must be valid JSON", 400);
+  }
+
+  const parsedRequest = parseConciergeRequest(parsedBody);
+  if (!parsedRequest.ok) {
+    return jsonError(parsedRequest.error, 400);
+  }
+  const { messages, sessionId, visitorContext } = parsedRequest.value;
+
   // --- Session budget check ---
-  const sid = sessionId ?? ip;
+  const sid = `${ip}:${sessionId ?? "anonymous"}`;
   if (!checkSessionBudget(sid)) {
     return new Response(
       JSON.stringify({
@@ -52,6 +99,30 @@ export async function POST(request: Request) {
         headers: { "Content-Type": "application/json" },
       }
     );
+  }
+
+  // --- Topical guardrail ---
+  // Fail closed: if the classifier is unavailable, do not send unclassified
+  // visitor content to the general-purpose concierge model.
+  let inScope = false;
+  try {
+    inScope = await isConciergeRequestInScope(messages);
+  } catch (error) {
+    console.error("Concierge scope classification failed:", error);
+    return Response.json(
+      {
+        error: "guardrail_unavailable",
+        message: "I’m having trouble checking that request right now. Please try again in a moment.",
+      },
+      { status: 503 }
+    );
+  }
+
+  if (!inScope) {
+    return textStreamResponse(CONCIERGE_SCOPE_REFUSAL, {
+      "X-Concierge-Guardrail": "blocked",
+      "X-RateLimit-Remaining": String(rateCheck.remaining),
+    });
   }
 
   // --- RAG retrieval ---
@@ -139,6 +210,8 @@ export async function POST(request: Request) {
       (m: { role: string }) => m.role === "user"
     ).length,
     customization: visitorContext?.customization,
+    country: visitorContext?.country,
+    conciergeVariant: visitorContext?.conciergeVariant,
   };
 
   const systemPrompt = buildSystemPrompt(ragContext, vCtx, brandVoice);
@@ -222,6 +295,7 @@ export async function POST(request: Request) {
   return new Response(stream.toReadableStream(), {
     headers: {
       "Content-Type": "text/event-stream",
+      "Cache-Control": "no-store",
       "X-RateLimit-Remaining": String(rateCheck.remaining),
     },
   });
