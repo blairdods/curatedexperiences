@@ -85,7 +85,7 @@ export function Footer() {
 
         <div className="mx-auto flex max-w-[1120px] items-center justify-center gap-8 px-6 pb-16 sm:gap-12 sm:px-10 md:pb-20">
           <Image
-            src="/logos/nz-fern-white.png"
+            src="/logos/nz-fern-blue.png"
             alt="Tourism New Zealand licence number 100920"
             width={512}
             height={512}
