@@ -2,30 +2,106 @@ import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendWelcomeEmail } from "@/lib/email/send";
 
-interface RecaptchaVerification {
-  success: boolean;
-  hostname?: string;
-  "error-codes"?: string[];
+const RECAPTCHA_ACTION = "contact_enquiry";
+
+interface RecaptchaAssessment {
+  tokenProperties?: {
+    valid?: boolean;
+    hostname?: string;
+    action?: string;
+    invalidReason?: string;
+  };
 }
 
-async function verifyRecaptcha(token: string): Promise<boolean> {
-  const secret = process.env.RECAPTCHA_SECRET_KEY;
-  if (!secret) return false;
+function getRequestHostname(request: Request): string {
+  const forwardedHost = request.headers
+    .get("x-forwarded-host")
+    ?.split(",")[0]
+    ?.trim();
 
-  const params = new URLSearchParams({ secret, response: token });
-  const response = await fetch(
-    "https://www.google.com/recaptcha/api/siteverify",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params,
-      cache: "no-store",
-    }
+  return (forwardedHost || new URL(request.url).host)
+    .split(":")[0]
+    .toLowerCase();
+}
+
+function getRequestIp(request: Request): string | undefined {
+  return (
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    undefined
   );
+}
 
-  if (!response.ok) return false;
-  const result = (await response.json()) as RecaptchaVerification;
-  return result.success;
+function isRecaptchaConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY &&
+      process.env.RECAPTCHA_PROJECT_ID &&
+      process.env.RECAPTCHA_API_KEY
+  );
+}
+
+async function verifyRecaptcha(
+  token: string,
+  request: Request
+): Promise<boolean> {
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const projectId = process.env.RECAPTCHA_PROJECT_ID;
+  const apiKey = process.env.RECAPTCHA_API_KEY;
+
+  if (!siteKey || !projectId || !apiKey) return false;
+
+  const endpoint = new URL(
+    `https://recaptchaenterprise.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/assessments`
+  );
+  endpoint.searchParams.set("key", apiKey);
+
+  const userAgent = request.headers.get("user-agent") || undefined;
+  const userIpAddress = getRequestIp(request);
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      event: {
+        token,
+        siteKey,
+        expectedAction: RECAPTCHA_ACTION,
+        requestedUri: request.url,
+        ...(userAgent ? { userAgent } : {}),
+        ...(userIpAddress ? { userIpAddress } : {}),
+      },
+    }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error("reCAPTCHA assessment request failed:", response.status);
+    return false;
+  }
+
+  const assessment = (await response.json()) as RecaptchaAssessment;
+  const tokenProperties = assessment.tokenProperties;
+  const expectedHostname = getRequestHostname(request);
+
+  if (!tokenProperties?.valid) {
+    console.warn(
+      "reCAPTCHA rejected a contact token:",
+      tokenProperties?.invalidReason || "unknown reason"
+    );
+    return false;
+  }
+
+  if (tokenProperties.action !== RECAPTCHA_ACTION) {
+    console.warn("reCAPTCHA contact action did not match");
+    return false;
+  }
+
+  if (tokenProperties.hostname?.toLowerCase() !== expectedHostname) {
+    console.warn("reCAPTCHA contact hostname did not match");
+    return false;
+  }
+
+  return true;
 }
 
 export async function POST(request: Request) {
@@ -45,7 +121,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!process.env.RECAPTCHA_SECRET_KEY) {
+    if (!isRecaptchaConfigured()) {
       return NextResponse.json(
         { error: "Contact form spam protection is not configured" },
         { status: 503 }
@@ -56,7 +132,7 @@ export async function POST(request: Request) {
       const verified =
         typeof recaptcha_token === "string" &&
         recaptcha_token.length > 0 &&
-        (await verifyRecaptcha(recaptcha_token));
+        (await verifyRecaptcha(recaptcha_token, request));
 
       if (!verified) {
         return NextResponse.json(

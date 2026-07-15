@@ -11,22 +11,26 @@ import {
 declare global {
   interface Window {
     grecaptcha?: {
-      ready?: (callback: () => void) => void;
-      render: (
-        container: HTMLElement,
-        parameters: {
-          sitekey: string;
-          theme?: "light" | "dark";
-          callback?: (token: string) => void;
-          "expired-callback"?: () => void;
-          "error-callback"?: () => void;
-        }
-      ) => number;
-      reset: (widgetId?: number) => void;
+      enterprise?: {
+        ready?: (callback: () => void) => void;
+        render: (
+          container: HTMLElement,
+          parameters: {
+            sitekey: string;
+            action: string;
+            theme?: "light" | "dark";
+            callback?: (token: string) => void;
+            "expired-callback"?: () => void;
+            "error-callback"?: () => void;
+          }
+        ) => number;
+        reset: (widgetId?: number) => void;
+      };
     };
   }
 }
 
+const RECAPTCHA_ACTION = "contact_enquiry";
 const FIELD_CLASS =
   "mt-2 w-full border border-navy/15 bg-white px-4 py-3.5 text-[14px] text-navy outline-none transition-colors placeholder:text-navy/28 focus:border-gold";
 
@@ -40,7 +44,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   const [error, setError] = useState("");
 
   const renderRecaptcha = useCallback(() => {
-    const recaptcha = window.grecaptcha;
+    const recaptcha = window.grecaptcha?.enterprise;
 
     if (!siteKey || !recaptcha || captchaWidgetId.current !== null) {
       return;
@@ -57,6 +61,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       captchaContainerRef.current,
       {
         sitekey: siteKey,
+        action: RECAPTCHA_ACTION,
         theme: "light",
         callback: (token) => {
           setCaptchaToken(token);
@@ -115,7 +120,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       setSubmitted(true);
       setCaptchaToken("");
       if (captchaWidgetId.current !== null) {
-        window.grecaptcha?.reset(captchaWidgetId.current);
+        window.grecaptcha?.enterprise?.reset(captchaWidgetId.current);
       }
     } catch (submissionError) {
       setError(
@@ -165,7 +170,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     >
       {siteKey ? (
         <Script
-          src="https://www.google.com/recaptcha/api.js?render=explicit"
+          src="https://www.google.com/recaptcha/enterprise.js?render=explicit"
           strategy="afterInteractive"
           onReady={renderRecaptcha}
           onError={() =>
@@ -243,8 +248,8 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
           <div ref={captchaContainerRef} />
         ) : (
           <div className="border border-gold/40 bg-white px-4 py-4 text-[13px] leading-6 text-navy/60">
-            Spam protection is not configured. Add the reCAPTCHA site and secret
-            keys to enable this form.
+            Spam protection is not configured. Add the reCAPTCHA Essentials site
+            key to enable this form.
           </div>
         )}
       </div>
