@@ -10,6 +10,7 @@ const FOOTER_LINKS = {
   ],
   Company: [
     { href: "/about",           label: "Our Story" },
+    { href: "/contact",         label: "Contact" },
     { href: "/terms",           label: "Privacy" },
     { href: "/terms",           label: "Terms" },
     { href: "tel:0800287283",   label: "0800 CURATE" },
@@ -19,6 +20,26 @@ const FOOTER_LINKS = {
 export function Footer() {
   return (
     <footer className="bg-navy text-cream/48">
+      <div className="border-b border-cream/10">
+        <div className="mx-auto grid max-w-[1120px] items-end gap-8 px-6 py-16 sm:px-10 md:grid-cols-[1fr_auto] md:py-20">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Private Journeys
+            </p>
+            <h2 className="mt-5 max-w-[780px] font-serif text-[36px] font-medium leading-[1.08] text-cream sm:text-[44px]">
+              Start planning your unforgettable journey to New Zealand with our
+              award-winning team
+            </h2>
+          </div>
+          <Link
+            href="/contact"
+            className="inline-flex w-fit items-center border border-gold px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gold transition-colors hover:bg-gold hover:text-navy"
+          >
+            Contact us
+          </Link>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-[1120px] px-6 pb-12 pt-12 sm:px-10 sm:pt-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
           <div>

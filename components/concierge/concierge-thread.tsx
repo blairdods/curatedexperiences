@@ -39,13 +39,7 @@ export function ConciergeThread({
     if (isNearBottomRef.current) {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
-
-  const showThinking =
-    isStreaming &&
-    (messages.length === 0 ||
-      messages[messages.length - 1]?.role !== "assistant" ||
-      messages[messages.length - 1]?.content === "");
+  }, [messages, isStreaming]);
 
   if (messages.length === 0) {
     return (
@@ -74,18 +68,23 @@ export function ConciergeThread({
     );
   }
 
+  const visibleMessages =
+    isStreaming && messages[messages.length - 1]?.role === "assistant"
+      ? messages.slice(0, -1)
+      : messages;
+
   return (
     <div
       ref={containerRef}
       onScroll={checkNearBottom}
       className="flex-1 overflow-y-auto px-5 py-6 space-y-4 scroll-smooth"
     >
-      {messages.map((msg, i) =>
+      {visibleMessages.map((msg, i) =>
         msg.content || msg.role === "user" ? (
           <ConciergeMessage key={i} message={msg} />
         ) : null
       )}
-      {showThinking && <ConciergeThinking />}
+      {isStreaming && <ConciergeThinking />}
       <div ref={bottomRef} />
     </div>
   );

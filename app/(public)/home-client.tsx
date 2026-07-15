@@ -155,10 +155,6 @@ const DESIGN_JOURNAL: DesignJournalArticle[] = [
   },
 ];
 
-function openConcierge() {
-  window.dispatchEvent(new Event("ce:open-concierge"));
-}
-
 function journalItems(articles: Article[], imageSlots: ImageSlotOverrides) {
   const fallbackJournal = DESIGN_JOURNAL.map((article) => ({
     ...article,
@@ -201,8 +197,6 @@ export default function HomePage({
 
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
-      <style>{`main:has(.ce-homepage-exact) + footer { display: none; }`}</style>
-
       <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
         <div className="absolute inset-0" data-slot="home-hero-video">
           {heroPoster?.src ? (
@@ -375,14 +369,12 @@ export default function HomePage({
               Destinations
             </p>
             <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] text-navy md:text-[46px]">
-              Distinct regions,
-              <br />
-              one rhythm.
+              A World of difference
             </h2>
             <p className="mt-8 text-[14px] leading-7 text-foreground-muted">
-              From private lodges and alpine landscapes to vineyards, coastlines,
-              and cultural encounters, every place is considered for how it
-              contributes to the rhythm of the wider journey.
+              From the rich culture, diverse landscapes of the North Island to
+              the breathtaking alpine scenery of the South Island, every journey
+              is carefully curated to showcase the very best of New Zealand.
             </p>
             <Link
               href="/destinations"
@@ -538,13 +530,11 @@ export default function HomePage({
             Journal
           </p>
           <h2 className="mt-6 max-w-[560px] font-serif text-[42px] font-medium leading-[1.06] text-navy md:text-[54px]">
-            Before a journey begins,
-            <br />
-            there is a way of seeing.
+            Insight creates exceptional Journeys.
           </h2>
           <p className="mt-7 max-w-[620px] text-[14px] leading-7 text-foreground-muted">
-            Selected perspectives on timing, remote places, and the details that
-            shape a more considered New Zealand journey.
+            Explore our collection of insights, perspectives and practical
+            information to inspire your New Zealand journey.
           </p>
 
           <div className="mt-14 grid gap-8 md:grid-cols-3">
@@ -579,88 +569,6 @@ export default function HomePage({
         </div>
       </section>
 
-      <section className="bg-navy px-6 py-[112px] text-center text-cream md:px-0">
-        <div className="mx-auto max-w-[620px]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-            Private Journeys
-          </p>
-          <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] md:text-[46px]">
-            Begin with a conversation.
-          </h2>
-          <p className="mx-auto mt-7 max-w-[520px] text-[14px] leading-7 text-cream/56">
-            Every journey begins quietly: with timing, preferences, privacy, and
-            the details that matter before anything is designed.
-          </p>
-          <button
-            onClick={openConcierge}
-            className="mt-9 border border-gold px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-gold transition-colors hover:bg-gold hover:text-navy"
-          >
-            Plan A Private Journey +
-          </button>
-        </div>
-      </section>
-
-      <footer className="bg-navy px-6 pb-12 pt-9 text-cream/48 md:px-0">
-        <div className="mx-auto grid max-w-[1120px] gap-10 md:grid-cols-[1.35fr_0.7fr_0.7fr_1fr]">
-          <div>
-            <Image
-              src="/logos/CE_Horizontal_NB_1200x400.svg"
-              alt="Curated Experiences"
-              width={295}
-              height={40}
-              className="h-8 w-auto"
-            />
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
-              Explore
-            </p>
-            <div className="mt-4 space-y-2 text-[12px]">
-              <Link href="/journeys" className="block hover:text-cream">Journeys</Link>
-              <Link href="/destinations" className="block hover:text-cream">Destinations</Link>
-              <Link href="/journal" className="block hover:text-cream">Journal</Link>
-            </div>
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
-              Company
-            </p>
-            <div className="mt-4 space-y-2 text-[12px]">
-              <Link href="/about" className="block hover:text-cream">Our Story</Link>
-              <Link href="/terms" className="block hover:text-cream">Privacy</Link>
-              <Link href="/terms" className="block hover:text-cream">Terms</Link>
-              <button onClick={openConcierge} className="block hover:text-cream">
-                Enquire
-              </button>
-            </div>
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
-              Contact
-            </p>
-            <div className="mt-4 space-y-2 text-[12px]">
-              <p>Enquire</p>
-              <p>Auckland, New Zealand</p>
-              <a href="tel:0800287283" className="block hover:text-cream">0800 287 283</a>
-              <a href="mailto:discover@curatedexperiences.co.nz" className="block hover:text-cream">
-                discover@curatedexperiences.co.nz
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto mt-14 flex max-w-[1120px] flex-col gap-3 text-[11px] text-cream/28 md:flex-row md:justify-between">
-          <p>&copy; 2026 Curated Experiences. All rights reserved.</p>
-          <p className="flex gap-2">
-            <Link href="/terms" className="hover:text-cream">
-              Privacy
-            </Link>
-            <span aria-hidden="true">·</span>
-            <Link href="/terms" className="hover:text-cream">
-              Terms
-            </Link>
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

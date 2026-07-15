@@ -2,13 +2,75 @@ import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendWelcomeEmail } from "@/lib/email/send";
 
+interface RecaptchaVerification {
+  success: boolean;
+  hostname?: string;
+  "error-codes"?: string[];
+}
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return false;
+
+  const params = new URLSearchParams({ secret, response: token });
+  const response = await fetch(
+    "https://www.google.com/recaptcha/api/siteverify",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) return false;
+  const result = (await response.json()) as RecaptchaVerification;
+  return result.success;
+}
+
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { name, email, phone, source, utm_campaign, journey_interest, interests, conversation_summary } = body;
+  const { name, email, phone, source, utm_campaign, journey_interest, interests, conversation_summary, recaptcha_token } = body;
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
+  }
+
+  if (source === "contact_page") {
+    if (!name?.trim() || !phone?.trim() || !interests?.[0]?.trim()) {
+      return NextResponse.json(
+        { error: "Please complete all required fields" },
+        { status: 400 }
+      );
+    }
+
+    if (!process.env.RECAPTCHA_SECRET_KEY) {
+      return NextResponse.json(
+        { error: "Contact form spam protection is not configured" },
+        { status: 503 }
+      );
+    }
+
+    try {
+      const verified =
+        typeof recaptcha_token === "string" &&
+        recaptcha_token.length > 0 &&
+        (await verifyRecaptcha(recaptcha_token));
+
+      if (!verified) {
+        return NextResponse.json(
+          { error: "Please complete the reCAPTCHA challenge again" },
+          { status: 400 }
+        );
+      }
+    } catch (error) {
+      console.error("reCAPTCHA verification failed:", error);
+      return NextResponse.json(
+        { error: "Unable to verify the reCAPTCHA challenge" },
+        { status: 502 }
+      );
+    }
   }
 
   const supabase = await createServiceClient();
