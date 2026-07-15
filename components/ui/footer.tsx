@@ -107,9 +107,9 @@ export function Footer() {
             <Image
               src="/logos/CE_Horizontal_NB_1200x400.svg"
               alt="Curated Experiences"
-              width={295}
-              height={40}
-              className="h-8 w-auto"
+              width={1200}
+              height={400}
+              className="h-auto w-full"
             />
 
             <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-gold/70">
@@ -184,18 +184,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 text-[11px] text-cream/28 sm:flex-row sm:justify-between">
+        <div className="mt-14 text-[11px] text-cream/28">
           <p>
             &copy; {new Date().getFullYear()} Curated Experiences. All rights reserved.
-          </p>
-          <p className="flex gap-2">
-            <Link href="/terms" className="hover:text-cream transition-colors">
-              Privacy
-            </Link>
-            <span aria-hidden="true">·</span>
-            <Link href="/terms" className="hover:text-cream transition-colors">
-              Terms
-            </Link>
           </p>
         </div>
       </div>
