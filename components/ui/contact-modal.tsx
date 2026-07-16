@@ -6,9 +6,10 @@ interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
   context?: string;
+  embedded?: boolean;
 }
 
-export function ContactModal({ isOpen, onClose, context }: ContactModalProps) {
+export function ContactModal({ isOpen, onClose, context, embedded = false }: ContactModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,13 +29,13 @@ export function ContactModal({ isOpen, onClose, context }: ContactModalProps) {
 
   // Escape key
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || embedded) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, embedded]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -72,15 +73,25 @@ export function ContactModal({ isOpen, onClose, context }: ContactModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center px-4">
+    <div
+      className={embedded
+        ? "flex flex-1 items-center justify-center overflow-y-auto px-4 py-6 sm:px-8"
+        : "fixed inset-0 z-[60] flex items-center justify-center px-4"}
+    >
       {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-navy-dark/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      {!embedded && (
+        <div
+          className="absolute inset-0 bg-navy-dark/40 backdrop-blur-sm"
+          onClick={onClose}
+        />
+      )}
 
       {/* Modal */}
-      <div className="relative bg-background rounded-2xl shadow-[0_24px_80px_-12px_rgba(31,56,100,0.2)] w-full max-w-md animate-[concierge-panel-in_0.3s_ease-out]">
+      <div className={`relative w-full max-w-md rounded-2xl bg-background animate-[concierge-panel-in_0.3s_ease-out] ${
+        embedded
+          ? "border border-warm-200 shadow-[0_16px_50px_-24px_rgba(31,56,100,0.25)]"
+          : "shadow-[0_24px_80px_-12px_rgba(31,56,100,0.2)]"
+      }`}>
         {/* Header */}
         <div className="px-6 pt-6 pb-4 flex items-start justify-between">
           <div>
@@ -93,6 +104,7 @@ export function ContactModal({ isOpen, onClose, context }: ContactModalProps) {
           </div>
           <button
             onClick={onClose}
+            aria-label={embedded ? "Back to concierge" : "Close contact form"}
             className="text-foreground-muted hover:text-foreground transition-colors p-1 -mr-1"
           >
             <svg
@@ -123,7 +135,7 @@ export function ContactModal({ isOpen, onClose, context }: ContactModalProps) {
               onClick={onClose}
               className="mt-4 text-sm text-navy hover:text-navy-light transition-colors"
             >
-              Close
+              {embedded ? "Back to concierge" : "Close"}
             </button>
           </div>
         ) : (

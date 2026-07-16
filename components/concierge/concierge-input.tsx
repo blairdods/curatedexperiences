@@ -23,7 +23,7 @@ export function ConciergeInput({
 
   const handleSend = useCallback(() => {
     if (!value.trim()) return;
-    onSend(value);
+    onSend(value.trim());
     setValue("");
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -39,23 +39,32 @@ export function ConciergeInput({
   };
 
   return (
-    <div className="border-t border-warm-200 px-4 py-3 flex items-end gap-2">
+    <form
+      className="mx-4 mb-2 flex items-end gap-3 rounded-2xl border border-warm-300 bg-white px-4 py-3 shadow-[0_8px_30px_-18px_rgba(31,56,100,0.35)] focus-within:border-navy/40 focus-within:ring-2 focus-within:ring-navy/10 sm:mx-6 sm:mb-3 sm:px-5 sm:py-4"
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!isStreaming) handleSend();
+      }}
+    >
       <textarea
         ref={textareaRef}
+        autoFocus
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
           resize();
         }}
         onKeyDown={handleKeyDown}
-        placeholder="Ask about New Zealand..."
+        placeholder="Tell us what you're imagining, or ask anything about New Zealand..."
+        aria-label="Message your travel curator"
         rows={1}
         className="flex-1 resize-none bg-transparent text-sm text-foreground
           placeholder:text-foreground/35 leading-relaxed
-          focus:outline-none max-h-[120px]"
+          focus:outline-none max-h-[120px] min-h-6"
       />
       {isStreaming ? (
         <button
+          type="button"
           onClick={onStop}
           aria-label="Stop generating"
           className="w-8 h-8 flex items-center justify-center
@@ -68,7 +77,7 @@ export function ConciergeInput({
         </button>
       ) : (
         <button
-          onClick={handleSend}
+          type="submit"
           disabled={!value.trim()}
           aria-label="Send message"
           className={`w-8 h-8 flex items-center justify-center
@@ -92,6 +101,6 @@ export function ConciergeInput({
           </svg>
         </button>
       )}
-    </div>
+    </form>
   );
 }

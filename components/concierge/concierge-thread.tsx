@@ -43,14 +43,17 @@ export function ConciergeThread({
 
   if (messages.length === 0) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center px-8 py-12 text-center">
+      <div className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-8 text-center sm:px-12 sm:py-12">
         <p className="text-2xl font-light tracking-tight text-navy">
           Welcome to Curated Experiences
         </p>
-        <p className="mt-3 text-sm text-foreground/50 max-w-[280px] leading-relaxed">
+        <p className="mt-3 max-w-lg text-sm leading-relaxed text-foreground/50 sm:text-base">
           What kind of New Zealand journey are you imagining?
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-2">
+        <p className="mt-2 text-xs text-foreground/40">
+          Write your own message below, or choose an idea to begin.
+        </p>
+        <div className="mt-6 flex max-w-2xl flex-wrap justify-center gap-2 sm:mt-8">
           {SUGGESTIONS.map((s) => (
             <button
               key={s}

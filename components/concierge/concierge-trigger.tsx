@@ -45,20 +45,21 @@ export function ConciergeTrigger({
         </div>
       )}
 
-      {/* Trigger button */}
+      {/* Launch button */}
       <button
         onClick={onClick}
         aria-label="Open travel concierge"
-        className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-full
+        className="h-14 rounded-full border-2 border-white px-5 sm:h-[60px] sm:px-6
           bg-navy text-background
           shadow-[0_8px_32px_-4px_rgba(31,56,100,0.3)]
           hover:shadow-[0_12px_40px_-4px_rgba(31,56,100,0.4)]
           hover:scale-105 active:scale-95
           transition-all duration-300 ease-out
-          flex items-center justify-center
+          flex items-center justify-center gap-3
           animate-[concierge-fade-in_0.5s_ease-out_2s_both]"
       >
-        <IconConcierge className="w-6 h-6 sm:w-7 sm:h-7" />
+        <IconConcierge className="h-6 w-6 sm:h-7 sm:w-7" />
+        <span className="text-sm font-medium tracking-wide">Plan your journey</span>
       </button>
     </div>
   );

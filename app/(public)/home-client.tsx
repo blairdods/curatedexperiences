@@ -197,7 +197,7 @@ export default function HomePage({
 
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
-      <section className="relative min-h-[1010px] overflow-hidden bg-navy text-cream md:min-h-[1018px]">
+      <section className="relative h-[100svh] max-h-[100svh] min-h-0 overflow-hidden bg-navy text-cream md:h-auto md:max-h-none md:min-h-[1018px]">
         <div className="absolute inset-0" data-slot="home-hero-video">
           {heroPoster?.src ? (
             <Image
@@ -228,7 +228,7 @@ export default function HomePage({
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
 
-        <div className="relative z-10 mx-auto flex min-h-[1010px] max-w-[1120px] items-center px-6 pt-20 md:min-h-[1018px] md:px-0">
+        <div className="relative z-10 mx-auto flex h-full min-h-0 max-w-[1120px] items-start px-6 pt-[clamp(7rem,16svh,9rem)] md:h-auto md:min-h-[1018px] md:items-center md:px-0 md:pt-20">
           <div className="max-w-[610px]">
             <p className="text-[11px] font-medium uppercase tracking-[0.34em] text-gold">
               The New Zealand Luxury Travel Experts

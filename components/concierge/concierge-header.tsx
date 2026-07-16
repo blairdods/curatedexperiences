@@ -4,7 +4,7 @@ export function ConciergeHeader({ onClose }: { onClose: () => void }) {
   return (
     <div className="bg-navy text-background px-5 py-4 flex items-center justify-between rounded-t-2xl sm:rounded-t-2xl">
       <div>
-        <h2 className="text-base font-light tracking-widest uppercase">
+        <h2 id="concierge-title" className="text-base font-light tracking-widest uppercase">
           Your Curator
         </h2>
         <p className="text-xs text-stone mt-0.5">
@@ -14,7 +14,7 @@ export function ConciergeHeader({ onClose }: { onClose: () => void }) {
       <button
         onClick={onClose}
         aria-label="Close concierge"
-        className="text-background/50 hover:text-background transition-colors p-1"
+        className="rounded-full p-2 text-background/60 transition-colors hover:bg-white/10 hover:text-background focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background"
       >
         <svg
           viewBox="0 0 24 24"
