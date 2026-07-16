@@ -61,6 +61,24 @@ function LinkedInIcon() {
   );
 }
 
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="h-4 w-4" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+      <path d="M13.7 21v-8.2h2.75l.41-3.2H13.7V7.56c0-.93.26-1.56 1.59-1.56H17V3.14A22.77 22.77 0 0 0 14.52 3c-2.45 0-4.13 1.5-4.13 4.25V9.6H7.62v3.2h2.77V21h3.31Z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="bg-navy text-cream/48">
@@ -118,10 +136,28 @@ export function Footer() {
             <p className="mt-2 text-[12px] text-cream/48">Stay connected</p>
             <div className="mt-4 flex items-center gap-3">
               <a
-                href="https://www.linkedin.com/company/ppg-tours/"
+                href="https://www.instagram.com/bycuratedexperiences/?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Follow PPG Tours on LinkedIn"
+                aria-label="Follow Curated Experiences on Instagram"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/20 text-cream/70 transition-colors hover:border-gold hover:text-gold"
+              >
+                <InstagramIcon />
+              </a>
+              <a
+                href="https://www.facebook.com/bycuratedexperiences/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow Curated Experiences on Facebook"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/20 text-cream/70 transition-colors hover:border-gold hover:text-gold"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/curatedexperiences"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow Curated Experiences on LinkedIn"
                 className="flex h-9 w-9 items-center justify-center rounded-full border border-cream/20 text-cream/70 transition-colors hover:border-gold hover:text-gold"
               >
                 <LinkedInIcon />
