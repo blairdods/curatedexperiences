@@ -22,6 +22,58 @@ const PHONE_NUMBERS = [
   { region: "Singapore", display: "+65 3158 3354", href: "tel:+6531583354" },
 ];
 
+const PARTNER_LOGOS = [
+  {
+    src: "/logos/nz-fern-blue.png",
+    alt: "Tourism New Zealand FernMark licence number 100920",
+    width: 512,
+    height: 512,
+    className: "h-24 w-24 sm:h-28 sm:w-28",
+  },
+  {
+    src: "/logos/tia-white.png",
+    alt: "Tourism Industry Aotearoa",
+    width: 250,
+    height: 102,
+    className: "h-12 w-auto sm:h-14",
+  },
+  {
+    src: "/assets/images/logos/100-per-cent-Pure-NZ-White.svg",
+    alt: "100% Pure New Zealand",
+    width: 580,
+    height: 294,
+    className: "h-14 w-auto sm:h-16",
+  },
+  {
+    src: "/assets/images/logos/PPG-Tours.svg",
+    alt: "PPG Tours",
+    width: 137,
+    height: 64,
+    className: "h-12 w-auto invert sm:h-14",
+  },
+  {
+    src: "/assets/images/logos/Sustainable-Event-Supplier.svg",
+    alt: "New Zealand Sustainable Event Supplier",
+    width: 53,
+    height: 62,
+    className: "h-20 w-auto sm:h-24",
+  },
+  {
+    src: "/assets/images/logos/Travelife-Certified.png",
+    alt: "Travelife Certified — Excellence in sustainability",
+    width: 2127,
+    height: 827,
+    className: "h-14 w-auto sm:h-16",
+  },
+  {
+    src: "/assets/images/logos/Tiaki_WordMark_Black.png",
+    alt: "Tiaki",
+    width: 1596,
+    height: 2132,
+    className: "h-24 w-auto invert sm:h-28",
+  },
+];
+
 function MailIcon() {
   return (
     <svg
@@ -101,21 +153,17 @@ export function Footer() {
           </Link>
         </div>
 
-        <div className="mx-auto flex max-w-[1120px] items-center justify-center gap-8 px-6 pb-16 sm:gap-12 sm:px-10 md:pb-20">
-          <Image
-            src="/logos/nz-fern-blue.png"
-            alt="Tourism New Zealand licence number 100920"
-            width={512}
-            height={512}
-            className="h-28 w-28 object-contain sm:h-32 sm:w-32"
-          />
-          <Image
-            src="/logos/tia-white.png"
-            alt="Tourism Industry Aotearoa"
-            width={250}
-            height={102}
-            className="h-14 w-auto object-contain sm:h-16"
-          />
+        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-center gap-x-8 gap-y-10 px-6 pb-16 sm:gap-x-10 sm:px-10 md:pb-20">
+          {PARTNER_LOGOS.map((logo) => (
+            <Image
+              key={logo.src}
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
+              className={`${logo.className} object-contain`}
+            />
+          ))}
         </div>
       </div>
 
