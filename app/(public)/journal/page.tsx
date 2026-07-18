@@ -4,7 +4,10 @@ import { getArticles } from "@/lib/data/journal";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { getImageSlotOverrides } from "@/lib/image-slot-settings";
-import { getSlotImage } from "@/lib/image-slots";
+import {
+  getManagedImageStyle,
+  getSlotImage,
+} from "@/lib/image-slots";
 
 export default async function JournalPage() {
   const [articles, imageSlots] = await Promise.all([
@@ -39,7 +42,10 @@ export default async function JournalPage() {
                   alt={article.title}
                   fill
                   sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="managed-image managed-image-hover object-cover transition-transform duration-700"
+                  style={getManagedImageStyle({
+                    position: article.heroImagePosition,
+                  })}
                 />
               </div>
               <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold">

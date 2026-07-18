@@ -5,6 +5,7 @@ import {
   resolveJournalHtml,
 } from "@/lib/journal-content";
 import { NextRequest, NextResponse } from "next/server";
+import { parseImagePosition } from "@/lib/image-slots";
 
 export async function GET(
   _req: NextRequest,
@@ -37,6 +38,7 @@ export async function GET(
         publishedAt: data.published_at,
         readTime: data.read_time,
         heroImage: data.hero_image,
+        heroImagePosition: parseImagePosition(data.hero_image_position),
         relatedJourneySlugs: data.related_journey_slugs ?? [],
       },
       content: resolveJournalHtml(data.content),
@@ -81,6 +83,8 @@ export async function PATCH(
         published_at: frontmatter.publishedAt ?? null,
         read_time: frontmatter.readTime ?? null,
         hero_image: frontmatter.heroImage ?? null,
+        hero_image_position:
+          parseImagePosition(frontmatter.heroImagePosition) ?? null,
         related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
         content: resolveJournalHtml(content),
       })

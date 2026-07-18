@@ -5,6 +5,7 @@ import {
   resolveJournalHtml,
 } from "@/lib/journal-content";
 import { NextRequest, NextResponse } from "next/server";
+import { parseImagePosition } from "@/lib/image-slots";
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
@@ -54,6 +55,8 @@ export async function POST(req: NextRequest) {
     published_at: frontmatter.publishedAt ?? null,
     read_time: frontmatter.readTime ?? null,
     hero_image: frontmatter.heroImage ?? null,
+    hero_image_position:
+      parseImagePosition(frontmatter.heroImagePosition) ?? null,
     related_journey_slugs: frontmatter.relatedJourneySlugs ?? [],
     content: resolveJournalHtml(content),
   });

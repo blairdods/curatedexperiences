@@ -38,6 +38,7 @@ export default async function JournalArticlePage({
       <Hero
         title={article.title}
         imageSrc={article.heroImage}
+        imagePosition={article.heroImagePosition}
         compact
       />
 

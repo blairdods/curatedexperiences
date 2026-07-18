@@ -35,6 +35,7 @@ export default async function EditJournalArticlePage({
           publishedAt: article.publishedAt,
           readTime: article.readTime,
           heroImage: article.heroImage,
+          heroImagePosition: article.heroImagePosition,
           relatedJourneySlugs: article.relatedJourneySlugs,
         }}
         initialContent={article.html}

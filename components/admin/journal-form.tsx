@@ -8,6 +8,7 @@ import { TagInput } from "@/components/admin/ui/tag-input";
 import { ImagePickerField } from "@/components/admin/image-picker";
 import { JournalHtmlEditor } from "@/components/admin/journal-html-editor";
 import { hasMeaningfulJournalContent } from "@/lib/journal-content";
+import type { ImagePosition } from "@/lib/image-slots";
 
 const CATEGORY_OPTIONS = [
   { value: "Wild Interior", label: "Wild Interior" },
@@ -36,6 +37,7 @@ interface JournalFrontmatter {
   publishedAt: string;
   readTime: string;
   heroImage: string;
+  heroImagePosition?: ImagePosition;
   relatedJourneySlugs: string[];
 }
 
@@ -70,6 +72,9 @@ export function JournalForm({
   const [heroImage, setHeroImage] = useState(
     initialFrontmatter?.heroImage ?? ""
   );
+  const [heroImagePosition, setHeroImagePosition] = useState<
+    ImagePosition | undefined
+  >(initialFrontmatter?.heroImagePosition);
   const [relatedJourneySlugs, setRelatedJourneySlugs] = useState<string[]>(
     initialFrontmatter?.relatedJourneySlugs ?? []
   );
@@ -98,6 +103,7 @@ export function JournalForm({
       publishedAt,
       readTime,
       heroImage,
+      heroImagePosition,
       relatedJourneySlugs,
     };
 
@@ -142,6 +148,7 @@ export function JournalForm({
     publishedAt,
     readTime,
     heroImage,
+    heroImagePosition,
     relatedJourneySlugs,
     content,
     isEditing,
@@ -211,7 +218,21 @@ export function JournalForm({
         <FormField label="Hero Image">
           <ImagePickerField
             value={heroImage}
-            onChange={setHeroImage}
+            position={heroImagePosition}
+            previewRatios={[
+              { label: "Article hero", value: 16 / 9 },
+              { label: "Mobile hero", value: 4 / 5 },
+              { label: "Journal card", value: 1.7 },
+            ]}
+            onChange={(src) => {
+              setHeroImage(src);
+              if (!src) setHeroImagePosition(undefined);
+            }}
+            onImageChange={(src) => {
+              setHeroImage(src);
+              setHeroImagePosition(undefined);
+            }}
+            onPositionChange={setHeroImagePosition}
           />
         </FormField>
 

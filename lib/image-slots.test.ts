@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   getManagedImageStyle,
   normaliseImagePosition,
+  parseImagePosition,
   parseImageSlotOverrides,
   serialiseImageSlotOverrides,
 } from "./image-slots";
@@ -25,6 +26,16 @@ test("image framing values are clamped to supported bounds", () => {
     x: 0,
     y: 100,
     zoom: 2,
+  });
+});
+
+test("optional framing ignores non-object database values", () => {
+  assert.equal(parseImagePosition(null), undefined);
+  assert.equal(parseImagePosition("50% 50%"), undefined);
+  assert.deepEqual(parseImagePosition({ x: 25, y: 75, zoom: 1.2 }), {
+    x: 25,
+    y: 75,
+    zoom: 1.2,
   });
 });
 

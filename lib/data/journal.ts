@@ -1,5 +1,9 @@
 import { createServiceClient } from "@/lib/supabase/server";
 import { resolveJournalHtml } from "@/lib/journal-content";
+import {
+  parseImagePosition,
+  type ImagePosition,
+} from "@/lib/image-slots";
 
 export interface Article {
   slug: string;
@@ -10,6 +14,7 @@ export interface Article {
   publishedAt: string;
   readTime: string;
   heroImage: string;
+  heroImagePosition?: ImagePosition;
   relatedJourneySlugs: string[];
 }
 
@@ -28,6 +33,7 @@ function mapRow(row: any): Article {
     publishedAt: row.published_at ?? "",
     readTime: row.read_time ?? "",
     heroImage: row.hero_image ?? "",
+    heroImagePosition: parseImagePosition(row.hero_image_position),
     relatedJourneySlugs: row.related_journey_slugs ?? [],
   };
 }
@@ -36,7 +42,7 @@ export async function getArticles(): Promise<Article[]> {
   const supabase = await createServiceClient();
   const { data, error } = await supabase
     .from("journal_articles")
-    .select("slug, title, excerpt, category, author, published_at, read_time, hero_image, related_journey_slugs")
+    .select("*")
     .order("published_at", { ascending: false });
   if (error) throw new Error(error.message);
   return (data ?? []).map(mapRow);

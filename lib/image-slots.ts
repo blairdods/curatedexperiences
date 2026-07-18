@@ -52,6 +52,13 @@ export function normaliseImagePosition(
   };
 }
 
+export function parseImagePosition(value: unknown): ImagePosition | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+  return normaliseImagePosition(value as Partial<ImagePosition>);
+}
+
 export type ManagedImageStyle = CSSProperties & {
   "--image-position": string;
   "--image-zoom": string;
@@ -232,10 +239,7 @@ export function parseImageSlotOverrides(value: string | null | undefined): Image
           if (!image || typeof image !== "object") return null;
           const item = image as Partial<ManagedImage>;
           if (!item.src || typeof item.src !== "string") return null;
-          const position =
-            item.position && typeof item.position === "object"
-              ? normaliseImagePosition(item.position)
-              : undefined;
+          const position = parseImagePosition(item.position);
           return {
             src: item.src,
             alt: typeof item.alt === "string" ? item.alt : "",

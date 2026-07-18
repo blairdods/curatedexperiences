@@ -161,7 +161,7 @@ function journalItems(
       category: article.category || fallback.category,
       heroImage: article.heroImage || fallbackImage.src,
       heroImagePosition: article.heroImage
-        ? undefined
+        ? article.heroImagePosition
         : fallbackImage.position,
     };
   });
