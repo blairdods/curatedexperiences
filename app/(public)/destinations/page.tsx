@@ -7,6 +7,8 @@ import { Section } from "@/components/ui/section";
 import { getImageSlotOverrides } from "@/lib/image-slot-settings";
 import { getSlotImage } from "@/lib/image-slots";
 
+export const revalidate = 60;
+
 async function getDestinations(): Promise<Destination[]> {
   try {
     const supabase = await createServiceClient();
@@ -14,7 +16,7 @@ async function getDestinations(): Promise<Destination[]> {
       .from("destinations")
       .select("slug, name, region, tagline, best_for, hero_image, images, highlights, best_seasons, related_journey_slugs, description")
       .eq("active", true)
-      .order("region", { ascending: true })
+      .order("sort_order", { ascending: true })
       .order("name", { ascending: true });
 
     if (data && data.length > 0) {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { getUserRole } from "@/lib/auth/roles";
 import { DESTINATIONS } from "@/lib/data/destinations";
@@ -14,10 +15,13 @@ export async function POST() {
   const serviceSupabase = await createServiceClient();
 
   // Find slugs already in DB
-  const { data: existing } = await serviceSupabase.from("destinations").select("slug");
+  const { data: existing } = await serviceSupabase
+    .from("destinations")
+    .select("slug, sort_order");
   const existingSlugs = new Set((existing ?? []).map((r) => r.slug));
+  const firstSortOrder = Math.max(-1, ...(existing ?? []).map((r) => r.sort_order)) + 1;
 
-  const toInsert = DESTINATIONS.filter((d) => !existingSlugs.has(d.slug)).map((d) => ({
+  const toInsert = DESTINATIONS.filter((d) => !existingSlugs.has(d.slug)).map((d, index) => ({
     slug: d.slug,
     name: d.name,
     region: d.region,
@@ -30,6 +34,7 @@ export async function POST() {
     hero_image: d.heroImage,
     images: d.images,
     active: true,
+    sort_order: firstSortOrder + index,
   }));
 
   if (toInsert.length === 0) {
@@ -38,6 +43,9 @@ export async function POST() {
 
   const { error } = await serviceSupabase.from("destinations").insert(toInsert);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  revalidatePath("/destinations");
+  revalidatePath("/destinations/[region]", "page");
 
   return NextResponse.json({ seeded: toInsert.length, slugs: toInsert.map((d) => d.slug) });
 }

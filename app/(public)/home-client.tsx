@@ -242,8 +242,8 @@ export default function HomePage({
               around you.
             </h1>
             <p className="mt-8 max-w-[430px] text-[15px] leading-7 text-cream/72">
-              Private travel designed by an Award winning agency with precision,
-              restraint and a deep understanding of place.
+              Personalized luxury experiences, curated by an award-winning
+              agency with a deep understanding of place.
             </p>
           </div>
         </div>

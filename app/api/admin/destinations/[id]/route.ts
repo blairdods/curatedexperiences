@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { getUserRole } from "@/lib/auth/roles";
 
@@ -27,6 +28,10 @@ export async function PATCH(
     .single();
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  revalidatePath("/destinations");
+  revalidatePath("/destinations/[region]", "page");
+
   return NextResponse.json({ destination: data });
 }
 
@@ -48,5 +53,9 @@ export async function DELETE(
   const { error } = await serviceSupabase.from("destinations").delete().eq("id", id);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  revalidatePath("/destinations");
+  revalidatePath("/destinations/[region]", "page");
+
   return NextResponse.json({ ok: true });
 }
