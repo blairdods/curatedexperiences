@@ -13,8 +13,8 @@ export default async function DestinationsPage() {
   const serviceSupabase = await createServiceClient();
   const { data: dbDestinations } = await serviceSupabase
     .from("destinations")
-    .select("id, slug, name, region, tagline, highlights, best_for, active, updated_at")
-    .order("region", { ascending: true })
+    .select("id, slug, name, region, tagline, highlights, best_for, active, updated_at, sort_order")
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   const hasDbDestinations = dbDestinations && dbDestinations.length > 0;
@@ -49,7 +49,7 @@ export default async function DestinationsPage() {
               <div>
                 <p className="text-sm font-medium text-navy">Destinations are not yet in the database</p>
                 <p className="text-xs text-foreground-muted mt-0.5">
-                  Import the {DESTINATIONS.length} existing destinations to make them editable. One-time action — won't overwrite anything already in the database.
+                  Import the {DESTINATIONS.length} existing destinations to make them editable. One-time action — won&apos;t overwrite anything already in the database.
                 </p>
               </div>
               <SeedImportButton

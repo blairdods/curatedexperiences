@@ -100,21 +100,6 @@ const DESTINATIONS = [
   },
 ];
 
-const PRIVACY_POINTS = [
-  {
-    title: "Private Arrivals",
-    text: "Transfers and access are planned to feel calm from the first moment.",
-  },
-  {
-    title: "Discreet Hosting",
-    text: "Guides and hosts are selected for judgement, presence, and restraint.",
-  },
-  {
-    title: "Unseen Detail",
-    text: "The work sits behind the experience, so each day unfolds naturally.",
-  },
-];
-
 type DesignJournalArticle = Omit<Article, "heroImage"> & {
   imageSlot: string;
 };
@@ -193,7 +178,6 @@ export default function HomePage({
     imageSlots,
     "home.destinations.feature"
   );
-  const privacyImage = getSlotImage(imageSlots, "home.privacy.image");
 
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
@@ -242,8 +226,8 @@ export default function HomePage({
               around you.
             </h1>
             <p className="mt-8 max-w-[430px] text-[15px] leading-7 text-cream/72">
-              Private travel designed by an Award winning agency with precision,
-              restraint and a deep understanding of place.
+              Personalized luxury experiences, curated by an award-winning
+              agency with a deep understanding of place.
             </p>
           </div>
         </div>
@@ -291,7 +275,17 @@ export default function HomePage({
             unwavering commitment to excellence in every journey we create.
           </h2>
           <div className="mt-7 h-px bg-gold/30" />
-          <div className="mt-7 grid gap-x-24 gap-y-7 md:grid-cols-2">
+          <div className="mt-7 grid gap-y-7 md:grid-cols-[180px_repeat(2,minmax(0,1fr))] md:gap-x-14">
+            <div className="mx-auto w-[150px] md:row-span-2 md:w-[160px]">
+              <Image
+                src="/assets/images/new-zealands-leading-destination-management-company-2025-winner-shield-256.png"
+                alt="World Travel Awards 2025 winner — New Zealand's Leading Destination Management Company"
+                width={256}
+                height={396}
+                sizes="(max-width: 767px) 150px, 160px"
+                className="h-auto w-full"
+              />
+            </div>
             {TRUST_ITEMS.map((item) => (
               <div key={`${item.label}-${item.text}`}>
                 <p className="text-[11px] font-semibold uppercase leading-none tracking-[0.42em] text-navy/52">
@@ -430,99 +424,16 @@ export default function HomePage({
         </div>
       </section>
 
-      <section className="px-6 pb-[104px] md:px-0">
-        <div className="mx-auto grid max-w-[1120px] gap-12 bg-[#d8d1c5] px-10 py-12 md:grid-cols-[0.9fr_1.1fr] md:px-14">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Local Knowledge
-            </p>
-            <h2 className="mt-6 font-serif text-[36px] font-medium leading-[1.08] text-navy md:text-[44px]">
-              Shaped by New Zealand,
-              <br />
-              held by experience.
-            </h2>
-            <p className="mt-7 max-w-[390px] text-[14px] leading-7 text-navy/62">
-              Curated Experiences is supported by PPG, a New Zealand-owned team
-              with more than two decades of experience designing and delivering
-              private travel across the country.
-            </p>
-          </div>
-          <div className="space-y-7">
-            <div className="border-t border-navy/14 pt-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-                Built For Nuance
-              </p>
-              <p className="mt-3 text-[14px] leading-7 text-navy/66">
-                Every journey is shaped with an understanding of season,
-                distance, weather, pace, and the small details that change how a
-                place is felt.
-              </p>
-            </div>
-            <div className="border-t border-navy/14 pt-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-                Quiet Coordination
-              </p>
-              <p className="mt-3 text-[14px] leading-7 text-navy/66">
-                Behind the visible itinerary sits careful planning, trusted local
-                relationships, and the ability to adjust without drawing
-                attention to the work.
-              </p>
-            </div>
-            <div className="border-t border-navy/14 pt-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-                A Sense Of Place
-              </p>
-              <p className="mt-3 text-[14px] leading-7 text-navy/66">
-                The result is travel that feels considered in the moment,
-                grounded in New Zealand, and held with calm precision from
-                beginning to end.
-              </p>
-            </div>
-          </div>
+      <div
+        className="flex h-16 items-center bg-navy px-6 md:h-20 md:px-0"
+        aria-hidden="true"
+      >
+        <div className="mx-auto flex w-full max-w-[1120px] items-center gap-5">
+          <div className="h-px flex-1 bg-gold/35" />
+          <div className="h-2.5 w-2.5 rotate-45 border border-gold/70" />
+          <div className="h-px flex-1 bg-gold/35" />
         </div>
-      </section>
-
-      <section className="bg-navy px-6 py-[104px] text-cream md:px-0">
-        <div className="mx-auto grid max-w-[1120px] items-center gap-18 md:grid-cols-[480px_1fr] md:gap-[118px]">
-          <div className="relative aspect-[0.86] overflow-hidden">
-            <Image
-              src={privacyImage.src}
-              alt={privacyImage.alt}
-              fill
-              loading="eager"
-              sizes="480px"
-              className="object-cover object-center"
-            />
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Privacy &amp; Discretion
-            </p>
-            <h2 className="mt-6 font-serif text-[42px] font-medium leading-[1.05] md:text-[56px]">
-              Arranged quietly,
-              <br />
-              held with care.
-            </h2>
-            <p className="mt-8 max-w-[455px] text-[15px] leading-7 text-cream/60">
-              For clients who value privacy, the best arrangements are often the
-              least visible. We manage arrivals, guiding, timing, and access with
-              quiet care.
-            </p>
-            <div className="mt-9 space-y-6">
-              {PRIVACY_POINTS.map((point) => (
-                <div key={point.title}>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">
-                    {point.title}
-                  </p>
-                  <p className="mt-2 max-w-[420px] text-[13px] leading-6 text-cream/50">
-                    {point.text}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
       <section className="px-6 py-[96px] md:px-0">
         <div className="mx-auto max-w-[1120px]">
