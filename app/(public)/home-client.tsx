@@ -275,7 +275,17 @@ export default function HomePage({
             unwavering commitment to excellence in every journey we create.
           </h2>
           <div className="mt-7 h-px bg-gold/30" />
-          <div className="mt-7 grid gap-x-24 gap-y-7 md:grid-cols-2">
+          <div className="mt-7 grid gap-y-7 md:grid-cols-[180px_repeat(2,minmax(0,1fr))] md:gap-x-14">
+            <div className="mx-auto w-[150px] md:row-span-2 md:w-[160px]">
+              <Image
+                src="/assets/images/new-zealands-leading-destination-management-company-2025-winner-shield-256.png"
+                alt="World Travel Awards 2025 winner — New Zealand's Leading Destination Management Company"
+                width={256}
+                height={396}
+                sizes="(max-width: 767px) 150px, 160px"
+                className="h-auto w-full"
+              />
+            </div>
             {TRUST_ITEMS.map((item) => (
               <div key={`${item.label}-${item.text}`}>
                 <p className="text-[11px] font-semibold uppercase leading-none tracking-[0.42em] text-navy/52">
