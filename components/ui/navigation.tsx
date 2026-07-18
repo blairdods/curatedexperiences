@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: "/destinations", label: "Destinations" },
   { href: "/about",        label: "Our Story" },
   { href: "/journal",      label: "Journal" },
+  { href: "/contact",      label: "Contact" },
 ];
 
 export function Navigation() {
@@ -77,46 +78,19 @@ export function Navigation() {
           ))}
 
           {isTransparentHome ? (
-            <>
-              <a
-                href="tel:0800287283"
-                className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] text-cream/60 transition-colors duration-300 hover:text-cream"
-                aria-label="Call 0800 CURATE"
-                title="Call 0800 CURATE"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                </svg>
-                0800 CURATE
-              </a>
-              <button
-                onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-                className="text-xs font-medium uppercase tracking-[0.15em] text-gold transition-colors duration-300 hover:text-cream"
-              >
-                Enquire
-              </button>
-            </>
+            <button
+              onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
+              className="text-xs font-medium uppercase tracking-[0.15em] text-gold transition-colors duration-300 hover:text-cream"
+            >
+              Enquire
+            </button>
           ) : (
-            <>
-              <a
-                href="tel:0800287283"
-                className={`inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] transition-colors duration-300 ${linkColor}`}
-                aria-label="Call 0800 CURATE"
-                title="Call 0800 CURATE"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-                </svg>
-                0800 CURATE
-              </a>
-
-              <button
-                onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
-                className={`px-5 py-2.5 text-xs tracking-[0.2em] uppercase font-medium border transition-colors duration-300 ${ctaColor}`}
-              >
-                Start Planning
-              </button>
-            </>
+            <button
+              onClick={() => window.dispatchEvent(new Event("ce:open-concierge"))}
+              className={`px-5 py-2.5 text-xs tracking-[0.2em] uppercase font-medium border transition-colors duration-300 ${ctaColor}`}
+            >
+              Start Planning
+            </button>
           )}
         </div>
 
