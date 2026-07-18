@@ -1,11 +1,16 @@
 import Image from "next/image";
 import { Button } from "./button";
+import {
+  getManagedImageStyle,
+  type ImagePosition,
+} from "@/lib/image-slots";
 
 interface HeroProps {
   title: string;
   subtitle?: string;
   imageSrc?: string;
   imageAlt?: string;
+  imagePosition?: ImagePosition;
   eyebrow?: string;
   cta?: { label: string; href?: string; onClick?: () => void };
   secondaryCta?: { label: string; href?: string; onClick?: () => void };
@@ -20,6 +25,7 @@ export function Hero({
   subtitle,
   imageSrc,
   imageAlt,
+  imagePosition,
   eyebrow,
   cta,
   secondaryCta,
@@ -41,7 +47,8 @@ export function Hero({
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="managed-image object-cover"
+            style={getManagedImageStyle({ position: imagePosition })}
           />
           {overlay && (
             <>

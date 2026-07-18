@@ -2,7 +2,11 @@ import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import Image from "next/image";
 import { getImageSlotOverrides } from "@/lib/image-slot-settings";
-import { getSlotImage, type ImageSlotOverrides } from "@/lib/image-slots";
+import {
+  getManagedImageStyle,
+  getSlotImage,
+  type ImageSlotOverrides,
+} from "@/lib/image-slots";
 
 const STORIES = [
   {
@@ -53,26 +57,30 @@ export default async function StoriesPage() {
         subtitle="Not star ratings, but considered accounts of journeys shaped around people, pace, and place."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
+        imagePosition={heroImage.position}
         compact
       />
 
       <Section>
         <div className="space-y-24">
-          {STORIES.map((story, i) => (
-            <div
-              key={i}
-              className={`flex flex-col ${
-                i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } gap-10 lg:gap-16 items-center`}
-            >
+          {STORIES.map((story, i) => {
+            const image = storyImage(imageSlots, story.imageSlot);
+            return (
+              <div
+                key={i}
+                className={`flex flex-col ${
+                  i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                } gap-10 lg:gap-16 items-center`}
+              >
               {/* Image */}
               <div className="relative w-full lg:w-1/2 aspect-[1.25] overflow-hidden bg-warm-100">
                 <Image
-                  src={storyImage(imageSlots, story.imageSlot).src}
+                  src={image.src}
                   alt={story.journey}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="managed-image object-cover"
+                  style={getManagedImageStyle(image)}
                 />
               </div>
 
@@ -96,8 +104,9 @@ export default async function StoriesPage() {
                   </p>
                 </div>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </Section>
     </>

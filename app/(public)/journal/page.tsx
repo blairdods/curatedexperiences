@@ -21,6 +21,7 @@ export default async function JournalPage() {
         subtitle="Selected perspectives on timing, remote places, and the details that shape a more considered New Zealand journey."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
+        imagePosition={heroImage.position}
         compact
       />
 

@@ -1,6 +1,20 @@
+import type { CSSProperties } from "react";
+
+export interface ImagePosition {
+  x: number;
+  y: number;
+  zoom: number;
+}
+
 export interface ManagedImage {
   src: string;
   alt: string;
+  position?: ImagePosition;
+}
+
+export interface ImagePreviewRatio {
+  label: string;
+  value: number;
 }
 
 export interface ImageSlotDefinition {
@@ -18,6 +32,73 @@ export type ImageSlotOverrides = Record<string, ManagedImage[]>;
 const A = (name: string) => `/assets/images/${name}`;
 
 export const IMAGE_SLOT_SETTING_KEY = "image_slots";
+export const DEFAULT_IMAGE_POSITION: ImagePosition = { x: 50, y: 50, zoom: 1 };
+
+function clamp(value: number, minimum: number, maximum: number) {
+  return Math.min(maximum, Math.max(minimum, value));
+}
+
+export function normaliseImagePosition(
+  position: Partial<ImagePosition> | null | undefined
+): ImagePosition {
+  return {
+    x: clamp(Number.isFinite(position?.x) ? Number(position?.x) : 50, 0, 100),
+    y: clamp(Number.isFinite(position?.y) ? Number(position?.y) : 50, 0, 100),
+    zoom: clamp(
+      Number.isFinite(position?.zoom) ? Number(position?.zoom) : 1,
+      1,
+      2
+    ),
+  };
+}
+
+export type ManagedImageStyle = CSSProperties & {
+  "--image-position": string;
+  "--image-zoom": string;
+};
+
+export function getManagedImageStyle(
+  image: Pick<ManagedImage, "position">
+): ManagedImageStyle {
+  const position = normaliseImagePosition(image.position);
+  return {
+    "--image-position": `${position.x}% ${position.y}%`,
+    "--image-zoom": String(position.zoom),
+  };
+}
+
+export function getSlotPreviewRatios(
+  key: string
+): ImagePreviewRatio[] {
+  if (key.includes(".hero")) {
+    return [
+      { label: "Desktop", value: 16 / 9 },
+      { label: "Mobile", value: 4 / 5 },
+    ];
+  }
+
+  if (key === "home.difference.image") {
+    return [{ label: "Portrait section", value: 0.77 }];
+  }
+
+  if (key.startsWith("home.journey.")) {
+    return [{ label: "Journey card", value: 1.45 }];
+  }
+
+  if (key.startsWith("home.journal.")) {
+    return [{ label: "Journal card", value: 1.7 }];
+  }
+
+  if (key.startsWith("page.stories.")) {
+    return [{ label: "Story panel", value: 1.25 }];
+  }
+
+  if (key.startsWith("home.destinations.")) {
+    return [{ label: "Destination tile", value: 1.45 }];
+  }
+
+  return [{ label: "Website", value: 4 / 3 }];
+}
 
 export const IMAGE_SLOT_DEFINITIONS: ImageSlotDefinition[] = [
   {
@@ -151,9 +232,14 @@ export function parseImageSlotOverrides(value: string | null | undefined): Image
           if (!image || typeof image !== "object") return null;
           const item = image as Partial<ManagedImage>;
           if (!item.src || typeof item.src !== "string") return null;
+          const position =
+            item.position && typeof item.position === "object"
+              ? normaliseImagePosition(item.position)
+              : undefined;
           return {
             src: item.src,
             alt: typeof item.alt === "string" ? item.alt : "",
+            ...(position ? { position } : {}),
           };
         })
         .filter(Boolean) as ManagedImage[];
@@ -175,6 +261,9 @@ export function serialiseImageSlotOverrides(overrides: ImageSlotOverrides): stri
         images.filter((image) => image.src.trim()).map((image) => ({
           src: image.src.trim(),
           alt: image.alt.trim(),
+          ...(image.position
+            ? { position: normaliseImagePosition(image.position) }
+            : {}),
         })),
       ])
       .filter(([, images]) => images.length > 0)
@@ -200,6 +289,7 @@ export function getSlotImage(
     getSlotImages(overrides, key)[0] ?? {
       src: "",
       alt: "",
+      position: undefined,
     }
   );
 }

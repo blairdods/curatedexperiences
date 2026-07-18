@@ -3,6 +3,13 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import type { AssetRecord } from "@/lib/asset-library";
 import { getAssetContentSrc, getAssetThumbnailSrc } from "@/lib/asset-library/sources";
+import {
+  DEFAULT_IMAGE_POSITION,
+  getManagedImageStyle,
+  normaliseImagePosition,
+  type ImagePosition,
+  type ImagePreviewRatio,
+} from "@/lib/image-slots";
 
 // ─── Thumbnail helper ────────────────────────────────────────────────────────
 
@@ -241,8 +248,233 @@ interface ImagePickerFieldProps {
   onChange: (src: string) => void;
   /** Also called when an image is selected — useful for setting alt text in a sibling field. */
   onAltChange?: (alt: string) => void;
+  /** Atomically handles image and alt text when both values belong to one record. */
+  onImageChange?: (src: string, alt: string) => void;
+  position?: ImagePosition;
+  onPositionChange?: (position: ImagePosition) => void;
+  previewRatios?: ImagePreviewRatio[];
   defaultRegion?: string;
   hint?: string;
+}
+
+interface ImagePositionModalProps {
+  src: string;
+  position?: ImagePosition;
+  previewRatios: ImagePreviewRatio[];
+  onApply: (position: ImagePosition) => void;
+  onClose: () => void;
+}
+
+function ImagePositionModal({
+  src,
+  position,
+  previewRatios,
+  onApply,
+  onClose,
+}: ImagePositionModalProps) {
+  const [draft, setDraft] = useState(() => normaliseImagePosition(position));
+  const [previewIndex, setPreviewIndex] = useState(0);
+  const activeRatio = previewRatios[previewIndex] ?? previewRatios[0];
+
+  useEffect(() => {
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  function update(key: keyof ImagePosition, value: number) {
+    setDraft((current) => normaliseImagePosition({ ...current, [key]: value }));
+  }
+
+  const presets = [
+    { label: "Top left", x: 20, y: 20 },
+    { label: "Top", x: 50, y: 20 },
+    { label: "Top right", x: 80, y: 20 },
+    { label: "Left", x: 20, y: 50 },
+    { label: "Centre", x: 50, y: 50 },
+    { label: "Right", x: 80, y: 50 },
+    { label: "Bottom left", x: 20, y: 80 },
+    { label: "Bottom", x: 50, y: 80 },
+    { label: "Bottom right", x: 80, y: 80 },
+  ];
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+      <button
+        type="button"
+        aria-label="Close crop and position editor"
+        className="absolute inset-0 bg-black/65 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="image-position-title"
+        className="relative z-10 flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-xl bg-white shadow-2xl"
+      >
+        <div className="flex items-start justify-between border-b border-warm-200 px-5 py-4">
+          <div>
+            <h2 id="image-position-title" className="text-base font-semibold text-navy">
+              Crop &amp; position
+            </h2>
+            <p className="mt-1 text-xs text-foreground-muted">
+              Frame the image as it will appear on the website.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded p-1 text-foreground-muted transition-colors hover:bg-warm-100 hover:text-navy"
+            aria-label="Close"
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="grid min-h-0 flex-1 overflow-y-auto lg:grid-cols-[minmax(0,1fr)_280px]">
+          <div className="flex min-h-[360px] flex-col bg-navy-dark p-5 sm:p-7">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cream/60">
+                Website preview
+              </p>
+              {previewRatios.length > 1 && (
+                <div className="flex rounded-lg bg-white/10 p-1">
+                  {previewRatios.map((ratio, index) => (
+                    <button
+                      key={ratio.label}
+                      type="button"
+                      onClick={() => setPreviewIndex(index)}
+                      className={`rounded-md px-3 py-1.5 text-xs transition-colors ${
+                        previewIndex === index
+                          ? "bg-white text-navy"
+                          : "text-cream/65 hover:text-cream"
+                      }`}
+                    >
+                      {ratio.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-1 items-center justify-center">
+              <div
+                className="relative max-h-[62vh] w-full max-w-[760px] overflow-hidden bg-black shadow-2xl ring-1 ring-white/15"
+                style={{
+                  aspectRatio: String(activeRatio?.value ?? 4 / 3),
+                  maxWidth:
+                    (activeRatio?.value ?? 1) < 1
+                      ? "min(440px, 66vw)"
+                      : "760px",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt=""
+                  className="managed-image h-full w-full object-cover"
+                  style={getManagedImageStyle({ position: draft })}
+                />
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/20" />
+                <div className="pointer-events-none absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/70 shadow-[0_0_0_1px_rgba(0,0,0,0.3)]">
+                  <span className="absolute left-1/2 top-1/2 h-px w-8 -translate-x-1/2 bg-white/60" />
+                  <span className="absolute left-1/2 top-1/2 h-8 w-px -translate-y-1/2 bg-white/60" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6 border-l border-warm-200 p-5">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">
+                Quick focus
+              </p>
+              <div className="mt-3 grid w-32 grid-cols-3 gap-1.5">
+                {presets.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    aria-label={preset.label}
+                    title={preset.label}
+                    onClick={() =>
+                      setDraft((current) => ({
+                        ...current,
+                        x: preset.x,
+                        y: preset.y,
+                      }))
+                    }
+                    className={`aspect-square rounded border transition-colors ${
+                      draft.x === preset.x && draft.y === preset.y
+                        ? "border-gold bg-gold text-white"
+                        : "border-warm-200 bg-warm-50 text-warm-400 hover:border-navy/40"
+                    }`}
+                  >
+                    <span className="mx-auto block h-1.5 w-1.5 rounded-full bg-current" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {[
+              { key: "x" as const, label: "Horizontal", min: 0, max: 100, suffix: "%" },
+              { key: "y" as const, label: "Vertical", min: 0, max: 100, suffix: "%" },
+              { key: "zoom" as const, label: "Zoom", min: 1, max: 2, suffix: "×" },
+            ].map((control) => (
+              <label key={control.key} className="block">
+                <span className="flex items-center justify-between text-xs font-medium text-navy">
+                  {control.label}
+                  <span className="font-mono text-[11px] text-foreground-muted">
+                    {control.key === "zoom"
+                      ? `${draft.zoom.toFixed(2)}${control.suffix}`
+                      : `${Math.round(draft[control.key])}${control.suffix}`}
+                  </span>
+                </span>
+                <input
+                  type="range"
+                  min={control.min}
+                  max={control.max}
+                  step={control.key === "zoom" ? 0.05 : 1}
+                  value={draft[control.key]}
+                  onChange={(event) =>
+                    update(control.key, Number(event.target.value))
+                  }
+                  className="mt-2 w-full accent-[#B8965A]"
+                />
+              </label>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => setDraft(DEFAULT_IMAGE_POSITION)}
+              className="text-xs text-foreground-muted underline underline-offset-2 hover:text-navy"
+            >
+              Reset to centre
+            </button>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-3 border-t border-warm-200 px-5 py-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg border border-warm-200 px-4 py-2 text-xs font-medium text-navy hover:bg-warm-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={() => onApply(draft)}
+            className="rounded-lg bg-navy px-4 py-2 text-xs font-medium text-white hover:bg-navy-light"
+          >
+            Apply framing
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export function ImagePickerField({
@@ -250,14 +482,23 @@ export function ImagePickerField({
   value,
   onChange,
   onAltChange,
+  onImageChange,
+  position,
+  onPositionChange,
+  previewRatios = [{ label: "Website", value: 4 / 3 }],
   defaultRegion,
   hint,
 }: ImagePickerFieldProps) {
   const [open, setOpen] = useState(false);
+  const [positionOpen, setPositionOpen] = useState(false);
 
   function handleSelect(src: string, alt: string) {
-    onChange(src);
-    onAltChange?.(alt);
+    if (onImageChange) {
+      onImageChange(src, alt);
+    } else {
+      onChange(src);
+      onAltChange?.(alt);
+    }
   }
 
   return (
@@ -268,9 +509,24 @@ export function ImagePickerField({
       {hint && <p className="text-xs text-foreground-muted">{hint}</p>}
 
       {value ? (
-        <div className="relative rounded-lg overflow-hidden border border-warm-200 bg-warm-50">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="" className="w-full max-h-48 object-cover" />
+        <div className="relative overflow-hidden rounded-lg border border-warm-200 bg-warm-50">
+          {onPositionChange ? (
+            <div
+              className="relative w-full overflow-hidden"
+              style={{ aspectRatio: String(previewRatios[0]?.value ?? 4 / 3) }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={value}
+                alt=""
+                className="managed-image h-full w-full object-cover"
+                style={getManagedImageStyle({ position })}
+              />
+            </div>
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={value} alt="" className="w-full max-h-48 object-cover" />
+          )}
           <div className="flex items-center gap-3 px-3 py-2 border-t border-warm-200 bg-white">
             <button
               type="button"
@@ -279,6 +535,18 @@ export function ImagePickerField({
             >
               Change image
             </button>
+            {onPositionChange && (
+              <>
+                <span className="text-warm-300 text-xs">·</span>
+                <button
+                  type="button"
+                  onClick={() => setPositionOpen(true)}
+                  className="text-xs font-medium text-navy transition-colors hover:text-gold"
+                >
+                  Crop &amp; position
+                </button>
+              </>
+            )}
             <span className="text-warm-300 text-xs">·</span>
             <button
               type="button"
@@ -308,6 +576,18 @@ export function ImagePickerField({
           onSelect={handleSelect}
           onClose={() => setOpen(false)}
           defaultRegion={defaultRegion}
+        />
+      )}
+      {positionOpen && value && onPositionChange && (
+        <ImagePositionModal
+          src={value}
+          position={position}
+          previewRatios={previewRatios}
+          onApply={(nextPosition) => {
+            onPositionChange(nextPosition);
+            setPositionOpen(false);
+          }}
+          onClose={() => setPositionOpen(false)}
         />
       )}
     </div>

@@ -24,6 +24,7 @@ export default async function DestinationsPage() {
         subtitle="From private lodges and alpine landscapes to vineyards, coastlines, and cultural encounters, every place is considered for how it contributes to the rhythm of the wider journey."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
+        imagePosition={heroImage.position}
         compact
       />
 

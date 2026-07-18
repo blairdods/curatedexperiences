@@ -65,6 +65,16 @@
   --font-sans:  var(--font-sans);
 }
 
+.managed-image {
+  object-position: var(--image-position, 50% 50%);
+  transform: scale(var(--image-zoom, 1));
+  transform-origin: var(--image-position, 50% 50%);
+}
+
+.group:hover .managed-image-hover {
+  transform: scale(calc(var(--image-zoom, 1) * 1.05));
+}
+
 /* ============================================================
    Base styles
    ============================================================ */

@@ -10,9 +10,11 @@ import {
   type DestinationMapItem,
 } from "@/components/ui/destination-map";
 import {
+  getManagedImageStyle,
   getSlotImage,
   getSlotImages,
   homepageHeroSlotKey,
+  type ImagePosition,
   type ImageSlotOverrides,
 } from "@/lib/image-slots";
 
@@ -126,21 +128,41 @@ const DESIGN_JOURNAL: DesignJournalArticle[] = [
   },
 ];
 
-function journalItems(articles: Article[], imageSlots: ImageSlotOverrides) {
-  const fallbackJournal = DESIGN_JOURNAL.map((article) => ({
-    ...article,
-    heroImage: getSlotImage(imageSlots, article.imageSlot).src,
-  })) satisfies Article[];
+type HomepageArticle = Article & {
+  heroImagePosition?: ImagePosition;
+};
+
+function journalItems(
+  articles: Article[],
+  imageSlots: ImageSlotOverrides
+): HomepageArticle[] {
+  const fallbackJournal = DESIGN_JOURNAL.map((article) => {
+    const image = getSlotImage(imageSlots, article.imageSlot);
+    return {
+      ...article,
+      heroImage: image.src,
+      heroImagePosition: image.position,
+    };
+  });
 
   if (!articles.length) return fallbackJournal;
   return DESIGN_JOURNAL.map((fallback, index) => {
     const article = articles[index];
-    const fallbackImage = getSlotImage(imageSlots, fallback.imageSlot).src;
-    if (!article) return { ...fallback, heroImage: fallbackImage };
+    const fallbackImage = getSlotImage(imageSlots, fallback.imageSlot);
+    if (!article) {
+      return {
+        ...fallback,
+        heroImage: fallbackImage.src,
+        heroImagePosition: fallbackImage.position,
+      };
+    }
     return {
       ...article,
       category: article.category || fallback.category,
-      heroImage: article.heroImage || fallbackImage,
+      heroImage: article.heroImage || fallbackImage.src,
+      heroImagePosition: article.heroImage
+        ? undefined
+        : fallbackImage.position,
     };
   });
 }
@@ -173,7 +195,8 @@ export default function HomePage({
               fill
               priority
               sizes="100vw"
-              className="object-cover object-center"
+              className="managed-image object-cover"
+              style={getManagedImageStyle(heroPoster)}
             />
           ) : null}
           <video
@@ -241,7 +264,8 @@ export default function HomePage({
               fill
               loading="eager"
               sizes="460px"
-              className="object-cover object-center"
+              className="managed-image object-cover"
+              style={getManagedImageStyle(differenceImage)}
             />
           </div>
         </div>
@@ -300,20 +324,23 @@ export default function HomePage({
           </div>
 
           <div className="mt-14 grid gap-5 md:grid-cols-3">
-            {SIGNATURE_JOURNEYS.map((journey) => (
-              <Link
-                key={journey.title}
-                href={journey.href}
-                className="group block bg-[#d8d1c5] text-navy"
-              >
+            {SIGNATURE_JOURNEYS.map((journey) => {
+              const image = getSlotImage(imageSlots, journey.imageSlot);
+              return (
+                <Link
+                  key={journey.title}
+                  href={journey.href}
+                  className="group block bg-[#d8d1c5] text-navy"
+                >
                 <div className="relative aspect-[1.45] overflow-hidden">
                   <Image
-                    src={getSlotImage(imageSlots, journey.imageSlot).src}
+                    src={image.src}
                     alt={journey.title}
                     fill
                     loading="eager"
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="managed-image managed-image-hover object-cover transition-transform duration-700"
+                    style={getManagedImageStyle(image)}
                   />
                 </div>
                 <div className="min-h-[246px] px-6 py-6">
@@ -330,8 +357,9 @@ export default function HomePage({
                     {journey.meta}
                   </p>
                 </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
         </div>
@@ -406,7 +434,10 @@ export default function HomePage({
                     fill
                     loading="eager"
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="managed-image managed-image-hover object-cover transition-transform duration-700"
+                    style={getManagedImageStyle({
+                      position: article.heroImagePosition,
+                    })}
                   />
                 </div>
                 <p className="mt-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-gold">

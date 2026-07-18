@@ -7,6 +7,7 @@ import {
   IMAGE_SLOT_DEFINITIONS,
   IMAGE_SLOT_SETTING_KEY,
   getSlotImages,
+  getSlotPreviewRatios,
   groupedImageSlotDefinitions,
   serialiseImageSlotOverrides,
   type ImageSlotOverrides,
@@ -37,28 +38,28 @@ export function ImageSlotsEditor({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [savedSerialised, setSavedSerialised] = useState(() =>
+    serialiseImageSlotOverrides(initialOverrides)
+  );
 
   const groups = useMemo(() => groupedImageSlotDefinitions(), []);
-  const initialSerialised = useMemo(
-    () => serialiseImageSlotOverrides(initialOverrides),
-    [initialOverrides]
-  );
   const currentSerialised = useMemo(
     () => serialiseImageSlotOverrides(overrides),
     [overrides]
   );
-  const isDirty = initialSerialised !== currentSerialised;
+  const isDirty = savedSerialised !== currentSerialised;
 
   function updateSlotImage(key: string, index: number, image: ManagedImage) {
     const definition = IMAGE_SLOT_DEFINITIONS.find((slot) => slot.key === key);
     const length = definition?.mode === "rotation" ? 3 : 1;
-    const current = normaliseSlotImages(overrides[key] ?? [], length);
-    current[index] = image;
-
-    setOverrides((previous) => ({
-      ...previous,
-      [key]: current.filter((item) => item.src.trim()),
-    }));
+    setOverrides((previous) => {
+      const current = normaliseSlotImages(previous[key] ?? [], length);
+      current[index] = image;
+      return {
+        ...previous,
+        [key]: current.filter((item) => item.src.trim()),
+      };
+    });
   }
 
   function resetSlot(key: string) {
@@ -104,12 +105,13 @@ export function ImageSlotsEditor({
         entityId: IMAGE_SLOT_SETTING_KEY,
         action: "updated",
         changes: {
-          before: JSON.parse(initialSerialised || "{}"),
+          before: JSON.parse(savedSerialised || "{}"),
           after: JSON.parse(currentSerialised || "{}"),
         },
       }),
     });
 
+    setSavedSerialised(currentSerialised);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }
@@ -213,16 +215,29 @@ export function ImageSlotsEditor({
                               : "Image"
                           }
                           value={image.src}
+                          position={image.position}
+                          previewRatios={getSlotPreviewRatios(slot.key)}
                           onChange={(src) =>
                             updateSlotImage(slot.key, index, {
                               src,
                               alt: image.alt,
+                              position: image.position,
                             })
+                          }
+                          onImageChange={(src, alt) =>
+                            updateSlotImage(slot.key, index, { src, alt })
                           }
                           onAltChange={(alt) =>
                             updateSlotImage(slot.key, index, {
                               src: image.src,
                               alt,
+                              position: image.position,
+                            })
+                          }
+                          onPositionChange={(position) =>
+                            updateSlotImage(slot.key, index, {
+                              ...image,
+                              position,
                             })
                           }
                           defaultRegion={slot.defaultRegion}
@@ -239,6 +254,7 @@ export function ImageSlotsEditor({
                             updateSlotImage(slot.key, index, {
                               src: image.src,
                               alt: event.target.value,
+                              position: image.position,
                             })
                           }
                           placeholder={displayImages[index]?.alt || "Alt text"}

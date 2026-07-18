@@ -17,6 +17,7 @@ export default async function JourneysPage() {
         subtitle="Take a moment to be inspired by some of our signature journeys. Every journey can be customised to evolve around your interests, pace and preferences for travelling."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
+        imagePosition={heroImage.position}
         compact
       />
 

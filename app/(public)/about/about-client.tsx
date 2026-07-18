@@ -18,6 +18,7 @@ export function AboutClient({ heroImage }: AboutClientProps) {
         subtitle="We do not sell tours. We curate time."
         imageSrc={heroImage.src}
         imageAlt={heroImage.alt}
+        imagePosition={heroImage.position}
         compact
       />
 

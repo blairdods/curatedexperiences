@@ -28,8 +28,9 @@ export default async function ImagesPage() {
       </h1>
       <p className="mt-1 max-w-3xl text-sm leading-6 text-foreground-muted">
         Control homepage hero variants, homepage section imagery, and key static
-        page images. Empty slots use the committed fallback image; saved slots
-        take effect without a code deploy.
+        page images. Preview and adjust each image&apos;s crop, focal position,
+        and zoom before saving. Empty slots use the committed fallback image;
+        saved slots take effect without a code deploy.
       </p>
 
       <div className="mt-8">
