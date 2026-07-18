@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Analytics } from "@/components/ui/analytics";
 import { OrganizationSchema } from "@/components/ui/schema-markup";
 import { ConsentBanner } from "@/components/ui/consent-banner";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
 
 const cormorant = localFont({

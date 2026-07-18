@@ -5,8 +5,10 @@ import Link from "next/link";
 import type { Article } from "@/lib/data/journal";
 import { getVideosByPlacement } from "@/lib/data/videos";
 import { VideoShowcase } from "@/components/ui/video-showcase";
-import { DestinationMap } from "@/components/ui/destination-map";
-import { DESTINATIONS as ALL_DESTINATIONS } from "@/lib/data/destinations";
+import {
+  DestinationMap,
+  type DestinationMapItem,
+} from "@/components/ui/destination-map";
 import {
   getSlotImage,
   getSlotImages,
@@ -147,10 +149,12 @@ export default function HomePage({
   articles,
   imageSlots,
   heroVariant,
+  destinations,
 }: {
   articles: Article[];
   imageSlots: ImageSlotOverrides;
   heroVariant: string;
+  destinations: DestinationMapItem[];
 }) {
   const heroPoster = getSlotImages(
     imageSlots,
@@ -363,7 +367,7 @@ export default function HomePage({
           </div>
 
           <div className="mt-14">
-            <DestinationMap destinations={ALL_DESTINATIONS} compact />
+            <DestinationMap destinations={destinations} compact />
           </div>
         </div>
       </section>

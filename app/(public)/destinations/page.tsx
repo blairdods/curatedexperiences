@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { DESTINATIONS, type Destination } from "@/lib/data/destinations";
-import { createServiceClient } from "@/lib/supabase/server";
+import { getActiveDestinations } from "@/lib/data/destinations-server";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
 import { DestinationMap } from "@/components/ui/destination-map";
@@ -10,41 +9,9 @@ import { getSlotImage } from "@/lib/image-slots";
 
 export const revalidate = 60;
 
-async function getDestinations(): Promise<Destination[]> {
-  try {
-    const supabase = await createServiceClient();
-    const { data } = await supabase
-      .from("destinations")
-      .select("slug, name, region, tagline, best_for, hero_image, images, highlights, best_seasons, related_journey_slugs, description")
-      .eq("active", true)
-      .order("sort_order", { ascending: true })
-      .order("name", { ascending: true });
-
-    if (data && data.length > 0) {
-      return data.map((d) => ({
-        slug: d.slug,
-        name: d.name,
-        region: d.region as "North Island" | "South Island",
-        tagline: d.tagline ?? "",
-        description: d.description ?? "",
-        highlights: d.highlights ?? [],
-        bestFor: d.best_for ?? [],
-        bestSeasons: d.best_seasons ?? "",
-        relatedJourneySlugs: d.related_journey_slugs ?? [],
-        heroImage: d.hero_image ?? "",
-        images: (d.images as { src: string; alt: string }[]) ?? [],
-      }));
-    }
-  } catch {
-    // Fall through to static
-  }
-
-  return DESTINATIONS;
-}
-
 export default async function DestinationsPage() {
   const [destinations, imageSlots] = await Promise.all([
-    getDestinations(),
+    getActiveDestinations(),
     getImageSlotOverrides(),
   ]);
   const heroImage = getSlotImage(imageSlots, "page.destinations.hero");

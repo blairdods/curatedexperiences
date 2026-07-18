@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
-
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
+import maplibregl from "maplibre-gl";
 
 export interface DestinationMapItem {
   slug: string;
@@ -16,6 +14,7 @@ export interface DestinationMapItem {
 type Island = "North Island" | "South Island";
 
 const DESTINATION_COORDINATES: Record<string, [number, number]> = {
+  auckland: [174.76, -36.85],
   northland: [173.73, -35.22],
   waikato: [175.28, -37.78],
   coromandel: [175.68, -36.83],
@@ -58,7 +57,7 @@ export function DestinationMap({
   compact?: boolean;
 }) {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
+  const map = useRef<maplibregl.Map | null>(null);
   const markerElements = useRef(new Map<string, HTMLAnchorElement>());
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [selectedIsland, setSelectedIsland] =
@@ -85,12 +84,48 @@ export function DestinationMap({
     null;
 
   useEffect(() => {
-    if (!mapContainer.current || !mapboxgl.accessToken) return;
+    if (!mapContainer.current) return;
     const renderedMarkerElements = markerElements.current;
 
-    const instance = new mapboxgl.Map({
+    const instance = new maplibregl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/dark-v11",
+      style: {
+        version: 8,
+        sources: {
+          "new-zealand": {
+            type: "geojson",
+            data: "/data/new-zealand.geojson",
+          },
+        },
+        layers: [
+          {
+            id: "background",
+            type: "background",
+            paint: {
+              "background-color": "#0A1420",
+            },
+          },
+          {
+            id: "new-zealand-land",
+            type: "fill",
+            source: "new-zealand",
+            paint: {
+              "fill-color": "#D8D1C5",
+              "fill-opacity": 0.96,
+            },
+          },
+          {
+            id: "new-zealand-coastline",
+            type: "line",
+            source: "new-zealand",
+            paint: {
+              "line-color": "#EDEAE2",
+              "line-opacity": 0.9,
+              "line-width": 1.4,
+            },
+          },
+        ],
+      },
       center: [172.25, -41.05],
       zoom: compact ? 3.8 : 4,
       minZoom: 3.4,
@@ -157,7 +192,7 @@ export function DestinationMap({
 
       renderedMarkerElements.set(destination.slug, markerLink);
 
-      new mapboxgl.Marker({
+      new maplibregl.Marker({
         element: markerRoot,
         anchor: "center",
       })
@@ -294,22 +329,15 @@ export function DestinationMap({
           role="region"
           aria-label="Interactive map of New Zealand destinations"
         >
-          <div ref={mapContainer} className="absolute inset-0" />
+          <div className="absolute inset-0">
+            <div ref={mapContainer} className="h-full w-full" />
+          </div>
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(15,28,46,0.04),rgba(15,28,46,0.2))]"
           />
 
-          {!mapboxgl.accessToken && (
-            <div className="absolute inset-0 flex items-center justify-center px-10 text-center">
-              <p className="max-w-xs text-[12px] leading-6 text-cream/48">
-                The regional index remains available while the map is
-                unavailable.
-              </p>
-            </div>
-          )}
-
-          {mapboxgl.accessToken && !mapLoaded && (
+          {!mapLoaded && (
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-navy-dark">
               <p className="text-[9px] font-semibold uppercase tracking-[0.28em] text-cream/35">
                 Drawing the map

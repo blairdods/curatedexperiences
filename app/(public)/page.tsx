@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { getArticles } from "@/lib/data/journal";
+import { getActiveDestinations } from "@/lib/data/destinations-server";
 import { getImageSlotOverrides } from "@/lib/image-slot-settings";
 import HomePage from "./home-client";
 
@@ -19,10 +20,11 @@ async function getHeroVariant(): Promise<string> {
 }
 
 export default async function Page() {
-  const [articles, imageSlots, heroVariant] = await Promise.all([
+  const [articles, imageSlots, heroVariant, destinations] = await Promise.all([
     getArticles().catch(() => []),
     getImageSlotOverrides(),
     getHeroVariant(),
+    getActiveDestinations(),
   ]);
 
   return (
@@ -30,6 +32,14 @@ export default async function Page() {
       articles={articles}
       imageSlots={imageSlots}
       heroVariant={heroVariant}
+      destinations={destinations.map(
+        ({ slug, name, region, tagline }) => ({
+          slug,
+          name,
+          region,
+          tagline,
+        })
+      )}
     />
   );
 }
