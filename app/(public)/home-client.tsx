@@ -5,6 +5,8 @@ import Link from "next/link";
 import type { Article } from "@/lib/data/journal";
 import { getVideosByPlacement } from "@/lib/data/videos";
 import { VideoShowcase } from "@/components/ui/video-showcase";
+import { DestinationMap } from "@/components/ui/destination-map";
+import { DESTINATIONS as ALL_DESTINATIONS } from "@/lib/data/destinations";
 import {
   getSlotImage,
   getSlotImages,
@@ -82,24 +84,6 @@ const SIGNATURE_JOURNEYS = [
   },
 ];
 
-const DESTINATIONS = [
-  {
-    href: "/destinations/northland",
-    title: "Northland & Bay of Islands",
-    imageSlot: "home.destinations.northland",
-  },
-  {
-    href: "/destinations/rotorua",
-    title: "Taupo & Rotorua",
-    imageSlot: "home.destinations.rotorua",
-  },
-  {
-    href: "/destinations/central-otago",
-    title: "Queenstown & Central Otago",
-    imageSlot: "home.destinations.central-otago",
-  },
-];
-
 type DesignJournalArticle = Omit<Article, "heroImage"> & {
   imageSlot: string;
 };
@@ -174,11 +158,6 @@ export default function HomePage({
   )[0];
   const featuredArticles = journalItems(articles, imageSlots);
   const differenceImage = getSlotImage(imageSlots, "home.difference.image");
-  const destinationFeatureImage = getSlotImage(
-    imageSlots,
-    "home.destinations.feature"
-  );
-
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
       <section className="relative h-[100svh] max-h-[100svh] min-h-0 overflow-hidden bg-navy text-cream md:h-auto md:max-h-none md:min-h-[1018px]">
@@ -357,69 +336,34 @@ export default function HomePage({
       <HomeVideoSection />
 
       <section className="px-6 py-[108px] md:px-0">
-        <div className="mx-auto grid max-w-[1120px] gap-16 md:grid-cols-[360px_1fr] md:gap-[110px]">
-          <div className="pt-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-              Destinations
-            </p>
-            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] text-navy md:text-[46px]">
-              A World of difference
-            </h2>
-            <p className="mt-8 text-[14px] leading-7 text-foreground-muted">
-              From the rich culture, diverse landscapes of the North Island to
-              the breathtaking alpine scenery of the South Island, every journey
-              is carefully curated to showcase the very best of New Zealand.
-            </p>
-            <Link
-              href="/destinations"
-              className="mt-8 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold"
-            >
-              View All Destinations +
-            </Link>
+        <div className="mx-auto max-w-[1120px]">
+          <div className="grid items-end gap-8 md:grid-cols-[360px_1fr] md:gap-[110px]">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+                Destinations
+              </p>
+              <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.08] text-navy md:text-[46px]">
+                A world of difference
+              </h2>
+            </div>
+            <div>
+              <p className="max-w-[600px] text-[14px] leading-7 text-foreground-muted">
+                From the rich culture and diverse landscapes of the North
+                Island to the breathtaking alpine scenery of the South Island,
+                every journey is carefully curated to showcase the very best of
+                New Zealand.
+              </p>
+              <Link
+                href="/destinations"
+                className="mt-6 inline-block text-[11px] font-semibold uppercase tracking-[0.28em] text-gold"
+              >
+                View All Destinations +
+              </Link>
+            </div>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-[1fr_250px]">
-            <Link
-              href="/destinations/fiordland"
-              className="group relative min-h-[570px] overflow-hidden"
-            >
-              <Image
-                src={destinationFeatureImage.src}
-                alt={destinationFeatureImage.alt}
-                fill
-                loading="eager"
-                sizes="430px"
-                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
-              <p className="absolute bottom-6 left-6 font-serif text-[25px] text-cream">
-                Fiordland &amp; the Southern
-                <br />
-                Alps
-              </p>
-            </Link>
-            <div className="grid gap-3">
-              {DESTINATIONS.map((destination) => (
-                <Link
-                  key={destination.title}
-                  href={destination.href}
-                  className="group relative min-h-[178px] overflow-hidden"
-                >
-                  <Image
-                    src={getSlotImage(imageSlots, destination.imageSlot).src}
-                    alt={destination.title}
-                    fill
-                    loading="eager"
-                    sizes="250px"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/65 via-transparent to-transparent" />
-                  <p className="absolute bottom-4 left-4 font-serif text-[18px] leading-tight text-cream">
-                    {destination.title}
-                  </p>
-                </Link>
-              ))}
-            </div>
+          <div className="mt-14">
+            <DestinationMap destinations={ALL_DESTINATIONS} compact />
           </div>
         </div>
       </section>

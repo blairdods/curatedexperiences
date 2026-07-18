@@ -98,3 +98,81 @@ h1, h2, h3, h4 {
   0%, 100% { opacity: 0.3; }
   50%       { opacity: 1; }
 }
+
+/* ============================================================
+   Destination map
+   ============================================================ */
+
+.destination-map-marker-root {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.destination-map-marker {
+  align-items: center;
+  color: var(--cream);
+  display: flex;
+  position: relative;
+  text-decoration: none;
+}
+
+.destination-map-marker-dot {
+  background: var(--gold);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(237, 234, 226, 0.88);
+  display: block;
+  height: 10px;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+  width: 10px;
+}
+
+.destination-map-marker-label {
+  background: rgba(15, 28, 46, 0.94);
+  border: 1px solid rgba(237, 234, 226, 0.18);
+  font-size: 10px;
+  font-weight: 600;
+  left: 16px;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  opacity: 0;
+  padding: 7px 9px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-4px, -50%);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  white-space: nowrap;
+}
+
+.destination-map-marker:hover .destination-map-marker-dot,
+.destination-map-marker:focus-visible .destination-map-marker-dot,
+.destination-map-marker[data-active="true"] .destination-map-marker-dot {
+  box-shadow:
+    0 0 0 3px rgba(237, 234, 226, 0.95),
+    0 0 0 8px rgba(184, 150, 90, 0.26);
+  transform: scale(1.25);
+}
+
+.destination-map-marker:hover .destination-map-marker-label,
+.destination-map-marker:focus-visible .destination-map-marker-label,
+.destination-map-marker[data-active="true"] .destination-map-marker-label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.destination-map-marker:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destination-map-marker-dot,
+  .destination-map-marker-label {
+    transition: none;
+  }
+}

@@ -4,6 +4,7 @@ import { DESTINATIONS, type Destination } from "@/lib/data/destinations";
 import { createServiceClient } from "@/lib/supabase/server";
 import { Hero } from "@/components/ui/hero";
 import { Section } from "@/components/ui/section";
+import { DestinationMap } from "@/components/ui/destination-map";
 import { getImageSlotOverrides } from "@/lib/image-slot-settings";
 import { getSlotImage } from "@/lib/image-slots";
 
@@ -59,7 +60,33 @@ export default async function DestinationsPage() {
         compact
       />
 
+      <Section background="navy">
+        <div className="mb-12 grid items-end gap-7 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+              Find your place
+            </p>
+            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-cream sm:text-[46px]">
+              Explore New Zealand, region by region.
+            </h2>
+          </div>
+          <p className="max-w-[560px] text-[14px] leading-7 text-cream/55">
+            Move through the map or browse by island. Each destination opens a
+            closer look at the character, experiences, and pace of that place.
+          </p>
+        </div>
+        <DestinationMap destinations={destinations} />
+      </Section>
+
       <Section>
+        <div className="mb-12 sm:mb-14">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
+            The complete collection
+          </p>
+          <h2 className="mt-6 max-w-[620px] font-serif text-[38px] font-medium leading-[1.06] text-navy sm:text-[46px]">
+            Every region, considered in its own right.
+          </h2>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {destinations.map((dest) => (
             <Link
