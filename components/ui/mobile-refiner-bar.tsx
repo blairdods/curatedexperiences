@@ -13,6 +13,8 @@ export function MobileRefinerBar({ journey }: { journey: Journey }) {
   useEffect(() => {
     const el = document.getElementById("itinerary-section");
     if (!el) {
+      // Fall back to visible if the observed section is not on this page.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(true);
       return;
     }
@@ -29,17 +31,20 @@ export function MobileRefinerBar({ journey }: { journey: Journey }) {
     return () => observer.disconnect();
   }, []);
 
-  if (!refiner) return null;
-
-  const { totalDays, selectedActivityCount, captureCustomization } = refiner;
+  const captureCustomization = refiner?.captureCustomization;
 
   const handleBeginJourney = useCallback(() => {
+    if (!captureCustomization) return;
     const customization = captureCustomization();
     dispatchOpenConcierge({
       customization,
       journeySlug: journey.slug,
     });
   }, [captureCustomization, journey.slug]);
+
+  if (!refiner) return null;
+
+  const { totalDays, selectedActivityCount } = refiner;
 
   if (!visible) return null;
 

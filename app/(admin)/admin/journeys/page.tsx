@@ -49,7 +49,7 @@ export default async function JourneysManagementPage() {
             <div>
               <p className="text-sm font-medium text-navy">Journeys are not yet in the database</p>
               <p className="text-xs text-foreground-muted mt-0.5">
-                Import the {JOURNEYS.length} existing journeys to make them editable. This is a one-time action — it won't overwrite anything already in the database.
+                Import the {JOURNEYS.length} existing journeys to make them editable. This is a one-time action — it won&apos;t overwrite anything already in the database.
               </p>
             </div>
             <SeedImportButton

@@ -32,7 +32,10 @@ export function ItineraryRefinerProvider({
   journey: Journey;
   children: React.ReactNode;
 }) {
-  const groups = journey.locationGroups ?? [];
+  const groups = useMemo(
+    () => journey.locationGroups ?? [],
+    [journey.locationGroups]
+  );
 
   const [state, dispatch] = useReducer(
     (s: RefinerState, action: { type: string; locationGroupId?: string; delta?: number; day?: number; activity?: string }) => {
@@ -47,10 +50,6 @@ export function ItineraryRefinerProvider({
   );
 
   const totalDays = useMemo(() => {
-    // Base duration minus default group days, plus adjusted days
-    let total = 0;
-    const baseDuration = journey.durationDays;
-
     // Count days NOT in any location group (e.g., departure day)
     const groupedDayNums = new Set<number>();
     for (const g of groups) {
@@ -70,7 +69,7 @@ export function ItineraryRefinerProvider({
     );
 
     return adjustedGroupDays + ungroupedDays;
-  }, [state.dayAdjustments, groups, journey.itinerary, journey.durationDays]);
+  }, [state.dayAdjustments, groups, journey.itinerary]);
 
   const selectedActivityCount = useMemo(() => {
     return Object.values(state.daySelections).reduce(

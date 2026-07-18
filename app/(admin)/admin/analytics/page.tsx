@@ -27,9 +27,13 @@ export default async function AnalyticsPage() {
 
   const serviceSupabase = await createServiceClient();
 
-  const since90 = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString();
-  const since30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
-  const sinceYear = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
+  // This server-rendered dashboard intentionally uses the request time.
+  // eslint-disable-next-line react-hooks/purity
+  const now = Date.now();
+  const since90 = new Date(now - 90 * 24 * 60 * 60 * 1000).toISOString();
+  const since30 = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const sinceYear = new Date(now - 365 * 24 * 60 * 60 * 1000).toISOString();
+  const today = new Date(now).toISOString();
 
   const [
     leadsOverTimeResult,
@@ -41,12 +45,12 @@ export default async function AnalyticsPage() {
     serviceSupabase.rpc("leads_over_time", {
       period_type: "week",
       from_date: since90,
-      to_date: new Date().toISOString(),
+      to_date: today,
     }),
     serviceSupabase.rpc("bookings_revenue_over_time", {
       period_type: "month",
       from_date: sinceYear,
-      to_date: new Date().toISOString(),
+      to_date: today,
     }),
     serviceSupabase
       .from("enquiries")

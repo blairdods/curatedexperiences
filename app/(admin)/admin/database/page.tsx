@@ -133,7 +133,7 @@ export default function DatabaseAdminPage() {
           />
           <p className="text-xs text-foreground-muted mt-2">
             Paste this SQL into the Supabase SQL Editor and click Run. All statements
-            use IF NOT EXISTS, so it's safe to re-run.
+            use IF NOT EXISTS, so it&apos;s safe to re-run.
           </p>
         </div>
       </div>

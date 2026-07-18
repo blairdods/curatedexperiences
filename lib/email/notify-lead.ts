@@ -1,16 +1,16 @@
 import { Resend } from "resend";
 import type { ConciergeBrief } from "@/lib/claude/extract-brief";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const NOTIFY_EMAILS = ["blairdods@gmail.com"];
 const FROM_EMAIL = "concierge@curatedexperiences.com";
 
 export async function notifyNewLead(brief: ConciergeBrief, enquiryId: string) {
-  if (!process.env.RESEND_API_KEY) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
     console.warn("RESEND_API_KEY not set — skipping lead notification");
     return;
   }
+  const resend = new Resend(apiKey);
 
   const intentLabel =
     brief.intent_score >= 7

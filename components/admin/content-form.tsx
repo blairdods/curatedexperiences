@@ -152,7 +152,21 @@ export function ContentForm({
       router.push("/admin/content");
       router.refresh();
     },
-    [type, title, body, regionTags, status, isEditing, initialData?.id, router]
+    [
+      type,
+      title,
+      body,
+      regionTags,
+      status,
+      isEditing,
+      initialData?.id,
+      initialData?.title,
+      initialData?.body,
+      initialData?.type,
+      initialData?.region_tags,
+      initialData?.status,
+      router,
+    ]
   );
 
   return (

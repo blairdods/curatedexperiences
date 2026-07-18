@@ -31,7 +31,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const articles = await getArticles();
+  // Database-backed entries are optional at build time so previews can be
+  // compiled without production Supabase credentials.
+  const articles = await getArticles().catch(() => []);
   const articlePages: MetadataRoute.Sitemap = articles.map((a) => ({
     url: `${BASE_URL}/journal/${a.slug}`,
     lastModified: a.publishedAt,

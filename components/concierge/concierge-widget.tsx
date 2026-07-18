@@ -65,6 +65,8 @@ export function ConciergeWidget() {
 
   // --- Reset prompt state on navigation ---
   useEffect(() => {
+    // Navigation invalidates any prompt associated with the previous page.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowPrompt(false);
   }, [pathname]);
 

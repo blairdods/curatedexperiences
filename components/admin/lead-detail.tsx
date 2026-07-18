@@ -249,7 +249,9 @@ export function LeadDetail({
     setNotesSaving(false);
   };
 
+  // This client-side age indicator intentionally uses the current time.
   const daysSinceCreated = Math.floor(
+    // eslint-disable-next-line react-hooks/purity
     (Date.now() - new Date(lead.created_at).getTime()) / (1000 * 60 * 60 * 24)
   );
 

@@ -109,7 +109,9 @@ export function TravelActionSchema({
           "@type": "Offer",
           priceCurrency: "USD",
           price: price.toString(),
+          // Structured offer validity is intentionally relative to render time.
           priceValidUntil: new Date(
+            // eslint-disable-next-line react-hooks/purity
             Date.now() + 90 * 24 * 60 * 60 * 1000
           ).toISOString().split("T")[0],
           availability: "https://schema.org/InStock",

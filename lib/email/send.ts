@@ -2,16 +2,21 @@ import { Resend } from "resend";
 import { render } from "@react-email/components";
 import { WelcomeEmail } from "./templates/welcome";
 import { PaymentLinkEmail } from "./templates/payment-link";
-import { EmailLayout, BRAND } from "./templates/base-layout";
+import { BRAND } from "./templates/base-layout";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = "Curated Experiences <hello@curatedexperiences.com>";
+
+function createResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  return apiKey ? new Resend(apiKey) : null;
+}
 
 /**
  * Send the welcome email when a visitor submits their email via the concierge.
  */
 export async function sendWelcomeEmail(email: string, name?: string) {
-  if (!process.env.RESEND_API_KEY) return;
+  const resend = createResendClient();
+  if (!resend) return;
 
   const html = await render(WelcomeEmail({ name }));
 
@@ -33,7 +38,8 @@ export async function sendNurtureEmail(
   subject: string,
   bodyHtml: string
 ) {
-  if (!process.env.RESEND_API_KEY) return;
+  const resend = createResendClient();
+  if (!resend) return;
 
   // Wrap the body HTML in the brand layout
   const fullHtml = `
@@ -86,7 +92,8 @@ export async function sendPaymentLinkEmail({
   paymentUrl: string;
   curatorName?: string;
 }) {
-  if (!process.env.RESEND_API_KEY) return;
+  const resend = createResendClient();
+  if (!resend) return;
 
   const html = await render(
     PaymentLinkEmail({ clientName, depositAmountUsd, paymentUrl, curatorName })

@@ -12,6 +12,8 @@ export function ConsentBanner() {
     const needsConsent = document.cookie.includes("ce-needs-consent=1");
     const hasConsented = document.cookie.includes("ce-consent=");
     if (needsConsent && !hasConsented) {
+      // Visibility is derived from browser cookies after hydration.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setVisible(true);
     }
   }, []);

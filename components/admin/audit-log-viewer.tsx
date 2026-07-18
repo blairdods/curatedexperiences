@@ -34,7 +34,9 @@ export function AuditLogViewer() {
   }, [filter]);
 
   useEffect(() => {
-    fetchEntries();
+    // Loading is intentionally synchronized with the active filter.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchEntries();
   }, [fetchEntries]);
 
   const actionColor = (action: string) => {
