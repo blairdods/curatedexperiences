@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const COMPANY_LINKS = [
   { href: "/about", label: "Our story" },
-  { href: "/terms", label: "Privacy policy" },
+  { href: "/privacy", label: "Privacy policy" },
   { href: "/terms", label: "Terms" },
 ];
 

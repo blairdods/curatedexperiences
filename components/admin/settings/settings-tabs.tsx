@@ -5,6 +5,7 @@ const SETTINGS_TABS = [
   { href: "/admin/settings/team", label: "Team Management" },
   { href: "/admin/settings/emails", label: "Email Templates" },
   { href: "/admin/settings/terms", label: "Terms Page" },
+  { href: "/admin/settings/privacy", label: "Privacy Page" },
 ];
 
 export function SettingsTabs({ active }: { active: string }) {

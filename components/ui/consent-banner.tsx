@@ -38,7 +38,7 @@ export function ConsentBanner() {
         <p className="text-sm text-cream/80 leading-relaxed flex-1">
           We use cookies to personalise your experience and analyse site traffic.
           See our{" "}
-          <Link href="/terms" className="text-cream underline underline-offset-2 hover:text-gold transition-colors">
+          <Link href="/privacy" className="text-cream underline underline-offset-2 hover:text-gold transition-colors">
             privacy policy
           </Link>{" "}
           for details.
