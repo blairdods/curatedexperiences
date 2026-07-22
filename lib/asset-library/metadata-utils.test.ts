@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  databaseSafeString,
   fieldsFromEmbeddedMetadata,
   formatFileSize,
   serializableMetadata,
@@ -46,4 +47,19 @@ test("extracts useful editable fields from common EXIF and IPTC tags", () => {
 test("formats byte sizes and removes binary metadata before JSON storage", () => {
   assert.equal(formatFileSize(1_572_864), "1.50 MB");
   assert.deepEqual(serializableMetadata({ title: "Image", preview: Buffer.from("binary") }), { title: "Image" });
+});
+
+test("removes PostgreSQL-incompatible Unicode from metadata keys and values", () => {
+  assert.equal(databaseSafeString("Piha\u0000 Beach \uD800"), "Piha Beach \uFFFD");
+
+  const result = serializableMetadata({
+    "caption\u0000": "Piha\u0000 Beach",
+    camera: { model: "EOS\u0000R5" },
+  });
+
+  assert.deepEqual(result, {
+    caption: "Piha Beach",
+    camera: { model: "EOSR5" },
+  });
+  assert.equal(JSON.stringify(result).includes("\\u0000"), false);
 });

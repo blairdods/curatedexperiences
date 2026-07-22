@@ -7,6 +7,7 @@ import { getUserRole } from "@/lib/auth/roles";
 import { createServiceClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit/log";
 import { randomUUID } from "node:crypto";
+import { databaseSafeString } from "@/lib/asset-library/metadata-utils";
 
 const BUCKET = "asset-library";
 const MAX_SIZE_BYTES = 10 * 1024 * 1024;
@@ -14,7 +15,9 @@ const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"
 
 function formText(formData: FormData, key: string, maxLength: number): string {
   const value = formData.get(key);
-  return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
+  return typeof value === "string"
+    ? databaseSafeString(value).trim().slice(0, maxLength)
+    : "";
 }
 
 function validUrl(value: string): boolean {
@@ -162,7 +165,7 @@ export async function POST(req: NextRequest) {
     copyright: formText(formData, "copyright", 500) || metadata.copyright || null,
     usage_notes: formText(formData, "usageNotes", 3_000) || null,
     source_url: sourceUrl || null,
-    original_filename: file.name.slice(0, 500),
+    original_filename: databaseSafeString(file.name).slice(0, 500),
     storage_path: storagePath,
     public_url: publicUrl,
     mime_type: metadata.mimeType,

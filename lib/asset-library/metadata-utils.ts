@@ -23,13 +23,34 @@ export interface ExtractedAssetMetadata {
   embedded: Record<string, unknown>;
 }
 
+/**
+ * PostgreSQL text/jsonb cannot store U+0000, and malformed image metadata can
+ * also contain lone UTF-16 surrogates. Remove or repair both before any
+ * extracted or user-editable text reaches Supabase.
+ */
+export function databaseSafeString(value: string): string {
+  let result = "";
+  for (const character of value) {
+    const codePoint = character.codePointAt(0);
+    if (codePoint === 0) continue;
+    if (codePoint != null && codePoint >= 0xD800 && codePoint <= 0xDFFF) {
+      result += "\uFFFD";
+    } else {
+      result += character;
+    }
+  }
+  return result;
+}
+
 function firstString(tags: Record<string, unknown>, keys: string[]): string {
   for (const key of keys) {
     const value = tags[key];
-    if (typeof value === "string" && value.trim()) return value.trim();
+    if (typeof value === "string" && databaseSafeString(value).trim()) {
+      return databaseSafeString(value).trim();
+    }
     if (Array.isArray(value)) {
-      const text = value.find((item) => typeof item === "string" && item.trim());
-      if (typeof text === "string") return text.trim();
+      const text = value.find((item) => typeof item === "string" && databaseSafeString(item).trim());
+      if (typeof text === "string") return databaseSafeString(text).trim();
     }
   }
   return "";
@@ -46,8 +67,9 @@ function firstNumber(tags: Record<string, unknown>, keys: string[]): number | nu
 function isoDate(value: unknown): string {
   if (value instanceof Date && !Number.isNaN(value.getTime())) return value.toISOString();
   if (typeof value === "string" && value.trim()) {
-    const parsed = new Date(value);
-    return Number.isNaN(parsed.getTime()) ? value.trim() : parsed.toISOString();
+    const safeValue = databaseSafeString(value).trim();
+    const parsed = new Date(safeValue);
+    return Number.isNaN(parsed.getTime()) ? safeValue : parsed.toISOString();
   }
   return "";
 }
@@ -56,12 +78,12 @@ function keywordList(value: unknown): string[] {
   const values = Array.isArray(value) ? value : typeof value === "string" ? value.split(/[;,]/) : [];
   return [...new Set(values.flatMap((item) => {
     if (typeof item !== "string") return [];
-    return item.split(/[;,]/).map((part) => part.trim()).filter(Boolean);
+    return item.split(/[;,]/).map((part) => databaseSafeString(part).trim()).filter(Boolean);
   }))];
 }
 
 export function titleFromFilename(filename: string): string {
-  return filename
+  return databaseSafeString(filename)
     .replace(/\.[^.]+$/, "")
     .replace(/[_-]+/g, " ")
     .replace(/\s+/g, " ")
@@ -83,7 +105,7 @@ export function formatFileSize(bytes: number): string {
 
 export function serializableMetadata(value: unknown, depth = 0): unknown {
   if (depth > 5 || value == null) return value == null ? value : undefined;
-  if (typeof value === "string") return value.slice(0, 10_000);
+  if (typeof value === "string") return databaseSafeString(value).slice(0, 10_000);
   if (typeof value === "number" || typeof value === "boolean") return value;
   if (value instanceof Date) return Number.isNaN(value.getTime()) ? undefined : value.toISOString();
   if (ArrayBuffer.isView(value)) return undefined;
@@ -94,8 +116,8 @@ export function serializableMetadata(value: unknown, depth = 0): unknown {
     return Object.fromEntries(
       Object.entries(value as Record<string, unknown>)
         .slice(0, 300)
-        .map(([key, item]) => [key, serializableMetadata(item, depth + 1)])
-        .filter((entry) => entry[1] !== undefined)
+        .map(([key, item]) => [databaseSafeString(key).slice(0, 500), serializableMetadata(item, depth + 1)])
+        .filter((entry) => entry[0] && entry[1] !== undefined)
     );
   }
   return undefined;
