@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
+import { trackConversion } from "@/components/ui/analytics";
 
 export type Message = {
   role: "user" | "assistant";
@@ -149,6 +150,7 @@ export function useConcierge() {
         if (!reader) throw new Error("No response stream");
 
         const decoder = new TextDecoder();
+        let fullAssistantResponse = "";
 
         while (true) {
           const { done, value } = await reader.read();
@@ -176,6 +178,7 @@ export function useConcierge() {
                 data.delta?.type === "text_delta"
               ) {
                 pendingTextRef.current += data.delta.text;
+                fullAssistantResponse += data.delta.text;
 
                 // Batch updates at 60fps
                 if (rafRef.current === null) {
@@ -191,6 +194,29 @@ export function useConcierge() {
         // Flush any remaining text
         if (pendingTextRef.current) {
           flushPendingText();
+        }
+
+        // Detect concierge brief and fire conversion events
+        const briefMatch = fullAssistantResponse.match(
+          /<!--BRIEF_JSON\s*([\s\S]*?)\s*BRIEF_JSON-->/
+        );
+        if (briefMatch) {
+          try {
+            const brief = JSON.parse(briefMatch[1]);
+            const intentScore: number = brief.intent_score ?? 5;
+            trackConversion("ai_brief_generated", {
+              value: 200,
+              params: { intent_score: intentScore },
+            });
+            if (intentScore >= 7) {
+              trackConversion("intent_score_high", {
+                value: 100,
+                params: { intent_score: intentScore },
+              });
+            }
+          } catch {
+            // Malformed brief JSON — skip tracking
+          }
         }
       } catch (err) {
         if ((err as Error).name === "AbortError") {

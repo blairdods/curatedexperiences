@@ -167,7 +167,17 @@ export async function fetchConversions(
       filter: {
         fieldName: "eventName",
         inListFilter: {
-          values: ["form_submit", "booking_enquiry", "concierge_started", "page_view", "enquiry_submit"],
+          values: [
+            "form_submit",
+            "booking_enquiry",
+            "concierge_started",
+            "enquiry_submit",
+            "lead_created",
+            "email_captured",
+            "concierge_engaged",
+            "intent_score_high",
+            "ai_brief_generated",
+          ],
         },
       },
     },

@@ -12,6 +12,7 @@ import {
   parseConciergeRequest,
 } from "@/lib/claude/concierge-guardrails";
 import { isConciergeRequestInScope } from "@/lib/claude/concierge-scope";
+import { resolveLeadAttribution } from "@/lib/analytics/attribution";
 
 function jsonError(message: string, status: number) {
   return Response.json({ error: "invalid_request", message }, { status });
@@ -84,6 +85,7 @@ export async function POST(request: Request) {
     return jsonError(parsedRequest.error, 400);
   }
   const { messages, sessionId, visitorContext } = parsedRequest.value;
+  const leadAttribution = await resolveLeadAttribution({ source: "concierge" });
 
   // --- Session budget check ---
   const sid = `${ip}:${sessionId ?? "anonymous"}`;
@@ -257,7 +259,7 @@ export async function POST(request: Request) {
             budget_signal: brief.budget_signal,
             intent_score: brief.intent_score,
             ai_brief: brief.ai_brief,
-            source: "concierge",
+            ...leadAttribution,
             status: "new",
             country: visitorContext?.country ?? null,
           })

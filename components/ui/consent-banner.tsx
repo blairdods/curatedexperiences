@@ -21,12 +21,24 @@ export function ConsentBanner() {
   const accept = () => {
     document.cookie = "ce-consent=accepted; max-age=" + (365 * 24 * 60 * 60) + "; path=/; samesite=lax";
     document.cookie = "ce-needs-consent=; max-age=0; path=/";
+    window.gtag?.("consent", "update", {
+      analytics_storage: "granted",
+      ad_storage: "granted",
+      ad_user_data: "granted",
+      ad_personalization: "granted",
+    });
     setVisible(false);
   };
 
   const decline = () => {
     document.cookie = "ce-consent=declined; max-age=" + (365 * 24 * 60 * 60) + "; path=/; samesite=lax";
     document.cookie = "ce-needs-consent=; max-age=0; path=/";
+    window.gtag?.("consent", "update", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
     setVisible(false);
   };
 

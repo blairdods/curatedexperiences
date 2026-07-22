@@ -17,6 +17,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: "/admin", label: "Dashboard", icon: "grid" },
   { href: "/admin/analytics", label: "Analytics", icon: "chart" },
+  { href: "/admin/ads", label: "Google Ads", icon: "target" },
   { href: "/admin/leads", label: "Leads", icon: "users" },
   { href: "/admin/bookings", label: "Bookings", icon: "calendar" },
   { href: "/admin/accommodations", label: "Accommodations", icon: "building", roles: ["admin", "curator"] },
@@ -57,6 +58,13 @@ const ICONS: Record<string, React.ReactNode> = {
     <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
       <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
       <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+    </svg>
+  ),
+  target: (
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" className="w-4 h-4">
+      <circle cx="10" cy="10" r="7" />
+      <circle cx="10" cy="10" r="3" />
+      <path d="M10 1v3M10 16v3M1 10h3M16 10h3" />
     </svg>
   ),
   clock: (
