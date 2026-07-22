@@ -7,6 +7,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import { trackConversion } from "@/components/ui/analytics";
 
 declare global {
   interface Window {
@@ -115,6 +116,12 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
       if (!response.ok) {
         throw new Error(result?.error || "Unable to send your enquiry");
       }
+
+      trackConversion("lead_created", {
+        value: 50,
+        params: { source: "contact_page" },
+        userData: { email, phone_number: phone },
+      });
 
       formRef.current?.reset();
       setSubmitted(true);

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendWelcomeEmail } from "@/lib/email/send";
+import { resolveLeadAttribution } from "@/lib/analytics/attribution";
 
 const RECAPTCHA_ACTION = "contact_enquiry";
 
@@ -107,7 +108,7 @@ async function verifyRecaptcha(
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { name, email, phone, source, utm_campaign, journey_interest, interests, conversation_summary, recaptcha_token } = body;
+  const { name, email, phone, source, journey_interest, interests, conversation_summary, recaptcha_token } = body;
 
   if (!email) {
     return NextResponse.json({ error: "Email is required" }, { status: 400 });
@@ -149,7 +150,10 @@ export async function POST(request: Request) {
     }
   }
 
-  const supabase = await createServiceClient();
+  const [supabase, attribution] = await Promise.all([
+    createServiceClient(),
+    resolveLeadAttribution(body),
+  ]);
 
   const hasConciergeContext = source === "concierge_email_capture" && conversation_summary;
 
@@ -162,7 +166,7 @@ export async function POST(request: Request) {
   // Strategy 1: Find recent concierge lead without email (brief was generated but no email captured)
   const { data: noEmailLead } = await supabase
     .from("enquiries")
-    .select("id, ai_brief, intent_score, source")
+    .select("id, ai_brief, intent_score, source, utm_source, utm_campaign, gclid, gbraid, wbraid")
     .eq("source", "concierge")
     .is("email", null)
     .gte("created_at", twoHoursAgo)
@@ -174,7 +178,7 @@ export async function POST(request: Request) {
   const { data: sameEmailLead } = !noEmailLead
     ? await supabase
         .from("enquiries")
-        .select("id, ai_brief, intent_score, source")
+        .select("id, ai_brief, intent_score, source, utm_source, utm_campaign, gclid, gbraid, wbraid")
         .eq("email", email)
         .gte("created_at", twoHoursAgo)
         .order("created_at", { ascending: false })
@@ -198,7 +202,16 @@ export async function POST(request: Request) {
     const updates: Record<string, unknown> = {
       email,
       intent_score: Math.max(existingLead.intent_score ?? 0, 6),
+      capture_surface: attribution.capture_surface,
     };
+    const hasNewMarketingAttribution = Boolean(
+      attribution.utm_source ||
+      attribution.utm_campaign ||
+      attribution.gclid ||
+      attribution.gbraid ||
+      attribution.wbraid
+    );
+    if (hasNewMarketingAttribution) Object.assign(updates, attribution);
     if (name) updates.name = name;
     if (phone) updates.phone = phone;
     if (mergedBrief) updates.ai_brief = mergedBrief;
@@ -244,8 +257,7 @@ export async function POST(request: Request) {
       name,
       email,
       phone,
-      source: source ?? "direct",
-      utm_campaign,
+      ...attribution,
       journey_interest,
       interests,
       ai_brief,

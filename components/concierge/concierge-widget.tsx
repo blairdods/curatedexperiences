@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useConcierge } from "./use-concierge";
 import { ConciergeTrigger } from "./concierge-trigger";
 import { ConciergePanel } from "./concierge-panel";
-import { trackEvent } from "@/components/ui/analytics";
+import { trackEvent, trackConversion } from "@/components/ui/analytics";
 import type { ConciergeOpenDetail } from "@/lib/itinerary-refiner/events";
 import { CONCIERGE_OPEN_EVENT } from "@/lib/itinerary-refiner/events";
 import type { ItineraryCustomization } from "@/lib/itinerary-refiner/types";
@@ -117,12 +117,16 @@ export function ConciergeWidget() {
   // --- Send message with customization context ---
   const handleSendMessage = useCallback(
     (content: string) => {
+      // Fire on the first user message only
+      if (messages.length === 0) {
+        trackConversion("concierge_engaged", { value: 0 });
+      }
       const customization = customizationRef.current;
       // Once sent, clear so it doesn't get re-sent on subsequent messages
       customizationRef.current = null;
       sendMessage(content, customization ?? undefined);
     },
-    [sendMessage]
+    [messages.length, sendMessage]
   );
 
   // --- Email capture handler ---
@@ -134,7 +138,7 @@ export function ConciergeWidget() {
           .map((m) => `${m.role === "user" ? "Visitor" : "Concierge"}: ${m.content}`)
           .join("\n\n");
 
-        await fetch("/api/leads", {
+        const res = await fetch("/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -145,6 +149,12 @@ export function ConciergeWidget() {
             conversation_summary: conversationSummary || undefined,
           }),
         });
+
+        if (res.ok) {
+          const userData = { email };
+          trackConversion("email_captured", { value: 30, userData });
+          trackConversion("lead_created", { value: 50, userData });
+        }
       } catch {
         // Silent fail — don't interrupt UX
       }

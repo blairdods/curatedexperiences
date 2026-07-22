@@ -74,24 +74,43 @@ export async function proxy(request: NextRequest) {
     });
   }
 
-  // Persist UTM params for attribution
+  // Persist last-touch paid-media parameters for server-side lead attribution.
+  // These cookies contain no personal data and are never used to source media.
   const url = new URL(request.url);
-  const utmCampaign = url.searchParams.get("utm_campaign");
-  if (utmCampaign) {
-    response.cookies.set("ce-utm-campaign", utmCampaign, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-      sameSite: "lax",
-    });
+  const attributionParams = [
+    ["utm_source", "ce-utm-source"],
+    ["utm_medium", "ce-utm-medium"],
+    ["utm_campaign", "ce-utm-campaign"],
+    ["utm_term", "ce-utm-term"],
+    ["utm_content", "ce-utm-content"],
+    ["gclid", "ce-gclid"],
+    ["gbraid", "ce-gbraid"],
+    ["wbraid", "ce-wbraid"],
+  ] as const;
+  const hasAttribution = attributionParams.some(([param]) =>
+    url.searchParams.has(param)
+  );
+  const attributionCookieOptions = {
+    maxAge: 90 * 24 * 60 * 60,
+    path: "/",
+    sameSite: "lax" as const,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  };
+
+  for (const [param, cookieName] of attributionParams) {
+    const value = url.searchParams.get(param);
+    if (value) {
+      response.cookies.set(cookieName, value.slice(0, 2048), attributionCookieOptions);
+    }
   }
 
-  const utmSource = url.searchParams.get("utm_source");
-  if (utmSource) {
-    response.cookies.set("ce-utm-source", utmSource, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-      sameSite: "lax",
-    });
+  if (hasAttribution) {
+    response.cookies.set(
+      "ce-landing-page",
+      `${url.pathname}${url.search}`.slice(0, 2048),
+      attributionCookieOptions
+    );
   }
 
   return response;
