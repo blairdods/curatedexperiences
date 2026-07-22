@@ -35,11 +35,11 @@ export default async function GoogleAdsPage() {
   const role = await getUserRole(user.email);
   if (!role) redirect("/admin");
 
-  const [dashboard, sources] = await Promise.all([
+  const [dashboard, sources, assets] = await Promise.all([
     getGoogleAdsDashboardData(30),
     getAdContentSources(),
+    getEligibleAdAssets(),
   ]);
-  const assets = getEligibleAdAssets();
   const service = await createServiceClient();
   const draftsResult = dashboard.migrationReady
     ? await service

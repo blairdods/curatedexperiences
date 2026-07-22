@@ -109,7 +109,7 @@ export async function POST(request: Request) {
   }
 
   const requestedIds = new Set(body.selectedAssetIds ?? []);
-  const selectedAssets = getEligibleAdAssets().filter((asset) =>
+  const selectedAssets = (await getEligibleAdAssets()).filter((asset) =>
     requestedIds.has(asset.assetId)
   );
   if (selectedAssets.length !== requestedIds.size) {

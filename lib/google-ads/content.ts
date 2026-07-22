@@ -2,6 +2,7 @@ import "server-only";
 
 import { createServiceClient } from "@/lib/supabase/server";
 import { getAssets } from "@/lib/asset-library";
+import { getUploadedAssets } from "@/lib/asset-library/uploaded";
 import { getAssetThumbnailSrc } from "@/lib/asset-library/sources";
 
 export type AdContentSourceType = "destination" | "journey" | "journal";
@@ -83,8 +84,9 @@ export async function getAdContentSources(): Promise<AdContentSourceOption[]> {
  * Only assets with explicit paid usage permission and a live-server source are
  * exposed. Raw files in the ignored asset-library directory are never copied.
  */
-export function getEligibleAdAssets(): EligibleAdAsset[] {
-  return getAssets()
+export async function getEligibleAdAssets(): Promise<EligibleAdAsset[]> {
+  const allAssets = [...await getUploadedAssets(), ...getAssets()];
+  return allAssets
     .filter((asset) => asset.paidAdsOk)
     .flatMap((asset) => {
       // Prefer the provider-hosted durable source so ad drafts do not depend on
@@ -119,14 +121,15 @@ function tokens(value: string): Set<string> {
   );
 }
 
-export function rankEligibleAssets(
+export async function rankEligibleAssets(
   source: AdContentSourceOption,
-  assets = getEligibleAdAssets()
-): EligibleAdAsset[] {
+  assets?: EligibleAdAsset[]
+): Promise<EligibleAdAsset[]> {
+  const eligibleAssets = assets ?? await getEligibleAdAssets();
   const sourceTokens = tokens(
     `${source.title} ${source.subtitle} ${source.region} ${source.slug}`
   );
-  return [...assets].sort((a, b) => {
+  return [...eligibleAssets].sort((a, b) => {
     const score = (asset: EligibleAdAsset) => {
       const assetTokens = tokens(
         `${asset.title} ${asset.region} ${asset.location} ${asset.tags.join(" ")}`
