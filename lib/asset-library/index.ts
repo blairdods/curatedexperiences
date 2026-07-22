@@ -12,17 +12,27 @@ const REMOTE_IMAGES = remoteImages as Record<string, RemoteImageRecord>;
 
 export interface AssetRecord {
   assetId: string;
+  source: "tnz" | "uploaded";
   title: string;
+  altText: string;
+  description: string;
   region: string;
   location: string;
   licence: string;
+  adStatus: "approved" | "not_approved" | "pending";
   paidAdsOk: boolean;
   tags: string[];
   credit: string;
+  copyright: string;
+  usageNotes: string;
   fileType: string;
   fileSize: string;
   resolution: string;
   dateAdded: string;
+  dateTaken: string;
+  camera: string;
+  latitude: number | null;
+  longitude: number | null;
   sourceUrl: string;
   filename: string;
   /** `/assets/images/[filename]` if committed to git, null otherwise. */
@@ -108,17 +118,27 @@ export const getAssets = cache((): AssetRecord[] => {
 
     results.push({
       assetId,
+      source: "tnz",
       title: get(COL("Title")),
+      altText: get(COL("Title")),
+      description: "",
       region: get(COL("Region")),
       location: get(COL("Location")),
       licence: get(COL("Licence")),
+      adStatus: get(COL("Paid Ads OK")).toLowerCase() === "yes" ? "approved" : "not_approved",
       paidAdsOk: get(COL("Paid Ads OK")).toLowerCase() === "yes",
       tags,
       credit: get(COL("Credit")),
+      copyright: "",
+      usageNotes: "",
       fileType: get(COL("File Type")).toUpperCase(),
       fileSize: get(COL("File Size")),
       resolution: get(COL("Resolution")),
       dateAdded: get(COL("Date Added")),
+      dateTaken: "",
+      camera: "",
+      latitude: null,
+      longitude: null,
       sourceUrl: get(COL("Source URL")),
       filename,
       publicSrc: PUBLIC_FILES.has(filename) ? `/assets/images/${filename}` : null,

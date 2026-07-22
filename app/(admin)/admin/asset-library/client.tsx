@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback, useRef } from "react";
 import type { AssetRecord } from "@/lib/asset-library";
 import { getAssetContentSrc, getAssetThumbnailSrc } from "@/lib/asset-library/sources";
+import { AssetUploadDialog } from "@/components/admin/asset-upload-dialog";
 
 /** Returns the best available src for a thumbnail/preview image. */
 const LICENCE_LABELS: Record<string, { label: string; colour: string }> = {
@@ -16,9 +17,11 @@ const PER_PAGE = 60;
 interface Props {
   initialAssets: AssetRecord[];
   facets: { regions: string[]; licences: string[]; fileTypes: string[] };
+  canUpload: boolean;
 }
 
-export function AssetLibraryClient({ initialAssets, facets }: Props) {
+export function AssetLibraryClient({ initialAssets, facets, canUpload }: Props) {
+  const [assets, setAssets] = useState(initialAssets);
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("");
   const [licence, setLicence] = useState("");
@@ -27,11 +30,12 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState<AssetRecord | null>(null);
   const [copied, setCopied] = useState(false);
+  const [uploadOpen, setUploadOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
-    return initialAssets.filter((a) => {
+    return assets.filter((a) => {
       if (region && a.region.toLowerCase() !== region.toLowerCase()) return false;
       if (licence && a.licence !== licence) return false;
       if (paidAdsOk !== undefined && a.paidAdsOk !== paidAdsOk) return false;
@@ -39,15 +43,24 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
       if (!q) return true;
       return (
         a.title.toLowerCase().includes(q) ||
+        a.altText.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q) ||
         a.location.toLowerCase().includes(q) ||
         a.region.toLowerCase().includes(q) ||
         a.credit.toLowerCase().includes(q) ||
         a.tags.some((t) => t.toLowerCase().includes(q)) ||
         a.filename.toLowerCase().includes(q) ||
+        a.usageNotes.toLowerCase().includes(q) ||
         a.assetId.includes(q)
       );
     });
-  }, [initialAssets, query, region, licence, paidAdsOk, fileType]);
+  }, [assets, query, region, licence, paidAdsOk, fileType]);
+
+  const availableFacets = useMemo(() => ({
+    regions: [...new Set([...facets.regions, ...assets.map((asset) => asset.region).filter(Boolean)])].sort(),
+    licences: [...new Set([...facets.licences, ...assets.map((asset) => asset.licence).filter(Boolean)])].sort(),
+    fileTypes: [...new Set([...facets.fileTypes, ...assets.map((asset) => asset.fileType).filter(Boolean)])].sort(),
+  }), [assets, facets]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const safePage = Math.min(page, totalPages);
@@ -91,7 +104,15 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
   const hasFilters = query || region || licence || fileType || paidAdsOk !== undefined;
 
   return (
-    <div className="flex gap-6 min-h-0">
+    <div className="space-y-4">
+      {canUpload && (
+        <div className="flex justify-end">
+          <button onClick={() => setUploadOpen(true)} className="rounded bg-navy px-4 py-2 text-sm font-medium text-white hover:bg-navy/90">
+            + Add asset
+          </button>
+        </div>
+      )}
+      <div className="flex gap-6 min-h-0">
       {/* ── Sidebar filters ── */}
       <aside className="w-56 flex-shrink-0 space-y-5">
         {/* Search */}
@@ -120,7 +141,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             className="w-full rounded border border-warm-200 bg-white px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-navy/40"
           >
             <option value="">All regions</option>
-            {facets.regions.map((r) => (
+            {availableFacets.regions.map((r) => (
               <option key={r} value={r}>{r}</option>
             ))}
           </select>
@@ -137,7 +158,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             className="w-full rounded border border-warm-200 bg-white px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-navy/40"
           >
             <option value="">All licences</option>
-            {facets.licences.map((l) => (
+            {availableFacets.licences.map((l) => (
               <option key={l} value={l}>{LICENCE_LABELS[l]?.label ?? l}</option>
             ))}
           </select>
@@ -154,7 +175,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             className="w-full rounded border border-warm-200 bg-white px-2 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-navy/40"
           >
             <option value="">All types</option>
-            {facets.fileTypes.map((t) => (
+            {availableFacets.fileTypes.map((t) => (
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
@@ -200,7 +221,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
 
         <div className="pt-2 border-t border-warm-100 text-xs text-foreground-muted">
           <span className="font-semibold text-navy">{filtered.length.toLocaleString()}</span> of{" "}
-          {initialAssets.length.toLocaleString()} assets
+          {assets.length.toLocaleString()} assets
         </div>
       </aside>
 
@@ -288,7 +309,17 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Title</p>
               <p className="mt-0.5 font-medium text-navy leading-snug">{selected.title}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wide text-foreground-muted">
+                {selected.source === "uploaded" ? "Platform upload" : "TNZ catalogue"}
+              </p>
             </div>
+
+            {selected.description && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Description</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-navy">{selected.description}</p>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -330,9 +361,13 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
 
             <div className="flex items-center gap-2">
               <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                selected.paidAdsOk ? "bg-blue-100 text-blue-800" : "bg-warm-100 text-warm-700"
+                selected.adStatus === "approved"
+                  ? "bg-blue-100 text-blue-800"
+                  : selected.adStatus === "pending"
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-warm-100 text-warm-700"
               }`}>
-                Paid ads: {selected.paidAdsOk ? "✓ OK" : "✗ Not allowed"}
+                Paid ads: {selected.adStatus === "approved" ? "✓ Approved" : selected.adStatus === "pending" ? "Pending review" : "✗ Not approved"}
               </span>
             </div>
 
@@ -340,6 +375,40 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Photographer</p>
                 <p className="mt-0.5 text-navy">{selected.credit}</p>
+              </div>
+            )}
+
+            {(selected.dateTaken || selected.camera) && (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Captured</p>
+                  <p className="mt-0.5 text-xs text-navy">{selected.dateTaken ? new Date(selected.dateTaken).toLocaleDateString("en-NZ") : "—"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Camera</p>
+                  <p className="mt-0.5 text-xs text-navy">{selected.camera || "—"}</p>
+                </div>
+              </div>
+            )}
+
+            {selected.copyright && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Copyright</p>
+                <p className="mt-0.5 text-xs text-navy">{selected.copyright}</p>
+              </div>
+            )}
+
+            {selected.usageNotes && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Usage notes</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-navy">{selected.usageNotes}</p>
+              </div>
+            )}
+
+            {selected.latitude != null && selected.longitude != null && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted">Embedded coordinates</p>
+                <p className="mt-0.5 font-mono text-xs text-navy">{selected.latitude.toFixed(5)}, {selected.longitude.toFixed(5)}</p>
               </div>
             )}
 
@@ -371,7 +440,7 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
                   rel="noopener noreferrer"
                   className="text-xs text-navy underline hover:text-gold"
                 >
-                  View on TNZ →
+                  View source →
                 </a>
               </div>
             )}
@@ -386,19 +455,31 @@ export function AssetLibraryClient({ initialAssets, facets }: Props) {
             >
               {copied ? "✓ Copied!" : "Copy API path"}
             </button>
-            <button
-              onClick={() => copyPublicPath(selected)}
-              className="w-full rounded border border-warm-200 px-3 py-2 text-xs font-medium text-foreground-muted hover:bg-warm-50 transition-colors"
-              title="Only works if this image is in public/assets/images/"
-            >
-              Copy public path
-            </button>
+            {selected.source === "tnz" && (
+              <button
+                onClick={() => copyPublicPath(selected)}
+                className="w-full rounded border border-warm-200 px-3 py-2 text-xs font-medium text-foreground-muted hover:bg-warm-50 transition-colors"
+                title="Only works if this image is in public/assets/images/"
+              >
+                Copy public path
+              </button>
+            )}
             <p className="text-[10px] text-foreground-muted leading-snug">
               Filename: <span className="font-mono">{selected.filename}</span>
             </p>
           </div>
         </aside>
       )}
+      </div>
+      <AssetUploadDialog
+        open={uploadOpen}
+        onClose={() => setUploadOpen(false)}
+        onUploaded={(asset) => {
+          setAssets((current) => [asset, ...current]);
+          setSelected(asset);
+          setPage(1);
+        }}
+      />
     </div>
   );
 }
@@ -454,6 +535,11 @@ function AssetCard({
         {asset.paidAdsOk && (
           <span className="rounded bg-blue-100 px-1.5 py-0.5 text-[9px] font-semibold text-blue-800">
             Ads ✓
+          </span>
+        )}
+        {asset.adStatus === "pending" && (
+          <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[9px] font-semibold text-amber-800">
+            Ads pending
           </span>
         )}
       </div>
