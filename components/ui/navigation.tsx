@@ -13,6 +13,9 @@ const NAV_LINKS = [
   { href: "/contact",      label: "Contact" },
 ];
 
+const SCROLL_ENTER_Y = 80;
+const SCROLL_EXIT_Y = 32;
+
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -20,7 +23,14 @@ export function Navigation() {
 
   // Detect scroll to toggle between transparent (hero) and solid (scrolled)
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => {
+      const scrollY = Math.max(window.scrollY, 0);
+      setScrolled((current) =>
+        current ? scrollY > SCROLL_EXIT_Y : scrollY > SCROLL_ENTER_Y
+      );
+    };
+
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -28,15 +38,10 @@ export function Navigation() {
   const isHome = pathname === "/";
   // Home page: transparent over hero, solid navy when scrolled
   // Internal pages: always solid navy
-  const isDark = !isHome || scrolled || mobileOpen;
 
   const navBg = isHome && !scrolled && !mobileOpen
     ? "bg-transparent"
     : "bg-navy border-b border-white/10";
-
-  const logoSrc = isDark
-    ? "/logos/CE_Horizontal_NB_1200x400.svg"
-    : "/logos/CE_Horizontal_TB_Cream_1200x400.svg";
 
   const linkColor = "text-cream/60 hover:text-cream";
   const activeLinkColor = "text-cream";
@@ -49,17 +54,15 @@ export function Navigation() {
         isTransparentHome ? "h-[82px]" : "h-16 sm:h-24"
       }`}>
 
-        {/* Logo — larger, proper proportion */}
+        {/* One transparent logo and a fixed aspect ratio prevent scroll-state flicker. */}
         <Link href="/" className="flex items-center flex-shrink-0">
           <Image
-            src={logoSrc}
+            src="/logos/CE_Horizontal_TB_Cream_1200x400.svg"
             alt="Curated Experiences"
-            width={isDark ? 440 : 295}
-            height={isDark ? 146 : 40}
-            className={`w-auto transition-all duration-300 ${
-              isTransparentHome ? "h-10" : "h-10 sm:h-22"
-            }`}
-            priority
+            width={1180}
+            height={160}
+            className="h-10 w-auto"
+            preload
           />
         </Link>
 
