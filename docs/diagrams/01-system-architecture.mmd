@@ -1,0 +1,67 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1F3864', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1F3864', 'lineColor': '#b8860b', 'secondaryColor': '#faf9f7', 'tertiaryColor': '#d4c5b5', 'fontFamily': 'Inter, sans-serif'}}}%%
+graph TB
+    subgraph CLIENT["🌐 CLIENT LAYER"]
+        US["🇺🇸 US Luxury Traveller<br/>$125K+ HHI, 40-60 age<br/>NY/CA/TX/WA/AZ"]
+        EDGE["⚡ Edge Middleware<br/>geo · source · device<br/>UTM · returning visitor"]
+    end
+
+    subgraph VERCEL["▲ VERCEL (Next.js 16, React 19)"]
+        subgraph PUBLIC["Public Website"]
+            HOME["🏠 Homepage<br/>4 personalised variants"]
+            JOURNEY["🗺️ 6 Journeys<br/>day-by-day accordion"]
+            DEST["📍 4 Destinations"]
+            JOURNAL["📝 19 Journal Articles<br/>MDX · SEO-optimised"]
+            ABOUT["👥 About · Stories<br/>Contact Modal"]
+        end
+
+        subgraph CONCIERGE["🤖 AI Concierge"]
+            CHAT["💬 Streaming Chat<br/>Claude Sonnet 4.6"]
+            RAG["🔍 RAG Search<br/>content(5) + tours(3)"]
+            BRIEF["📋 Brief Extraction<br/>structured JSON"]
+            TRIGGERS["🎯 Triggers<br/>45s · exit intent · CTA"]
+        end
+
+        subgraph ADMIN["🔐 Admin Dashboard"]
+            CRM["📊 CRM<br/>leads · timeline · notes"]
+            BOOKING["📅 Bookings<br/>DnD Kanban · costing"]
+            CMS["✏️ Content<br/>queue · versions · approve"]
+            SETTINGS["⚙️ Settings<br/>brand voice · email · team"]
+        end
+
+        API["🔗 API Routes<br/>concierge · leads · nurture<br/>admin CRUD · embed · exports"]
+        CRON["⏰ Vercel Cron<br/>daily nurture processing"]
+    end
+
+    subgraph SUPABASE["🗄️ SUPABASE (Postgres + pgvector)"]
+        DB["📦 Database<br/>tours · enquiries · content<br/>bookings · settings"]
+        VECTOR["🧬 pgvector<br/>gte-small · 384 dims<br/>HNSW indexes"]
+        EDGE_FN["⚡ Edge Function<br/>embed (text + batch)"]
+        AUTH["🔑 Auth<br/>magic link · RBAC"]
+        STORAGE["📁 Storage<br/>images · documents"]
+    end
+
+    subgraph EXTERNAL["🔌 EXTERNAL SERVICES"]
+        CLAUDE["🧠 Claude API<br/>concierge + agents"]
+        RESEND["✉️ Resend<br/>transactional + nurture"]
+        GA4["📈 GA4 + Google Ads<br/>analytics + acquisition"]
+        MAPBOX["🗾 Mapbox<br/>journey route maps"]
+        PAPERCLIP["📎 Paperclip<br/>agent governance"]
+    end
+
+    US -->|"searches luxury NZ travel"| EDGE
+    EDGE -->|"personalised content"| PUBLIC
+    PUBLIC -->|"Start Planning CTA"| CONCIERGE
+    CONCIERGE -->|"RAG query"| VECTOR
+    CONCIERGE -->|"save brief"| API
+    API --> DB
+    CONCIERGE -->|"streaming"| CLAUDE
+    CONCIERGE -->|"notify + nurture"| RESEND
+    ADMIN --> API
+    API --> DB
+    VECTOR --> DB
+    EDGE_FN --> VECTOR
+    CRON --> RESEND
+    PUBLIC --> GA4
+    PUBLIC --> MAPBOX
+    PAPERCLIP -->|"governs"| CLAUDE
+    PUBLIC -->|"deploy"| VERCEL

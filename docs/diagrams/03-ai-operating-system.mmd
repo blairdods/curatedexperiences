@@ -1,0 +1,41 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1F3864', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1F3864', 'lineColor': '#b8860b', 'secondaryColor': '#faf9f7', 'tertiaryColor': '#d4c5b5', 'fontFamily': 'Inter, sans-serif'}}}%%
+graph LR
+    subgraph PAPERCLIP["📎 PAPERCLIP CONTROL PLANE"]
+        GOV["🛂 Governance<br/>budgets · heartbeats<br/>approval gates"]
+        TASKS["📋 Task Management<br/>assignment · tracking<br/>priority queues"]
+        HUMAN["👤 Human-in-the-Loop<br/>content approval<br/>strategy overrides"]
+    end
+
+    subgraph AGENTS["🤖 24/7 AI AGENT FLEET"]
+        CEO["🏛️ CEO Agent<br/>Reviews metrics<br/>Writes strategic briefs<br/>Sets priorities"]
+        CONTENT["✍️ Content Agent<br/>Generates journal articles<br/>SEO-optimises content<br/>Maintains brand voice"]
+        SEO["📈 SEO + Ads Agent<br/>Monitors Search Console<br/>Adjusts ad strategy<br/>Tracks lodge queries"]
+        CONCIERGE_AGENT["💬 Concierge Agent<br/>Reviews conversations<br/>Suggests prompt improvements<br/>Monitors qualification rate"]
+    end
+
+    subgraph DATA["🗄️ DATA & KNOWLEDGE"]
+        VECTOR_STORE["🧬 Vector Store<br/>pgvector · gte-small<br/>384 dims · HNSW"]
+        CONTENT_DB["📚 Content DB<br/>121 TNZ records<br/>19 journal articles<br/>6 journey narratives"]
+        LEADS["👥 Leads DB<br/>enquiries · briefs<br/>conversations · bookings"]
+    end
+
+    subgraph OUTPUTS["📤 OUTPUTS & ACTIONS"]
+        JOURNAL_OUT["📝 Journal Articles<br/>→ curatedexperiences.com"]
+        BRIEF_OUT["📋 CEO Briefs<br/>→ admin dashboard"]
+        ADS_OUT["🎯 Ad Optimisations<br/>→ Google Ads campaigns"]
+        PROMPT_OUT["💡 Prompt Updates<br/>→ Concierge system prompt"]
+    end
+
+    GOV -->|"governs"| AGENTS
+    TASKS -->|"assigns work"| AGENTS
+    AGENTS -->|"reads/writes"| DATA
+    AGENTS -->|"produces"| OUTPUTS
+    CEO -->|"approves"| CONTENT
+    CEO -->|"directs"| SEO
+    HUMAN -->|"approves"| OUTPUTS
+    PAPERCLIP -->|"logs all actions"| DATA
+
+    style PAPERCLIP fill:#1F3864,stroke:#b8860b,color:#fff
+    style AGENTS fill:#faf9f7,stroke:#1F3864,color:#1F3864
+    style DATA fill:#d4c5b5,stroke:#1F3864,color:#1F3864
+    style OUTPUTS fill:#b8860b,stroke:#1F3864,color:#fff

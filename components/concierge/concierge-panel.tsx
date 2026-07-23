@@ -114,7 +114,7 @@ export function ConciergePanel({
               <div className="px-5 pb-3 text-center">
                 <button
                   onClick={() => setShowEmailCapture(true)}
-                  className="text-[11px] text-foreground/35 transition-colors hover:text-foreground/50"
+                  className="text-[11px] text-navy/60 underline underline-offset-2 transition-colors hover:text-navy"
                 >
                   Just browsing? Get inspiration by email instead
                 </button>

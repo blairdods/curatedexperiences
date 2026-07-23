@@ -54,6 +54,7 @@ export function VideoShowcase({ videos, dark = false }: Props) {
           muted={muted}
           loop
           playsInline
+          poster={current.poster}
           className="w-full h-full object-cover"
         >
           <source src={current.src} type="video/mp4" />
@@ -118,6 +119,7 @@ export function VideoShowcase({ videos, dark = false }: Props) {
                 muted
                 playsInline
                 preload="metadata"
+                poster={v.poster}
                 className="w-full h-full object-cover pointer-events-none"
               />
               <div className="absolute inset-0 bg-black/20" />

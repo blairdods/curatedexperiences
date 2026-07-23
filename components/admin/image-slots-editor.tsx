@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { ImagePickerField } from "@/components/admin/image-picker";
+import { saveSetting } from "@/lib/admin/save-setting";
 import {
   IMAGE_SLOT_DEFINITIONS,
   IMAGE_SLOT_SETTING_KEY,
@@ -75,25 +75,13 @@ export function ImageSlotsEditor({
     setSaved(false);
     setError("");
 
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error: upsertError } = await supabase.from("settings").upsert(
-      {
-        key: IMAGE_SLOT_SETTING_KEY,
-        value: currentSerialised,
-        updated_by: user?.email ?? "unknown",
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: "key" }
-    );
-
-    setSaving(false);
-
-    if (upsertError) {
-      setError(upsertError.message);
+    try {
+      await saveSetting(IMAGE_SLOT_SETTING_KEY, currentSerialised);
+    } catch (saveError) {
+      setSaving(false);
+      setError(
+        saveError instanceof Error ? saveError.message : "Unable to save images"
+      );
       return;
     }
 
@@ -112,6 +100,7 @@ export function ImageSlotsEditor({
     });
 
     setSavedSerialised(currentSerialised);
+    setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }

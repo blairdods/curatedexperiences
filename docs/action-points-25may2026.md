@@ -18,11 +18,11 @@
 **Ongoing / Pre-launch**
 
 - [x] **Three-tier accommodation** — Standalone `accommodations` table live in Supabase. Admin page at `/admin/accommodations` with full CRUD, tier badges, region/rate fields, contracted flag. 140 properties ready to be entered.
-- [ ] **Stripe integration** — Real-time deposit capture from booking dashboard; generate secure payment links instantly during client conversations
+- [x] **Stripe integration** — Code complete: payment link generation, send-to-client email, webhook auto-marks deposit paid. **Still needed**: add STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET to Vercel env vars, and register curatedexperiences.com/api/stripe/webhook in Stripe dashboard.
 - [x] **™ symbol** — Added to about page (philosophy + heritage sections) and homepage PPG Collective section. Footer and T&C were already correct.
-- [ ] **Real-time analytics dashboard** — Lead tracking, conversion metrics, marketing cost per acquisition, geographic performance split (SG vs NA)
-- [ ] **Marketing AI agent** — Budget reallocation suggestions with human approval gate (e.g., "New York State performing well — reallocate $X?")
-- [ ] **GDPR/consent banners** — Implement only where legally required; avoid unnecessary friction on conversion pages
+- [x] **Real-time analytics dashboard** — Geo breakdown (SG/US/Other), GA4 traffic chart, conversion funnel, lead sources, CPA widget. CPA widget is manual placeholder — will be replaced with live Google Ads API data when ad accounts are connected.
+- [x] **Marketing AI agent** — Live on analytics dashboard. Claude haiku analyses lead data by market, generates budget recommendations, each requires Approve/Dismiss before logging.
+- [x] **GDPR/consent banners** — EU/EEA/UK/CH only. Detected via Cloudflare geo headers in middleware, cookie-based (1yr), not shown to US or Singapore visitors.
 - [ ] **Payment policy T&Cs** — Once Tony/Liam decide on cooling-off period (48h vs 7 days) and deposit conditions, update Terms & Conditions template accordingly
 - [ ] **Professional email setup** — Configure named addresses (e.g., tony@, liam@) instead of generic websales@ or info@
 

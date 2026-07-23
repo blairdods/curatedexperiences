@@ -1,922 +1,131 @@
 {
-  "generated_at": "2026-06-10T04:44:43.680Z",
-  "updated": 89,
-  "failed": 32,
+  "generated_at": "2026-06-10T16:04:28.649Z",
+  "updated": 16,
+  "failed": 2,
   "entries": [
     {
-      "id": "5cfd0385-8485-407a-a870-f105676f0c75",
-      "name": "Castaways Resort",
-      "region": "Auckland",
-      "website_url": "https://www.castaways.co.nz",
-      "source_urls": [
-        "https://www.castaways.co.nz/",
-        "https://www.castaways.co.nz/accommodation-1"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "7bf2040f-76b6-4da3-ad5b-f6ea46cdd989",
-      "name": "Delamore Estate Waiheke",
-      "region": "Auckland",
-      "website_url": "https://www.delamorelodge.com/",
-      "source_urls": [
-        "https://www.delamorelodge.com/",
-        "https://www.delamorelodge.com/rooms",
-        "https://www.delamorelodge.com/experiences"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "1308caa8-f9e3-4ee7-9977-493e9a3fb948",
-      "name": "Hilton Auckland",
-      "region": "Auckland",
-      "website_url": "https://www.hilton.com/en/hotels/aklhitw-hilton-auckland",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "a0b3c87a-29bb-4e3c-b500-4b0a7b38062d",
-      "name": "Hotel Fitzroy",
-      "region": "Auckland",
-      "website_url": "https://www.fablehotelsandresorts.com/hotels/hotel-fitzroy",
-      "source_urls": [
-        "https://www.fablehotelsandresorts.com/hotels/hotel-fitzroy",
-        "https://www.fablehotelsandresorts.com/dining",
-        "https://www.fablehotelsandresorts.com/dining/fable-auckland"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "a773aecd-2a81-4f09-9cc4-8b3d1816ae2a",
-      "name": "JW Marriott Auckland",
-      "region": "Auckland",
-      "website_url": "https://www.marriott.com/en-us/hotels/akljw-jw-marriott-auckland",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "335f9950-1574-4899-b013-c2ddb021da98",
-      "name": "Oaks Auckland Hotel",
-      "region": "Auckland",
-      "website_url": "https://www.oakshotels.com/en/oaks-auckland-hotel",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "de5ff896-87a8-47cc-a378-77bcc7203bac",
-      "name": "Omana Luxury Villas",
-      "region": "Auckland",
-      "website_url": "https://www.omana.nz",
-      "source_urls": [
-        "https://www.omana.nz/",
-        "https://www.omana.nz/villas",
-        "https://www.omana.nz/packages/summer-special---stay-4-nights-save-20"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "ccd4bc3b-2228-4e13-bfce-d7f1caadd3ab",
-      "name": "Park Hyatt Auckland",
-      "region": "Auckland",
-      "website_url": "https://www.hyatt.com/park-hyatt/en-US/akland-park-hyatt-auckland",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "89bf8b8a-0aeb-484b-b170-9ac63fb313dd",
-      "name": "Pullman Auckland",
-      "region": "Auckland",
-      "website_url": "https://www.pullmanauckland.co.nz",
-      "source_urls": [
-        "https://www.pullmanauckland.co.nz/",
-        "https://www.pullmanauckland.co.nz/apartments-and-rooms/",
-        "https://www.pullmanauckland.co.nz/apartments-and-rooms/superior-queen-twin-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "a563a849-695b-42aa-ae01-470e794952f8",
-      "name": "Sofitel Auckland Viaduct Harbour",
-      "region": "Auckland",
-      "website_url": "https://www.sofitel-auckland-viaduct.com",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "3afa60b6-0328-4eec-8691-5ca1d0d37b6c",
-      "name": "Swiss-Bel Suites Auckland",
-      "region": "Auckland",
-      "website_url": "https://www.swiss-belhotel.com/en-gb/new-zealand/auckland",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "9159984e-8127-4591-9a1c-4f50ff01d070",
-      "name": "Te Arai Links",
-      "region": "Auckland",
-      "website_url": "https://tearai.com",
-      "source_urls": [
-        "https://tearai.com/",
-        "https://tearai.com/stay/",
-        "https://tearai.com/experiences/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "2f13d8e4-8958-4cb7-8cec-715b4cdace5d",
-      "name": "Te Arai Lodge",
-      "region": "Auckland",
-      "website_url": "https://tearailodge.co.nz",
-      "source_urls": [
-        "https://tearailodge.co.nz/",
-        "https://tearailodge.co.nz/our-story",
-        "https://tearailodge.co.nz/lodge-activities"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "a697a70e-d830-436b-a69c-8f496a9d84cf",
-      "name": "The Boatshed Hotel",
-      "region": "Auckland",
-      "website_url": "https://www.boatshed.co.nz/",
-      "source_urls": [
-        "https://www.boatshed.co.nz/",
-        "https://www.boatshed.co.nz/Rooms.html",
-        "https://www.boatshed.co.nz/rooms_boatsheds.html"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "0f570332-e7dc-4c01-b8d9-4b09098c4b65",
-      "name": "The Hotel Britomart",
-      "region": "Auckland",
-      "website_url": "https://www.thehotelbritomart.com",
-      "source_urls": [
-        "https://thehotelbritomart.com/",
-        "https://thehotelbritomart.com/our-guest-rooms/",
-        "https://thehotelbritomart.com/the-landing-suites/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "e585308a-3734-477a-9de1-e28042ca9ea4",
-      "name": "Woodhouse Mountain Lodge",
-      "region": "Auckland",
-      "website_url": "https://www.capstonehotels.co.nz/woodhouse-mountain-lodge",
-      "source_urls": [
-        "https://www.capstonehotels.co.nz/woodhouse-mountain-lodge",
-        "https://www.capstonehotels.co.nz/about-us-1"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "2aa36845-3c43-47f0-b56b-f28784333937",
-      "name": "Aldourie Lodge",
+      "id": "e1bb287b-b9e1-44d3-b149-4251bc5a769c",
+      "name": "Dyers House",
       "region": "Canterbury",
-      "website_url": "https://www.aldourietekapo.com",
+      "website_url": "https://www.dyershouse.co.nz/",
       "source_urls": [
-        "https://www.aldourietekapo.com/"
+        "https://www.dyershouse.co.nz/",
+        "https://www.dyershouse.co.nz/accommodation",
+        "https://www.dyershouse.co.nz/accommodation/garden-room"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "f8bf418e-f61b-4b31-891c-2e46ce39c62e",
-      "name": "Annandale",
-      "region": "Canterbury",
-      "website_url": "https://www.annandale.com",
-      "source_urls": [
-        "https://www.annandale.com/",
-        "https://www.annandale.com/about",
-        "https://www.annandale.com/about/awards"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "a15f2141-fb39-4be4-aa22-681b139e23db",
-      "name": "Aoraki Alpine Lodge",
-      "region": "Canterbury",
-      "website_url": "https://aorakialpinelodge.co.nz",
-      "source_urls": [
-        "https://aorakialpinelodge.co.nz/",
-        "https://aorakialpinelodge.co.nz/rooms/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "bc3e3c07-bb8f-4eda-b96e-d50af4c51353",
-      "name": "Distinction Mackenzie Country Hotel",
-      "region": "Canterbury",
-      "website_url": "https://www.distinctionhotelstwizel.co.nz",
-      "source_urls": [
-        "https://www.distinctionhotelstwizel.co.nz/",
-        "https://www.distinctionhotelstwizel.co.nz/x,1002,2223,4136,,,/winterstay1.html",
-        "https://www.distinctionhotelstwizel.co.nz/x,1002,1979,4136,,,/stay2save.html"
-      ],
-      "status": "updated",
-      "confidence": "medium"
-    },
-    {
-      "id": "af82bdb5-5a3a-4d51-9ca7-18ec9f40a8b8",
-      "name": "Flockhill",
-      "region": "Canterbury",
-      "website_url": "https://www.flockhillnz.com",
-      "source_urls": [
-        "https://www.flockhillnz.com/",
-        "https://www.flockhillnz.com/stay",
-        "https://www.flockhillnz.com/the-villas"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "93050ba8-7945-4453-8e60-96a774a3dc33",
-      "name": "Grasmere Lodge",
-      "region": "Canterbury",
-      "website_url": "https://www.grasmerenz.com",
-      "source_urls": [
-        "https://www.grasmerenz.com/",
-        "https://www.grasmerenz.com/accommodation"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "17356138-0810-41a0-88da-9255e5124bb0",
-      "name": "Hapuku Lodge + Tree Houses",
-      "region": "Canterbury",
-      "website_url": "https://www.hapukulodge.com",
-      "source_urls": [
-        "https://www.hapukulodge.com/",
-        "https://www.hapukulodge.com/stay/",
-        "https://www.hapukulodge.com/stay/tree-houses/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "53ecafaf-09f7-46a9-b170-d1b524070d58",
-      "name": "Holme Station Homestead",
-      "region": "Canterbury",
-      "website_url": "https://www.holmestation.co.nz",
-      "source_urls": [
-        "https://www.holmestation.co.nz/",
-        "https://www.holmestation.co.nz/stay",
-        "https://www.holmestation.co.nz/stay/suites"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "9bb228da-efd2-45dc-8ef9-f3489e381e2f",
-      "name": "Hotel Montreal Christchurch",
-      "region": "Canterbury",
-      "website_url": "https://www.hotelmontreal.co.nz",
-      "source_urls": [
-        "https://www.hotelmontreal.co.nz/",
-        "https://www.hotelmontreal.co.nz/rooms-and-suites",
-        "https://www.hotelmontreal.co.nz/rooms-and-suites/superior-suite"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "5d027f38-c91f-42f1-896d-b229b75b3829",
-      "name": "Lake Heron Lodge",
-      "region": "Canterbury",
-      "website_url": "https://www.lakeheron.co.nz",
-      "source_urls": [
-        "https://www.lakeheron.co.nz/",
-        "https://www.lakeheron.co.nz/accommodation-options",
-        "https://www.lakeheron.co.nz/about-us"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "8118bdb3-66ae-4cd9-bb12-69b64f7c9473",
-      "name": "Lake Tekapo Grand Suites",
-      "region": "Canterbury",
-      "website_url": "https://grandsuitestekapo.co.nz/",
-      "source_urls": [
-        "https://grandsuitestekapo.co.nz/",
-        "https://grandsuitestekapo.co.nz/accommodation/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "83ea0264-52ad-4cc9-b68f-7f2ffaabd93b",
-      "name": "Lakestone Lodge",
-      "region": "Canterbury",
-      "website_url": "https://www.lakestonelodge.co.nz",
-      "source_urls": [
-        "https://www.lakestonelodge.co.nz/",
-        "https://www.lakestonelodge.co.nz/accommodation",
-        "https://www.lakestonelodge.co.nz/accommodation/exclusive-use"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "6e0a7933-e77c-46a1-b1a5-19c165235e1c",
-      "name": "Lindis Lodge",
-      "region": "Canterbury",
-      "website_url": "https://thelindis.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "5a926a86-3b8c-4ec6-99af-7230182cee4f",
-      "name": "Mt Cook Lakeside Retreat",
-      "region": "Canterbury",
-      "website_url": "https://mtcookretreat.nz",
-      "source_urls": [
-        "https://mtcookretreat.nz/",
-        "https://mtcookretreat.nz/stay/",
-        "https://mtcookretreat.nz/stay/ashley-mackenzie-villa/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "7850f2b0-8bd5-4f78-aff2-80c8f5b31738",
-      "name": "Mt Cook Lodge & Motels Aoraki",
-      "region": "Canterbury",
-      "website_url": "https://www.mtcooklodge.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "180f24ea-96a0-4984-9d04-0c232558f44d",
-      "name": "Otahuna Lodge",
-      "region": "Canterbury",
-      "website_url": "https://www.otahuna.co.nz",
-      "source_urls": [
-        "https://otahuna.co.nz/",
-        "https://otahuna.co.nz/pages/experiences/games-lawn",
-        "https://otahuna.co.nz/pages/experiences/picnic-lunch"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "a9437097-e6cb-46b3-82af-28690a13cec3",
-      "name": "Peppers Bluewater Resort Lake Tekapo",
-      "region": "Canterbury",
-      "website_url": "https://www.peppers.co.nz/bluewater",
-      "source_urls": [
-        "https://www.peppers.co.nz/bluewater/",
-        "https://www.peppers.co.nz/bluewater/rooms/",
-        "https://www.peppers.co.nz/bluewater/dining/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "7972220f-83ad-47b0-b409-ce21a2d3114f",
-      "name": "Piwakawaka Point Estate",
-      "region": "Canterbury",
-      "website_url": "https://www.piwakawakapoint.com/",
-      "source_urls": [
-        "https://www.piwakawakapoint.com/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "13c87618-ee4a-4976-bf18-0f035591c9ca",
-      "name": "Ranginui at Lake Tekapo",
-      "region": "Canterbury",
-      "website_url": "https://ranginui.nz",
-      "source_urls": [
-        "https://ranginui.nz/",
-        "https://ranginui.nz/guest-suites/",
-        "https://ranginui.nz/amenities/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "12c868ab-6ac3-457e-8b18-da81447a3ba7",
-      "name": "Sudima Kaikōura",
-      "region": "Canterbury",
-      "website_url": "https://www.sudimahotels.com/hotels/kaikoura",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "9be3dd0d-4db6-48ee-87cf-c1a969b15608",
-      "name": "The Bunker House",
-      "region": "Canterbury",
-      "website_url": "https://www.bunkerhouse.co.nz",
-      "source_urls": [
-        "https://www.bunkerhouse.co.nz/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "c86cc67a-b738-4127-a42b-1356019fa7c0",
-      "name": "The George Christchurch",
-      "region": "Canterbury",
-      "website_url": "https://www.thegeorge.com",
-      "source_urls": [
-        "https://www.thegeorge.com/",
-        "https://www.thegeorge.com/stay/",
-        "https://www.thegeorge.com/stay/executive-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "56949307-2d78-4b57-b4d9-8be0ea9d6c22",
-      "name": "The Observatory Hotel Christchurch",
-      "region": "Canterbury",
-      "website_url": "https://www.observatoryhotel.co.nz",
-      "source_urls": [
-        "https://www.observatoryhotel.co.nz/",
-        "https://www.observatoryhotel.co.nz/rooms/",
-        "https://www.observatoryhotel.co.nz/rooms/legacy-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "50c147ae-625d-4edf-ba16-ecf05c20be68",
-      "name": "Wilderness Lodge Arthur's Pass",
-      "region": "Canterbury",
-      "website_url": "https://www.wildernesslodge.co.nz/new-zealand/arthurs-pass-wilderness-lodge/",
-      "source_urls": [
-        "https://www.wildernesslodge.co.nz/new-zealand/arthurs-pass-wilderness-lodge/",
-        "https://www.wildernesslodge.co.nz/new-zealand/arthurs-pass-wilderness-lodge/arthurs-pass-accommodation/",
-        "https://www.wildernesslodge.co.nz/new-zealand/lake-moeraki-wilderness-lodge/lake-moeraki-accommodation/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "485086dd-319f-49a6-b695-c9b95317af81",
-      "name": "Distinction Dunedin Hotel",
-      "region": "Dunedin",
-      "website_url": "https://www.distinctionhotels.co.nz/hotels/distinction-dunedin-hotel",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "57226349-0e0e-419f-94d1-c63b4c616b38",
-      "name": "Fable Dunedin",
-      "region": "Dunedin",
-      "website_url": "https://www.fablehotels.com/dunedin",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "541b86ab-c428-4826-a400-e4bd18cd36a1",
-      "name": "Scenic Hotel Southern Cross Dunedin",
-      "region": "Dunedin",
-      "website_url": "https://www.scenichotelgroup.co.nz/southern-cross",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "8f9086b5-2a15-4984-93b4-512918aa28ee",
-      "name": "Cabot Lodge",
+      "id": "4332b868-a919-45e9-b712-8be8245556d1",
+      "name": "Milford Sound Lodge",
       "region": "Fiordland",
-      "website_url": "https://www.cabotlodge.co.nz",
+      "website_url": "https://www.milfordsoundlodge.com",
       "source_urls": [
-        "https://www.cabotlodge.co.nz/",
-        "https://www.cabotlodge.co.nz/stay",
-        "https://www.cabotlodge.co.nz/stay/premier-suite"
+        "https://milfordlodge.com/",
+        "https://milfordlodge.com/stay/luxury-riverside-chalet/",
+        "https://milfordlodge.com/stay/two-bedroom-chalet-suite/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "05a833db-8f4a-4932-85b3-4a1dabbad906",
-      "name": "Fiordland Lodge",
+      "id": "baaa27e0-69db-4eff-a815-dd6ef2c66a64",
+      "name": "Tukare Hideaway",
       "region": "Fiordland",
-      "website_url": "https://www.fiordlandlodge.co.nz",
+      "website_url": "https://www.tukarelookout.co.nz/",
       "source_urls": [
-        "https://www.fiordlandlodge.co.nz/",
-        "https://www.fiordlandlodge.co.nz/experiences/",
-        "https://www.fiordlandlodge.co.nz/dining/"
+        "https://www.tukarelookout.co.nz/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "25758504-3e79-4dd2-af75-4108e742cb21",
-      "name": "Breckenridge Lodge",
+      "id": "12704609-ca92-4c17-ac7f-8b06197bb1d0",
+      "name": "Tukare Lookout",
+      "region": "Fiordland",
+      "website_url": "https://www.tukarelookout.co.nz/",
+      "source_urls": [
+        "https://www.tukarelookout.co.nz/"
+      ],
+      "status": "updated",
+      "confidence": "high"
+    },
+    {
+      "id": "f1602134-4292-4fd2-992b-72ec2a11600f",
+      "name": "Black Barn Retreats",
       "region": "Hawke's Bay",
-      "website_url": "https://www.breckenridgelodge.co.nz",
+      "website_url": "https://www.blackbarn.com/retreats",
       "source_urls": [
-        "https://www.breckenridgelodge.co.nz/",
-        "https://www.breckenridgelodge.co.nz/accommodation/",
-        "https://www.breckenridgelodge.co.nz/hb-experiences/"
+        "https://www.blackbarn.com/retreats",
+        "https://www.blackbarn.com/servicecategories"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "67f9619c-5dd0-490b-b7c2-28c1016649f5",
-      "name": "Craggy Range Accommodation",
+      "id": "7afe2d4b-a027-4743-bc0d-d5e0af525095",
+      "name": "Summerlee",
       "region": "Hawke's Bay",
-      "website_url": "https://www.newzealand.com/int/plan/business/craggy-range-vineyard-cottages/",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "4bd8e847-15c1-41a7-9530-1fe714cd5701",
-      "name": "Mission Estate Winery",
-      "region": "Hawke's Bay",
-      "website_url": "https://www.missionestate.co.nz",
+      "website_url": "https://www.blackbarn.com/retreatdetail/4/summerlee",
       "source_urls": [
-        "https://www.missionestate.co.nz/",
-        "https://www.missionestate.co.nz/pages/accommodation",
-        "https://www.missionestate.co.nz/pages/about-us"
+        "https://www.blackbarn.com/retreatdetail/4/summerlee",
+        "https://www.blackbarn.com/servicecategories"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "9152c92d-7e65-48ad-82be-92c00cc9bf4f",
-      "name": "Rosewood Cape Kidnappers",
-      "region": "Hawke's Bay",
-      "website_url": "https://www.rosewoodhotels.com/en/cape-kidnappers",
-      "source_urls": [
-        "https://www.rosewoodhotels.com/en/cape-kidnappers",
-        "https://www.rosewoodhotels.com/en/cape-kidnappers/accommodation",
-        "https://www.rosewoodhotels.com/en/cape-kidnappers/dining"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "67e269da-48b1-4852-b802-b96575fe5a4c",
-      "name": "Swiss-Bel Suites Napier",
-      "region": "Hawke's Bay",
-      "website_url": "https://www.swiss-belhotel.com/en-gb/new-zealand/napier",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "6f989e91-49ed-4ae5-8b75-2fd07b418f3a",
-      "name": "Wallingford Homestead",
-      "region": "Hawke's Bay",
-      "website_url": "https://www.wallingford.co.nz",
-      "source_urls": [
-        "https://www.wallingford.co.nz/",
-        "https://www.wallingford.co.nz/stay",
-        "https://www.wallingford.co.nz/stay-2"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "b27512ff-1d9d-463d-a3ca-5851868ff5c5",
-      "name": "Hilton Lake Taupo",
-      "region": "Lake Taupo",
-      "website_url": "https://www.hilton.com/en/hotels/tpohitw-hilton-lake-taupo",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "0a7d2ec6-075a-42f0-b07e-14b192eba670",
-      "name": "Huka Lodge",
-      "region": "Lake Taupo",
-      "website_url": "https://www.hukalodge.com",
-      "source_urls": [
-        "https://hukalodge.com/",
-        "https://hukalodge.com/stay/",
-        "https://hukalodge.com/dine/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "7fe14fed-b864-4fc9-8fbb-7fe7e543f76e",
-      "name": "Kinloch Manor & Villas",
-      "region": "Lake Taupo",
-      "website_url": "https://www.kinlochmanor.co.nz",
-      "source_urls": [
-        "https://www.kinlochmanor.co.nz/",
-        "https://www.kinlochmanor.co.nz/stay/",
-        "https://www.kinlochmanor.co.nz/stay/manor-suite/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "8d38037d-a573-4e6f-8acb-c6d46fac1133",
-      "name": "Millennium Hotel Taupo",
-      "region": "Lake Taupo",
-      "website_url": "https://www.millenniumhotels.com/en/taupo/millennium-hotel-taupo",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "144423dc-83a9-4836-84d0-c12b857bb21f",
-      "name": "Poronui",
-      "region": "Lake Taupo",
-      "website_url": "https://www.poronui.com",
-      "source_urls": [
-        "https://www.poronui.com/",
-        "https://www.poronui.com/stay/",
-        "https://www.poronui.com/stay/the-lodge/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "c8e1b997-6dd5-4d4d-b8b8-761fbbd45698",
-      "name": "Tongariro Lodge",
-      "region": "Lake Taupo",
-      "website_url": "https://www.tongarirolodge.co.nz",
-      "source_urls": [
-        "https://www.tongarirolodge.co.nz/",
-        "https://www.tongarirolodge.co.nz/lodge-accommodation",
-        "https://www.tongarirolodge.co.nz/lodge-dining"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "42cb51a9-e558-4290-97ad-21e6a81452cd",
-      "name": "Tongariro Suites & Nightsky Cottage",
-      "region": "Lake Taupo",
-      "website_url": "https://www.tongarirosuites.co.nz",
-      "source_urls": [
-        "https://tongarirosuites.co.nz/",
-        "https://tongarirosuites.co.nz/luxury-suites/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "e404eb10-c0c6-424f-a7e9-f3ec69ea5ce4",
-      "name": "Wairakei Resort Taupo",
-      "region": "Lake Taupo",
-      "website_url": "https://www.wairakeiresort.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "d8c4a739-277a-498e-b4cb-8ba3b41b4676",
-      "name": "Mahu Whenua",
-      "region": "Lake Wanaka",
-      "website_url": "https://www.mahuwhenua.co.nz",
-      "source_urls": [
-        "https://www.mahuwhenua.co.nz/",
-        "https://www.mahuwhenua.co.nz/the-rooms/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "58e4156b-8194-487d-8718-4fedcb1cee78",
-      "name": "Minaret Station Alpine Lodge",
-      "region": "Lake Wanaka",
-      "website_url": "https://minaretstation.com/",
-      "source_urls": [
-        "https://minaretstation.com/",
-        "https://minaretstation.com/experiences",
-        "https://minaretstation.com/our-story"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "c4b5f83f-a476-4346-90b3-5fe64997ff82",
-      "name": "Mt Isthmus",
-      "region": "Lake Wanaka",
-      "website_url": "https://www.thelindisgroup.com/mtisthmus",
-      "source_urls": [
-        "https://www.thelindisgroup.com/mtisthmus",
-        "https://www.thelindisgroup.com/mtisthmus/tailoredstays"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "84480515-3b7a-4c47-b253-2f9e0373e460",
-      "name": "Blue Duck Station",
+      "id": "f680ea5c-6b98-4bb3-b05a-b4d30ac104f0",
+      "name": "Grassmere Estate",
       "region": "Manawatū-Whanganui",
-      "website_url": "https://blueduckstation.co.nz",
+      "website_url": "https://grassmere.nz/",
       "source_urls": [
-        "https://blueduckstation.co.nz/",
-        "https://blueduckstation.co.nz/accommodation-2/",
-        "https://blueduckstation.co.nz/accommodation-2/blue-duck-lodge-2/"
+        "https://grassmere.nz/",
+        "https://grassmere.nz/accommodation/",
+        "https://grassmere.nz/farmexperiences/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "d1e7753d-efda-47c3-b182-de9555c4409d",
-      "name": "Bay of Many Coves",
-      "region": "Marlborough",
-      "website_url": "https://www.bayofmanycoves.co.nz",
+      "id": "9dc71e3f-5bd1-4f0f-8f6c-a7a606edf1d6",
+      "name": "Hiwinui Country Estate",
+      "region": "Manawatū-Whanganui",
+      "website_url": "https://www.hiwinui.co.nz/",
       "source_urls": [
-        "https://www.bayofmanycoves.co.nz/",
-        "https://www.bayofmanycoves.co.nz/about-us",
-        "https://www.bayofmanycoves.co.nz/about-us/sustainability-and-guardianship"
+        "https://www.hiwinui.co.nz/",
+        "https://www.hiwinui.co.nz/accommodation",
+        "https://www.hiwinui.co.nz/accommodation/super-king-suite"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "ef907eb6-60ba-4865-899c-35f44366a281",
-      "name": "Carnmore Chateau Marlborough",
-      "region": "Marlborough",
-      "website_url": "https://carnmore.co.nz/carnmore-chateau-marlborough/",
-      "source_urls": [
-        "https://carnmore.co.nz/carnmore-chateau-marlborough/",
-        "https://carnmore.co.nz/carnmore-chateau-marlborough/rooms/",
-        "https://carnmore.co.nz/about-us/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "60b55e63-db54-4c01-a610-8f0ff8f78500",
-      "name": "Lochmara Lodge",
-      "region": "Marlborough",
-      "website_url": "https://www.lochmara.co.nz",
-      "source_urls": [
-        "https://www.lochmara.co.nz/",
-        "https://www.lochmara.co.nz/accommodation",
-        "https://www.lochmara.co.nz/about-lochmara"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "56fd8158-f95b-4bbb-91d8-9f2dac058f88",
-      "name": "The Marlborough Boutique Hotel and Vineyard",
-      "region": "Marlborough",
-      "website_url": "https://www.themarlborough.co.nz",
-      "source_urls": [
-        "https://www.themarlborough.co.nz/",
-        "https://www.themarlborough.co.nz/stay",
-        "https://www.themarlborough.co.nz/about"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "ef7055eb-1823-42ab-98f8-bb3ed893bc33",
-      "name": "Awaroa Lodge Abel Tasman",
-      "region": "Nelson",
-      "website_url": "https://www.awaroalodge.co.nz",
-      "source_urls": [
-        "https://www.awaroalodge.co.nz/",
-        "https://www.awaroalodge.co.nz/standard-rooms",
-        "https://www.awaroalodge.co.nz/dining-at-awaroa"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "ea17f207-5610-45cb-a553-cd9a96100b98",
-      "name": "Ratanui Lodge",
-      "region": "Nelson",
-      "website_url": "https://ratanuilodge.com/",
-      "source_urls": [
-        "https://ratanuilodge.com/",
-        "https://ratanuilodge.com/rooms"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "af09c696-9e60-42d7-9fd0-86e598d1b1e8",
-      "name": "Split Apple Retreat",
-      "region": "Nelson",
-      "website_url": "https://www.splitapple.com",
-      "source_urls": [
-        "https://www.splitapple.com/",
-        "https://www.splitapple.com/luxury-accommodation"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "89f1794a-5b6d-4caa-96ee-68645853416b",
-      "name": "Stonefly Lodge",
-      "region": "Nelson",
-      "website_url": "https://www.stoneflylodge.co.nz",
-      "source_urls": [
-        "https://www.stoneflylodge.co.nz/",
-        "https://www.stoneflylodge.co.nz/dining",
-        "https://www.stoneflylodge.co.nz/experiences"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "70862a32-6047-4f8e-aa36-6f5fb5ab4ff1",
-      "name": "Te Koi - The Lodge at Bronte",
-      "region": "Nelson",
-      "website_url": "https://www.tekoithelodge.com",
-      "source_urls": [
-        "https://www.tekoithelodge.com/",
-        "https://www.tekoithelodge.com/stay",
-        "https://www.tekoithelodge.com/stay/dining"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "9462bdb3-57db-467e-bbb5-d91e18ac305c",
-      "name": "The Waters Hotel",
-      "region": "Nelson",
-      "website_url": "https://www.thewaters.co.nz/",
-      "source_urls": [
-        "https://www.thewaters.co.nz/",
-        "https://www.thewaters.co.nz/boutique-suites/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "7deac830-0d90-49f4-95bf-4690687db9cd",
-      "name": "Windhover Estate",
-      "region": "Nelson",
-      "website_url": "https://www.thewaters.co.nz/",
-      "source_urls": [
-        "https://www.thewaters.co.nz/",
-        "https://www.thewaters.co.nz/boutique-suites/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "2125bb87-e046-4130-b5d2-ee06cf37360a",
-      "name": "Owen River Lodge",
-      "region": "Nelson / Marlborough",
-      "website_url": "https://elevenexperience.com/lodge-destinations/new-zealand/eleven-owen-river-lodge",
-      "source_urls": [
-        "https://elevenexperience.com/lodge-destinations/new-zealand/eleven-owen-river-lodge",
-        "https://elevenexperience.com/lodge-destinations",
-        "https://elevenexperience.com/about-us"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "35afa6c9-a49c-4759-b4c0-336fa70cd565",
-      "name": "Arcadia Lodge",
-      "region": "Northland",
-      "website_url": "https://www.arcadialodge.co.nz",
-      "source_urls": [
-        "https://www.arcadialodge.co.nz/",
-        "https://www.arcadialodge.co.nz/accommodation",
-        "https://www.arcadialodge.co.nz/accommodation/arcadia-cottage"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "4c5faced-f6af-4fca-bc44-6906d919c81a",
-      "name": "Copthorne Hotel Waitangi",
-      "region": "Northland",
-      "website_url": "https://www.millenniumhotels.com/en/paihia/copthorne-hotel-and-resort-bay-of-islands",
+      "id": "420c063e-b4a4-4192-a301-4babfc09a92c",
+      "name": "Rathmoy Estate - Lodge",
+      "region": "Manawatū-Whanganui",
+      "website_url": null,
       "source_urls": [],
       "status": "failed",
       "error": "Insufficient public source text to create a specific profile"
     },
     {
-      "id": "8cd1bfce-f8af-44e0-801b-e938c85e942d",
-      "name": "Donkey Bay Inn",
+      "id": "a752d94a-66b6-4080-9ad2-0ab30eb52c8f",
+      "name": "Mountainview Villa",
+      "region": "Marlborough",
+      "website_url": "https://www.mountainviewvillanz.com",
+      "source_urls": [
+        "https://www.mountainviewvillanz.com/",
+        "https://www.mountainviewvillanz.com/about",
+        "https://www.mountainviewvillanz.com/suites"
+      ],
+      "status": "updated",
+      "confidence": "high"
+    },
+    {
+      "id": "84f41037-2868-40b4-8c4a-e1a119fe3c89",
+      "name": "Little Donkey Bay Inn",
       "region": "Northland",
       "website_url": "https://www.donkeybayinn.co.nz",
       "source_urls": [
@@ -926,492 +135,85 @@
       "confidence": "medium"
     },
     {
-      "id": "e718eeb3-5501-41f9-b0c4-87fd3462d111",
-      "name": "Duke of Marlborough Hotel",
-      "region": "Northland",
-      "website_url": "https://www.theduke.co.nz",
+      "id": "071547f2-20a3-4d9e-ba33-ef30df165787",
+      "name": "Earnscleugh Castle",
+      "region": "Otago",
+      "website_url": "https://www.earnscleughcastle.co.nz/",
       "source_urls": [
-        "https://www.theduke.co.nz/",
-        "https://www.theduke.co.nz/stay/",
-        "https://www.theduke.co.nz/rooms/waterfront-room/"
+        "https://www.earnscleughcastle.co.nz/",
+        "https://www.earnscleughcastle.co.nz/stay-with-us/",
+        "https://www.earnscleughcastle.co.nz/castle-suites-rooms/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "88f71920-f3bf-427e-bfbf-3dd6fcb27745",
-      "name": "Eagles Nest",
-      "region": "Northland",
-      "website_url": "https://eaglesnest.co.nz",
-      "source_urls": [
-        "https://eaglesnest.co.nz/",
-        "https://eaglesnest.co.nz/villas/",
-        "https://eaglesnest.co.nz/experiences/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "67c65b18-0e18-4a9b-bd83-b4e9b3cb95d0",
-      "name": "Paroa Bay Accommodation and Winery",
-      "region": "Northland",
-      "website_url": "https://thelindisgroup.com",
-      "source_urls": [
-        "https://www.thelindisgroup.com/",
-        "https://www.thelindisgroup.com/thelindislodge/accommodation",
-        "https://www.thelindisgroup.com/thelindislodge/experiences"
-      ],
-      "status": "updated",
-      "confidence": "medium"
-    },
-    {
-      "id": "330e4f56-dedd-49cf-9521-cbb5534acbd9",
-      "name": "Rosewood Kauri Cliffs",
-      "region": "Northland",
-      "website_url": "https://www.rosewoodhotels.com/en/kauri-cliffs",
-      "source_urls": [
-        "https://www.rosewoodhotels.com/en/kauri-cliffs",
-        "https://www.rosewoodhotels.com/en/kauri-cliffs/accommodation",
-        "https://www.rosewoodhotels.com/en/kauri-cliffs/dining"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "deb0dddc-c0c2-4fec-a48b-21ed388df846",
-      "name": "The Boathouse at The Landing",
-      "region": "Northland",
-      "website_url": "https://www.thelanding.co.nz/accommodation/the-boathouse",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "a754cb94-21d1-4f67-a12a-0c924d563223",
-      "name": "The Landing Bay of Islands",
-      "region": "Northland",
-      "website_url": "https://www.thelanding.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Cannot read properties of undefined (reading 'trim')"
-    },
-    {
-      "id": "23fe57a6-c077-4cc6-b814-ee07845a5551",
-      "name": "Azur Lodge",
+      "id": "a9f2d927-e655-42dd-9b3b-d67751e39abf",
+      "name": "4 Cardigan Street, Arrowtown",
       "region": "Queenstown",
-      "website_url": "https://azur.co.nz",
-      "source_urls": [
-        "https://azur.co.nz/",
-        "https://azur.co.nz/villas/",
-        "https://azur.co.nz/dining/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "11666a3d-bf87-468b-bb98-88063526e417",
-      "name": "Blanket Bay",
-      "region": "Queenstown",
-      "website_url": "https://blanketbay.com",
-      "source_urls": [
-        "https://blanketbay.com/",
-        "https://blanketbay.com/accommodation/",
-        "https://blanketbay.com/experiences/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "ba4c9d6e-9b4d-4994-afd1-557a497f1a97",
-      "name": "Coronet Ridge Resort",
-      "region": "Queenstown",
-      "website_url": "https://www.capstonehotels.co.nz/coronet-ridge-resort",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "4510f7cb-cc76-4cd0-8b73-9d0e0a4fd4ab",
-      "name": "Drift Bay Private Villa",
-      "region": "Queenstown",
-      "website_url": "https://www.driftbayvilla.com/",
-      "source_urls": [
-        "https://www.driftbayvilla.com/",
-        "https://www.driftbayvilla.com/stay"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "f7c5169d-69f7-4eb3-a421-577c13120596",
-      "name": "Eichardt's Private Hotel",
-      "region": "Queenstown",
-      "website_url": "https://imperiumcollection.com/#eichardts",
+      "website_url": "https://imperiumcollection.com",
       "source_urls": [
         "https://imperiumcollection.com/"
       ],
       "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "44859987-6c08-4794-bc0b-202f82aabb1a",
-      "name": "Gibbston Valley Lodge & Spa",
-      "region": "Queenstown",
-      "website_url": "https://www.gibbstonvalleylodge.com",
-      "source_urls": [
-        "https://www.gibbstonvalleylodgeandspa.com/",
-        "https://www.gibbstonvalleylodgeandspa.com/villas/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "f428dd12-af94-4dbe-9742-2e75417b827a",
-      "name": "Headwaters Eco Lodge",
-      "region": "Queenstown",
-      "website_url": "https://theheadwatersecolodge.com",
-      "source_urls": [
-        "https://theheadwatersecolodge.com/",
-        "https://theheadwatersecolodge.com/stay-with-us",
-        "https://theheadwatersecolodge.com/accommodation"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "9ef71050-942b-4895-96fb-812e0731df4a",
-      "name": "Hulbert House",
-      "region": "Queenstown",
-      "website_url": "https://www.hulberthouse.co.nz",
-      "source_urls": [
-        "https://www.hulberthouse.co.nz/",
-        "https://www.hulberthouse.co.nz/stay-with-us/",
-        "https://www.hulberthouse.co.nz/stay-with-us/firth-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "8c768844-35e8-48fa-acae-b41bd5590c7d",
-      "name": "ROKI Collection",
-      "region": "Queenstown",
-      "website_url": "https://roki-collection.com",
-      "source_urls": [
-        "https://roki-collection.com/",
-        "https://roki-collection.com/stay/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "eb4e809b-d215-4ada-adbf-435768943602",
-      "name": "Rosewood Matakauri",
-      "region": "Queenstown",
-      "website_url": "https://www.rosewoodhotels.com/en/matakauri",
-      "source_urls": [
-        "https://www.rosewoodhotels.com/en/matakauri",
-        "https://www.rosewoodhotels.com/en/matakauri/accommodation",
-        "https://www.rosewoodhotels.com/en/matakauri/dining"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "f09887a0-d6a9-4781-af51-4d304b8c3bda",
-      "name": "Stoneridge Estate",
-      "region": "Queenstown",
-      "website_url": "https://www.stoneridge.co.nz",
-      "source_urls": [
-        "https://stoneridge.co.nz/",
-        "https://stoneridge.co.nz/accommodation",
-        "https://stoneridge.co.nz/accommodation/the-lodge"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "ff8b4151-d174-45e6-92b2-d9e2f870a60f",
-      "name": "Swiss-Bel Suites Pounamu",
-      "region": "Queenstown",
-      "website_url": "https://www.swiss-belhotel.com/en-gb/new-zealand/queenstown/swiss-belsuites-pounamu-queenstown",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "296aa7f8-f897-47c3-b83c-5fe2df82a58a",
-      "name": "Te Toka Private Villa",
-      "region": "Queenstown",
-      "website_url": "https://www.tetokavilla.com/",
-      "source_urls": [
-        "https://www.tetokavilla.com/",
-        "https://www.tetokavilla.com/stay"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "8486a134-f552-4a19-bbd9-11f6c055d894",
-      "name": "The Rees",
-      "region": "Queenstown",
-      "website_url": "https://therees.co.nz",
-      "source_urls": [
-        "https://therees.co.nz/",
-        "https://therees.co.nz/luxury-accommodation-queenstown/",
-        "https://therees.co.nz/food-wine/true-south-dining-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "62c61216-1d90-4965-b173-8d0278ed157d",
-      "name": "Moose Lodge",
-      "region": "Rotorua",
-      "website_url": "https://www.newzealand.com/us/plan/business/moose-lodge-estate-1/",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "bd27f211-a470-49a8-917e-c5651fc4bd1c",
-      "name": "Novotel Rotorua Lakeside",
-      "region": "Rotorua",
-      "website_url": "https://www.novotelrotorua.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "d9bed004-db60-495e-8c4b-91e3e98a4197",
-      "name": "Pullman Rotorua",
-      "region": "Rotorua",
-      "website_url": "https://www.pullmanrotorua.com",
-      "source_urls": [
-        "https://www.pullmanrotorua.com/",
-        "https://www.pullmanrotorua.com/rooms-suites/",
-        "https://www.pullmanrotorua.com/rooms-suites/superior-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "cc029180-2010-495b-9195-764208f2a618",
-      "name": "Regent of Rotorua",
-      "region": "Rotorua",
-      "website_url": "https://www.regentrotorua.co.nz",
-      "source_urls": [
-        "https://regentrotorua.co.nz/",
-        "https://regentrotorua.co.nz/stay/",
-        "https://regentrotorua.co.nz/stay/superior-room/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "bd8877dd-41dd-4145-bb4f-997fd793cac9",
-      "name": "Solitaire Lodge",
-      "region": "Rotorua",
-      "website_url": "https://www.solitairelodge.co.nz",
-      "source_urls": [
-        "https://solitairelodge.co.nz/",
-        "https://solitairelodge.co.nz/stay/",
-        "https://solitairelodge.co.nz/stay/executive-suite/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "33935dab-4cc5-47e1-b55b-fcef3d09a7db",
-      "name": "Sudima Rotorua",
-      "region": "Rotorua",
-      "website_url": "https://www.sudimahotels.com/en/hotels/rotorua/",
-      "source_urls": [
-        "https://www.sudimahotels.com/en/hotels/rotorua/",
-        "https://www.sudimahotels.com/en/about-us/",
-        "https://www.sudimahotels.com/en/about-us/environment-social-governance/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "5598cb00-dd3b-4ac6-891f-4a234791fe11",
-      "name": "Treetops Lodge & Estate",
-      "region": "Rotorua",
-      "website_url": "https://www.treetops.co.nz",
-      "source_urls": [
-        "https://www.treetops.co.nz/",
-        "https://www.treetops.co.nz/packages/stay-longer-3rd-night-free/",
-        "https://www.treetops.co.nz/stay/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "74d9a23c-8d60-4e55-a963-e82117ef5f67",
-      "name": "Puka Park Lodge",
-      "region": "The Coromandel",
-      "website_url": "https://www.pukapark.co.nz",
-      "source_urls": [
-        "https://www.pukapark.co.nz/",
-        "https://www.pukapark.co.nz/about/",
-        "https://www.pukapark.co.nz/chalets-and-suites/"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "f3153961-9f9c-4276-b2e0-108b16fd1fb7",
-      "name": "Clements Hotel Hamilton",
-      "region": "Waikato",
-      "website_url": "https://www.clementshotel.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "e5e6db05-1197-46e1-8076-2a71ea1eba22",
-      "name": "Novotel Hamilton Tainui",
-      "region": "Waikato",
-      "website_url": "https://www.novotelhamilton.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "8734fad2-34fc-4d99-95ae-7183c4242751",
-      "name": "Pullman Hamilton",
-      "region": "Waikato",
-      "website_url": "https://www.pullman-hamilton.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "6ab7708c-3d60-4344-8c5f-69db58436749",
-      "name": "Te Karaka Lodge",
-      "region": "Waikato",
-      "website_url": "https://www.capstonehotels.co.nz/te-karaka-lodge",
-      "source_urls": [
-        "https://www.capstonehotels.co.nz/te-karaka-lodge",
-        "https://www.capstonehotels.co.nz/about-us-1"
-      ],
-      "status": "updated",
-      "confidence": "high"
-    },
-    {
-      "id": "c593705a-b744-4742-a170-1ac6df443c22",
-      "name": "Foley Villa",
-      "region": "Wairarapa",
-      "website_url": "https://wharekauhau.co.nz/",
-      "source_urls": [
-        "https://wharekauhau.co.nz/"
-      ],
-      "status": "updated",
       "confidence": "medium"
     },
     {
-      "id": "dff1cb8a-a71b-486e-89de-c67bef60688d",
-      "name": "Martinborough Hotel",
-      "region": "Wairarapa",
-      "website_url": "https://www.martinboroughhotel.co.nz",
+      "id": "e9d8d1a1-110d-43e9-9ea7-92e5ce58585a",
+      "name": "The Spire Hotel",
+      "region": "Queenstown",
+      "website_url": "https://thespirehotel.com",
+      "source_urls": [],
+      "status": "failed",
+      "error": "Insufficient public source text to create a specific profile"
+    },
+    {
+      "id": "452706ee-06be-4de7-a1ba-779d225eb18f",
+      "name": "On The Point",
+      "region": "Rotorua",
+      "website_url": "https://www.onthepoint.co.nz",
       "source_urls": [
-        "https://www.martinboroughhotel.co.nz/",
-        "https://www.martinboroughhotel.co.nz/rooms",
-        "https://www.martinboroughhotel.co.nz/accommodation-in-martinborough"
+        "https://www.onthepoint.co.nz/",
+        "https://www.onthepoint.co.nz/stay",
+        "https://www.onthepoint.co.nz/lodge-suites"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "7e6cfd16-f59a-4990-bf34-37d551d78870",
-      "name": "Parehua Resort & Luna Estate",
-      "region": "Wairarapa",
-      "website_url": "https://www.parehuaresort.co.nz",
+      "id": "7f34f48d-4dd9-4ad6-9a9d-e53df0b3ccd4",
+      "name": "Ohtel",
+      "region": "Wellington",
+      "website_url": "https://ohtel.nz/",
       "source_urls": [
-        "https://www.parehuaresort.co.nz/",
-        "https://www.parehuaresort.co.nz/about-us",
-        "https://www.parehuaresort.co.nz/cottages-villas"
-      ],
-      "status": "updated",
-      "confidence": "medium"
-    },
-    {
-      "id": "ffb2265b-067c-4cbc-8d46-d9b7ed10352c",
-      "name": "Wharekauhau Country Estate",
-      "region": "Wairarapa",
-      "website_url": "https://www.wharekauhau.co.nz",
-      "source_urls": [
-        "https://wharekauhau.co.nz/"
+        "https://ohtel.nz/",
+        "https://ohtel.nz/wellington/rooms/",
+        "https://ohtel.nz/auckland/rooms/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "343012a8-04d5-46a5-87de-bc673754b4e0",
-      "name": "Boulcott Suites",
-      "region": "Wellington",
-      "website_url": "https://www.boulcottsuites.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "e0e89cb0-cad7-4186-ba01-f7ff6e67b93a",
-      "name": "Double Tree by Hilton",
-      "region": "Wellington",
-      "website_url": "https://www.boulcottsuites.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "6f7e5b04-71eb-4736-bfed-085bf8532296",
-      "name": "InterContinental Wellington",
-      "region": "Wellington",
-      "website_url": "https://www.ihg.com/intercontinental/hotels/gb/en/wellington/wlgha/hoteldetail",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "39401fe2-15ac-485e-b937-4b89d2f7d5b2",
-      "name": "Rydges Wellington",
-      "region": "Wellington",
-      "website_url": "https://www.rydges.com/accommodation/wellington-nz/wellington",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "f6c76b0b-97f6-4afa-a35d-582ecae41e4f",
-      "name": "Sofitel Wellington",
-      "region": "Wellington",
-      "website_url": "https://www.sofitel-wellington.co.nz",
-      "source_urls": [],
-      "status": "failed",
-      "error": "Insufficient public source text to create a specific profile"
-    },
-    {
-      "id": "fcb200ca-bcf2-45bb-afa0-566d879e1c06",
-      "name": "Lake Brunner Eco Lodge",
+      "id": "abb4602b-1d1e-4d94-9515-78701e44dd5f",
+      "name": "Legacy Te Waonui Hotel Franz Josef",
       "region": "West Coast",
-      "website_url": "https://www.lakebrunner.co.nz",
+      "website_url": "https://www.scenichotelgroup.co.nz/franz-josef/legacy-te-waonui-hotel/",
       "source_urls": [
-        "https://www.lakebrunner.co.nz/",
-        "https://www.lakebrunner.co.nz/dining-at-lake-brunner-eco-lodge"
+        "https://www.scenichotelgroup.co.nz/franz-josef/legacy-te-waonui-hotel/",
+        "https://www.scenichotelgroup.co.nz/franz-josef/legacy-te-waonui-hotel/accommodation/",
+        "https://www.scenichotelgroup.co.nz/about-us/"
       ],
       "status": "updated",
       "confidence": "high"
     },
     {
-      "id": "2add1343-df1e-4ecc-9bac-59d60f08a93b",
-      "name": "Wilderness Lodge Lake Moeraki",
+      "id": "55b3123f-f6aa-490d-a86a-ad313f433c89",
+      "name": "Rimu Lodge",
       "region": "West Coast",
-      "website_url": "https://www.wildernesslodge.co.nz/new-zealand/lake-moeraki-wilderness-lodge/",
+      "website_url": "https://www.rimulodge.co.nz/",
       "source_urls": [
-        "https://www.wildernesslodge.co.nz/new-zealand/lake-moeraki-wilderness-lodge/",
-        "https://www.wildernesslodge.co.nz/new-zealand/arthurs-pass-wilderness-lodge/arthurs-pass-accommodation/",
-        "https://www.wildernesslodge.co.nz/new-zealand/lake-moeraki-wilderness-lodge/lake-moeraki-accommodation/"
+        "https://www.rimulodge.co.nz/",
+        "https://www.rimulodge.co.nz/rooms"
       ],
       "status": "updated",
       "confidence": "high"

@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { createClient } from "@/lib/supabase/client";
+import { saveSetting } from "@/lib/admin/save-setting";
 
 export function RichTextSettingsEditor({
   settingKey,
@@ -58,25 +58,13 @@ export function RichTextSettingsEditor({
     setSaved(false);
 
     const nextValue = editorRef.current?.innerHTML ?? value;
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error: upsertError } = await supabase.from("settings").upsert(
-      {
-        key: settingKey,
-        value: nextValue,
-        updated_by: user?.email ?? "unknown",
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: "key" }
-    );
-
-    setSaving(false);
-
-    if (upsertError) {
-      setError(upsertError.message);
+    try {
+      await saveSetting(settingKey, nextValue);
+    } catch (saveError) {
+      setSaving(false);
+      setError(
+        saveError instanceof Error ? saveError.message : "Unable to save setting"
+      );
       return;
     }
 
@@ -93,6 +81,7 @@ export function RichTextSettingsEditor({
 
     setValue(nextValue);
     setSavedValue(nextValue);
+    setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   }, [settingKey, savedValue, value]);

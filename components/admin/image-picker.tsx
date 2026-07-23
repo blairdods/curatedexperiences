@@ -600,6 +600,7 @@ interface GalleryPickerProps {
   label?: string;
   images: { src: string; alt: string }[];
   onAdd: (src: string, alt: string) => void;
+  onChange: (index: number, src: string, alt: string) => void;
   onRemove: (index: number) => void;
   defaultRegion?: string;
 }
@@ -608,14 +609,27 @@ export function GalleryPickerField({
   label,
   images,
   onAdd,
+  onChange,
   onRemove,
   defaultRegion,
 }: GalleryPickerProps) {
   const [open, setOpen] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   function handleSelect(src: string, alt: string) {
+    if (editingIndex !== null) {
+      onChange(editingIndex, src, alt);
+      setEditingIndex(null);
+      setOpen(false);
+      return;
+    }
     onAdd(src, alt);
     // Keep modal open so multiple images can be added
+  }
+
+  function closePicker() {
+    setEditingIndex(null);
+    setOpen(false);
   }
 
   return (
@@ -627,23 +641,47 @@ export function GalleryPickerField({
       {images.length > 0 && (
         <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
           {images.map((img, i) => (
-            <div key={i} className="relative group aspect-[4/3] rounded overflow-hidden bg-warm-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={() => onRemove(i)}
-                  className="scale-0 group-hover:scale-100 transition-transform rounded-full bg-white p-1 text-red-500 hover:bg-red-50 shadow"
-                >
-                  <svg viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3">
-                    <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
-                  </svg>
-                </button>
+            <div
+              key={`${img.src}-${i}`}
+              className="overflow-hidden rounded border border-warm-200 bg-white"
+            >
+              <div className="relative aspect-[4/3] overflow-hidden bg-warm-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img.src} alt={img.alt} className="h-full w-full object-cover" />
+                <div className="absolute right-1.5 top-1.5 flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingIndex(i);
+                      setOpen(true);
+                    }}
+                    aria-label={`Change gallery image ${i + 1}`}
+                    className="rounded-full bg-white/95 px-2 py-1 text-[10px] font-medium text-navy shadow transition-colors hover:bg-gold hover:text-white"
+                  >
+                    Change
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onRemove(i)}
+                    aria-label={`Remove gallery image ${i + 1}`}
+                    className="rounded-full bg-white/95 p-1.5 text-red-500 shadow transition-colors hover:bg-red-50"
+                  >
+                    <svg viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <p className="absolute bottom-0 inset-x-0 bg-black/50 px-1.5 py-0.5 text-[9px] text-white truncate opacity-0 group-hover:opacity-100 transition-opacity">
-                {img.alt}
-              </p>
+              <label className="block border-t border-warm-200 px-2 py-1.5">
+                <span className="sr-only">Alt text for gallery image {i + 1}</span>
+                <input
+                  type="text"
+                  value={img.alt}
+                  onChange={(event) => onChange(i, img.src, event.target.value)}
+                  placeholder="Describe this image"
+                  className="w-full bg-transparent text-[10px] text-foreground focus:outline-none"
+                />
+              </label>
             </div>
           ))}
         </div>
@@ -651,7 +689,10 @@ export function GalleryPickerField({
 
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setEditingIndex(null);
+          setOpen(true);
+        }}
         className="flex items-center gap-2 rounded border border-warm-200 bg-white px-3 py-2 text-xs font-medium text-navy hover:bg-warm-50 transition-colors"
       >
         <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
@@ -663,7 +704,7 @@ export function GalleryPickerField({
       {open && (
         <ImagePickerModal
           onSelect={handleSelect}
-          onClose={() => setOpen(false)}
+          onClose={closePicker}
           defaultRegion={defaultRegion}
         />
       )}
