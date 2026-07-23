@@ -1,0 +1,6 @@
+# Local-only source assets and development state.
+asset-library
+paperclip/data
+
+# Original video masters are served from Supabase Storage.
+public/assets/videos
