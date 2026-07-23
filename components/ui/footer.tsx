@@ -52,10 +52,10 @@ const PARTNER_LOGOS = [
     className: "h-12 w-auto sm:h-14",
   },
   {
-    src: "/assets/images/logos/Sustainable-Event-Supplier-transparent.png",
+    src: "/assets/images/logos/Sustainable-Event-Supplier.svg",
     alt: "New Zealand Sustainable Event Supplier",
-    width: 230,
-    height: 241,
+    width: 53,
+    height: 62,
     className: "h-16 w-auto sm:h-20",
     panelClassName: "rounded-sm bg-white px-3 py-2",
   },
