@@ -24,6 +24,13 @@ const PHONE_NUMBERS = [
 
 const PARTNER_LOGOS = [
   {
+    src: "/assets/images/logos/PPG-Tours.svg",
+    alt: "PPG Tours",
+    width: 137,
+    height: 64,
+    className: "h-10 w-auto invert sm:h-12",
+  },
+  {
     src: "/logos/nz-fern-blue.png",
     alt: "Tourism New Zealand FernMark licence number 100920",
     width: 512,
@@ -45,18 +52,12 @@ const PARTNER_LOGOS = [
     className: "h-12 w-auto sm:h-14",
   },
   {
-    src: "/assets/images/logos/PPG-Tours.svg",
-    alt: "PPG Tours",
-    width: 137,
-    height: 64,
-    className: "h-10 w-auto invert sm:h-12",
-  },
-  {
     src: "/assets/images/logos/Sustainable-Event-Supplier-transparent.png",
     alt: "New Zealand Sustainable Event Supplier",
     width: 230,
     height: 241,
     className: "h-16 w-auto sm:h-20",
+    panelClassName: "rounded-sm bg-white px-3 py-2",
   },
   {
     src: "/assets/images/logos/Travelife-Partner.svg",
@@ -64,6 +65,7 @@ const PARTNER_LOGOS = [
     width: 980,
     height: 381,
     className: "h-12 w-auto sm:h-14",
+    panelClassName: "rounded-sm bg-white px-3 py-2",
   },
   {
     src: "/assets/images/logos/Tiaki_WordMark_Black.png",
@@ -153,16 +155,24 @@ export function Footer() {
           </Link>
         </div>
 
-        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-center gap-x-6 gap-y-8 px-6 pb-16 sm:gap-x-8 sm:px-10 md:pb-20">
+        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-center gap-x-6 gap-y-8 px-6 pb-16 sm:gap-x-10 sm:px-10 lg:gap-x-12 md:pb-20">
           {PARTNER_LOGOS.map((logo) => (
-            <Image
+            <div
               key={logo.src}
-              src={logo.src}
-              alt={logo.alt}
-              width={logo.width}
-              height={logo.height}
-              className={`${logo.className} object-contain`}
-            />
+              className="flex min-h-24 min-w-[112px] items-center justify-center sm:min-w-[128px] lg:min-w-[140px]"
+            >
+              <span
+                className={`inline-flex items-center justify-center ${logo.panelClassName ?? ""}`}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className={`${logo.className} object-contain`}
+                />
+              </span>
+            </div>
           ))}
         </div>
       </div>
