@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import type { ConciergeBrief } from "@/lib/claude/extract-brief";
 
 const NOTIFY_EMAILS = ["blairdods@gmail.com"];
-const FROM_EMAIL = "concierge@curatedexperiences.com";
+const FROM_EMAIL = "hello@curatedexperiences.com";
 
 export async function notifyNewLead(brief: ConciergeBrief, enquiryId: string) {
   const apiKey = process.env.RESEND_API_KEY;

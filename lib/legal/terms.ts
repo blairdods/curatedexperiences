@@ -49,7 +49,7 @@ Payment may be made by bank transfer or by arrangement with our team. Details wi
 
 ## 5. Cancellation by You
 
-All cancellations must be made in writing to [enquiries@curatedexperiences.com](mailto:enquiries@curatedexperiences.com). Cancellation takes effect on the date we receive your written notice. The following charges apply, calculated as a percentage of the total journey price:
+All cancellations must be made in writing to [hello@curatedexperiences.com](mailto:hello@curatedexperiences.com). Cancellation takes effect on the date we receive your written notice. The following charges apply, calculated as a percentage of the total journey price:
 
 ### All year except any travel between 15 December – 06 January
 
@@ -134,7 +134,7 @@ Please inform us at the time of booking of any medical conditions, mobility requ
 
 We collect and hold personal information about you to facilitate your booking and to deliver the services you have requested. We will not sell or share your personal information with third parties except where necessary to deliver your journey (for example, providing your details to lodges, transport providers, and activity operators).
 
-We comply with the New Zealand Privacy Act 2020. You have the right to access and correct any personal information we hold about you. To make a request, please contact us at [enquiries@curatedexperiences.com](mailto:enquiries@curatedexperiences.com).
+We comply with the New Zealand Privacy Act 2020. You have the right to access and correct any personal information we hold about you. To make a request, please contact us at [hello@curatedexperiences.com](mailto:hello@curatedexperiences.com).
 
 ## 14. Intellectual Property
 
@@ -144,7 +144,7 @@ Curated Experiences™ is a registered trademark in Australia and New Zealand. A
 
 If something is not right during your journey, please contact your travel curator (different term used above) immediately so we have the opportunity to resolve the issue on the ground. Issues raised after your return that were not raised during travel may be more difficult to address.
 
-If you wish to make a formal complaint after your return, please write to us at [enquiries@curatedexperiences.com](mailto:enquiries@curatedexperiences.com) within 28 days of your return date. We will acknowledge your complaint within 5 business days and aim to resolve it within 28 days.
+If you wish to make a formal complaint after your return, please write to us at [hello@curatedexperiences.com](mailto:hello@curatedexperiences.com) within 28 days of your return date. We will acknowledge your complaint within 5 business days and aim to resolve it within 28 days.
 
 ## 16. Governing Law
 
@@ -160,9 +160,9 @@ If you have any questions about these terms, please get in touch:
 
 A venture of PPG Tours Limited
 
-Email: [enquiries@curatedexperiences.com](mailto:enquiries@curatedexperiences.com)
+Email: [hello@curatedexperiences.com](mailto:hello@curatedexperiences.com)
 
-Phone: [0800 287 283](tel:0800287283)`;
+Phone: [0800 CURATE (0800 287 283)](tel:0800287283)`;
 
 export type TermsPageContent = {
   effectiveDate: string;

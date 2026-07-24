@@ -32,8 +32,8 @@ const TRUST_ITEMS = [
     text: "New Zealand & Oceania Destination Management Company 2026",
   },
   {
-    label: "Trusted By Leading Cruise Lines",
-    text: "Silversea, Ponant, & Celebrity Cruises",
+    label: "Trusted by luxury Cruise Lines",
+    text: "Silversea, Ponant, Celebrity, and their discerning clients",
   },
 ];
 

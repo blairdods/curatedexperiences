@@ -1,25 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import { CONTACT_EMAIL, PHONE_NUMBERS } from "@/lib/contact-details";
 
 const COMPANY_LINKS = [
   { href: "/about", label: "Our story" },
   { href: "/privacy", label: "Privacy policy" },
   { href: "/terms", label: "Terms" },
-];
-
-const PHONE_NUMBERS = [
-  {
-    region: "New Zealand",
-    display: "0800 Curate   0800 287 283",
-    href: "tel:0800287283",
-  },
-  { region: "USA", display: "1-800-267-4520", href: "tel:+18002674520" },
-  {
-    region: "Australia",
-    display: "1800 417 674",
-    href: "tel:+611800417674",
-  },
-  { region: "Singapore", display: "+65 3158 3354", href: "tel:+6531583354" },
 ];
 
 const PARTNER_LOGOS = [
@@ -52,20 +38,18 @@ const PARTNER_LOGOS = [
     className: "h-12 w-auto sm:h-14",
   },
   {
-    src: "/assets/images/logos/Sustainable-Event-Supplier.svg",
+    src: "/assets/images/logos/NZ-Sustainable-Supplier-Full-White.svg",
     alt: "New Zealand Sustainable Event Supplier",
-    width: 53,
-    height: 62,
-    className: "h-16 w-auto sm:h-20",
-    panelClassName: "rounded-sm bg-white px-3 py-2",
+    width: 600,
+    height: 600,
+    className: "h-14 w-auto sm:h-16",
   },
   {
-    src: "/assets/images/logos/Travelife-Partner.svg",
+    src: "/assets/images/logos/Travelife-Partner-Full-White.svg",
     alt: "Travelife Partner — Committed to sustainability",
     width: 980,
     height: 381,
-    className: "h-12 w-auto sm:h-14",
-    panelClassName: "rounded-sm bg-white px-3 py-2",
+    className: "h-9 w-auto sm:h-11",
   },
   {
     src: "/assets/images/logos/Tiaki_WordMark_Black.png",
@@ -155,21 +139,19 @@ export function Footer() {
           </Link>
         </div>
 
-        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center justify-center gap-x-6 gap-y-8 px-6 pb-16 sm:gap-x-10 sm:px-10 lg:gap-x-12 md:pb-20">
+        <div className="mx-auto grid max-w-[1120px] grid-cols-7 items-center gap-3 px-4 pb-16 sm:gap-6 sm:px-10 md:pb-20 lg:gap-8">
           {PARTNER_LOGOS.map((logo) => (
             <div
               key={logo.src}
-              className="flex min-h-24 min-w-[112px] items-center justify-center sm:min-w-[128px] lg:min-w-[140px]"
+              className="flex min-h-20 min-w-0 items-center justify-center sm:min-h-24"
             >
-              <span
-                className={`inline-flex items-center justify-center ${logo.panelClassName ?? ""}`}
-              >
+              <span className="inline-flex min-w-0 items-center justify-center">
                 <Image
                   src={logo.src}
                   alt={logo.alt}
                   width={logo.width}
                   height={logo.height}
-                  className={`${logo.className} object-contain`}
+                  className={`${logo.className} max-w-full object-contain`}
                 />
               </span>
             </div>
@@ -247,13 +229,13 @@ export function Footer() {
             </h4>
             <div className="space-y-7 text-[12px]">
               <a
-                href="mailto:discover@curatedexperiences.co.nz"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="flex items-start gap-4 text-cream/58 transition-colors hover:text-cream"
               >
                 <span className="text-gold">
                   <MailIcon />
                 </span>
-                <span className="break-all">discover@curatedexperiences.co.nz</span>
+                <span className="break-all">{CONTACT_EMAIL}</span>
               </a>
 
               <div className="flex items-start gap-4">
@@ -261,9 +243,12 @@ export function Footer() {
                   <PhoneIcon />
                 </span>
                 <div className="space-y-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-cream/38">
+                    Speak with a curator
+                  </p>
                   {PHONE_NUMBERS.map((phone) => (
                     <p key={phone.region} className="leading-5">
-                      <span className="mr-2 text-cream/38">{phone.region}:</span>
+                      <span className="mr-2 text-cream/38">{phone.region}</span>
                       <a
                         href={phone.href}
                         className="text-cream/64 transition-colors hover:text-cream"
