@@ -43,6 +43,7 @@ export const VIDEOS: VideoAsset[] = [
     concept: "Helicopter / private aviation hero",
     placements: ["home"],
     src: V("232665-christchurch-helicopters-christchurch.mp4"),
+    poster: "/assets/images/video-posters/christchurch-helicopters-poster.jpg",
   },
   {
     id: "luxury-accommodation",

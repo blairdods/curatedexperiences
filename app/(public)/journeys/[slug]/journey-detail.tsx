@@ -4,7 +4,6 @@ import { Hero } from "@/components/ui/hero";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { ItineraryAccordion } from "@/components/ui/itinerary-accordion";
 import { Testimonial } from "@/components/ui/testimonial";
-import { ImageGrid } from "@/components/ui/image-grid";
 import { StickyCta } from "@/components/ui/sticky-cta";
 import { JourneyCard } from "@/components/ui/journey-card";
 import { Button } from "@/components/ui/button";
@@ -15,8 +14,6 @@ import { ItineraryRefinerProvider } from "@/lib/itinerary-refiner/context";
 import { dispatchOpenConcierge } from "@/lib/itinerary-refiner/events";
 import { JOURNEYS, type Journey } from "@/lib/data/journeys";
 import { getRouteForJourney } from "@/lib/data/coordinates";
-import { getVideosByPlacement } from "@/lib/data/videos";
-import { VideoShowcase } from "@/components/ui/video-showcase";
 
 export function JourneyDetail({ journey }: { journey: Journey }) {
   const relatedJourneys = JOURNEYS.filter(
@@ -24,7 +21,6 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
   ).slice(0, 2);
   const route = getRouteForJourney(journey.slug, journey.durationDays);
   const hasRefiner = (journey.locationGroups?.length ?? 0) > 0;
-  const videos = getVideosByPlacement(`journeys/${journey.slug}`);
 
   return (
     <ItineraryRefinerProvider journey={journey}>
@@ -94,18 +90,6 @@ export function JourneyDetail({ journey }: { journey: Journey }) {
                 ))}
               </div>
             </div>
-
-            {/* Gallery */}
-            <div className="mt-16">
-              <ImageGrid images={journey.images} columns={2} />
-            </div>
-
-            {/* Video showcase */}
-            {videos.length > 0 && (
-              <div className="mt-16">
-                <VideoShowcase videos={videos} />
-              </div>
-            )}
 
             {/* Route Map */}
             {route.length > 0 && (

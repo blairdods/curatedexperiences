@@ -142,9 +142,9 @@ If you have any questions about this Privacy Policy or wish to access or correct
 
 **Curated Experiences™**
 
-Email: [discover@curatedexperiences.com](mailto:discover@curatedexperiences.com)
+Email: [hello@curatedexperiences.com](mailto:hello@curatedexperiences.com)
 
-Phone: [0800 287 283](tel:0800287283)
+Phone: [0800 CURATE (0800 287 283)](tel:0800287283)
 
 Address: 349 Remuera Road, Remuera, Auckland 1050
 

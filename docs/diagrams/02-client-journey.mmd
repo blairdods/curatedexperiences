@@ -1,0 +1,31 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1F3864', 'primaryTextColor': '#fff', 'primaryBorderColor': '#1F3864', 'lineColor': '#b8860b', 'secondaryColor': '#faf9f7', 'tertiaryColor': '#d4c5b5', 'fontFamily': 'Inter, sans-serif'}}}%%
+graph TD
+    A["🔍 US visitor searches<br/>'luxury New Zealand travel'"]
+    B["🌐 Lands on curatedexperiences.com"]
+    C["⚡ Middleware detects<br/>California · desktop · Google organic<br/>→ Wine country hero variant<br/>→ Featured: The Epicurean"]
+    D["👀 Browses journeys + journal<br/>Every page has 'Start Planning' CTA"]
+    E["💬 Concierge triggers<br/>• 45s on journey page<br/>• Exit intent<br/>• CTA click"]
+    F["🤖 Concierge opens<br/>'Kia ora — I'm your travel curator.<br/>Tell me about the trip you're imagining...'"]
+    G["💭 Conversation unfolds<br/>• Asks aspirational TNZ questions<br/>• Answers with RAG knowledge<br/>• After 3 msgs → soft email capture<br/>• Qualifies: name, timing, party, budget<br/>• Always offers human curator"]
+    H["📋 Brief extracted + saved<br/>• Saved to Supabase enquiries<br/>• Resend notifies Tony/Liam<br/>• Welcome email sent to visitor<br/>• Enters nurture sequence"]
+    I["📊 Admin Dashboard<br/>• Tony/Liam see new lead<br/>• Review conversation transcript<br/>• Assign travel designer<br/>• Create booking → Kanban<br/>• Build itinerary in costing module"]
+    J["📧 Nurture continues<br/>Wk 1: Personal designer email<br/>Mo 1: NZ this season<br/>Mo 3: Curated to interests<br/>Mo 6: Check-in + availability"]
+    K["✅ Client books<br/>Kanban: deposit → planning<br/>→ in progress → completed"]
+    L["🌟 Post-trip<br/>• Survey feedback<br/>• Referral request<br/>• Becomes advocate"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+
+    style A fill:#d4c5b5,stroke:#1F3864,color:#1F3864
+    style F fill:#1F3864,stroke:#b8860b,color:#fff
+    style H fill:#b8860b,stroke:#1F3864,color:#fff
+    style L fill:#d4c5b5,stroke:#1F3864,color:#1F3864

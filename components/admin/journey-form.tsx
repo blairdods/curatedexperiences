@@ -322,6 +322,14 @@ export function JourneyForm({
         <GalleryPickerField
           images={data.media}
           onAdd={(src, alt) => update("media", [...data.media, { src, alt }])}
+          onChange={(i, src, alt) =>
+            update(
+              "media",
+              data.media.map((image, index) =>
+                index === i ? { src, alt } : image
+              )
+            )
+          }
           onRemove={(i) => update("media", data.media.filter((_, idx) => idx !== i))}
         />
       </div>

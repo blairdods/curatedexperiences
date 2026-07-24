@@ -4,6 +4,7 @@ import { Hero } from "@/components/ui/hero";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Testimonial } from "@/components/ui/testimonial";
 import type { ManagedImage } from "@/lib/image-slots";
+import { PHONE_NUMBERS } from "@/lib/contact-details";
 
 interface AboutClientProps {
   heroImage: ManagedImage;
@@ -62,6 +63,11 @@ export function AboutClient({ heroImage }: AboutClientProps) {
               bio: "With decades of luxury travel experience across New Zealand and the Pacific, Tony brings an encyclopaedic knowledge of the country's best lodges, guides, and hidden experiences. His background with PPG Tours — Best New Zealand DMC at the World Travel Awards 2025, and finalist in two categories for 2026 — means he's worked with the most discerning travellers in the world. From designing VIP land programs for Silversea, Ponant, and Celebrity to crafting private journeys for high-net-worth clients, Tony knows exactly how to exceed expectations.",
             },
             {
+              name: "Marjorie",
+              role: "Senior Project Manager",
+              bio: "Having spent many years working in the luxury tourism industry, Marjorie has developed a deep understanding of what discerning travellers truly value. Passionate about creating unforgettable journeys, she combines this expertise with more than 20 years of living abroad and extensive travel across the globe, bringing a unique perspective to every itinerary she curates.",
+            },
+            {
               name: "Liam",
               role: "Head of Digital",
               tagline: "It's all about connecting with people, informing and educating them, to create the pathway to curating and developing great experiences.",
@@ -87,9 +93,11 @@ export function AboutClient({ heroImage }: AboutClientProps) {
               <p className="text-[10px] tracking-[0.28em] uppercase font-semibold text-gold mt-3">
                 {person.role}
               </p>
-              <p className="mt-5 font-serif text-[20px] text-navy/80 leading-[1.2]">
-                &ldquo;{person.tagline}&rdquo;
-              </p>
+              {"tagline" in person ? (
+                <p className="mt-5 font-serif text-[20px] text-navy/80 leading-[1.2]">
+                  &ldquo;{person.tagline}&rdquo;
+                </p>
+              ) : null}
               <p className="mt-4 text-[13px] text-foreground/70 leading-6">
                 {person.bio}
               </p>
@@ -109,7 +117,11 @@ export function AboutClient({ heroImage }: AboutClientProps) {
             { stat: "20+", label: "Years of NZ travel expertise" },
             { stat: "Best NZ DMC", label: "World Travel Awards 2025" },
             { stat: "2026 Finalist", label: "NZ Tour Operator & DMC of the Year" },
-            { stat: "Silversea, Ponant, Celebrity", label: "Trusted by the world's leading cruise lines" },
+            {
+              stat: "Silversea, Ponant, Celebrity",
+              label:
+                "Trusted by the world's leading luxury Cruise Lines and their discerning clients",
+            },
           ].map((item) => (
             <div key={item.label} className="border-t border-navy/12 pt-5">
               <p className="font-serif text-[28px] sm:text-[34px] text-navy tracking-normal leading-[1.08]">
@@ -161,7 +173,7 @@ export function AboutClient({ heroImage }: AboutClientProps) {
 
       <Section>
         <Testimonial
-          quote="Tony doesn't just know New Zealand — he understands what makes a journey feel personal. Every recommendation felt like it was chosen specifically for us."
+          quote="Tony and the team don't just know New Zealand — they understand what makes a journey feel personal. Every recommendation felt like it was chosen specifically for us."
           author="Jennifer & Mark Williams"
           location="New York, NY"
         />
@@ -185,14 +197,14 @@ export function AboutClient({ heroImage }: AboutClientProps) {
               Start a Conversation
             </button>
             <a
-              href="tel:0800287283"
+              href={PHONE_NUMBERS[0].href}
               className="inline-flex items-center gap-2 px-6 py-4 text-xs tracking-[0.2em] uppercase font-medium text-navy/60
                 border border-navy/15 hover:border-navy/30 hover:text-navy transition-colors"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 flex-shrink-0">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
               </svg>
-              0800 CURATE · 0800 287 283
+              {PHONE_NUMBERS[0].display}
             </a>
           </div>
         </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { saveSetting } from "@/lib/admin/save-setting";
 
 export function SettingsEditor({
   settingKey,
@@ -36,26 +36,8 @@ export function SettingsEditor({
     setError("");
     setSaved(false);
 
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error: upsertError } = await supabase.from("settings").upsert(
-      {
-        key: settingKey,
-        value,
-        updated_by: user?.email ?? "unknown",
-        updated_at: new Date().toISOString(),
-      },
-      { onConflict: "key" }
-    );
-
-    setSaving(false);
-
-    if (upsertError) {
-      setError(upsertError.message);
-    } else {
+    try {
+      await saveSetting(settingKey, value);
       // Log audit
       await fetch("/api/admin/audit", {
         method: "POST",
@@ -71,6 +53,12 @@ export function SettingsEditor({
       setSavedValue(value);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
+    } catch (saveError) {
+      setError(
+        saveError instanceof Error ? saveError.message : "Unable to save setting"
+      );
+    } finally {
+      setSaving(false);
     }
   }, [settingKey, value, savedValue]);
 

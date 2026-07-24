@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "./contact-form";
+import { CONTACT_EMAIL, PHONE_NUMBERS } from "@/lib/contact-details";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -7,17 +8,6 @@ export const metadata: Metadata = {
     "Contact Curated Experiences to begin planning a private, tailor-made journey through New Zealand.",
   alternates: { canonical: "/contact" },
 };
-
-const PHONE_NUMBERS = [
-  {
-    region: "New Zealand",
-    display: "0800 Curate\u00A0\u00A0\u00A00800 287 283",
-    href: "tel:0800287283",
-  },
-  { region: "USA", display: "1-800-267-4520", href: "tel:+18002674520" },
-  { region: "Australia", display: "1800 417 674", href: "tel:+611800417674" },
-  { region: "Singapore", display: "+65 3158 3354", href: "tel:+6531583354" },
-];
 
 function MailIcon() {
   return (
@@ -79,10 +69,10 @@ export default function ContactPage() {
                     Email
                   </p>
                   <a
-                    href="mailto:discover@curatedexperiences.co.nz"
+                    href={`mailto:${CONTACT_EMAIL}`}
                     className="mt-2 block text-[14px] text-cream transition-colors hover:text-gold"
                   >
-                    discover@curatedexperiences.co.nz
+                    {CONTACT_EMAIL}
                   </a>
                 </div>
               </div>
@@ -93,13 +83,13 @@ export default function ContactPage() {
                 </span>
                 <div className="flex-1">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-cream/36">
-                    Call our team
+                    Speak with a curator
                   </p>
                   <div className="mt-3 space-y-3">
                     {PHONE_NUMBERS.map((phone) => (
                       <p key={phone.region} className="text-[13px] leading-6">
                         <span className="inline-block min-w-[104px] text-cream/42">
-                          {phone.region}:
+                          {phone.region}
                         </span>
                         <a
                           href={phone.href}

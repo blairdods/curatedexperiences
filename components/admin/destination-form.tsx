@@ -189,6 +189,14 @@ export function DestinationForm({ initialData }: { initialData?: DestinationData
             label="Gallery Images"
             images={data.images}
             onAdd={(src, alt) => update("images", [...data.images, { src, alt }])}
+            onChange={(i, src, alt) =>
+              update(
+                "images",
+                data.images.map((image, index) =>
+                  index === i ? { src, alt } : image
+                )
+              )
+            }
             onRemove={(i) => update("images", data.images.filter((_, idx) => idx !== i))}
             defaultRegion={data.region}
           />

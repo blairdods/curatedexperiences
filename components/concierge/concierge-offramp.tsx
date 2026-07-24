@@ -7,7 +7,7 @@ export function ConciergeOfframp({ onDirectContact }: { onDirectContact: () => v
           onClick={onDirectContact}
           className="text-navy/60 hover:text-navy underline underline-offset-2 transition-colors"
         >
-          Speak with Tony or Liam directly
+          speak with us directly
         </button>
       </p>
     </div>

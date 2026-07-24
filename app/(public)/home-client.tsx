@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import type { Article } from "@/lib/data/journal";
-import { getVideosByPlacement } from "@/lib/data/videos";
-import { VideoShowcase } from "@/components/ui/video-showcase";
 import {
   DestinationMap,
   type DestinationMapItem,
@@ -16,6 +15,7 @@ import {
   homepageHeroSlotKey,
   type ImagePosition,
   type ImageSlotOverrides,
+  type ManagedImage,
 } from "@/lib/image-slots";
 
 const TRUST_ITEMS = [
@@ -32,8 +32,8 @@ const TRUST_ITEMS = [
     text: "New Zealand & Oceania Destination Management Company 2026",
   },
   {
-    label: "Trusted By Leading Cruise Lines",
-    text: "Silversea, Ponant, & Celebrity Cruises",
+    label: "Trusted by luxury Cruise Lines",
+    text: "Silversea, Ponant, Celebrity, and their discerning clients",
   },
 ];
 
@@ -167,6 +167,103 @@ function journalItems(
   });
 }
 
+function HeroVideo({ poster }: { poster?: ManagedImage }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(true);
+  const [playbackBlocked, setPlaybackBlocked] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  function playVideo() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    void video.play().then(
+      () => setPlaybackBlocked(false),
+      () => setPlaybackBlocked(true)
+    );
+  }
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    playVideo();
+    const retryWhenVisible = () => {
+      if (document.visibilityState === "visible" && video.paused) playVideo();
+    };
+    document.addEventListener("visibilitychange", retryWhenVisible);
+    return () =>
+      document.removeEventListener("visibilitychange", retryWhenVisible);
+  }, []);
+
+  return (
+    <div className="absolute inset-0" data-slot="home-hero-video">
+      {poster?.src ? (
+        <Image
+          src={poster.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="managed-image object-cover"
+          style={getManagedImageStyle(poster)}
+        />
+      ) : null}
+      {!videoFailed && (
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={poster?.src}
+          aria-hidden="true"
+          onCanPlay={playVideo}
+          onPlaying={() => {
+            setHasPlayed(true);
+            setIsWaiting(false);
+            setPlaybackBlocked(false);
+          }}
+          onWaiting={() => setIsWaiting(true)}
+          onError={() => {
+            setVideoFailed(true);
+            setIsWaiting(false);
+          }}
+          className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 motion-reduce:hidden ${
+            hasPlayed ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <source
+            src="/media/hero-video-curated-experiences-web.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support background video.
+        </video>
+      )}
+      {!videoFailed && isWaiting && !playbackBlocked && (
+        <p
+          aria-live="polite"
+          className="absolute bottom-6 right-6 z-10 rounded-full bg-navy/55 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-cream/80 backdrop-blur-sm motion-reduce:hidden"
+        >
+          Loading film…
+        </p>
+      )}
+      {!videoFailed && playbackBlocked && (
+        <button
+          type="button"
+          onClick={playVideo}
+          className="absolute bottom-6 right-6 z-10 rounded-full bg-navy/65 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-cream backdrop-blur-sm transition-colors hover:bg-navy/80 motion-reduce:hidden"
+        >
+          Play background film
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function HomePage({
   articles,
   imageSlots,
@@ -187,34 +284,7 @@ export default function HomePage({
   return (
     <div className="ce-homepage-exact bg-cream text-navy">
       <section className="relative h-[100svh] max-h-[100svh] min-h-0 overflow-hidden bg-navy text-cream md:h-auto md:max-h-none md:min-h-[1018px]">
-        <div className="absolute inset-0" data-slot="home-hero-video">
-          {heroPoster?.src ? (
-            <Image
-              src={heroPoster.src}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="managed-image object-cover"
-              style={getManagedImageStyle(heroPoster)}
-            />
-          ) : null}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster={heroPoster?.src}
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover object-center motion-reduce:hidden"
-          >
-            <source
-              src="/media/hero-video-curated-experiences.mp4"
-              type="video/mp4"
-            />
-          </video>
-        </div>
+        <HeroVideo poster={heroPoster} />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,20,32,0.68)_0%,rgba(10,20,32,0.3)_48%,rgba(10,20,32,0.03)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(10,20,32,0.32)_0%,rgba(10,20,32,0)_46%)]" />
 
@@ -365,8 +435,6 @@ export default function HomePage({
         </div>
       </section>
 
-      <HomeVideoSection />
-
       <section className="px-6 py-[108px] md:px-0">
         <div className="mx-auto max-w-[1120px]">
           <div className="grid items-end gap-8 md:grid-cols-[360px_1fr] md:gap-[110px]">
@@ -460,34 +528,5 @@ export default function HomePage({
       </section>
 
     </div>
-  );
-}
-
-function HomeVideoSection() {
-  const videos = getVideosByPlacement("home");
-  if (!videos.length) return null;
-
-  return (
-    <section className="bg-navy px-6 py-[96px] md:px-0">
-      <div className="mx-auto max-w-[1120px]">
-        <div className="grid gap-16 md:grid-cols-[380px_1fr] md:gap-[100px] items-start">
-          <div className="pt-2">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-gold">
-              New Zealand in motion
-            </p>
-            <h2 className="mt-6 font-serif text-[38px] font-medium leading-[1.06] text-cream md:text-[46px]">
-              Some places ask
-              <br />
-              to be seen moving.
-            </h2>
-            <p className="mt-8 max-w-[340px] text-[14px] leading-7 text-cream/56">
-              These are the landscapes, experiences, and moments that define a
-              private New Zealand journey.
-            </p>
-          </div>
-          <VideoShowcase videos={videos} dark />
-        </div>
-      </div>
-    </section>
   );
 }
